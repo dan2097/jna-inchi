@@ -1,0 +1,46 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.github.dan2097</groupId>
+  <artifactId>jna-inchi</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>JNA InChI</name>
+
+  <licenses>
+    <license>
+      <name>GNU General Public License (GPL) 2 or later</name>
+      <url>http://www.gnu.org/licenses/gpl-2.0-standalone.html</url>
+    </license>
+  </licenses>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+  <developers>
+    <developer>
+      <name>Daniel Lowe</name>
+      <url>http://bitbucket.org/dan2097</url>
+    </developer>
+  </developers>
+
+  <build>
+    <plugins>
+      <plugin>    
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.7.0</version>
+        <configuration>
+          <source>1.7</source>
+          <target>1.7</target>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+  <dependencies>
+    <dependency>
+      <groupId>net.java.dev.jna</groupId>
+      <artifactId>jna</artifactId>
+      <version>4.5.1</version>
+    </dependency>
+  </dependencies>
+
+</project>
