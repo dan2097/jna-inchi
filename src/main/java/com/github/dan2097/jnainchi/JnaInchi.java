@@ -1,7 +1,6 @@
 package com.github.dan2097.jnainchi;
 
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,10 +8,12 @@ import java.util.Map;
 import com.github.dan2097.jnainchi.InchiOptions.InchiOptionsBuilder;
 
 import inchi.InchiLibrary;
-import inchi.tagINCHIStereo0D;
-import inchi.tagINCHI_Input;
-import inchi.tagINCHI_Output;
-import inchi.tagInchiAtom;
+import inchi.InchiLibrary.IXA_ATOMID;
+import inchi.InchiLibrary.IXA_BONDID;
+import inchi.InchiLibrary.IXA_INCHIBUILDER_HANDLE;
+import inchi.InchiLibrary.IXA_MOL_HANDLE;
+import inchi.InchiLibrary.IXA_STATUS_HANDLE;
+import inchi.InchiLibrary.IXA_STEREOID;
 
 public class JnaInchi {
   
@@ -24,103 +25,179 @@ public class JnaInchi {
   }
   
   public InchiOutput toInchi(InchiInput inchiInput, InchiOptions options) {
-    tagINCHI_Input nativeInput = inputToNative(inchiInput, options);
-    tagINCHI_Output nativeOutput = new tagINCHI_Output();
+    List<InchiAtom> atoms = inchiInput.getAtoms();
+    int atomCount = atoms.size();
+    if (atomCount > Short.MAX_VALUE) {
+      throw new IllegalStateException("InChI is limited to 32767 atoms, input contained " + atomCount + " atoms");
+    }
+    List<InchiBond> bonds = inchiInput.getBonds();
+    List<InchiStereo> stereos = inchiInput.getStereos();
+    if (stereos.size() > Short.MAX_VALUE) {
+      throw new IllegalStateException("Too many stereochemistry elements in input");
+    }
+
+    IXA_STATUS_HANDLE logger = InchiLibrary.IXA_STATUS_Create();
+    IXA_MOL_HANDLE nativeMol = InchiLibrary.IXA_MOL_Create(logger);
     try {
-      InchiStatus ret = InchiStatus.fromInchiRetCode(InchiLibrary.GetINCHI(nativeInput, nativeOutput));
-      return new InchiOutput(nativeOutput, ret);
+      Map<InchiAtom, IXA_ATOMID> atomToNativeAtom = addAtoms(nativeMol, logger, atoms);
+      addBonds(nativeMol, logger, bonds, atomToNativeAtom);
+      addStereos(nativeMol, logger, stereos, atomToNativeAtom);
+      return buildInchi(logger, nativeMol);
     }
     finally {
-      InchiLibrary.FreeINCHI(nativeOutput);
+      InchiLibrary.IXA_MOL_Destroy(logger, nativeMol);
+      InchiLibrary.IXA_STATUS_Destroy(logger);
     }
   }
-  
-  private tagINCHI_Input inputToNative(InchiInput inchiInput, InchiOptions options) {
-    try {
-      List<InchiAtom> atoms = inchiInput.getAtoms();
-      int atomCount = atoms.size();
-      if (atomCount > Short.MAX_VALUE) {
-        throw new IllegalStateException("InChI is limited to 32767 atoms, input contained " + atomCount + " atoms");
-      }
-      List<InchiBond> bonds = inchiInput.getBonds();
-      Map<InchiAtom, List<InchiBond>> atomToBonds = new HashMap<>();
-      Map<InchiAtom, Short> atomToIdx = new HashMap<>();
-      for (short i = 0; i < atomCount; i++) {
-        InchiAtom atom = atoms.get(i);
-        atomToBonds.put(atom, new ArrayList<InchiBond>());
-        atomToIdx.put(atom, i);
-      }
-      for (InchiBond inchiBond : bonds) {
-        List<InchiBond> bondsToAtom = atomToBonds.get(inchiBond.getStart());
-        if (bondsToAtom == null) {
-          throw new IllegalStateException("Bond referenced an atom that was not part of the InchiInput");
-        }
-        bondsToAtom.add(inchiBond);
-      }
 
-      tagInchiAtom nativeAtomReference = new tagInchiAtom();
-      tagInchiAtom[] nativeAtoms = new tagInchiAtom[atomCount];
-      nativeAtomReference.toArray(nativeAtoms);
-      for (int i = 0; i < atomCount; i++) {
-        InchiAtom atom = atoms.get(i);
-        tagInchiAtom nativeAtom = nativeAtoms[i];
-        List<InchiBond> bondsForAtom = atomToBonds.get(atom);
-        int bondCount = bondsForAtom.size();
-        if (bondCount > 20) {
-          throw new IllegalArgumentException("Atom had more 20 bonds");
-        }
-        for (int j = 0; j < bondCount; j++) {
-          InchiBond bond = bondsForAtom.get(j);
-          nativeAtom.neighbor[j] = atomToIdx.get(bond.getOther(atom));
-          nativeAtom.bond_type[j] = bond.getType().getCode();
-          //TODO nativeAtom.bond_stereo
-        }
-
-        nativeAtom.x = atom.getX();
-        nativeAtom.y = atom.getY();
-        nativeAtom.z = atom.getZ();
-        
-        byte[] el = atom.getElName().getBytes("UTF-8");
-        if (el.length > 5) {
-          throw new IllegalArgumentException("Element name was too long: " + atom.getElName());
-        }
-        for (int j = 0; j < el.length; j++) {
-          nativeAtom.elname[j] = el[j];
-        }      
-        nativeAtom.num_bonds = (short) bondsForAtom.size();
-        nativeAtom.num_iso_H[0] = (byte) atom.getImplicitHydrogen();//The other positions in this array can be used for implicit protium/deuterium/tritium
-        nativeAtom.isotopic_mass = (short) atom.getIsotopicMass();
-        nativeAtom.radical = (byte) atom.getRadical().getCode();
-        nativeAtom.charge = (byte) atom.getCharge();
-      }
+  private Map<InchiAtom, IXA_ATOMID> addAtoms(IXA_MOL_HANDLE mol, IXA_STATUS_HANDLE logger, List<InchiAtom> atoms) {
+    Map<InchiAtom, IXA_ATOMID> atomToNativeAtom = new HashMap<>();
+    for (InchiAtom atom : atoms) {
+      //For performance only call InchiLibrary when values differ from the defaults
+      IXA_ATOMID nativeAtom = InchiLibrary.IXA_MOL_CreateAtom(logger, mol);
+      atomToNativeAtom.put(atom, nativeAtom);
       
-      List<InchiStereo> stereos = inchiInput.getStereos();
-      int stereoCount = stereos.size();
-      if (stereoCount > Short.MAX_VALUE) {
-        throw new IllegalArgumentException("Too many stereochemistry elements in input");
+      if (atom.getX() != 0) {
+        InchiLibrary.IXA_MOL_SetAtomX(logger, mol, nativeAtom, atom.getX());
       }
-      
-      tagINCHIStereo0D nativeStereoReference = new tagINCHIStereo0D();
-      if (stereoCount > 0) {
-        tagINCHIStereo0D[] nativeStereos = new tagINCHIStereo0D[stereoCount];
-        nativeStereoReference.toArray(nativeStereos);
-        for (int i = 0; i < stereoCount; i++) {
-          InchiStereo stereo = stereos.get(i);
-          tagINCHIStereo0D nativeStereo = nativeStereos[i];
-          InchiAtom[] stereoAtoms = stereo.getAtoms();
-          for (int j = 0; j < 4; j++) {
-            nativeStereo.neighbor[j] = atomToIdx.get(stereoAtoms[j]);
-          }
-          nativeStereo.central_atom = stereo.getCentralAtom() != null ? atomToIdx.get(stereo.getCentralAtom()) : InchiLibrary.NO_ATOM;
-          nativeStereo.type = stereo.getType().getCode();
-          nativeStereo.parity = stereo.getParity().getCode();
+      if (atom.getY() != 0) {
+        InchiLibrary.IXA_MOL_SetAtomY(logger, mol, nativeAtom, atom.getY());
+      }
+      if (atom.getZ() != 0) {
+        InchiLibrary.IXA_MOL_SetAtomZ(logger, mol, nativeAtom, atom.getZ());
+      }
+      String elName = atom.getElName();
+      if (!elName.equals("C")) {
+        if (elName.length() > 5) {
+          throw new IllegalArgumentException("Element name was too long: " + elName);
         }
+        InchiLibrary.IXA_MOL_SetAtomElement(logger, mol, nativeAtom, elName);
       }
-      return new tagINCHI_Input(nativeAtomReference, nativeStereoReference, options.toString(), (short) atomCount, (short) stereoCount);
+      if (atom.getIsotopicMass() != 0) {
+        InchiLibrary.IXA_MOL_SetAtomMass(logger, mol, nativeAtom, atom.getIsotopicMass());
+      }
+      if (atom.getCharge() != 0) {
+        InchiLibrary.IXA_MOL_SetAtomCharge(logger, mol, nativeAtom, atom.getCharge());
+      }
+      if (atom.getRadical() != InchiRadical.NONE) {
+        InchiLibrary.IXA_MOL_SetAtomRadical(logger, mol, nativeAtom, atom.getRadical().getCode());
+      }
+      if (atom.getImplicitHydrogen() > 0) {
+        //InChI also supports the concept of implicit deuterium/tritium, but as this is unusual this wrapper requires such cases to be given as explicit atoms
+        InchiLibrary.IXA_MOL_SetAtomHydrogens(logger, mol, nativeAtom, 0, atom.getImplicitHydrogen());
+      }
     }
-    catch (UnsupportedEncodingException e) {
-      //Broken VM
-      throw new RuntimeException(e);
+    return atomToNativeAtom;
+  }
+  
+  private void addBonds(IXA_MOL_HANDLE mol, IXA_STATUS_HANDLE logger, List<InchiBond> bonds, Map<InchiAtom, IXA_ATOMID> atomToNativeAtom) {
+    for (InchiBond bond : bonds) {
+      IXA_ATOMID nativeAtom1 = atomToNativeAtom.get(bond.getStart());
+      IXA_ATOMID nativeAtom2 = atomToNativeAtom.get(bond.getEnd());
+      if (nativeAtom1 == null || nativeAtom2 == null) {
+        throw new IllegalStateException("Bond referenced an atom that was not part of the InchiInput");
+      }
+      IXA_BONDID nativeBond = InchiLibrary.IXA_MOL_CreateBond(logger, mol, nativeAtom1, nativeAtom2);
+      if (bond.getType() != InchiBondType.SINGLE) {
+        InchiLibrary.IXA_MOL_SetBondType(logger, mol, nativeBond, bond.getType().getCode());
+      }
+      //InchiLibrary.IXA_MOL_SetBondWedge(log, mol, nativeBond, vRefAtom, vDirection);
+      //InchiLibrary.IXA_MOL_SetDblBondConfig(log, mol, nativeBond, vConfig);
+    }
+  }
+  private void addStereos(IXA_MOL_HANDLE nativeMol, IXA_STATUS_HANDLE logger, List<InchiStereo> stereos, Map<InchiAtom, IXA_ATOMID> atomToNativeAtom) {
+    for (InchiStereo stereo : stereos) {
+      switch (stereo.getType()) {
+      case Tetrahedral:
+      {
+        IXA_ATOMID centralAtom = atomToNativeAtom.get(stereo.getCentralAtom());
+        InchiAtom[] atomsInCenter = stereo.getAtoms();
+        InchiAtom atomsInCenter1 = atomsInCenter[0];
+        InchiAtom atomsInCenter2 = atomsInCenter[1];
+        InchiAtom atomsInCenter3 = atomsInCenter[2];
+        InchiAtom atomsInCenter4 = atomsInCenter[3];
+        
+        IXA_ATOMID vertex1 = atomsInCenter1 != null ? atomToNativeAtom.get(atomsInCenter1) : null;
+        IXA_ATOMID vertex2 = atomsInCenter2 != null ? atomToNativeAtom.get(atomsInCenter2) : null;
+        IXA_ATOMID vertex3 = atomsInCenter3 != null ? atomToNativeAtom.get(atomsInCenter3) : null;
+        IXA_ATOMID vertex4 = atomsInCenter4 != null ? atomToNativeAtom.get(atomsInCenter4) : null;
+  
+        IXA_STEREOID center = InchiLibrary.IXA_MOL_CreateStereoTetrahedron(logger, nativeMol, centralAtom, vertex1, vertex2, vertex3, vertex4);
+        byte parity = stereo.getParity().getCode();
+        InchiLibrary.IXA_MOL_SetStereoParity(logger, nativeMol, center, parity);
+        break;
+      }
+      case Allene:
+      {
+        IXA_ATOMID centralAtom = atomToNativeAtom.get(stereo.getCentralAtom());
+        InchiAtom[] atomsInCenter = stereo.getAtoms();
+        InchiAtom atomsInCenter1 = atomsInCenter[0];
+        InchiAtom atomsInCenter2 = atomsInCenter[1];
+        InchiAtom atomsInCenter3 = atomsInCenter[2];
+        InchiAtom atomsInCenter4 = atomsInCenter[3];
+        
+        IXA_ATOMID vertex1 = atomToNativeAtom.get(atomsInCenter1);
+        IXA_ATOMID vertex2 = atomToNativeAtom.get(atomsInCenter2);
+        IXA_ATOMID vertex3 = atomToNativeAtom.get(atomsInCenter3);
+        IXA_ATOMID vertex4 = atomToNativeAtom.get(atomsInCenter4);
+        IXA_STEREOID center = InchiLibrary.IXA_MOL_CreateStereoAntiRectangle(logger, nativeMol, centralAtom, vertex1, vertex2, vertex3, vertex4);
+        byte parity = stereo.getParity().getCode();
+        InchiLibrary.IXA_MOL_SetStereoParity(logger, nativeMol, center, parity);
+        break;
+      }
+      case DoubleBond:
+      {
+        InchiAtom[] atomsInCenter = stereo.getAtoms();
+        InchiAtom atomsInCenter1 = atomsInCenter[0];
+        InchiAtom atomsInCenter2 = atomsInCenter[1];
+        InchiAtom atomsInCenter3 = atomsInCenter[2];
+        InchiAtom atomsInCenter4 = atomsInCenter[3];
+  
+        IXA_ATOMID vertex1 = atomToNativeAtom.get(atomsInCenter1);
+        IXA_ATOMID vertex2 = atomToNativeAtom.get(atomsInCenter2);
+        IXA_ATOMID vertex3 = atomToNativeAtom.get(atomsInCenter3);
+        IXA_ATOMID vertex4 = atomToNativeAtom.get(atomsInCenter4);
+        IXA_BONDID centralBond = InchiLibrary.IXA_MOL_GetCommonBond(logger, nativeMol, vertex2, vertex3);
+        IXA_STEREOID center = InchiLibrary.IXA_MOL_CreateStereoRectangle(logger, nativeMol, centralBond, vertex1, vertex2, vertex3, vertex4);
+        byte parity = stereo.getParity().getCode();
+        InchiLibrary.IXA_MOL_SetStereoParity(logger, nativeMol, center, parity);
+        break;
+      }
+      default:
+        break;
+      }
+    }
+  }
+
+  private InchiOutput buildInchi(IXA_STATUS_HANDLE logger, IXA_MOL_HANDLE nativeMol) {
+    IXA_INCHIBUILDER_HANDLE builder = InchiLibrary.IXA_INCHIBUILDER_Create(logger);
+    try {
+      InchiLibrary.IXA_INCHIBUILDER_SetMolecule(logger, builder, nativeMol);
+
+      String inchi = InchiLibrary.IXA_INCHIBUILDER_GetInChI(logger, builder);
+      String auxInfo = InchiLibrary.IXA_INCHIBUILDER_GetAuxInfo(logger, builder);
+      String log = InchiLibrary.IXA_INCHIBUILDER_GetLog(logger, builder);
+      
+      InchiStatus status = InchiStatus.SUCCESS;
+      if (InchiLibrary.IXA_STATUS_HasError(logger)) {
+        status = InchiStatus.ERROR;
+      }
+      else if (InchiLibrary.IXA_STATUS_HasWarning(logger)) {
+        status = InchiStatus.WARNING;
+      }
+      
+      StringBuilder sb = new StringBuilder();
+      int messageCount = InchiLibrary.IXA_STATUS_GetCount(logger);
+      for (int i = 0; i < messageCount; i++) {
+        if (i > 0) {
+          sb.append("; ");
+        }
+        sb.append(InchiLibrary.IXA_STATUS_GetMessage(logger, i));
+      }
+      return new InchiOutput(inchi, auxInfo, sb.toString(), log, status);
+    }
+    finally {
+      InchiLibrary.IXA_INCHIBUILDER_Destroy(logger, builder); 
     }
   }
 
@@ -129,13 +206,15 @@ public class JnaInchi {
   }
   
   public InchiOutput molToInchi(String molText, InchiOptions options) {
-    tagINCHI_Output nativeOutput = new tagINCHI_Output();
+    IXA_STATUS_HANDLE logger = InchiLibrary.IXA_STATUS_Create();
+    IXA_MOL_HANDLE nativeMol = InchiLibrary.IXA_MOL_Create(logger);
     try {
-      InchiStatus ret = InchiStatus.fromInchiFromMolRetCode(InchiLibrary.MakeINCHIFromMolfileText(molText, options.toString(), nativeOutput));
-      return new InchiOutput(nativeOutput, ret);
+      InchiLibrary.IXA_MOL_ReadMolfile(logger, nativeMol, molText);
+      return buildInchi(logger, nativeMol);
     }
     finally {
-      InchiLibrary.FreeINCHI(nativeOutput);
+      InchiLibrary.IXA_MOL_Destroy(logger, nativeMol);
+      InchiLibrary.IXA_STATUS_Destroy(logger);
     }
   }
 

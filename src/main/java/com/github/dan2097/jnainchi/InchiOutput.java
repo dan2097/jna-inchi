@@ -1,7 +1,5 @@
 package com.github.dan2097.jnainchi;
 
-import inchi.tagINCHI_Output;
-
 public class InchiOutput {
   
   private final String inchi;
@@ -10,11 +8,11 @@ public class InchiOutput {
   private final String log;
   private final InchiStatus status;
 
-  public InchiOutput(tagINCHI_Output output, InchiStatus status) {
-    this.inchi = output.szInChI;
-    this.auxInfo = output.szAuxInfo;
-    this.message = output.szMessage;
-    this.log = output.szLog;
+  InchiOutput(String inchi, String auxInfo, String message, String log, InchiStatus status) {
+    this.inchi = inchi;
+    this.auxInfo = auxInfo;
+    this.message = message;
+    this.log = log;
     this.status = status;
   }
 
