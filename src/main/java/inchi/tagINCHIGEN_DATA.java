@@ -21,9 +21,9 @@ public class tagINCHIGEN_DATA extends Structure implements ByReference {
    */
   public int[] num_components = new int[2];
   /** C type : NORM_ATOMS*[2] */
-  public inchi.tagNormAtomData[] NormAtomsNontaut = new inchi.tagNormAtomData[2];
+  public tagNormAtomData[] NormAtomsNontaut = new tagNormAtomData[2];
   /** C type : NORM_ATOMS*[2] */
-  public inchi.tagNormAtomData[] NormAtomsTaut = new inchi.tagNormAtomData[2];
+  public tagNormAtomData[] NormAtomsTaut = new tagNormAtomData[2];
 
   protected List<String> getFieldOrder() {
     return Arrays.asList("pStrErrStruct", "num_components", "NormAtomsNontaut", "NormAtomsTaut");
@@ -36,7 +36,7 @@ public class tagINCHIGEN_DATA extends Structure implements ByReference {
    * @param NormAtomsNontaut C type : NORM_ATOMS*[2]<br>
    * @param NormAtomsTaut C type : NORM_ATOMS*[2]
    */
-  public tagINCHIGEN_DATA(byte pStrErrStruct[], int num_components[], inchi.tagNormAtomData NormAtomsNontaut[], inchi.tagNormAtomData NormAtomsTaut[]) {
+  public tagINCHIGEN_DATA(byte pStrErrStruct[], int num_components[], tagNormAtomData NormAtomsNontaut[], tagNormAtomData NormAtomsTaut[]) {
     super();
     if ((pStrErrStruct.length != this.pStrErrStruct.length)) 
       throw new IllegalArgumentException("Wrong array size !");
@@ -51,4 +51,5 @@ public class tagINCHIGEN_DATA extends Structure implements ByReference {
       throw new IllegalArgumentException("Wrong array size !");
     this.NormAtomsTaut = NormAtomsTaut;
   }
+
 }

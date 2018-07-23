@@ -15,12 +15,12 @@ public class tagNormAtomData extends Structure implements ByReference {
    * atom list<br>
    * C type : NORM_ATOM*
    */
-  public inchi.tagNormAtom at;
+  public tagNormAtom at;
   /**
    * atom list with added or removed protons only<br>
    * C type : NORM_ATOM*
    */
-  public inchi.tagNormAtom at_fixed_bonds;
+  public tagNormAtom at_fixed_bonds;
   /** number of atoms except removed terminal H */
   public int num_at;
   /** number of removed H; at[] has (num_at+num_removed_H) elements */
@@ -60,4 +60,5 @@ public class tagNormAtomData extends Structure implements ByReference {
   protected List<String> getFieldOrder() {
     return Arrays.asList("at", "at_fixed_bonds", "num_at", "num_removed_H", "num_bonds", "num_isotopic", "bExists", "bDeleted", "bHasIsotopicLayer", "bTautomeric", "bTautPreprocessed", "nNumRemovedProtons", "nNumRemovedProtonsIsotopic", "num_iso_H", "bTautFlags", "bTautFlagsDone", "bNormalizationFlags");
   }
+
 }

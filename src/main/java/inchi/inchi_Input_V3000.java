@@ -58,4 +58,5 @@ public class inchi_Input_V3000 extends Structure implements ByReference {
   protected List<String> getFieldOrder() {
     return Arrays.asList("n_non_star_atoms", "n_star_atoms", "atom_index_orig", "atom_index_fin", "n_sgroups", "n_3d_constraints", "n_collections", "n_non_haptic_bonds", "n_haptic_bonds", "lists_haptic_bonds", "n_steabs", "lists_steabs", "n_sterel", "lists_sterel", "n_sterac", "lists_sterac");
   }
+
 }

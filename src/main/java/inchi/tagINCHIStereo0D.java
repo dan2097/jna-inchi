@@ -58,4 +58,5 @@ public class tagINCHIStereo0D extends Structure implements ByReference {
     this.type = type;
     this.parity = parity;
   }
+
 }

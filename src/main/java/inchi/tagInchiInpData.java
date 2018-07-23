@@ -14,7 +14,7 @@ public class tagInchiInpData extends Structure implements ByReference {
    * a pointer to pInp that has all items 0 or NULL<br>
    * C type : inchi_Input*
    */
-  public inchi.tagINCHI_Input pInp;
+  public tagINCHI_Input pInp;
   /** 1 => the structure was marked as chiral, 2=> not chiral, 0=> not marked */
   public int bChiral;
   /** C type : char[256] */
@@ -29,7 +29,7 @@ public class tagInchiInpData extends Structure implements ByReference {
    * @param bChiral 1 => the structure was marked as chiral, 2=> not chiral, 0=> not marked<br>
    * @param szErrMsg C type : char[256]
    */
-  public tagInchiInpData(inchi.tagINCHI_Input pInp, int bChiral, byte szErrMsg[]) {
+  public tagInchiInpData(tagINCHI_Input pInp, int bChiral, byte szErrMsg[]) {
     super();
     this.pInp = pInp;
     this.bChiral = bChiral;
@@ -37,4 +37,5 @@ public class tagInchiInpData extends Structure implements ByReference {
       throw new IllegalArgumentException("Wrong array size !");
     this.szErrMsg = szErrMsg;
   }
+
 }

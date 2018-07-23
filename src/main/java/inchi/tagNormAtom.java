@@ -177,4 +177,5 @@ public class tagNormAtom extends Structure implements ByReference {
   protected List<String> getFieldOrder() {
     return Arrays.asList("elname", "el_number", "neighbor", "orig_at_number", "orig_compt_at_numb", "bond_stereo", "bond_type", "valence", "chem_bonds_valence", "num_H", "num_iso_H", "iso_atw_diff", "charge", "radical", "bAmbiguousStereo", "cFlags", "at_type", "component", "endpoint", "c_point", "x", "y", "z", "bUsed0DParity", "p_parity", "p_orig_at_num", "sb_ord", "sn_ord", "sb_parity", "sn_orig_at_num", "bCutVertex", "nRingSystem", "nNumAtInRingSystem", "nBlockSystem");
   }
+
 }

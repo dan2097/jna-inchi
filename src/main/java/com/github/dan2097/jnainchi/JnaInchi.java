@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.github.dan2097.jnainchi.InchiOptions.InchiOptionsBuilder;
-import com.sun.jna.Native;
 
 import inchi.InchiLibrary;
 import inchi.tagINCHIStereo0D;
@@ -17,12 +16,7 @@ import inchi.tagInchiAtom;
 
 public class JnaInchi {
   
-  private static final String INCHI_LIBRARY_NAME = "inchi";
-
-  private final InchiLibrary lib;
-
   public JnaInchi() {
-    this.lib = (InchiLibrary) Native.loadLibrary(INCHI_LIBRARY_NAME, InchiLibrary.class);
   }
   
   public InchiOutput toInchi(InchiInput inchiInput) {
@@ -33,11 +27,11 @@ public class JnaInchi {
     tagINCHI_Input nativeInput = inputToNative(inchiInput, options);
     tagINCHI_Output nativeOutput = new tagINCHI_Output();
     try {
-      InchiStatus ret = InchiStatus.fromInchiRetCode(lib.GetINCHI(nativeInput, nativeOutput));
+      InchiStatus ret = InchiStatus.fromInchiRetCode(InchiLibrary.GetINCHI(nativeInput, nativeOutput));
       return new InchiOutput(nativeOutput, ret);
     }
     finally {
-      lib.FreeINCHI(nativeOutput);
+      InchiLibrary.FreeINCHI(nativeOutput);
     }
   }
   
@@ -106,7 +100,7 @@ public class JnaInchi {
         throw new IllegalArgumentException("Too many stereochemistry elements in input");
       }
       
-      tagINCHIStereo0D nativeStereoReference = new inchi.tagINCHIStereo0D();
+      tagINCHIStereo0D nativeStereoReference = new tagINCHIStereo0D();
       if (stereoCount > 0) {
         tagINCHIStereo0D[] nativeStereos = new tagINCHIStereo0D[stereoCount];
         nativeStereoReference.toArray(nativeStereos);
@@ -137,11 +131,11 @@ public class JnaInchi {
   public InchiOutput molToInchi(String molText, InchiOptions options) {
     tagINCHI_Output nativeOutput = new tagINCHI_Output();
     try {
-      InchiStatus ret = InchiStatus.fromInchiFromMolRetCode(lib.MakeINCHIFromMolfileText(molText, options.toString(), nativeOutput));
+      InchiStatus ret = InchiStatus.fromInchiFromMolRetCode(InchiLibrary.MakeINCHIFromMolfileText(molText, options.toString(), nativeOutput));
       return new InchiOutput(nativeOutput, ret);
     }
     finally {
-      lib.FreeINCHI(nativeOutput);
+      InchiLibrary.FreeINCHI(nativeOutput);
     }
   }
 
@@ -149,7 +143,7 @@ public class JnaInchi {
     byte[] inchiKey = new byte[28];
     byte[] szXtra1 = new byte[65];
     byte[] szXtra2 = new byte[65];
-    InchiKeyStatus ret = InchiKeyStatus.of(lib.GetINCHIKeyFromINCHI(inchi, 1, 1, inchiKey, szXtra1, szXtra2));
+    InchiKeyStatus ret = InchiKeyStatus.of(InchiLibrary.GetINCHIKeyFromINCHI(inchi, 1, 1, inchiKey, szXtra1, szXtra2));
     try {
       return new InchiKeyOutput(new String(inchiKey, "UTF-8"), ret);
     } catch (UnsupportedEncodingException e) {

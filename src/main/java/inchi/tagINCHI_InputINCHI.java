@@ -11,7 +11,7 @@ import com.sun.jna.Structure.ByReference;
  */
 public class tagINCHI_InputINCHI extends Structure implements ByReference {
   /**
-   * InChI ASCIIZ string to be converted to a strucure<br>
+   * InChI ASCIIZ string to be converted to a structure<br>
    * C type : char*
    */
   public String szInChI;
@@ -25,7 +25,7 @@ public class tagINCHI_InputINCHI extends Structure implements ByReference {
     return Arrays.asList("szInChI", "szOptions");
   }
   /**
-   * @param szInChI InChI ASCIIZ string to be converted to a strucure<br>
+   * @param szInChI InChI ASCIIZ string to be converted to a structure<br>
    * C type : char*<br>
    * @param szOptions InChI options: space-delimited; each is preceded by<br>
    * C type : char*
@@ -35,4 +35,5 @@ public class tagINCHI_InputINCHI extends Structure implements ByReference {
     this.szInChI = szInChI;
     this.szOptions = szOptions;
   }
+
 }

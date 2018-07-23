@@ -11,7 +11,7 @@ import com.sun.jna.Structure.ByReference;
  */
 public class inchi_Input_Polymer extends Structure implements ByReference {
   /** C type : inchi_Input_PolymerUnit** */
-  public inchi.inchi_Input_PolymerUnit[] units;
+  public inchi_Input_PolymerUnit[] units;
   /** Number of polymer units */
   public int n;
 
@@ -22,11 +22,12 @@ public class inchi_Input_Polymer extends Structure implements ByReference {
    * @param units C type : inchi_Input_PolymerUnit**<br>
    * @param n Number of polymer units
    */
-  public inchi_Input_Polymer(inchi.inchi_Input_PolymerUnit units[], int n) {
+  public inchi_Input_Polymer(inchi_Input_PolymerUnit units[], int n) {
     super();
     if ((units.length != this.units.length)) 
       throw new IllegalArgumentException("Wrong array size !");
     this.units = units;
     this.n = n;
   }
+
 }

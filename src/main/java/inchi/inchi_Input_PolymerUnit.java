@@ -54,4 +54,5 @@ public class inchi_Input_PolymerUnit extends Structure implements ByReference {
   protected List<String> getFieldOrder() {
     return Arrays.asList("id", "type", "subtype", "conn", "label", "na", "nb", "xbr1", "xbr2", "smt", "alist", "blist");
   }
+
 }

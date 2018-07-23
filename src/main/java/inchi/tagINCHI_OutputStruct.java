@@ -15,12 +15,12 @@ public class tagINCHI_OutputStruct extends Structure implements ByReference {
    * array of num_atoms elements<br>
    * C type : inchi_Atom*
    */
-  public inchi.tagInchiAtom atom;
+  public tagInchiAtom atom;
   /**
    * array of num_stereo0D 0D stereo elements or NULL<br>
    * C type : inchi_Stereo0D*
    */
-  public inchi.tagINCHIStereo0D stereo0D;
+  public tagINCHIStereo0D stereo0D;
   /**
    * number of atoms in the structure<br>
    * C type : AT_NUM
@@ -66,7 +66,7 @@ public class tagINCHI_OutputStruct extends Structure implements ByReference {
    * @param WarningFlags warnings, see INCHIDIFF in inchicmp.h<br>
    * C type : unsigned long[2][2]
    */
-  public tagINCHI_OutputStruct(inchi.tagInchiAtom atom, inchi.tagINCHIStereo0D stereo0D, short num_atoms, short num_stereo0D, String szMessage, String szLog, NativeLong WarningFlags[]) {
+  public tagINCHI_OutputStruct(tagInchiAtom atom, tagINCHIStereo0D stereo0D, short num_atoms, short num_stereo0D, String szMessage, String szLog, NativeLong WarningFlags[]) {
     super();
     this.atom = atom;
     this.stereo0D = stereo0D;
@@ -78,4 +78,5 @@ public class tagINCHI_OutputStruct extends Structure implements ByReference {
       throw new IllegalArgumentException("Wrong array size !");
     this.WarningFlags = WarningFlags;
   }
+
 }

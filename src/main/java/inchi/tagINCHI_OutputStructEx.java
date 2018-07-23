@@ -15,12 +15,12 @@ public class tagINCHI_OutputStructEx extends Structure implements ByReference {
    * array of num_atoms elements<br>
    * C type : inchi_Atom*
    */
-  public inchi.tagInchiAtom atom;
+  public tagInchiAtom atom;
   /**
    * array of num_stereo0D 0D stereo elements or NULL<br>
    * C type : inchi_Stereo0D*
    */
-  public inchi.tagINCHIStereo0D stereo0D;
+  public tagINCHIStereo0D stereo0D;
   /**
    * number of atoms in the structure<br>
    * C type : AT_NUM
@@ -50,12 +50,12 @@ public class tagINCHI_OutputStructEx extends Structure implements ByReference {
    * v. 1.05 extended data, polymers<br>
    * C type : inchi_Output_Polymer*
    */
-  public inchi.inchi_Input_Polymer polymer;
+  public inchi_Input_Polymer polymer;
   /**
    * v. 1.05 extended data, V3000 Molfile features<br>
    * C type : inchi_Output_V3000*
    */
-  public inchi.inchi_Input_V3000 v3000;
+  public inchi_Input_V3000 v3000;
 
   protected List<String> getFieldOrder() {
     return Arrays.asList("atom", "stereo0D", "num_atoms", "num_stereo0D", "szMessage", "szLog", "WarningFlags", "polymer", "v3000");
@@ -80,7 +80,7 @@ public class tagINCHI_OutputStructEx extends Structure implements ByReference {
    * @param v3000 v. 1.05 extended data, V3000 Molfile features<br>
    * C type : inchi_Output_V3000*
    */
-  public tagINCHI_OutputStructEx(inchi.tagInchiAtom atom, inchi.tagINCHIStereo0D stereo0D, short num_atoms, short num_stereo0D, String szMessage, String szLog, NativeLong WarningFlags[], inchi.inchi_Input_Polymer polymer, inchi.inchi_Input_V3000 v3000) {
+  public tagINCHI_OutputStructEx(tagInchiAtom atom, tagINCHIStereo0D stereo0D, short num_atoms, short num_stereo0D, String szMessage, String szLog, NativeLong WarningFlags[], inchi_Input_Polymer polymer, inchi_Input_V3000 v3000) {
     super();
     this.atom = atom;
     this.stereo0D = stereo0D;
@@ -94,4 +94,5 @@ public class tagINCHI_OutputStructEx extends Structure implements ByReference {
     this.polymer = polymer;
     this.v3000 = v3000;
   }
+
 }

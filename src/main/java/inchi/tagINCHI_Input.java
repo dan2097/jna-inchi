@@ -14,12 +14,12 @@ public class tagINCHI_Input extends Structure implements ByReference {
    * array of num_atoms elements<br>
    * C type : inchi_Atom*
    */
-  public inchi.tagInchiAtom atom;
+  public tagInchiAtom atom;
   /**
    * array of num_stereo0D 0D stereo elements or NULL<br>
    * C type : inchi_Stereo0D*
    */
-  public inchi.tagINCHIStereo0D stereo0D;
+  public tagINCHIStereo0D stereo0D;
   /**
    * InChI options: space-delimited; each is preceded by<br>
    * C type : char*
@@ -51,7 +51,7 @@ public class tagINCHI_Input extends Structure implements ByReference {
    * @param num_stereo0D number of 0D stereo elements<br>
    * C type : AT_NUM
    */
-  public tagINCHI_Input(inchi.tagInchiAtom atom, inchi.tagINCHIStereo0D stereo0D, String szOptions, short num_atoms, short num_stereo0D) {
+  public tagINCHI_Input(tagInchiAtom atom, tagINCHIStereo0D stereo0D, String szOptions, short num_atoms, short num_stereo0D) {
     super();
     this.atom = atom;
     this.stereo0D = stereo0D;
@@ -59,4 +59,5 @@ public class tagINCHI_Input extends Structure implements ByReference {
     this.num_atoms = num_atoms;
     this.num_stereo0D = num_stereo0D;
   }
+
 }

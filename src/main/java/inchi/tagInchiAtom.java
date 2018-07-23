@@ -62,4 +62,5 @@ public class tagInchiAtom extends Structure implements ByReference {
   protected List<String> getFieldOrder() {
     return Arrays.asList("x", "y", "z", "neighbor", "bond_type", "bond_stereo", "elname", "num_bonds", "num_iso_H", "isotopic_mass", "radical", "charge");
   }
+
 }
