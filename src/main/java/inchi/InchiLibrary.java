@@ -404,7 +404,7 @@ public class InchiLibrary implements Library {
    * Original signature : <code>int CheckINCHI(const char*, const int)</code><br>
    * <i>native declaration : line 994</i>
    */
-  public static native int CheckINCHI(String szINCHI, int strict);
+  public static native int CheckINCHI(String szINCHI, boolean strict);
   /**
    * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^<br>
    * GetINCHIKeyFromINCHI<br>

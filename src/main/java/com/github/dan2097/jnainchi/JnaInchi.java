@@ -293,5 +293,26 @@ public class JnaInchi {
       throw new RuntimeException(e);
     }
   }
+  
+  /**
+   * Check if the string represents a valid InChI/StdInChI
+   * If strict is true, try to perform InChI2InChI conversion; returns success if a resulting InChI string exactly matches source.
+   * Be cautious: the result may be too strict, i.e. a 'false alarm', due to imperfection of conversion.
+   * @param inchi
+   * @param strict if false, just briefly check for proper layout (prefix, version, etc.)
+   * @return InchiCheckStatus
+   */
+  public static InchiCheckStatus checkInch(String inchi, boolean strict) {
+    return InchiCheckStatus.of(InchiLibrary.CheckINCHI(inchi, strict));
+  }
+  
+  /**
+   * Check if the string represents valid InChIKey
+   * @param inchiKey
+   * @return InchiKeyCheckStatus
+   */
+  public static InchiKeyCheckStatus checkInchiKey(String inchiKey) {
+    return InchiKeyCheckStatus.of(InchiLibrary.CheckINCHIKey(inchiKey));
+  }
 
 }
