@@ -280,6 +280,28 @@ public class JnaInchi {
       InchiLibrary.IXA_STATUS_Destroy(logger);
     }
   }
+  
+  /**
+   * Converts InChI into InChI for validation purposes.
+   * It may also be used to filter out specific layers.
+   * For instance, SNon would remove the stereochemical layer.
+   * Omitting FixedH and/or RecMet would remove Fixed-H or Reconnected layers.
+   * @param inchi
+   * @param options
+   * @return
+   */
+  public static InchiOutput inchiToInchi(String inchi, InchiOptions options) {
+    IXA_STATUS_HANDLE logger = InchiLibrary.IXA_STATUS_Create();
+    IXA_MOL_HANDLE nativeMol = InchiLibrary.IXA_MOL_Create(logger);
+    try {
+      InchiLibrary.IXA_MOL_ReadInChI(logger, nativeMol, inchi);
+      return buildInchi(logger, nativeMol, options);
+    }
+    finally {
+      InchiLibrary.IXA_MOL_Destroy(logger, nativeMol);
+      InchiLibrary.IXA_STATUS_Destroy(logger);
+    }
+  }
 
   public static InchiKeyOutput inchiToInchiKey(String inchi){
     byte[] inchiKey = new byte[28];
