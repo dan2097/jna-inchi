@@ -19,14 +19,11 @@ import inchi.InchiLibrary.IXA_STEREOID;
 
 public class JnaInchi {
   
-  public JnaInchi() {
-  }
-  
-  public InchiOutput toInchi(InchiInput inchiInput) {
+  public static InchiOutput toInchi(InchiInput inchiInput) {
     return toInchi(inchiInput, new InchiOptionsBuilder().build());
   }
   
-  public InchiOutput toInchi(InchiInput inchiInput, InchiOptions options) {
+  public static InchiOutput toInchi(InchiInput inchiInput, InchiOptions options) {
     List<InchiAtom> atoms = inchiInput.getAtoms();
     int atomCount = atoms.size();
     if (atomCount > Short.MAX_VALUE) {
@@ -52,7 +49,7 @@ public class JnaInchi {
     }
   }
 
-  private Map<InchiAtom, IXA_ATOMID> addAtoms(IXA_MOL_HANDLE mol, IXA_STATUS_HANDLE logger, List<InchiAtom> atoms) {
+  private static Map<InchiAtom, IXA_ATOMID> addAtoms(IXA_MOL_HANDLE mol, IXA_STATUS_HANDLE logger, List<InchiAtom> atoms) {
     Map<InchiAtom, IXA_ATOMID> atomToNativeAtom = new HashMap<>();
     for (InchiAtom atom : atoms) {
       //For performance only call InchiLibrary when values differ from the defaults
@@ -92,7 +89,7 @@ public class JnaInchi {
     return atomToNativeAtom;
   }
   
-  private void addBonds(IXA_MOL_HANDLE mol, IXA_STATUS_HANDLE logger, List<InchiBond> bonds, Map<InchiAtom, IXA_ATOMID> atomToNativeAtom) {
+  private static void addBonds(IXA_MOL_HANDLE mol, IXA_STATUS_HANDLE logger, List<InchiBond> bonds, Map<InchiAtom, IXA_ATOMID> atomToNativeAtom) {
     for (InchiBond bond : bonds) {
       IXA_ATOMID nativeAtom1 = atomToNativeAtom.get(bond.getStart());
       IXA_ATOMID nativeAtom2 = atomToNativeAtom.get(bond.getEnd());
@@ -107,7 +104,7 @@ public class JnaInchi {
       //InchiLibrary.IXA_MOL_SetDblBondConfig(log, mol, nativeBond, vConfig);
     }
   }
-  private void addStereos(IXA_MOL_HANDLE nativeMol, IXA_STATUS_HANDLE logger, List<InchiStereo> stereos, Map<InchiAtom, IXA_ATOMID> atomToNativeAtom) {
+  private static void addStereos(IXA_MOL_HANDLE nativeMol, IXA_STATUS_HANDLE logger, List<InchiStereo> stereos, Map<InchiAtom, IXA_ATOMID> atomToNativeAtom) {
     for (InchiStereo stereo : stereos) {
       switch (stereo.getType()) {
       case Tetrahedral:
@@ -171,7 +168,7 @@ public class JnaInchi {
     }
   }
 
-  private InchiOutput buildInchi(IXA_STATUS_HANDLE logger, IXA_MOL_HANDLE nativeMol, InchiOptions options) {
+  private static InchiOutput buildInchi(IXA_STATUS_HANDLE logger, IXA_MOL_HANDLE nativeMol, InchiOptions options) {
     IXA_INCHIBUILDER_HANDLE builder = InchiLibrary.IXA_INCHIBUILDER_Create(logger);
     try {
       InchiLibrary.IXA_INCHIBUILDER_SetMolecule(logger, builder, nativeMol);
@@ -267,11 +264,11 @@ public class JnaInchi {
     }
   }
 
-  public InchiOutput molToInchi(String molText) {
+  public static InchiOutput molToInchi(String molText) {
     return molToInchi(molText, new InchiOptionsBuilder().build());
   }
   
-  public InchiOutput molToInchi(String molText, InchiOptions options) {
+  public static InchiOutput molToInchi(String molText, InchiOptions options) {
     IXA_STATUS_HANDLE logger = InchiLibrary.IXA_STATUS_Create();
     IXA_MOL_HANDLE nativeMol = InchiLibrary.IXA_MOL_Create(logger);
     try {
@@ -284,7 +281,7 @@ public class JnaInchi {
     }
   }
 
-  public InchiKeyOutput inchiToInchiKey(String inchi){
+  public static InchiKeyOutput inchiToInchiKey(String inchi){
     byte[] inchiKey = new byte[28];
     byte[] szXtra1 = new byte[65];
     byte[] szXtra2 = new byte[65];

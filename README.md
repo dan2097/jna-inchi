@@ -4,8 +4,7 @@ Wrapper to access InChI from Java. This is a work in progress to wrap the latest
 ## Examples
 Mol file to StdInChI
 ```java
-JnaInchi jnaInchi = new JnaInchi();
-InchiOutput output = jnaInchi.molToInchi(molText);
+InchiOutput output = JnaInchi.molToInchi(molText);
 if (output.getStatus() == InchiStatus.OKAY || output.getStatus() == InchiStatus.WARNING) {
   String inchi = output.getInchi();
 }
@@ -13,8 +12,7 @@ if (output.getStatus() == InchiStatus.OKAY || output.getStatus() == InchiStatus.
 
 InChI to InChIKey
 ```java
-JnaInchi jnaInchi = new JnaInchi();
-InchiKeyOutput output = jnaInchi.inchiToInchiKey(inchi);
+InchiKeyOutput output = JnaInchi.inchiToInchiKey(inchi);
 if (output.getStatus() == InchiKeyStatus.OK) {
   String inchiKey = output.getInchiKey();
 }
@@ -22,12 +20,11 @@ if (output.getStatus() == InchiKeyStatus.OK) {
 
 Custom molecule to StdInChI
 ```java
-JnaInchi jnaInchi = new JnaInchi();
 InchiInput inchiInput = new InchiInput();
 inchiInput.addAtom(atom);
 inchiInput.addBond(bond);
 inchiInput.addStereo(stereo);
-InchiOutput output = jnaInchi.toInchi(inchiInput);
+InchiOutput output = JnaInchi.toInchi(inchiInput);
 ```
 
 ## License
