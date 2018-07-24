@@ -50,12 +50,6 @@ public enum InchiFlag {
   /** Omit auxiliary information*/
   AuxNone,
   
-  /** Set time-out per structure in seconds; W0 means unlimited*/
-  Wnumber,
-  
-  /** Output SDfile instead of InChI*/
-  OutputSDF,
-  
   /** Warn and produce empty InChI for empty structure*/
   WarnOnEmptyStructure,
   

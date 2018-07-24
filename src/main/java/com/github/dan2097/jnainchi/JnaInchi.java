@@ -11,6 +11,8 @@ import inchi.InchiLibrary;
 import inchi.InchiLibrary.IXA_ATOMID;
 import inchi.InchiLibrary.IXA_BONDID;
 import inchi.InchiLibrary.IXA_INCHIBUILDER_HANDLE;
+import inchi.InchiLibrary.IXA_INCHIBUILDER_OPTION;
+import inchi.InchiLibrary.IXA_INCHIBUILDER_STEREOOPTION;
 import inchi.InchiLibrary.IXA_MOL_HANDLE;
 import inchi.InchiLibrary.IXA_STATUS_HANDLE;
 import inchi.InchiLibrary.IXA_STEREOID;
@@ -42,7 +44,7 @@ public class JnaInchi {
       Map<InchiAtom, IXA_ATOMID> atomToNativeAtom = addAtoms(nativeMol, logger, atoms);
       addBonds(nativeMol, logger, bonds, atomToNativeAtom);
       addStereos(nativeMol, logger, stereos, atomToNativeAtom);
-      return buildInchi(logger, nativeMol);
+      return buildInchi(logger, nativeMol, options);
     }
     finally {
       InchiLibrary.IXA_MOL_Destroy(logger, nativeMol);
@@ -169,10 +171,74 @@ public class JnaInchi {
     }
   }
 
-  private InchiOutput buildInchi(IXA_STATUS_HANDLE logger, IXA_MOL_HANDLE nativeMol) {
+  private InchiOutput buildInchi(IXA_STATUS_HANDLE logger, IXA_MOL_HANDLE nativeMol, InchiOptions options) {
     IXA_INCHIBUILDER_HANDLE builder = InchiLibrary.IXA_INCHIBUILDER_Create(logger);
     try {
       InchiLibrary.IXA_INCHIBUILDER_SetMolecule(logger, builder, nativeMol);
+      
+      if (options.getTimeout() != 0){
+        InchiLibrary.IXA_INCHIBUILDER_SetOption_Timeout(logger, builder, options.getTimeout());
+      }
+      for (InchiFlag flag : options.getFlags()) {
+        switch (flag) {
+        case AuxNone:
+          InchiLibrary.IXA_INCHIBUILDER_SetOption(logger, builder, IXA_INCHIBUILDER_OPTION.IXA_INCHIBUILDER_OPTION_AuxNone, true);
+          break;
+        case ChiralFlagOFF:
+          InchiLibrary.IXA_MOL_SetChiral(logger, nativeMol, false);
+          break;
+        case ChiralFlagON:
+          InchiLibrary.IXA_MOL_SetChiral(logger, nativeMol, true);
+          break;
+        case DoNotAddH:
+          InchiLibrary.IXA_INCHIBUILDER_SetOption(logger, builder, IXA_INCHIBUILDER_OPTION.IXA_INCHIBUILDER_OPTION_DoNotAddH, true);
+          break;
+        case FixedH:
+          InchiLibrary.IXA_INCHIBUILDER_SetOption(logger, builder, IXA_INCHIBUILDER_OPTION.IXA_INCHIBUILDER_OPTION_FixedH, true);
+          break;
+        case KET:
+          InchiLibrary.IXA_INCHIBUILDER_SetOption(logger, builder, IXA_INCHIBUILDER_OPTION.IXA_INCHIBUILDER_OPTION_KET, true);
+          break;
+        case LargeMolecules:
+          InchiLibrary.IXA_INCHIBUILDER_SetOption(logger, builder, IXA_INCHIBUILDER_OPTION.IXA_INCHIBUILDER_OPTION_LargeMolecules, true);
+          break;
+        case NEWPSOFF:
+          InchiLibrary.IXA_INCHIBUILDER_SetOption(logger, builder, IXA_INCHIBUILDER_OPTION.IXA_INCHIBUILDER_OPTION_NewPsOff, true);
+          break;
+        case OneFiveT:
+          InchiLibrary.IXA_INCHIBUILDER_SetOption(logger, builder, IXA_INCHIBUILDER_OPTION.IXA_INCHIBUILDER_OPTION_15T, true);
+          break;
+        case RecMet:
+          InchiLibrary.IXA_INCHIBUILDER_SetOption(logger, builder, IXA_INCHIBUILDER_OPTION.IXA_INCHIBUILDER_OPTION_SLUUD, true);
+          break;
+        case SLUUD:
+          InchiLibrary.IXA_INCHIBUILDER_SetOption(logger, builder, IXA_INCHIBUILDER_OPTION.IXA_INCHIBUILDER_OPTION_SUU, true);
+          break;
+        case SNon:
+          InchiLibrary.IXA_INCHIBUILDER_SetOption_Stereo(logger, builder, IXA_INCHIBUILDER_STEREOOPTION.IXA_INCHIBUILDER_STEREOOPTION_SNon);
+          break;
+        case SRac:
+          InchiLibrary.IXA_INCHIBUILDER_SetOption_Stereo(logger, builder, IXA_INCHIBUILDER_STEREOOPTION.IXA_INCHIBUILDER_STEREOOPTION_SRac);
+          break;
+        case SRel:
+          InchiLibrary.IXA_INCHIBUILDER_SetOption_Stereo(logger, builder, IXA_INCHIBUILDER_STEREOOPTION.IXA_INCHIBUILDER_STEREOOPTION_SRel);
+          break;
+        case SUCF:
+          InchiLibrary.IXA_INCHIBUILDER_SetOption_Stereo(logger, builder, IXA_INCHIBUILDER_STEREOOPTION.IXA_INCHIBUILDER_STEREOOPTION_SUCF);
+          break;
+        case SUU:
+          InchiLibrary.IXA_INCHIBUILDER_SetOption(logger, builder, IXA_INCHIBUILDER_OPTION.IXA_INCHIBUILDER_OPTION_SUU, true);
+          break;
+        case SaveOpt:
+          InchiLibrary.IXA_INCHIBUILDER_SetOption(logger, builder, IXA_INCHIBUILDER_OPTION.IXA_INCHIBUILDER_OPTION_SaveOpt, true);
+          break;
+        case WarnOnEmptyStructure:
+          InchiLibrary.IXA_INCHIBUILDER_SetOption(logger, builder, IXA_INCHIBUILDER_OPTION.IXA_INCHIBUILDER_OPTION_WarnOnEmptyStructure, true);
+          break;
+        default:
+          throw new IllegalStateException("Unexpected InChI option flag: " + flag);
+        }
+      }
 
       String inchi = InchiLibrary.IXA_INCHIBUILDER_GetInChI(logger, builder);
       String auxInfo = InchiLibrary.IXA_INCHIBUILDER_GetAuxInfo(logger, builder);
@@ -210,7 +276,7 @@ public class JnaInchi {
     IXA_MOL_HANDLE nativeMol = InchiLibrary.IXA_MOL_Create(logger);
     try {
       InchiLibrary.IXA_MOL_ReadMolfile(logger, nativeMol, molText);
-      return buildInchi(logger, nativeMol);
+      return buildInchi(logger, nativeMol, options);
     }
     finally {
       InchiLibrary.IXA_MOL_Destroy(logger, nativeMol);

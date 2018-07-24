@@ -762,7 +762,7 @@ public class InchiLibrary implements Library {
    * Original signature : <code>INCHI_DECL IXA_MOL_SetChiral(IXA_STATUS_HANDLE, IXA_MOL_HANDLE, IXA_BOOL)</code><br>
    * <i>native declaration : line 246</i>
    */
-  public static native void IXA_MOL_SetChiral(IXA_STATUS_HANDLE hStatus, IXA_MOL_HANDLE hMolecule, int vChiral);
+  public static native void IXA_MOL_SetChiral(IXA_STATUS_HANDLE hStatus, IXA_MOL_HANDLE hMolecule, boolean vChiral);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_GetChiral(IXA_STATUS_HANDLE, IXA_MOL_HANDLE)</code><br>
    * <i>native declaration : line 250</i>
@@ -1066,7 +1066,7 @@ public class InchiLibrary implements Library {
    * Original signature : <code>INCHI_DECL IXA_INCHIBUILDER_SetOption(IXA_STATUS_HANDLE, IXA_INCHIBUILDER_HANDLE, IXA_INCHIBUILDER_OPTION, IXA_BOOL)</code><br>
    * <i>native declaration : line 540</i>
    */
-  public static native void IXA_INCHIBUILDER_SetOption(IXA_STATUS_HANDLE hStatus, IXA_INCHIBUILDER_HANDLE hInChIBuilder, int vOption, int vValue);
+  public static native void IXA_INCHIBUILDER_SetOption(IXA_STATUS_HANDLE hStatus, IXA_INCHIBUILDER_HANDLE hInChIBuilder, int vOption, boolean vValue);
   /**
    * Original signature : <code>INCHI_DECL IXA_INCHIBUILDER_SetOption_Stereo(IXA_STATUS_HANDLE, IXA_INCHIBUILDER_HANDLE, IXA_INCHIBUILDER_STEREOOPTION)</code><br>
    * <i>native declaration : line 545</i>
