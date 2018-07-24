@@ -60,7 +60,7 @@ public class InchiAtom {
   }
 
   public void setImplicitHydrogen(int implicitHydrogen) {
-    if (implicitHydrogen > Byte.MAX_VALUE  || isotopicMass < -1) {
+    if (implicitHydrogen > Byte.MAX_VALUE  || implicitHydrogen < -1) {
       throw new IllegalArgumentException("Unacceptable implicitHydrogen:" + implicitHydrogen);
     }
     this.implicitHydrogen = implicitHydrogen;

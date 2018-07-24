@@ -81,7 +81,7 @@ public class JnaInchi {
       if (atom.getRadical() != InchiRadical.NONE) {
         InchiLibrary.IXA_MOL_SetAtomRadical(logger, mol, nativeAtom, atom.getRadical().getCode());
       }
-      if (atom.getImplicitHydrogen() > 0) {
+      if (atom.getImplicitHydrogen() != 0) {
         //InChI also supports the concept of implicit deuterium/tritium, but as this is unusual this wrapper requires such cases to be given as explicit atoms
         InchiLibrary.IXA_MOL_SetAtomHydrogens(logger, mol, nativeAtom, 0, atom.getImplicitHydrogen());
       }
