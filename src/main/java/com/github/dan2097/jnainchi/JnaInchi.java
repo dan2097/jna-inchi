@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.github.dan2097.jnainchi.InchiOptions.InchiOptionsBuilder;
+import com.sun.jna.NativeLong;
 
 import inchi.InchiLibrary;
 import inchi.InchiLibrary.IXA_ATOMID;
@@ -16,6 +17,13 @@ import inchi.InchiLibrary.IXA_INCHIBUILDER_STEREOOPTION;
 import inchi.InchiLibrary.IXA_MOL_HANDLE;
 import inchi.InchiLibrary.IXA_STATUS_HANDLE;
 import inchi.InchiLibrary.IXA_STEREOID;
+import inchi.InchiLibrary.tagRetValGetINCHI;
+import inchi.tagINCHIStereo0D;
+import inchi.tagINCHI_Input;
+import inchi.tagINCHI_InputINCHI;
+import inchi.tagINCHI_OutputStruct;
+import inchi.tagInchiAtom;
+import inchi.tagInchiInpData;
 
 public class JnaInchi {
   
@@ -335,6 +343,168 @@ public class JnaInchi {
    */
   public static InchiKeyCheckStatus checkInchiKey(String inchiKey) {
     return InchiKeyCheckStatus.of(InchiLibrary.CheckINCHIKey(inchiKey));
+  }
+  
+  /**
+   * Creates the input data structure for InChI generation out of the auxiliary information (AuxInfo) 
+   * string produced by previous InChI generator calls
+   * @param auxInfo contains ASCIIZ string of InChI output for a single structure or only the AuxInfo line
+   * @param doNotAddH if true then InChI will not be allowed to add implicit H
+   * @param diffUnkUndfStereo if true, use different labels for unknown and undefined stereo
+   * @return
+   */
+  public static InchiInputFromAuxinfoOutput getInchiInputFromAuxInfo(String auxInfo, boolean doNotAddH, boolean diffUnkUndfStereo) {
+    tagINCHI_Input pInp = new tagINCHI_Input();
+    tagInchiInpData input = new tagInchiInpData(pInp);
+    try {
+      InchiStatus status = getInchiStatus(InchiLibrary.Get_inchi_Input_FromAuxInfo(auxInfo, doNotAddH, diffUnkUndfStereo, input));
+      
+      InchiInput inchiInput = new InchiInput();
+      
+      tagINCHI_Input populatedInput = input.pInp;
+      if (populatedInput.num_atoms > 0) {
+        tagInchiAtom[] nativeAtoms = new tagInchiAtom[populatedInput.num_atoms];
+        populatedInput.atom.toArray(nativeAtoms);
+        nativeToJavaAtoms(inchiInput, nativeAtoms);
+        nativeToJavaBonds(inchiInput, nativeAtoms);
+      }
+      if (populatedInput.num_stereo0D > 0) {
+        tagINCHIStereo0D[] nativeStereos = new tagINCHIStereo0D[populatedInput.num_stereo0D];
+        populatedInput.stereo0D.toArray(nativeStereos);
+        nativeToJavaStereos(inchiInput, nativeStereos);
+      }
+      String message = toString(input.szErrMsg);
+      Boolean chiralFlag = null;
+      if (input.bChiral == 1) {
+        chiralFlag = true;
+      }
+      else if (input.bChiral == 2) {
+        chiralFlag = false;
+      }
+      return new InchiInputFromAuxinfoOutput(inchiInput, chiralFlag, message, status);
+    }
+    finally {
+      InchiLibrary.Free_inchi_Input(pInp);
+      input.clear();
+    }
+  }
+  
+  public static InchiInputFromInchiOutput getInchiInputFromInchi(String inchi) {
+    return getInchiInputFromInchi(inchi, new InchiOptionsBuilder().build());
+  }
+  
+  public static InchiInputFromInchiOutput getInchiInputFromInchi(String inchi, InchiOptions options) {
+    tagINCHI_InputINCHI input = new tagINCHI_InputINCHI(inchi, options.toString());
+    tagINCHI_OutputStruct output = new tagINCHI_OutputStruct();
+    try {
+      InchiStatus status = getInchiStatus(InchiLibrary.GetStructFromINCHI(input, output));
+      InchiInput inchiInput = new InchiInput();
+      
+      if (output.num_atoms > 0) {
+        tagInchiAtom[] nativeAtoms = new tagInchiAtom[output.num_atoms];
+        output.atom.toArray(nativeAtoms);
+        nativeToJavaAtoms(inchiInput, nativeAtoms);
+        nativeToJavaBonds(inchiInput, nativeAtoms);
+      }
+      if (output.num_stereo0D > 0) {
+        tagINCHIStereo0D[] nativeStereos = new tagINCHIStereo0D[output.num_stereo0D];
+        output.stereo0D.toArray(nativeStereos);
+        nativeToJavaStereos(inchiInput, nativeStereos);
+      }
+      String message = output.szMessage;
+      String log = output.szLog;
+      NativeLong[] warningFlags = output.WarningFlags;      
+      return new InchiInputFromInchiOutput(inchiInput, message, log, status, null);
+    }
+    finally {
+      InchiLibrary.FreeStructFromINCHI(output);
+      input.clear();
+    }
+  }
+
+  private static void nativeToJavaAtoms(InchiInput inchiInput, tagInchiAtom[] nativeAtoms) {
+    for (int i = 0, numAtoms = nativeAtoms.length; i < numAtoms; i++) {
+      tagInchiAtom nativeAtom = nativeAtoms[i];
+      InchiAtom atom = new InchiAtom(toString(nativeAtom.elname));
+      atom.setX(nativeAtom.x);
+      atom.setY(nativeAtom.y);
+      atom.setZ(nativeAtom.z);
+      atom.setImplicitHydrogen(nativeAtom.num_iso_H[0]);
+      atom.setIsotopicMass(nativeAtom.isotopic_mass);
+      atom.setRadical(InchiRadical.of(nativeAtom.radical));
+      atom.setCharge(nativeAtom.charge);
+      inchiInput.addAtom(atom);
+    }
+  }
+
+  private static void nativeToJavaBonds(InchiInput inchiInput, tagInchiAtom[] nativeAtoms) {
+    int numAtoms = nativeAtoms.length;
+    boolean[] seenAtoms = new boolean[numAtoms];
+    for (int i = 0; i < numAtoms; i++) {
+      tagInchiAtom nativeAtom = nativeAtoms[i];
+      int numBonds = nativeAtom.num_bonds;
+      if (numBonds > 0) {
+        InchiAtom atom = inchiInput.getAtom(i);
+        for (int j = 0; j < numBonds; j++) {
+          int neighborIdx = nativeAtom.neighbor[j];
+          if (seenAtoms[neighborIdx]) {
+            //Only add each bond once
+            continue;
+          }
+          InchiAtom neighbor = inchiInput.getAtom(neighborIdx);
+          InchiBondType bondType = InchiBondType.of(nativeAtom.bond_type[j]);
+          InchiBondStereo bondStereo = InchiBondStereo.of(nativeAtom.bond_stereo[j]);
+          inchiInput.addBond(new InchiBond(atom, neighbor, bondType));
+        }
+      }
+      seenAtoms[i] = true;
+    }
+  }
+
+  private static void nativeToJavaStereos(InchiInput inchiInput, tagINCHIStereo0D[] nativeStereos) {
+    for (tagINCHIStereo0D nativeStereo : nativeStereos) {
+      InchiAtom[] atoms = new InchiAtom[4];
+      //idxToAtom will give null for -1 input (implicit hydrogen)
+      for (int i = 0; i < 4; i++) {
+        int idx = nativeStereo.neighbor[i];
+        atoms[i] = idx >=0 ?  inchiInput.getAtom(idx) : null;
+      }
+
+      InchiAtom centralAtom = nativeStereo.central_atom >=0 ? inchiInput.getAtom(nativeStereo.central_atom) : null;
+      InchiStereoType stereoType = InchiStereoType.of(nativeStereo.type);
+      InchiStereoParity parity = InchiStereoParity.of(nativeStereo.parity);
+      
+      inchiInput.addStereo(new InchiStereo(atoms, centralAtom, stereoType, parity));
+    }
+  }
+
+  private static InchiStatus getInchiStatus(int ret) {
+    switch (ret) {
+    case tagRetValGetINCHI.inchi_Ret_OKAY:/* Success; no errors or warnings*/
+      return InchiStatus.SUCCESS;
+    case tagRetValGetINCHI.inchi_Ret_EOF:/* no structural data has been provided */
+    case tagRetValGetINCHI.inchi_Ret_WARNING:/* Success; warning(s) issued*/
+      return InchiStatus.WARNING;
+    case tagRetValGetINCHI.inchi_Ret_ERROR:/* Error: no InChI has been created */
+    case tagRetValGetINCHI.inchi_Ret_FATAL:/* Severe error: no InChI has been created (typically, memory allocation failure) */
+    case tagRetValGetINCHI.inchi_Ret_UNKNOWN:/* Unknown program error */
+    case tagRetValGetINCHI.inchi_Ret_BUSY:/* Previous call to InChI has not returned yet*/
+      return InchiStatus.ERROR;
+    default:
+      return InchiStatus.ERROR;
+    }
+  }
+
+  private static String toString(byte[] cstr) {
+    StringBuilder sb = new StringBuilder(cstr.length);
+    for (int i = 0; i < cstr.length; i++) {
+      char ch = (char) cstr[i];
+      if (ch == '\0') {
+        break;
+      }
+      sb.append(ch);
+    }
+    return sb.toString();
   }
 
 }

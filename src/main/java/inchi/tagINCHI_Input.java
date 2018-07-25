@@ -59,5 +59,9 @@ public class tagINCHI_Input extends Structure implements ByReference {
     this.num_atoms = num_atoms;
     this.num_stereo0D = num_stereo0D;
   }
+  
+  public tagINCHI_Input() {
+    super();
+  }
 
 }

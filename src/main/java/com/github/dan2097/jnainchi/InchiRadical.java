@@ -1,5 +1,8 @@
 package com.github.dan2097.jnainchi;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public enum InchiRadical {
 
   NONE(0),
@@ -19,4 +22,17 @@ public enum InchiRadical {
   byte getCode() {
     return code;
   }
+  
+  private static final Map<Byte, InchiRadical> map = new HashMap<>();
+  
+  static {
+    for (InchiRadical val : InchiRadical.values()) {
+      map.put(val.code, val);
+    }
+  }
+  
+  static InchiRadical of(byte code) {
+    return map.get(code);
+  }
+
 }

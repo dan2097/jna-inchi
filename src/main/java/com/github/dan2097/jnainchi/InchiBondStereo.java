@@ -1,5 +1,8 @@
 package com.github.dan2097.jnainchi;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public enum InchiBondStereo {
 
   NONE(0),
@@ -27,6 +30,18 @@ public enum InchiBondStereo {
   
   byte getCode() {
     return code;
+  }
+  
+  private static final Map<Byte, InchiBondStereo> map = new HashMap<>();
+  
+  static {
+    for (InchiBondStereo val : InchiBondStereo.values()) {
+      map.put(val.code, val);
+    }
+  }
+  
+  static InchiBondStereo of(byte code) {
+    return map.get(code);
   }
 
 }

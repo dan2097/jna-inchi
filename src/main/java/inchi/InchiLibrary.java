@@ -366,12 +366,12 @@ public class InchiLibrary implements Library {
    * Original signature : <code>int Get_inchi_Input_FromAuxInfo(char*, int, int, InchiInpData*)</code><br>
    * <i>native declaration : line 956</i>
    */
-  public static native int Get_inchi_Input_FromAuxInfo(ByteBuffer szInchiAuxInfo, int bDoNotAddH, int bDiffUnkUndfStereo, tagInchiInpData pInchiInp);
+  public static native int Get_inchi_Input_FromAuxInfo(String szInchiAuxInfo, boolean bDoNotAddH, boolean bDiffUnkUndfStereo, tagInchiInpData pInchiInp);
   /**
    * Original signature : <code>int Get_std_inchi_Input_FromAuxInfo(char*, int, InchiInpData*)</code><br>
    * <i>native declaration : line 961</i>
    */
-  public static native int Get_std_inchi_Input_FromAuxInfo(ByteBuffer szInchiAuxInfo, int bDoNotAddH, tagInchiInpData pInchiInp);
+  public static native int Get_std_inchi_Input_FromAuxInfo(String szInchiAuxInfo, boolean bDoNotAddH, tagInchiInpData pInchiInp);
   /**
    * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^<br>
    * Free_inchi_Input / Free_std_inchi_Input<br>

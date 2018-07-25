@@ -37,5 +37,10 @@ public class tagInchiInpData extends Structure implements ByReference {
       throw new IllegalArgumentException("Wrong array size !");
     this.szErrMsg = szErrMsg;
   }
+  
+  public tagInchiInpData(tagINCHI_Input pInp) {
+    super();
+    this.pInp = pInp;
+  }
 
 }

@@ -1,5 +1,8 @@
 package com.github.dan2097.jnainchi;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public enum InchiStereoParity {
 
   NONE(0),
@@ -20,5 +23,17 @@ public enum InchiStereoParity {
   
   byte getCode() {
     return code;
+  }
+  
+  private static final Map<Byte, InchiStereoParity> map = new HashMap<>();
+  
+  static {
+    for (InchiStereoParity val : InchiStereoParity.values()) {
+      map.put(val.code, val);
+    }
+  }
+  
+  static InchiStereoParity of(byte code) {
+    return map.get(code);
   }
 }

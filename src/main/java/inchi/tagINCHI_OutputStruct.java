@@ -78,5 +78,9 @@ public class tagINCHI_OutputStruct extends Structure implements ByReference {
       throw new IllegalArgumentException("Wrong array size !");
     this.WarningFlags = WarningFlags;
   }
+  
+  public tagINCHI_OutputStruct() {
+    super();
+  }
 
 }
