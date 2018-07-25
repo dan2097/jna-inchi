@@ -332,7 +332,7 @@ public class JnaInchi {
    * @param strict if false, just briefly check for proper layout (prefix, version, etc.)
    * @return InchiCheckStatus
    */
-  public static InchiCheckStatus checkInch(String inchi, boolean strict) {
+  public static InchiCheckStatus checkInchi(String inchi, boolean strict) {
     return InchiCheckStatus.of(InchiLibrary.CheckINCHI(inchi, strict));
   }
   
