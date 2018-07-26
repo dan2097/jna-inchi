@@ -8,6 +8,10 @@
 
   <licenses>
     <license>
+      <name>IUPAC/InChI-Trust InChI Licence No. 1.0</name>
+      <url>https://www.inchi-trust.org/download/105/LICENCE.pdf</url>
+    </license>
+    <license>
       <name>GNU General Public License (GPL) 2 or later</name>
       <url>http://www.gnu.org/licenses/gpl-2.0-standalone.html</url>
     </license>
