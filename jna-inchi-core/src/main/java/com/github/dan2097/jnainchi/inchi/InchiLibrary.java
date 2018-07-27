@@ -742,12 +742,12 @@ public class InchiLibrary implements Library {
    * Original signature : <code>INCHI_DECL IXA_MOL_ReadMolfile(Pointer, Pointer, const char*)</code><br>
    * <i>native declaration : line 238</i>
    */
-  static native void IXA_MOL_ReadMolfile(Pointer hStatus, Pointer hMolecule, String pBytes);
+  static native void IXA_MOL_ReadMolfile(Pointer hStatus, Pointer hMolecule, byte[] pBytes);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_ReadInChI(Pointer, Pointer, const char*)</code><br>
    * <i>native declaration : line 242</i>
    */
-  static native void IXA_MOL_ReadInChI(Pointer hStatus, Pointer hMolecule, String pInChI);
+  static native void IXA_MOL_ReadInChI(Pointer hStatus, Pointer hMolecule, byte[] pInChI);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_SetChiral(Pointer, Pointer, IXA_BOOL)</code><br>
    * <i>native declaration : line 246</i>
@@ -768,7 +768,7 @@ public class InchiLibrary implements Library {
    * Original signature : <code>INCHI_DECL IXA_MOL_SetAtomElement(Pointer, Pointer, Pointer, const char*)</code><br>
    * <i>native declaration : line 260</i>
    */
-  static native void IXA_MOL_SetAtomElement(Pointer hStatus, Pointer hMolecule, Pointer vAtom, String pElement);
+  static native void IXA_MOL_SetAtomElement(Pointer hStatus, Pointer hMolecule, Pointer vAtom, byte[] pElement);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_SetAtomAtomicNumber(Pointer, Pointer, Pointer, int)</code><br>
    * <i>native declaration : line 265</i>
@@ -1077,7 +1077,7 @@ public class InchiLibrary implements Library {
    * Original signature : <code>INCHI_DECL IXA_INCHIKEYBUILDER_SetInChI(Pointer, Pointer, const char*)</code><br>
    * <i>native declaration : line 560</i>
    */
-  static native void IXA_INCHIKEYBUILDER_SetInChI(Pointer hStatus, Pointer hInChIKeyBuilder, String pInChI);
+  static native void IXA_INCHIKEYBUILDER_SetInChI(Pointer hStatus, Pointer hInChIKeyBuilder, byte[] pInChI);
   /**
    * Original signature : <code>INCHI_DECL IXA_INCHIKEYBUILDER_GetInChIKey(Pointer, Pointer)</code><br>
    * <i>native declaration : line 564</i>

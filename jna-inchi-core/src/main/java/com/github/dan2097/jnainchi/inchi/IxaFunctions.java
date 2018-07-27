@@ -113,11 +113,11 @@ public class IxaFunctions {
   }
 
   public static void IXA_MOL_ReadMolfile(IXA_STATUS_HANDLE hStatus, IXA_MOL_HANDLE hMolecule, String pBytes) {
-    InchiLibrary.IXA_MOL_ReadMolfile(hStatus.getPointer(), hMolecule.getPointer(), pBytes);
+    InchiLibrary.IXA_MOL_ReadMolfile(hStatus.getPointer(), hMolecule.getPointer(), fromString(pBytes));
   }
 
   public static void IXA_MOL_ReadInChI(IXA_STATUS_HANDLE hStatus, IXA_MOL_HANDLE hMolecule, String pInChI) {
-    InchiLibrary.IXA_MOL_ReadInChI(hStatus.getPointer(), hMolecule.getPointer(), pInChI);
+    InchiLibrary.IXA_MOL_ReadInChI(hStatus.getPointer(), hMolecule.getPointer(), fromString(pInChI));
   }
 
   public static void IXA_MOL_SetChiral(IXA_STATUS_HANDLE hStatus, IXA_MOL_HANDLE hMolecule, boolean vChiral) {
@@ -133,7 +133,7 @@ public class IxaFunctions {
   }
 
   public static void IXA_MOL_SetAtomElement(IXA_STATUS_HANDLE hStatus, IXA_MOL_HANDLE hMolecule, IXA_ATOMID vAtom, String pElement) {
-    InchiLibrary.IXA_MOL_SetAtomElement(hStatus.getPointer(), hMolecule.getPointer(), vAtom.getPointer(), pElement);
+    InchiLibrary.IXA_MOL_SetAtomElement(hStatus.getPointer(), hMolecule.getPointer(), vAtom.getPointer(), fromString(pElement));
   }
 
   public static void IXA_MOL_SetAtomAtomicNumber(IXA_STATUS_HANDLE hStatus, IXA_MOL_HANDLE hMolecule, IXA_ATOMID vAtom, int vAtomicNumber) {
@@ -373,7 +373,7 @@ public class IxaFunctions {
   }
 
   public static void IXA_INCHIKEYBUILDER_SetInChI(IXA_STATUS_HANDLE hStatus, IXA_INCHIKEYBUILDER_HANDLE hInChIKeyBuilder, String pInChI) {
-    InchiLibrary.IXA_INCHIKEYBUILDER_SetInChI(hStatus.getPointer(), hInChIKeyBuilder.getPointer(), pInChI);
+    InchiLibrary.IXA_INCHIKEYBUILDER_SetInChI(hStatus.getPointer(), hInChIKeyBuilder.getPointer(), fromString(pInChI));
   }
 
   public static String IXA_INCHIKEYBUILDER_GetInChIKey(IXA_STATUS_HANDLE hStatus, IXA_INCHIKEYBUILDER_HANDLE hInChIKeyBuilder) {
@@ -382,6 +382,16 @@ public class IxaFunctions {
 
   public static void IXA_INCHIKEYBUILDER_Destroy(IXA_STATUS_HANDLE hStatus, IXA_INCHIKEYBUILDER_HANDLE hInChIKeyBuilder) {
     InchiLibrary.IXA_INCHIKEYBUILDER_Destroy(hStatus.getPointer(), hInChIKeyBuilder.getPointer());
+  }
+  
+  private static byte[] fromString(String jstr) {
+    int strLen = jstr.length();
+    byte[] cstr = new byte[strLen + 1];
+    for (int i = 0; i < strLen; i++) {
+      cstr[i] = (byte) jstr.charAt(i);
+    }
+    cstr[strLen] = '\0';
+    return cstr;
   }
 
 }
