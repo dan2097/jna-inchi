@@ -3,7 +3,7 @@ package com.github.dan2097.jnainchi;
 import java.util.HashMap;
 import java.util.Map;
 
-import inchi.InchiLibrary.tagINCHIRadical;
+import com.github.dan2097.jnainchi.inchi.InchiLibrary.tagINCHIRadical;
 
 public enum InchiRadical {
 

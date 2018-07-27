@@ -1,7 +1,8 @@
-package inchi;
+package com.github.dan2097.jnainchi.inchi;
 import java.util.Arrays;
 import java.util.List;
 
+import com.sun.jna.NativeLong;
 import com.sun.jna.Structure;
 import com.sun.jna.Structure.ByReference;
 /**
@@ -9,7 +10,7 @@ import com.sun.jna.Structure.ByReference;
  * a tool written by <a href="http://ochafik.com/">Olivier Chafik</a> that <a href="http://code.google.com/p/jnaerator/wiki/CreditsAndLicense">uses a few opensource projects.</a>.<br>
  * For help, please visit <a href="http://nativelibs4java.googlecode.com/">NativeLibs4Java</a> , <a href="http://rococoa.dev.java.net/">Rococoa</a>, or <a href="http://jna.dev.java.net/">JNA</a>.
  */
-public class inchi_InputEx extends Structure implements ByReference {
+public class tagINCHI_OutputStructEx extends Structure implements ByReference {
   /**
    * array of num_atoms elements<br>
    * C type : inchi_Atom*
@@ -21,11 +22,6 @@ public class inchi_InputEx extends Structure implements ByReference {
    */
   public tagINCHIStereo0D stereo0D;
   /**
-   * InChI options: space-delimited; each is preceded by<br>
-   * C type : char*
-   */
-  public String szOptions;
-  /**
    * number of atoms in the structure<br>
    * C type : AT_NUM
    */
@@ -36,42 +32,65 @@ public class inchi_InputEx extends Structure implements ByReference {
    */
   public short num_stereo0D;
   /**
+   * Error/warning ASCIIZ message<br>
+   * C type : char*
+   */
+  public String szMessage;
+  /**
+   * log-file ASCIIZ string, contains a human-readable list<br>
+   * C type : char*
+   */
+  public String szLog;
+  /**
+   * warnings, see INCHIDIFF in inchicmp.h<br>
+   * C type : unsigned long[2][2]
+   */
+  public NativeLong[] WarningFlags = new NativeLong[((2) * (2))];
+  /**
    * v. 1.05 extended data, polymers<br>
-   * C type : inchi_Input_Polymer*
+   * C type : inchi_Output_Polymer*
    */
   public inchi_Input_Polymer polymer;
   /**
    * v. 1.05 extended data, V3000 Molfile features<br>
-   * C type : inchi_Input_V3000*
+   * C type : inchi_Output_V3000*
    */
   public inchi_Input_V3000 v3000;
 
   protected List<String> getFieldOrder() {
-    return Arrays.asList("atom", "stereo0D", "szOptions", "num_atoms", "num_stereo0D", "polymer", "v3000");
+    return Arrays.asList("atom", "stereo0D", "num_atoms", "num_stereo0D", "szMessage", "szLog", "WarningFlags", "polymer", "v3000");
   }
   /**
    * @param atom array of num_atoms elements<br>
    * C type : inchi_Atom*<br>
    * @param stereo0D array of num_stereo0D 0D stereo elements or NULL<br>
    * C type : inchi_Stereo0D*<br>
-   * @param szOptions InChI options: space-delimited; each is preceded by<br>
-   * C type : char*<br>
    * @param num_atoms number of atoms in the structure<br>
    * C type : AT_NUM<br>
    * @param num_stereo0D number of 0D stereo elements<br>
    * C type : AT_NUM<br>
+   * @param szMessage Error/warning ASCIIZ message<br>
+   * C type : char*<br>
+   * @param szLog log-file ASCIIZ string, contains a human-readable list<br>
+   * C type : char*<br>
+   * @param WarningFlags warnings, see INCHIDIFF in inchicmp.h<br>
+   * C type : unsigned long[2][2]<br>
    * @param polymer v. 1.05 extended data, polymers<br>
-   * C type : inchi_Input_Polymer*<br>
+   * C type : inchi_Output_Polymer*<br>
    * @param v3000 v. 1.05 extended data, V3000 Molfile features<br>
-   * C type : inchi_Input_V3000*
+   * C type : inchi_Output_V3000*
    */
-  public inchi_InputEx(tagInchiAtom atom, tagINCHIStereo0D stereo0D, String szOptions, short num_atoms, short num_stereo0D, inchi_Input_Polymer polymer, inchi_Input_V3000 v3000) {
+  public tagINCHI_OutputStructEx(tagInchiAtom atom, tagINCHIStereo0D stereo0D, short num_atoms, short num_stereo0D, String szMessage, String szLog, NativeLong WarningFlags[], inchi_Input_Polymer polymer, inchi_Input_V3000 v3000) {
     super();
     this.atom = atom;
     this.stereo0D = stereo0D;
-    this.szOptions = szOptions;
     this.num_atoms = num_atoms;
     this.num_stereo0D = num_stereo0D;
+    this.szMessage = szMessage;
+    this.szLog = szLog;
+    if ((WarningFlags.length != this.WarningFlags.length)) 
+      throw new IllegalArgumentException("Wrong array size !");
+    this.WarningFlags = WarningFlags;
     this.polymer = polymer;
     this.v3000 = v3000;
   }

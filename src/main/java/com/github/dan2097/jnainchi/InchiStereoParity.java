@@ -3,7 +3,7 @@ package com.github.dan2097.jnainchi;
 import java.util.HashMap;
 import java.util.Map;
 
-import inchi.InchiLibrary.tagINCHIStereoParity0D;
+import com.github.dan2097.jnainchi.inchi.InchiLibrary.tagINCHIStereoParity0D;
 
 public enum InchiStereoParity {
 

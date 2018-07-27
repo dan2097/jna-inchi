@@ -3,7 +3,7 @@ package com.github.dan2097.jnainchi;
 import java.util.HashMap;
 import java.util.Map;
 
-import inchi.InchiLibrary.tagINCHIStereoType0D;
+import com.github.dan2097.jnainchi.inchi.InchiLibrary.tagINCHIStereoType0D;
 
 public enum InchiStereoType {
 

@@ -1,4 +1,4 @@
-package inchi;
+package com.github.dan2097.jnainchi.inchi;
 import java.util.Arrays;
 import java.util.List;
 

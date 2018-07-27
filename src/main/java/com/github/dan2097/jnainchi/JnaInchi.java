@@ -6,24 +6,23 @@ import java.util.List;
 import java.util.Map;
 
 import com.github.dan2097.jnainchi.InchiOptions.InchiOptionsBuilder;
+import com.github.dan2097.jnainchi.inchi.InchiLibrary;
+import com.github.dan2097.jnainchi.inchi.tagINCHIStereo0D;
+import com.github.dan2097.jnainchi.inchi.tagINCHI_Input;
+import com.github.dan2097.jnainchi.inchi.tagINCHI_InputINCHI;
+import com.github.dan2097.jnainchi.inchi.tagINCHI_OutputStruct;
+import com.github.dan2097.jnainchi.inchi.tagInchiAtom;
+import com.github.dan2097.jnainchi.inchi.tagInchiInpData;
+import com.github.dan2097.jnainchi.inchi.InchiLibrary.IXA_ATOMID;
+import com.github.dan2097.jnainchi.inchi.InchiLibrary.IXA_BONDID;
+import com.github.dan2097.jnainchi.inchi.InchiLibrary.IXA_INCHIBUILDER_HANDLE;
+import com.github.dan2097.jnainchi.inchi.InchiLibrary.IXA_INCHIBUILDER_OPTION;
+import com.github.dan2097.jnainchi.inchi.InchiLibrary.IXA_INCHIBUILDER_STEREOOPTION;
+import com.github.dan2097.jnainchi.inchi.InchiLibrary.IXA_MOL_HANDLE;
+import com.github.dan2097.jnainchi.inchi.InchiLibrary.IXA_STATUS_HANDLE;
+import com.github.dan2097.jnainchi.inchi.InchiLibrary.IXA_STEREOID;
+import com.github.dan2097.jnainchi.inchi.InchiLibrary.tagRetValGetINCHI;
 import com.sun.jna.NativeLong;
-
-import inchi.InchiLibrary;
-import inchi.InchiLibrary.IXA_ATOMID;
-import inchi.InchiLibrary.IXA_BONDID;
-import inchi.InchiLibrary.IXA_INCHIBUILDER_HANDLE;
-import inchi.InchiLibrary.IXA_INCHIBUILDER_OPTION;
-import inchi.InchiLibrary.IXA_INCHIBUILDER_STEREOOPTION;
-import inchi.InchiLibrary.IXA_MOL_HANDLE;
-import inchi.InchiLibrary.IXA_STATUS_HANDLE;
-import inchi.InchiLibrary.IXA_STEREOID;
-import inchi.InchiLibrary.tagRetValGetINCHI;
-import inchi.tagINCHIStereo0D;
-import inchi.tagINCHI_Input;
-import inchi.tagINCHI_InputINCHI;
-import inchi.tagINCHI_OutputStruct;
-import inchi.tagInchiAtom;
-import inchi.tagInchiInpData;
 
 public class JnaInchi {
   

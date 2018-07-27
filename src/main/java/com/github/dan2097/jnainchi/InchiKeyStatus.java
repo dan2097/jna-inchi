@@ -3,7 +3,7 @@ package com.github.dan2097.jnainchi;
 import java.util.HashMap;
 import java.util.Map;
 
-import inchi.InchiLibrary;
+import com.github.dan2097.jnainchi.inchi.InchiLibrary;
 
 public enum InchiKeyStatus {
   
