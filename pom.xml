@@ -4,8 +4,13 @@
   <groupId>com.github.dan2097</groupId>
   <artifactId>jna-inchi</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+  <packaging>pom</packaging>
   <name>JNA InChI</name>
-
+  <description>Parent project for JNA InChI</description>
+  <modules>
+    <module>jna-inchi-core</module>
+    <module>jna-inchi-smiles</module>
+  </modules>
   <licenses>
     <license>
       <name>IUPAC/InChI-Trust InChI Licence No. 1.0</name>
@@ -39,12 +44,24 @@
     </plugins>
   </build>
 
-  <dependencies>
-    <dependency>
-      <groupId>net.java.dev.jna</groupId>
-      <artifactId>jna</artifactId>
-      <version>4.5.2</version>
-    </dependency>
-  </dependencies>
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>com.github.dan2097</groupId>
+        <artifactId>jna-inchi-core</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>net.java.dev.jna</groupId>
+        <artifactId>jna</artifactId>
+        <version>4.5.2</version>
+      </dependency>
+      <dependency>
+        <groupId>uk.ac.ebi.beam</groupId>
+        <artifactId>beam-core</artifactId>
+        <version>1.1</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 
 </project>

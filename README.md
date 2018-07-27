@@ -10,6 +10,14 @@ if (output.getStatus() == InchiStatus.OKAY || output.getStatus() == InchiStatus.
 }
 ```
 
+SMILES to StdInChI
+```java
+InchiOutput output = SmilesToInchi.toInchi(smiles);
+if (output.getStatus() == InchiStatus.OKAY || output.getStatus() == InchiStatus.WARNING) {
+  String inchi = output.getInchi();
+}
+```
+
 InChI to InChIKey
 ```java
 InchiKeyOutput output = JnaInchi.inchiToInchiKey(inchi);
