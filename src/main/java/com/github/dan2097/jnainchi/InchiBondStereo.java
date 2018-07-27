@@ -3,24 +3,26 @@ package com.github.dan2097.jnainchi;
 import java.util.HashMap;
 import java.util.Map;
 
+import inchi.InchiLibrary.tagINCHIBondStereo2D;
+
 public enum InchiBondStereo {
+  
+  NONE(tagINCHIBondStereo2D.INCHI_BOND_STEREO_NONE),
+  
+  SINGLE_1UP(tagINCHIBondStereo2D.INCHI_BOND_STEREO_SINGLE_1UP),
+  
+  SINGLE_1EITHER(tagINCHIBondStereo2D.INCHI_BOND_STEREO_SINGLE_1EITHER),
+  
+  SINGLE_1DOWN(tagINCHIBondStereo2D.INCHI_BOND_STEREO_SINGLE_1DOWN),
 
-  NONE(0),
+  SINGLE_2UP(tagINCHIBondStereo2D.INCHI_BOND_STEREO_SINGLE_2UP),
   
-  SINGLE_1UP(1),
+  SINGLE_2EITHER(tagINCHIBondStereo2D.INCHI_BOND_STEREO_SINGLE_2EITHER),
   
-  SINGLE_1EITHER(4),
-  
-  SINGLE_1DOWN(6),
-
-  SINGLE_2UP(-1),
-  
-  SINGLE_2EITHER(-4),
-  
-  SINGLE_2DOWN(-6),
+  SINGLE_2DOWN(tagINCHIBondStereo2D.INCHI_BOND_STEREO_SINGLE_2DOWN),
   
   /** unknown stereobond geometry*/
-  DOUBLE_EITHER(3);
+  DOUBLE_EITHER(tagINCHIBondStereo2D.INCHI_BOND_STEREO_DOUBLE_EITHER);
   
   private final byte code;
   

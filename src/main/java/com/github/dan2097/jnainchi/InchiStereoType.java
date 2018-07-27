@@ -3,16 +3,18 @@ package com.github.dan2097.jnainchi;
 import java.util.HashMap;
 import java.util.Map;
 
+import inchi.InchiLibrary.tagINCHIStereoType0D;
+
 public enum InchiStereoType {
 
-  None(0),
+  None(tagINCHIStereoType0D.INCHI_StereoType_None),
   
-  DoubleBond(1),
+  DoubleBond(tagINCHIStereoType0D.INCHI_StereoType_DoubleBond),
   
-  Tetrahedral(2),
+  Tetrahedral(tagINCHIStereoType0D.INCHI_StereoType_Tetrahedral),
   
-  Allene(3);
-  
+  Allene(tagINCHIStereoType0D.INCHI_StereoType_Allene);
+
   private final byte code;
   
   private InchiStereoType(int code) {

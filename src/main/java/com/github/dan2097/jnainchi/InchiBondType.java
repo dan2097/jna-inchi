@@ -3,18 +3,20 @@ package com.github.dan2097.jnainchi;
 import java.util.HashMap;
 import java.util.Map;
 
+import inchi.InchiLibrary.tagINCHIBondType;
+
 public enum InchiBondType {
 
-  NONE(0),
+  NONE(tagINCHIBondType.INCHI_BOND_TYPE_NONE),
   
-  SINGLE(1),
+  SINGLE(tagINCHIBondType.INCHI_BOND_TYPE_SINGLE),
   
-  DOUBLE(2),
+  DOUBLE(tagINCHIBondType.INCHI_BOND_TYPE_DOUBLE),
   
-  TRIPLE(3),
+  TRIPLE(tagINCHIBondType.INCHI_BOND_TYPE_TRIPLE),
   
   /** avoid by all means */
-  ALTERN(4);
+  ALTERN(tagINCHIBondType.INCHI_BOND_TYPE_ALTERN);
   
   private final byte code;
   

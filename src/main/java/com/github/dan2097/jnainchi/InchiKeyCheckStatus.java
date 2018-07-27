@@ -3,15 +3,15 @@ package com.github.dan2097.jnainchi;
 import java.util.HashMap;
 import java.util.Map;
 
-import inchi.InchiLibrary;
+import inchi.InchiLibrary.tagRetValGetINCHIKey;
 
 public enum InchiKeyCheckStatus {
   
-  VALID_STANDARD(InchiLibrary.tagRetValGetINCHIKey.INCHIKEY_VALID_STANDARD),
-  VALID_NON_STANDARD(InchiLibrary.tagRetValGetINCHIKey.INCHIKEY_VALID_NON_STANDARD),
-  INVALID_LENGTH(InchiLibrary.tagRetValGetINCHIKey.INCHIKEY_INVALID_LENGTH),
-  INVALID_LAYOUT(InchiLibrary.tagRetValGetINCHIKey.INCHIKEY_INVALID_LAYOUT),
-  INVALID_VERSION(InchiLibrary.tagRetValGetINCHIKey.INCHIKEY_INVALID_VERSION);
+  VALID_STANDARD(tagRetValGetINCHIKey.INCHIKEY_VALID_STANDARD),
+  VALID_NON_STANDARD(tagRetValGetINCHIKey.INCHIKEY_VALID_NON_STANDARD),
+  INVALID_LENGTH(tagRetValGetINCHIKey.INCHIKEY_INVALID_LENGTH),
+  INVALID_LAYOUT(tagRetValGetINCHIKey.INCHIKEY_INVALID_LAYOUT),
+  INVALID_VERSION(tagRetValGetINCHIKey.INCHIKEY_INVALID_VERSION);
   
   private final int code;
   

@@ -3,29 +3,31 @@ package com.github.dan2097.jnainchi;
 import java.util.HashMap;
 import java.util.Map;
 
+import inchi.InchiLibrary;
+
 public enum InchiKeyStatus {
   
   /** Success; no errors or warnings*/
-  OK(0),
+  OK(InchiLibrary.INCHIKEY_OK),
   
   /** Unknown program error*/
-  UNKNOWN_ERROR(1),
+  UNKNOWN_ERROR(InchiLibrary.INCHIKEY_UNKNOWN_ERROR),
   
   /** Source string is empty*/
-  EMPTY_INPUT(2),
+  EMPTY_INPUT(InchiLibrary.INCHIKEY_EMPTY_INPUT),
   
   /** Invalid InChI prefix or invalid version (not 1)*/
-  INVALID_INCHI_PREFIX(3),
+  INVALID_INCHI_PREFIX(InchiLibrary.INCHIKEY_INVALID_INCHI_PREFIX),
   
   /** Not enough memory*/
-  NOT_ENOUGH_MEMORY(4),
+  NOT_ENOUGH_MEMORY(InchiLibrary.INCHIKEY_NOT_ENOUGH_MEMORY),
   
   /** Source InChI has invalid layout*/
-  INVALID_INCHI(20),
+  INVALID_INCHI(InchiLibrary.INCHIKEY_INVALID_INCHI),
 
   /** Source standard InChI has invalid layout*/
-  INVALID_STD_INCHI(21);
-    
+  INVALID_STD_INCHI(InchiLibrary.INCHIKEY_INVALID_STD_INCHI);
+
   private final int code;
   
   private InchiKeyStatus(int code){

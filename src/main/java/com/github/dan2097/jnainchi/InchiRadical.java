@@ -3,16 +3,18 @@ package com.github.dan2097.jnainchi;
 import java.util.HashMap;
 import java.util.Map;
 
+import inchi.InchiLibrary.tagINCHIRadical;
+
 public enum InchiRadical {
 
-  NONE(0),
+  NONE(tagINCHIRadical.INCHI_RADICAL_NONE),
   
-  SINGLET(1),
+  SINGLET(tagINCHIRadical.INCHI_RADICAL_SINGLET),
   
-  DOUBLET(2),
+  DOUBLET(tagINCHIRadical.INCHI_RADICAL_DOUBLET),
   
-  TRIPLET(3);
-  
+  TRIPLET(tagINCHIRadical.INCHI_RADICAL_TRIPLET);
+
   private final byte code;
   
   private InchiRadical(int code) {

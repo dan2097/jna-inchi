@@ -579,13 +579,6 @@ public class InchiLibrary implements Library {
       public static final int IXA_STATUS_ERROR = 2;
   };
   /** enum values */
-  public static interface IXA_BOOL {
-      /** <i>native declaration : line 112</i> */
-      public static final int IXA_FALSE = 0;
-      /** <i>native declaration : line 113</i> */
-      public static final int IXA_TRUE = 1;
-  };
-  /** enum values */
   public static interface IXA_ATOM_RADICAL {
       /** <i>native declaration : line 118</i> */
       public static final int IXA_ATOM_RADICAL_NONE = 0;

@@ -3,17 +3,19 @@ package com.github.dan2097.jnainchi;
 import java.util.HashMap;
 import java.util.Map;
 
+import inchi.InchiLibrary.tagINCHIStereoParity0D;
+
 public enum InchiStereoParity {
 
-  NONE(0),
+  NONE(tagINCHIStereoParity0D.INCHI_PARITY_NONE),
   
-  ODD(1),
+  ODD(tagINCHIStereoParity0D.INCHI_PARITY_ODD),
   
-  EVEN(2),
+  EVEN(tagINCHIStereoParity0D.INCHI_PARITY_EVEN),
   
-  UNKNOWN(3),
+  UNKNOWN(tagINCHIStereoParity0D.INCHI_PARITY_UNKNOWN),
   
-  UNDEFINED(4);
+  UNDEFINED(tagINCHIStereoParity0D.INCHI_PARITY_UNDEFINED);
   
   private final byte code;
   
