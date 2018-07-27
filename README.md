@@ -5,7 +5,7 @@ Wrapper to access InChI from Java. This is a work in progress to wrap the latest
 Mol file to StdInChI
 ```java
 InchiOutput output = JnaInchi.molToInchi(molText);
-if (output.getStatus() == InchiStatus.OKAY || output.getStatus() == InchiStatus.WARNING) {
+if (output.getStatus() == InchiStatus.SUCCESS || output.getStatus() == InchiStatus.WARNING) {
   String inchi = output.getInchi();
 }
 ```
@@ -13,7 +13,7 @@ if (output.getStatus() == InchiStatus.OKAY || output.getStatus() == InchiStatus.
 SMILES to StdInChI
 ```java
 InchiOutput output = SmilesToInchi.toInchi(smiles);
-if (output.getStatus() == InchiStatus.OKAY || output.getStatus() == InchiStatus.WARNING) {
+if (output.getStatus() == InchiStatus.SUCCESS || output.getStatus() == InchiStatus.WARNING) {
   String inchi = output.getInchi();
 }
 ```
