@@ -90,8 +90,16 @@ public class JnaInchi {
         IxaFunctions.IXA_MOL_SetAtomRadical(logger, mol, nativeAtom, atom.getRadical().getCode());
       }
       if (atom.getImplicitHydrogen() != 0) {
-        //InChI also supports the concept of implicit deuterium/tritium, but as this is unusual this wrapper requires such cases to be given as explicit atoms
         IxaFunctions.IXA_MOL_SetAtomHydrogens(logger, mol, nativeAtom, 0, atom.getImplicitHydrogen());
+      }
+      if (atom.getImplicitProtium() != 0) {
+         IxaFunctions.IXA_MOL_SetAtomHydrogens(logger, mol, nativeAtom, 1, atom.getImplicitProtium());
+      }
+      if (atom.getImplicitDeuterium() != 0) {
+         IxaFunctions.IXA_MOL_SetAtomHydrogens(logger, mol, nativeAtom, 2, atom.getImplicitDeuterium());
+      }
+      if (atom.getImplicitTritium() != 0) {
+          IxaFunctions.IXA_MOL_SetAtomHydrogens(logger, mol, nativeAtom, 3, atom.getImplicitTritium());
       }
     }
     return atomToNativeAtom;
@@ -430,6 +438,9 @@ public class JnaInchi {
       atom.setY(nativeAtom.y);
       atom.setZ(nativeAtom.z);
       atom.setImplicitHydrogen(nativeAtom.num_iso_H[0]);
+      atom.setImplicitProtium(nativeAtom.num_iso_H[1]);
+      atom.setImplicitDeuterium(nativeAtom.num_iso_H[2]);
+      atom.setImplicitTritium(nativeAtom.num_iso_H[3]);
       atom.setIsotopicMass(nativeAtom.isotopic_mass);
       atom.setRadical(InchiRadical.of(nativeAtom.radical));
       atom.setCharge(nativeAtom.charge);

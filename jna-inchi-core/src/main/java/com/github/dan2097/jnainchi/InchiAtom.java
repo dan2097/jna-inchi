@@ -7,7 +7,8 @@ public class InchiAtom {
   private double y = 0;
   private double z = 0;
 
-  private int implicitHydrogen = 0;
+  //array positions for hydrogen (i.e. isotope not specified), protium, deuterium, tritium
+  private int[] implicitHydrogen = new int[4];
   private int isotopicMass = 0;
   private InchiRadical radical = InchiRadical.NONE;
   private int charge = 0;
@@ -56,14 +57,56 @@ public class InchiAtom {
   }
 
   public int getImplicitHydrogen() {
-    return implicitHydrogen;
+    return implicitHydrogen[0];
   }
 
+  /**
+   * Used for specifying implicit hydrogen of natural isotopic abundance.
+   * If the hydrogen is known to be protium/deuterium/tritium this can be either specified
+   * using {@link #setImplicitProtium(int)}, {@link #setImplicitDeuterium(int)}, {@link #setImplicitTritium(int)}
+   * or using explicit atoms
+   * 
+   * -1 has the special meaning of deduce hydrogen count from valency
+   * @param implicitHydrogen
+   */
   public void setImplicitHydrogen(int implicitHydrogen) {
     if (implicitHydrogen > Byte.MAX_VALUE  || implicitHydrogen < -1) {
       throw new IllegalArgumentException("Unacceptable implicitHydrogen:" + implicitHydrogen);
     }
-    this.implicitHydrogen = implicitHydrogen;
+    this.implicitHydrogen[0] = implicitHydrogen;
+  }
+  
+  public void setImplicitProtium(int implicitProtium) {
+    if (implicitProtium > Byte.MAX_VALUE  || implicitProtium < 0) {
+      throw new IllegalArgumentException("Unacceptable implicitProtium:" + implicitProtium);
+    }
+    this.implicitHydrogen[1] = implicitProtium;
+  }
+  
+  public int getImplicitProtium() {
+    return implicitHydrogen[1];
+  }
+  
+  public void setImplicitDeuterium(int implicitDeuterium) {
+    if (implicitDeuterium > Byte.MAX_VALUE  || implicitDeuterium < 0) {
+      throw new IllegalArgumentException("Unacceptable implicitDeuterium:" + implicitDeuterium);
+    }
+    this.implicitHydrogen[2] = implicitDeuterium;
+  }
+  
+  public int getImplicitDeuterium() {
+    return implicitHydrogen[2];
+  }
+  
+  public void setImplicitTritium(int implicitTritium) {
+    if (implicitTritium > Byte.MAX_VALUE  || implicitTritium < 0) {
+      throw new IllegalArgumentException("Unacceptable implicitTritium:" + implicitTritium);
+    }
+    this.implicitHydrogen[3] = implicitTritium;
+  }
+  
+  public int getImplicitTritium() {
+    return implicitHydrogen[3];
   }
 
   public int getIsotopicMass() {
