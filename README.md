@@ -36,5 +36,4 @@ InchiOutput output = JnaInchi.toInchi(inchiInput);
 ```
 
 ## License
-This project is dual licensed under the [IUPAC/InChI-Trust InChI Licence No. 1.0](https://www.inchi-trust.org/download/105/LICENCE.pdf)
-or the GNU General Public License (GPL) 2 or later
+This project is licensed under the GNU Lesser General Public License v2.1 or later
