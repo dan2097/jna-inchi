@@ -29,7 +29,7 @@ import com.sun.jna.Pointer;
  * For help, please visit <a href="http://nativelibs4java.googlecode.com/">NativeLibs4Java</a> , <a href="http://rococoa.dev.java.net/">Rococoa</a>, or <a href="http://jna.dev.java.net/">JNA</a>.
  */
 public class InchiLibrary implements Library {
-  public static final String JNA_LIBRARY_NAME = "inchi";
+  public static final String JNA_LIBRARY_NAME = "jnainchi";
   public static final NativeLibrary JNA_NATIVE_LIB = NativeLibrary.getInstance(InchiLibrary.JNA_LIBRARY_NAME);
   static {
     Native.register(InchiLibrary.class, InchiLibrary.JNA_NATIVE_LIB);
