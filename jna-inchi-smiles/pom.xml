@@ -19,5 +19,10 @@
       <groupId>uk.ac.ebi.beam</groupId>
       <artifactId>beam-core</artifactId>
     </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 </project>
