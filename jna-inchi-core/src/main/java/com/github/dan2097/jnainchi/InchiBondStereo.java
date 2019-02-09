@@ -24,18 +24,25 @@ import com.github.dan2097.jnainchi.inchi.InchiLibrary.tagINCHIBondStereo2D;
 
 public enum InchiBondStereo {
   
+  /** No stereo information recorded for this bond */
   NONE(tagINCHIBondStereo2D.INCHI_BOND_STEREO_NONE),
   
+  /**sharp end points to this atom i.e. reference atom is {@link InchiBond#getStart()} */
   SINGLE_1UP(tagINCHIBondStereo2D.INCHI_BOND_STEREO_SINGLE_1UP),
   
+  /**sharp end points to this atom i.e. reference atom is {@link InchiBond#getStart()} */
   SINGLE_1EITHER(tagINCHIBondStereo2D.INCHI_BOND_STEREO_SINGLE_1EITHER),
   
+  /**sharp end points to this atom i.e. reference atom is {@link InchiBond#getStart()} */
   SINGLE_1DOWN(tagINCHIBondStereo2D.INCHI_BOND_STEREO_SINGLE_1DOWN),
 
+  /**sharp end points to the opposite atom i.e. reference atom is {@link InchiBond#getEnd()} */
   SINGLE_2UP(tagINCHIBondStereo2D.INCHI_BOND_STEREO_SINGLE_2UP),
   
+  /**sharp end points to the opposite atom i.e. reference atom is {@link InchiBond#getEnd()} */
   SINGLE_2EITHER(tagINCHIBondStereo2D.INCHI_BOND_STEREO_SINGLE_2EITHER),
   
+  /**sharp end points to the opposite atom i.e. reference atom is {@link InchiBond#getEnd()} */
   SINGLE_2DOWN(tagINCHIBondStereo2D.INCHI_BOND_STEREO_SINGLE_2DOWN),
   
   /** unknown stereobond geometry*/

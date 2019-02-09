@@ -30,6 +30,8 @@ import com.github.dan2097.jnainchi.inchi.tagINCHI_InputINCHI;
 import com.github.dan2097.jnainchi.inchi.tagINCHI_OutputStruct;
 import com.github.dan2097.jnainchi.inchi.tagInchiAtom;
 import com.github.dan2097.jnainchi.inchi.tagInchiInpData;
+import com.github.dan2097.jnainchi.inchi.InchiLibrary.IXA_BOND_WEDGE;
+import com.github.dan2097.jnainchi.inchi.InchiLibrary.IXA_DBLBOND_CONFIG;
 import com.github.dan2097.jnainchi.inchi.InchiLibrary.IXA_INCHIBUILDER_OPTION;
 import com.github.dan2097.jnainchi.inchi.InchiLibrary.IXA_INCHIBUILDER_STEREOOPTION;
 import com.github.dan2097.jnainchi.inchi.InchiLibrary.tagRetValGetINCHI;
@@ -130,11 +132,36 @@ public class JnaInchi {
         throw new IllegalStateException("Bond referenced an atom that was not part of the InchiInput");
       }
       IXA_BONDID nativeBond = IxaFunctions.IXA_MOL_CreateBond(logger, mol, nativeAtom1, nativeAtom2);
-      if (bond.getType() != InchiBondType.SINGLE) {
-        IxaFunctions.IXA_MOL_SetBondType(logger, mol, nativeBond, bond.getType().getCode());
+      InchiBondType bondType = bond.getType();
+      if (bondType != InchiBondType.SINGLE) {
+        IxaFunctions.IXA_MOL_SetBondType(logger, mol, nativeBond, bondType.getCode());
       }
-      //IxaFunctions.IXA_MOL_SetBondWedge(log, mol, nativeBond, vRefAtom, vDirection);
-      //IxaFunctions.IXA_MOL_SetDblBondConfig(log, mol, nativeBond, vConfig);
+      switch (bond.getStereo()) {
+      case DOUBLE_EITHER:
+        //Default is to perceive configuration from 2D coordinates
+        IxaFunctions.IXA_MOL_SetDblBondConfig(logger, mol, nativeBond, IXA_DBLBOND_CONFIG.IXA_DBLBOND_CONFIG_EITHER);
+        break;
+      case SINGLE_1DOWN:
+        IxaFunctions.IXA_MOL_SetBondWedge(logger, mol, nativeBond, nativeAtom1, IXA_BOND_WEDGE.IXA_BOND_WEDGE_DOWN);
+        break;
+      case SINGLE_1EITHER:
+        IxaFunctions.IXA_MOL_SetBondWedge(logger, mol, nativeBond, nativeAtom1, IXA_BOND_WEDGE.IXA_BOND_WEDGE_EITHER);
+        break;
+      case SINGLE_1UP:
+        IxaFunctions.IXA_MOL_SetBondWedge(logger, mol, nativeBond, nativeAtom1, IXA_BOND_WEDGE.IXA_BOND_WEDGE_UP);
+        break;
+      case SINGLE_2DOWN:
+        IxaFunctions.IXA_MOL_SetBondWedge(logger, mol, nativeBond, nativeAtom2, IXA_BOND_WEDGE.IXA_BOND_WEDGE_DOWN);
+        break;
+      case SINGLE_2EITHER:
+        IxaFunctions.IXA_MOL_SetBondWedge(logger, mol, nativeBond, nativeAtom2, IXA_BOND_WEDGE.IXA_BOND_WEDGE_EITHER);
+        break;
+      case SINGLE_2UP:
+        IxaFunctions.IXA_MOL_SetBondWedge(logger, mol, nativeBond, nativeAtom2, IXA_BOND_WEDGE.IXA_BOND_WEDGE_UP);
+        break;
+      case NONE:
+        break;
+      }  
     }
   }
   private static void addStereos(IXA_MOL_HANDLE nativeMol, IXA_STATUS_HANDLE logger, List<InchiStereo> stereos, Map<InchiAtom, IXA_ATOMID> atomToNativeAtom) {
@@ -482,7 +509,7 @@ public class JnaInchi {
           InchiAtom neighbor = inchiInput.getAtom(neighborIdx);
           InchiBondType bondType = InchiBondType.of(nativeAtom.bond_type[j]);
           InchiBondStereo bondStereo = InchiBondStereo.of(nativeAtom.bond_stereo[j]);
-          inchiInput.addBond(new InchiBond(atom, neighbor, bondType));
+          inchiInput.addBond(new InchiBond(atom, neighbor, bondType, bondStereo));
         }
       }
       seenAtoms[i] = true;
