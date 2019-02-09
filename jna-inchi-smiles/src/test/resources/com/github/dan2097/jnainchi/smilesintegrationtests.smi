@@ -1,6 +1,9 @@
 [C]	InChI=1S/C
 [Al]	InChI=1S/Al
 [Og]	InChI=1S/Og
+[Fe++]	InChI=1S/Fe/q+2
+[Fe+2]	InChI=1S/Fe/q+2
+[OH-]	InChI=1S/H2O/h1H2/p-1
 C	InChI=1S/CH4/h1H4
 CC	InChI=1S/C2H6/c1-2/h1-2H3
 C=C	InChI=1S/C2H4/c1-2/h1-2H2
