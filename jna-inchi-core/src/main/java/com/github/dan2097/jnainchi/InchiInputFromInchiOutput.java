@@ -23,13 +23,14 @@ public class InchiInputFromInchiOutput {
   private final String message;
   private final String log;
   private final InchiStatus status;
+  private final long[][] warningFlags;
   
-  
-  InchiInputFromInchiOutput(InchiInput inchiInput, String message, String log, InchiStatus status, String warnings) {
+  InchiInputFromInchiOutput(InchiInput inchiInput, String message, String log, InchiStatus status, long[][] warningFlags) {
     this.inchiInput = inchiInput;
     this.message = message;
     this.log = log;
     this.status = status;
+    this.warningFlags = warningFlags;
   }
 
   public InchiInput getInchiInput() {
@@ -46,6 +47,19 @@ public class InchiInputFromInchiOutput {
 
   public InchiStatus getStatus() {
     return status;
+  }
+  
+  /**
+   * see INCHIDIFF in inchicmp.h.
+   *
+   * [x][y]:
+   * x=0 => Reconnected if present in InChI otherwise Disconnected/Normal
+   * x=1 => Disconnected layer if Reconnected layer is present
+   * y=1 => Main layer or Mobile-H
+   * y=0 => Fixed-H layer
+   */
+  public long[][] getWarningFlags() {
+    return warningFlags;
   }
 
 }

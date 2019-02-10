@@ -465,8 +465,28 @@ public class JnaInchi {
       }
       String message = output.szMessage;
       String log = output.szLog;
-      NativeLong[] warningFlags = output.WarningFlags;      
-      return new InchiInputFromInchiOutput(inchiInput, message, log, status, null);
+      NativeLong[] nativeFlags = output.WarningFlags;//This is a flattened multi-dimensional array, unflatten as we convert
+      long[][] warningFlags = new long[2][2];
+      for (int i = 0; i < nativeFlags.length; i++) {
+        long val = nativeFlags[i].longValue();
+        switch (i) {
+        case 0:
+          warningFlags[0][0] = val;
+          break;
+        case 1:
+          warningFlags[0][1] = val;
+          break;
+        case 2:
+          warningFlags[1][0] = val;
+          break;
+        case 3:
+          warningFlags[1][1] = val;
+          break;
+        default:
+          break;
+        }
+      }
+      return new InchiInputFromInchiOutput(inchiInput, message, log, status, warningFlags);
     }
     finally {
       InchiLibrary.FreeStructFromINCHI(output);
