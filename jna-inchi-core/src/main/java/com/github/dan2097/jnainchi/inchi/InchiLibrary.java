@@ -36,131 +36,96 @@ public class InchiLibrary implements Library {
   }
   /** enum values */
   public static interface tagINCHIRadical {
-    /** <i>native declaration : line 59</i> */
     public static final int INCHI_RADICAL_NONE = 0;
-    /** <i>native declaration : line 60</i> */
     public static final int INCHI_RADICAL_SINGLET = 1;
-    /** <i>native declaration : line 61</i> */
     public static final int INCHI_RADICAL_DOUBLET = 2;
-    /** <i>native declaration : line 62</i> */
     public static final int INCHI_RADICAL_TRIPLET = 3;
   };
   /** enum values */
   public static interface tagINCHIBondType {
-    /** <i>native declaration : line 67</i> */
     public static final int INCHI_BOND_TYPE_NONE = 0;
-    /** <i>native declaration : line 68</i> */
     public static final int INCHI_BOND_TYPE_SINGLE = 1;
-    /** <i>native declaration : line 69</i> */
     public static final int INCHI_BOND_TYPE_DOUBLE = 2;
-    /** <i>native declaration : line 70</i> */
     public static final int INCHI_BOND_TYPE_TRIPLE = 3;
     /**
      * avoid by all means<br>
-     * <i>native declaration : line 71</i>
      */
     public static final int INCHI_BOND_TYPE_ALTERN = 4;
   };
   /** enum values */
   public static interface tagINCHIBondStereo2D {
-    /** <i>native declaration : line 75</i> */
     public static final int INCHI_BOND_STEREO_NONE = 0;
-    /** <i>native declaration : line 76</i> */
     public static final int INCHI_BOND_STEREO_SINGLE_1UP = 1;
-    /** <i>native declaration : line 77</i> */
     public static final int INCHI_BOND_STEREO_SINGLE_1EITHER = 4;
-    /** <i>native declaration : line 78</i> */
     public static final int INCHI_BOND_STEREO_SINGLE_1DOWN = 6;
-    /** <i>native declaration : line 80</i> */
     public static final int INCHI_BOND_STEREO_SINGLE_2UP = -1;
-    /** <i>native declaration : line 81</i> */
     public static final int INCHI_BOND_STEREO_SINGLE_2EITHER = -4;
-    /** <i>native declaration : line 82</i> */
     public static final int INCHI_BOND_STEREO_SINGLE_2DOWN = -6;
     /**
      * unknown stereobond geometry<br>
-     * <i>native declaration : line 84</i>
      */
     public static final int INCHI_BOND_STEREO_DOUBLE_EITHER = 3;
   };
   /** enum values */
   public static interface tagINCHIStereoType0D {
-    /** <i>native declaration : line 407</i> */
     public static final int INCHI_StereoType_None = 0;
-    /** <i>native declaration : line 408</i> */
     public static final int INCHI_StereoType_DoubleBond = 1;
-    /** <i>native declaration : line 409</i> */
     public static final int INCHI_StereoType_Tetrahedral = 2;
-    /** <i>native declaration : line 410</i> */
     public static final int INCHI_StereoType_Allene = 3;
   };
   /** enum values */
   public static interface tagINCHIStereoParity0D {
-    /** <i>native declaration : line 415</i> */
     public static final int INCHI_PARITY_NONE = 0;
     /**
      * 'o'<br>
-     * <i>native declaration : line 416</i>
      */
     public static final int INCHI_PARITY_ODD = 1;
     /**
      * 'e'<br>
-     * <i>native declaration : line 417</i>
      */
     public static final int INCHI_PARITY_EVEN = 2;
     /**
      * 'u'<br>
-     * <i>native declaration : line 418</i>
      */
     public static final int INCHI_PARITY_UNKNOWN = 3;
     /**
      * '?' -- should not be used; however, see Note above<br>
-     * <i>native declaration : line 420</i>
      */
     public static final int INCHI_PARITY_UNDEFINED = 4;
   };
   /** enum values */
   public static interface tagRetValGetINCHI {
-    /** <i>native declaration : line 727</i> */
     public static final int inchi_Ret_BREAK = -100;
     /**
      * not used in InChI library<br>
-     * <i>native declaration : line 728</i>
      */
     public static final int inchi_Ret_SKIP = -2;
     /**
      * no structural data has been provided<br>
-     * <i>native declaration : line 729</i>
      */
     public static final int inchi_Ret_EOF = -1;
     /**
      * Success; no errors or warnings<br>
-     * <i>native declaration : line 730</i>
      */
     public static final int inchi_Ret_OKAY = 0;
     /**
      * Success; warning(s) issued<br>
-     * <i>native declaration : line 731</i>
      */
     public static final int inchi_Ret_WARNING = 1;
     /**
      * Error: no InChI has been created<br>
-     * <i>native declaration : line 732</i>
      */
     public static final int inchi_Ret_ERROR = 2;
     /**
      * Severe error: no InChI has been created (typically, memory allocation failure)<br>
-     * <i>native declaration : line 733</i>
      */
     public static final int inchi_Ret_FATAL = 3;
     /**
      * Unknown program error<br>
-     * <i>native declaration : line 734</i>
      */
     public static final int inchi_Ret_UNKNOWN = 4;
     /**
      * Previuos call to InChI has not returned yet<br>
-     * <i>native declaration : line 735</i>
      */
     public static final int inchi_Ret_BUSY = 5;
   };
@@ -168,58 +133,41 @@ public class InchiLibrary implements Library {
   public static interface tagRetValMOL2INCHI {
     /**
      * Success; no errors or warnings<br>
-     * <i>native declaration : line 743</i>
      */
     public static final int mol2inchi_Ret_OKAY = 0;
     /**
      * Success; warning(s) issued<br>
-     * <i>native declaration : line 744</i>
      */
     public static final int mol2inchi_Ret_WARNING = 1;
     /**
      * generic Error: no InChI has been created<br>
-     * <i>native declaration : line 745</i>
      */
     public static final int mol2inchi_Ret_ERROR = 2;
     /**
      * get structure Error: no InChI has been created<br>
-     * <i>native declaration : line 746</i>
      */
     public static final int mol2inchi_Ret_ERROR_get = 4;
     /**
      * compute InChI Error: no InChI has been created<br>
-     * <i>native declaration : line 747</i>
      */
     public static final int mol2inchi_Ret_ERROR_comp = 5;
   };
   /** enum values */
   public static interface tagRetValCheckINCHI {
-    /** <i>native declaration : line 755</i> */
     public static final int INCHI_VALID_STANDARD = 0;
-    /** <i>native declaration : line 756</i> */
     public static final int INCHI_VALID_NON_STANDARD = 1;
-    /** <i>native declaration : line 757</i> */
     public static final int INCHI_VALID_BETA = 2;
-    /** <i>native declaration : line 758</i> */
     public static final int INCHI_INVALID_PREFIX = 3;
-    /** <i>native declaration : line 759</i> */
     public static final int INCHI_INVALID_VERSION = 4;
-    /** <i>native declaration : line 760</i> */
     public static final int INCHI_INVALID_LAYOUT = 5;
-    /** <i>native declaration : line 761</i> */
     public static final int INCHI_FAIL_I2I = 6;
   };
   /** enum values */
   public static interface tagRetValGetINCHIKey {
-    /** <i>native declaration : line 1062</i> */
     public static final int INCHIKEY_VALID_STANDARD = 0;
-    /** <i>native declaration : line 1063</i> */
     public static final int INCHIKEY_VALID_NON_STANDARD = -1;
-    /** <i>native declaration : line 1064</i> */
     public static final int INCHIKEY_INVALID_LENGTH = 1;
-    /** <i>native declaration : line 1065</i> */
     public static final int INCHIKEY_INVALID_LAYOUT = 2;
-    /** <i>native declaration : line 1066</i> */
     public static final int INCHIKEY_INVALID_VERSION = 3;
   };
   public static final int FIND_RING_SYSTEMS = (int)1;
@@ -246,7 +194,6 @@ public class InchiLibrary implements Library {
   public static final int INCHI_NUM = (int)2;
   /**
    * Original signature : <code>void FreeInChIExtInput(inchi_Input_Polymer*, inchi_Input_V3000*)</code><br>
-   * <i>native declaration : line 681</i>
    */
   //public static native void FreeInChIExtInput(inchi_Input_Polymer polymer, inchi_Input_V3000 v3000);
   /**
@@ -278,18 +225,15 @@ public class InchiLibrary implements Library {
    * /SaveOpt    Save custom InChI creation options (non-standard InChI)<br>
    * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^<br>
    * Original signature : <code>int GetINCHI(inchi_Input*, inchi_Output*)</code><br>
-   * <i>native declaration : line 835</i>
    */
   public static native int GetINCHI(tagINCHI_Input inp, tagINCHI_Output out);
   /**
    * Original signature : <code>int GetStdINCHI(inchi_Input*, inchi_Output*)</code><br>
-   * <i>native declaration : line 836</i>
    */
   public static native int GetStdINCHI(tagINCHI_Input inp, tagINCHI_Output out);
   /**
    * Extended version of GetINCHI supporting v. 1.05 extensions: V3000; polymers<br>
    * Original signature : <code>int GetINCHIEx(inchi_InputEx*, inchi_Output*)</code><br>
-   * <i>native declaration : line 840</i>
    */
   public static native int GetINCHIEx(inchi_InputEx inp, tagINCHI_Output out);
   /**
@@ -299,12 +243,10 @@ public class InchiLibrary implements Library {
    * obtained from each GetINCHI /GetStdINCHI call<br>
    * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^<br>
    * Original signature : <code>void FreeINCHI(inchi_Output*)</code><br>
-   * <i>native declaration : line 850</i>
    */
   public static native void FreeINCHI(tagINCHI_Output out);
   /**
    * Original signature : <code>void FreeStdINCHI(inchi_Output*)</code><br>
-   * <i>native declaration : line 851</i>
    */
   public static native void FreeStdINCHI(tagINCHI_Output out);
   /**
@@ -315,17 +257,14 @@ public class InchiLibrary implements Library {
    * Option /Inchi2Struct is not needed for GetStructFromINCHI()/GetStructFromStdINCHI()<br>
    * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^<br>
    * Original signature : <code>int GetStructFromINCHI(inchi_InputINCHI*, inchi_OutputStruct*)</code><br>
-   * <i>native declaration : line 872</i>
    */
   public static native int GetStructFromINCHI(tagINCHI_InputINCHI inpInChI, tagINCHI_OutputStruct outStruct);
   /**
    * Original signature : <code>int GetStructFromStdINCHI(inchi_InputINCHI*, inchi_OutputStruct*)</code><br>
-   * <i>native declaration : line 873</i>
    */
   public static native int GetStructFromStdINCHI(tagINCHI_InputINCHI inpInChI, tagINCHI_OutputStruct outStruct);
   /**
    * Original signature : <code>int GetStructFromINCHIEx(inchi_InputINCHI*, inchi_OutputStructEx*)</code><br>
-   * <i>native declaration : line 874</i>
    */
   public static native int GetStructFromINCHIEx(tagINCHI_InputINCHI inpInChI, tagINCHI_OutputStructEx outStruct);
   /**
@@ -335,17 +274,14 @@ public class InchiLibrary implements Library {
    * GetStructFromStdINCHI / GetStructFromINCHI / GetStructFromINCHIEx<br>
    * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^<br>
    * Original signature : <code>void FreeStructFromINCHI(inchi_OutputStruct*)</code><br>
-   * <i>native declaration : line 884</i>
    */
   public static native void FreeStructFromINCHI(tagINCHI_OutputStruct out);
   /**
    * Original signature : <code>void FreeStructFromStdINCHI(inchi_OutputStruct*)</code><br>
-   * <i>native declaration : line 885</i>
    */
   public static native void FreeStructFromStdINCHI(tagINCHI_OutputStruct out);
   /**
    * Original signature : <code>void FreeStructFromINCHIEx(inchi_OutputStructEx*)</code><br>
-   * <i>native declaration : line 886</i>
    */
   public static native void FreeStructFromINCHIEx(tagINCHI_OutputStructEx out);
   /**
@@ -360,7 +296,6 @@ public class InchiLibrary implements Library {
    * Note: there is no explicit tool to conversion from/to standard InChI<br>
    * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^<br>
    * Original signature : <code>int GetINCHIfromINCHI(inchi_InputINCHI*, inchi_Output*)</code><br>
-   * <i>native declaration : line 902</i>
    */
   public static native int GetINCHIfromINCHI(tagINCHI_InputINCHI inpInChI, tagINCHI_Output out);
   /**
@@ -380,12 +315,10 @@ public class InchiLibrary implements Library {
    * Return value:  see RetValGetINCHI<br>
    * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^<br>
    * Original signature : <code>int Get_inchi_Input_FromAuxInfo(char*, int, int, InchiInpData*)</code><br>
-   * <i>native declaration : line 956</i>
    */
   public static native int Get_inchi_Input_FromAuxInfo(String szInchiAuxInfo, boolean bDoNotAddH, boolean bDiffUnkUndfStereo, tagInchiInpData pInchiInp);
   /**
    * Original signature : <code>int Get_std_inchi_Input_FromAuxInfo(char*, int, InchiInpData*)</code><br>
-   * <i>native declaration : line 961</i>
    */
   public static native int Get_std_inchi_Input_FromAuxInfo(String szInchiAuxInfo, boolean bDoNotAddH, tagInchiInpData pInchiInp);
   /**
@@ -395,12 +328,10 @@ public class InchiLibrary implements Library {
    * Free_inchi_Input( inchi_Input *pInp )<br>
    * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^<br>
    * Original signature : <code>void Free_inchi_Input(inchi_Input*)</code><br>
-   * <i>native declaration : line 974</i>
    */
   public static native void Free_inchi_Input(tagINCHI_Input pInp);
   /**
    * Original signature : <code>void Free_std_inchi_Input(inchi_Input*)</code><br>
-   * <i>native declaration : line 975</i>
    */
   public static native void Free_std_inchi_Input(tagINCHI_Input pInp);
   /**
@@ -418,7 +349,6 @@ public class InchiLibrary implements Library {
    * success/errors codes<br>
    * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^<br>
    * Original signature : <code>int CheckINCHI(const char*, const int)</code><br>
-   * <i>native declaration : line 994</i>
    */
   public static native int CheckINCHI(String szINCHI, boolean strict);
   /**
@@ -446,7 +376,6 @@ public class InchiLibrary implements Library {
    * success/errors codes<br>
    * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^<br>
    * Original signature : <code>int GetINCHIKeyFromINCHI(const char*, const int, const int, char*, char*, char*)</code><br>
-   * <i>native declaration : line 1113</i>
    */
   public static native int GetINCHIKeyFromINCHI(String szINCHISource, int xtra1, int xtra2, byte[] szINCHIKey, byte[] szXtra1, byte[] szXtra2);
   /**
@@ -457,7 +386,6 @@ public class InchiLibrary implements Library {
    * To calculate extra hash(es), use GetINCHIKeyFromINCHI with stdInChI as input.<br>
    * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^<br>
    * Original signature : <code>int GetStdINCHIKeyFromStdINCHI(const char*, char*)</code><br>
-   * <i>native declaration : line 1131</i>
    */
   public static native int GetStdINCHIKeyFromStdINCHI(String szINCHISource, ByteBuffer szINCHIKey);
   /**
@@ -471,7 +399,6 @@ public class InchiLibrary implements Library {
    * success/errors codes<br>
    * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^<br>
    * Original signature : <code>int CheckINCHIKey(const char*)</code><br>
-   * <i>native declaration : line 1146</i>
    */
   public static native int CheckINCHIKey(String szINCHIKey);
   /**
@@ -481,12 +408,10 @@ public class InchiLibrary implements Library {
    * Returns handle of generator object or NULL on failure<br>
    * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^<br>
    * Original signature : <code>INCHIGEN_HANDLE INCHIGEN_Create()</code><br>
-   * <i>native declaration : line 1312</i>
    */
   public static native Pointer INCHIGEN_Create();
   /**
    * Original signature : <code>INCHIGEN_HANDLE STDINCHIGEN_Create()</code><br>
-   * <i>native declaration : line 1314</i>
    */
   public static native Pointer STDINCHIGEN_Create();
   /**
@@ -495,12 +420,10 @@ public class InchiLibrary implements Library {
    * InChI Generator: setup<br>
    * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^<br>
    * Original signature : <code>int INCHIGEN_Setup(INCHIGEN_HANDLE, INCHIGEN_DATA*, inchi_Input*)</code><br>
-   * <i>native declaration : line 1324</i>
    */
   public static native int INCHIGEN_Setup(Pointer HGen, tagINCHIGEN_DATA pGenData, tagINCHI_Input pInp);
   /**
    * Original signature : <code>int STDINCHIGEN_Setup(INCHIGEN_HANDLE, INCHIGEN_DATA*, inchi_Input*)</code><br>
-   * <i>native declaration : line 1327</i>
    */
   public static native int STDINCHIGEN_Setup(Pointer HGen, tagINCHIGEN_DATA pGenData, tagINCHI_Input pInp);
   /**
@@ -509,12 +432,10 @@ public class InchiLibrary implements Library {
    * InChI Generator: structure normalization stage<br>
    * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^<br>
    * Original signature : <code>int INCHIGEN_DoNormalization(INCHIGEN_HANDLE, INCHIGEN_DATA*)</code><br>
-   * <i>native declaration : line 1339</i>
    */
   public static native int INCHIGEN_DoNormalization(Pointer HGen, tagINCHIGEN_DATA pGenData);
   /**
    * Original signature : <code>int STDINCHIGEN_DoNormalization(INCHIGEN_HANDLE, INCHIGEN_DATA*)</code><br>
-   * <i>native declaration : line 1341</i>
    */
   public static native int STDINCHIGEN_DoNormalization(Pointer HGen, tagINCHIGEN_DATA pGenData);
   /**
@@ -523,12 +444,10 @@ public class InchiLibrary implements Library {
    * InChI Generator: structure canonicalization stage<br>
    * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^<br>
    * Original signature : <code>int INCHIGEN_DoCanonicalization(INCHIGEN_HANDLE, INCHIGEN_DATA*)</code><br>
-   * <i>native declaration : line 1352</i>
    */
   public static native int INCHIGEN_DoCanonicalization(Pointer HGen, tagINCHIGEN_DATA pGenData);
   /**
    * Original signature : <code>int STDINCHIGEN_DoCanonicalization(INCHIGEN_HANDLE, INCHIGEN_DATA*)</code><br>
-   * <i>native declaration : line 1354</i>
    */
   public static native int STDINCHIGEN_DoCanonicalization(Pointer HGen, tagINCHIGEN_DATA pGenData);
   /**
@@ -537,12 +456,10 @@ public class InchiLibrary implements Library {
    * InChI Generator: InChI serialization stage<br>
    * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^<br>
    * Original signature : <code>int INCHIGEN_DoSerialization(INCHIGEN_HANDLE, INCHIGEN_DATA*, inchi_Output*)</code><br>
-   * <i>native declaration : line 1365</i>
    */
   public static native int INCHIGEN_DoSerialization(Pointer HGen, tagINCHIGEN_DATA pGenData, tagINCHI_Output pResults);
   /**
    * Original signature : <code>int STDINCHIGEN_DoSerialization(INCHIGEN_HANDLE, INCHIGEN_DATA*, inchi_Output*)</code><br>
-   * <i>native declaration : line 1368</i>
    */
   public static native int STDINCHIGEN_DoSerialization(Pointer HGen, tagINCHIGEN_DATA pGenData, tagINCHI_Output pResults);
   /**
@@ -551,12 +468,10 @@ public class InchiLibrary implements Library {
    * InChI Generator: reset stage (use before get next structure)<br>
    * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^<br>
    * Original signature : <code>void INCHIGEN_Reset(INCHIGEN_HANDLE, INCHIGEN_DATA*, inchi_Output*)</code><br>
-   * <i>native declaration : line 1381</i>
    */
   public static native void INCHIGEN_Reset(Pointer HGen, tagINCHIGEN_DATA pGenData, tagINCHI_Output pResults);
   /**
    * Original signature : <code>void STDINCHIGEN_Reset(INCHIGEN_HANDLE, INCHIGEN_DATA*, inchi_Output*)</code><br>
-   * <i>native declaration : line 1385</i>
    */
   public static native void STDINCHIGEN_Reset(Pointer HGen, tagINCHIGEN_DATA pGenData, tagINCHI_Output pResults);
   /**
@@ -565,12 +480,10 @@ public class InchiLibrary implements Library {
    * InChI Generator: destroy generator<br>
    * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^<br>
    * Original signature : <code>void INCHIGEN_Destroy(INCHIGEN_HANDLE)</code><br>
-   * <i>native declaration : line 1397</i>
    */
   public static native void INCHIGEN_Destroy(Pointer HGen);
   /**
    * Original signature : <code>void STDINCHIGEN_Destroy(INCHIGEN_HANDLE)</code><br>
-   * <i>native declaration : line 1398</i>
    */
   public static native void STDINCHIGEN_Destroy(Pointer HGen);
   /**
@@ -579,119 +492,76 @@ public class InchiLibrary implements Library {
    * Direct generation of InChI from Molfile supplied as text<br>
    * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^<br>
    * Original signature : <code>int MakeINCHIFromMolfileText(const char*, char*, inchi_Output*)</code><br>
-   * <i>native declaration : line 1410</i>
    */
   public static native int MakeINCHIFromMolfileText(String moltext, String options, tagINCHI_Output result);
   
   /** enum values */
   public static interface IXA_STATUS {
-      /** <i>native declaration : line 105</i> */
       public static final int IXA_STATUS_SUCCESS = 0;
-      /** <i>native declaration : line 106</i> */
       public static final int IXA_STATUS_WARNING = 1;
-      /** <i>native declaration : line 107</i> */
       public static final int IXA_STATUS_ERROR = 2;
   };
   /** enum values */
   public static interface IXA_ATOM_RADICAL {
-      /** <i>native declaration : line 118</i> */
       public static final int IXA_ATOM_RADICAL_NONE = 0;
-      /** <i>native declaration : line 119</i> */
       public static final int IXA_ATOM_RADICAL_SINGLET = 1;
-      /** <i>native declaration : line 120</i> */
       public static final int IXA_ATOM_RADICAL_DOUBLET = 2;
-      /** <i>native declaration : line 121</i> */
       public static final int IXA_ATOM_RADICAL_TRIPLET = 3;
   };
   /** enum values */
   public static interface IXA_BOND_TYPE {
-      /** <i>native declaration : line 126</i> */
       public static final int IXA_BOND_TYPE_SINGLE = 1;
-      /** <i>native declaration : line 127</i> */
       public static final int IXA_BOND_TYPE_DOUBLE = 2;
-      /** <i>native declaration : line 128</i> */
       public static final int IXA_BOND_TYPE_TRIPLE = 3;
-      /** <i>native declaration : line 129</i> */
       public static final int IXA_BOND_TYPE_AROMATIC = 4;
   };
   /** enum values */
   public static interface IXA_BOND_WEDGE {
-      /** <i>native declaration : line 134</i> */
       public static final int IXA_BOND_WEDGE_NONE = 0;
-      /** <i>native declaration : line 135</i> */
       public static final int IXA_BOND_WEDGE_UP = 1;
-      /** <i>native declaration : line 136</i> */
       public static final int IXA_BOND_WEDGE_DOWN = 2;
-      /** <i>native declaration : line 137</i> */
       public static final int IXA_BOND_WEDGE_EITHER = 3;
   };
   /** enum values */
   public static interface IXA_DBLBOND_CONFIG {
-      /** <i>native declaration : line 142</i> */
       public static final int IXA_DBLBOND_CONFIG_PERCEIVE = 0;
-      /** <i>native declaration : line 143</i> */
       public static final int IXA_DBLBOND_CONFIG_EITHER = 1;
   };
   /** enum values */
   public static interface IXA_STEREO_TOPOLOGY {
-      /** <i>native declaration : line 148</i> */
       public static final int IXA_STEREO_TOPOLOGY_INVALID = 0;
-      /** <i>native declaration : line 149</i> */
       public static final int IXA_STEREO_TOPOLOGY_TETRAHEDRON = 2;
-      /** <i>native declaration : line 150</i> */
       public static final int IXA_STEREO_TOPOLOGY_RECTANGLE = 3;
-      /** <i>native declaration : line 151</i> */
       public static final int IXA_STEREO_TOPOLOGY_ANTIRECTANGLE = 4;
   };
   /** enum values */
   public static interface IXA_STEREO_PARITY {
-      /** <i>native declaration : line 156</i> */
       public static final int IXA_STEREO_PARITY_NONE = 0;
-      /** <i>native declaration : line 157</i> */
       public static final int IXA_STEREO_PARITY_ODD = 1;
-      /** <i>native declaration : line 158</i> */
       public static final int IXA_STEREO_PARITY_EVEN = 2;
-      /** <i>native declaration : line 159</i> */
       public static final int IXA_STEREO_PARITY_UNKNOWN = 3;
   };
   /** enum values */
   public static interface IXA_INCHIBUILDER_OPTION {
-      /** <i>native declaration : line 164</i> */
       public static final int IXA_INCHIBUILDER_OPTION_NewPsOff = 0;
-      /** <i>native declaration : line 165</i> */
       public static final int IXA_INCHIBUILDER_OPTION_DoNotAddH = 1;
-      /** <i>native declaration : line 166</i> */
       public static final int IXA_INCHIBUILDER_OPTION_SUU = 2;
-      /** <i>native declaration : line 167</i> */
       public static final int IXA_INCHIBUILDER_OPTION_SLUUD = 3;
-      /** <i>native declaration : line 168</i> */
       public static final int IXA_INCHIBUILDER_OPTION_FixedH = 4;
-      /** <i>native declaration : line 169</i> */
       public static final int IXA_INCHIBUILDER_OPTION_RecMet = 5;
-      /** <i>native declaration : line 170</i> */
       public static final int IXA_INCHIBUILDER_OPTION_KET = 6;
-      /** <i>native declaration : line 171</i> */
       public static final int IXA_INCHIBUILDER_OPTION_15T = 7;
-      /** <i>native declaration : line 172</i> */
       public static final int IXA_INCHIBUILDER_OPTION_SaveOpt = 8;
-      /** <i>native declaration : line 173</i> */
       public static final int IXA_INCHIBUILDER_OPTION_AuxNone = 9;
-      /** <i>native declaration : line 174</i> */
       public static final int IXA_INCHIBUILDER_OPTION_WarnOnEmptyStructure = 10;
-      /** <i>native declaration : line 175</i> */
       public static final int IXA_INCHIBUILDER_OPTION_LargeMolecules = 11;
   };
   /** enum values */
   public static interface IXA_INCHIBUILDER_STEREOOPTION {
-      /** <i>native declaration : line 180</i> */
       public static final int IXA_INCHIBUILDER_STEREOOPTION_SAbs = 0;
-      /** <i>native declaration : line 181</i> */
       public static final int IXA_INCHIBUILDER_STEREOOPTION_SNon = 1;
-      /** <i>native declaration : line 182</i> */
       public static final int IXA_INCHIBUILDER_STEREOOPTION_SRel = 2;
-      /** <i>native declaration : line 183</i> */
       public static final int IXA_INCHIBUILDER_STEREOOPTION_SRac = 3;
-      /** <i>native declaration : line 184</i> */
       public static final int IXA_INCHIBUILDER_STEREOOPTION_SUCF = 4;
   };
   public static final int IXA_ATOM_NATURAL_MASS = (int)0;
@@ -700,409 +570,330 @@ public class InchiLibrary implements Library {
   /**
    * Functions handling IXA Status Objects<br>
    * Original signature : <code>INCHI_DECL IXA_STATUS_Create()</code><br>
-   * <i>native declaration : line 204</i>
    */
   static native Pointer IXA_STATUS_Create();
   /**
    * Original signature : <code>INCHI_DECL IXA_STATUS_Clear(Pointer)</code><br>
-   * <i>native declaration : line 206</i>
    */
   static native void IXA_STATUS_Clear(Pointer hStatus);
   /**
    * Original signature : <code>INCHI_DECL IXA_STATUS_Destroy(Pointer)</code><br>
-   * <i>native declaration : line 208</i>
    */
   static native void IXA_STATUS_Destroy(Pointer hStatus);
   /**
    * Original signature : <code>INCHI_DECL IXA_STATUS_HasError(Pointer)</code><br>
-   * <i>native declaration : line 210</i>
    */
   static native boolean IXA_STATUS_HasError(Pointer hStatus);
   /**
    * Original signature : <code>INCHI_DECL IXA_STATUS_HasWarning(Pointer)</code><br>
-   * <i>native declaration : line 212</i>
    */
   static native boolean IXA_STATUS_HasWarning(Pointer hStatus);
   /**
    * Original signature : <code>INCHI_DECL IXA_STATUS_GetCount(Pointer)</code><br>
-   * <i>native declaration : line 214</i>
    */
   static native int IXA_STATUS_GetCount(Pointer hStatus);
   /**
    * Original signature : <code>INCHI_DECL IXA_STATUS_GetSeverity(Pointer, int)</code><br>
-   * <i>native declaration : line 216</i>
    */
   static native int IXA_STATUS_GetSeverity(Pointer hStatus, int vIndex);
   /**
    * Original signature : <code>INCHI_DECL IXA_STATUS_GetMessage(Pointer, int)</code><br>
-   * <i>native declaration : line 219</i>
    */
   static native String IXA_STATUS_GetMessage(Pointer hStatus, int vIndex);
   /**
    * Functions to Create, Clear and Destroy Molecule Objects<br>
    * Original signature : <code>INCHI_DECL IXA_MOL_Create(Pointer)</code><br>
-   * <i>native declaration : line 226</i>
    */
   static native Pointer IXA_MOL_Create(Pointer hStatus);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_Clear(Pointer, Pointer)</code><br>
-   * <i>native declaration : line 228</i>
    */
   static native void IXA_MOL_Clear(Pointer hStatus, Pointer hMolecule);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_Destroy(Pointer, Pointer)</code><br>
-   * <i>native declaration : line 231</i>
    */
   static native void IXA_MOL_Destroy(Pointer hStatus, Pointer hMolecule);
   /**
    * Functions Operating on Complete Molecules<br>
    * Original signature : <code>INCHI_DECL IXA_MOL_ReadMolfile(Pointer, Pointer, const char*)</code><br>
-   * <i>native declaration : line 238</i>
    */
   static native void IXA_MOL_ReadMolfile(Pointer hStatus, Pointer hMolecule, byte[] pBytes);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_ReadInChI(Pointer, Pointer, const char*)</code><br>
-   * <i>native declaration : line 242</i>
    */
   static native void IXA_MOL_ReadInChI(Pointer hStatus, Pointer hMolecule, byte[] pInChI);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_SetChiral(Pointer, Pointer, IXA_BOOL)</code><br>
-   * <i>native declaration : line 246</i>
    */
   static native void IXA_MOL_SetChiral(Pointer hStatus, Pointer hMolecule, boolean vChiral);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_GetChiral(Pointer, Pointer)</code><br>
-   * <i>native declaration : line 250</i>
    */
   static native boolean IXA_MOL_GetChiral(Pointer hStatus, Pointer hMolecule);
   /**
    * Functions to Add and Define Atoms<br>
    * Original signature : <code>INCHI_DECL IXA_MOL_CreateAtom(Pointer, Pointer)</code><br>
-   * <i>native declaration : line 257</i>
    */
   static native Pointer IXA_MOL_CreateAtom(Pointer hStatus, Pointer hMolecule);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_SetAtomElement(Pointer, Pointer, Pointer, const char*)</code><br>
-   * <i>native declaration : line 260</i>
    */
   static native void IXA_MOL_SetAtomElement(Pointer hStatus, Pointer hMolecule, Pointer vAtom, byte[] pElement);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_SetAtomAtomicNumber(Pointer, Pointer, Pointer, int)</code><br>
-   * <i>native declaration : line 265</i>
    */
   static native void IXA_MOL_SetAtomAtomicNumber(Pointer hStatus, Pointer hMolecule, Pointer vAtom, int vAtomicNumber);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_SetAtomMass(Pointer, Pointer, Pointer, int)</code><br>
-   * <i>native declaration : line 270</i>
    */
   static native void IXA_MOL_SetAtomMass(Pointer hStatus, Pointer hMolecule, Pointer vAtom, int vMassNumber);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_SetAtomCharge(Pointer, Pointer, Pointer, int)</code><br>
-   * <i>native declaration : line 275</i>
    */
   static native void IXA_MOL_SetAtomCharge(Pointer hStatus, Pointer hMolecule, Pointer vAtom, int vCharge);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_SetAtomRadical(Pointer, Pointer, Pointer, IXA_ATOM_RADICAL)</code><br>
-   * <i>native declaration : line 280</i>
    */
   static native void IXA_MOL_SetAtomRadical(Pointer hStatus, Pointer hMolecule, Pointer vAtom, int vRadical);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_SetAtomHydrogens(Pointer, Pointer, Pointer, int, int)</code><br>
-   * <i>native declaration : line 285</i>
    */
   static native void IXA_MOL_SetAtomHydrogens(Pointer hStatus, Pointer hMolecule, Pointer vAtom, int vHydrogenMassNumber, int vHydrogenCount);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_SetAtomX(Pointer, Pointer, Pointer, double)</code><br>
-   * <i>native declaration : line 291</i>
    */
   static native void IXA_MOL_SetAtomX(Pointer hStatus, Pointer hMolecule, Pointer vAtom, double vX);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_SetAtomY(Pointer, Pointer, Pointer, double)</code><br>
-   * <i>native declaration : line 296</i>
    */
   static native void IXA_MOL_SetAtomY(Pointer hStatus, Pointer hMolecule, Pointer vAtom, double vY);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_SetAtomZ(Pointer, Pointer, Pointer, double)</code><br>
-   * <i>native declaration : line 301</i>
    */
   static native void IXA_MOL_SetAtomZ(Pointer hStatus, Pointer hMolecule, Pointer vAtom, double vZ);
   /**
    * Functions to Add and Define Bonds<br>
    * Original signature : <code>INCHI_DECL IXA_MOL_CreateBond(Pointer, Pointer, Pointer, Pointer)</code><br>
-   * <i>native declaration : line 310</i>
    */
   static native Pointer IXA_MOL_CreateBond(Pointer hStatus, Pointer hMolecule, Pointer vAtom1, Pointer vAtom2);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_SetBondType(Pointer, Pointer, Pointer, IXA_BOND_TYPE)</code><br>
-   * <i>native declaration : line 315</i>
    */
   static native void IXA_MOL_SetBondType(Pointer hStatus, Pointer hMolecule, Pointer vBond, int vType);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_SetBondWedge(Pointer, Pointer, Pointer, Pointer, IXA_BOND_WEDGE)</code><br>
-   * <i>native declaration : line 320</i>
    */
   static native void IXA_MOL_SetBondWedge(Pointer hStatus, Pointer hMolecule, Pointer vBond, Pointer vRefAtom, int vDirection);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_SetDblBondConfig(Pointer, Pointer, Pointer, IXA_DBLBOND_CONFIG)</code><br>
-   * <i>native declaration : line 326</i>
    */
   static native void IXA_MOL_SetDblBondConfig(Pointer hStatus, Pointer hMolecule, Pointer vBond, int vConfig);
   /**
    * Functions to Add and Define Stereodescriptors<br>
    * Original signature : <code>INCHI_DECL IXA_MOL_CreateStereoTetrahedron(Pointer, Pointer, Pointer, Pointer, Pointer, Pointer, Pointer)</code><br>
-   * <i>native declaration : line 334</i>
    */
   static native Pointer IXA_MOL_CreateStereoTetrahedron(Pointer hStatus, Pointer hMolecule, Pointer vCentralAtom, Pointer vVertex1, Pointer vVertex2, Pointer vVertex3, Pointer vVertex4);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_CreateStereoRectangle(Pointer, Pointer, Pointer, Pointer, Pointer, Pointer, Pointer)</code><br>
-   * <i>native declaration : line 342</i>
    */
   static native Pointer IXA_MOL_CreateStereoRectangle(Pointer hStatus, Pointer hMolecule, Pointer vCentralBond, Pointer vVertex1, Pointer vVertex2, Pointer vVertex3, Pointer vVertex4);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_CreateStereoAntiRectangle(Pointer, Pointer, Pointer, Pointer, Pointer, Pointer, Pointer)</code><br>
-   * <i>native declaration : line 350</i>
    */
   static native Pointer IXA_MOL_CreateStereoAntiRectangle(Pointer hStatus, Pointer hMolecule, Pointer vCentralAtom, Pointer vVertex1, Pointer vVertex2, Pointer vVertex3, Pointer vVertex4);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_SetStereoParity(Pointer, Pointer, Pointer, IXA_STEREO_PARITY)</code><br>
-   * <i>native declaration : line 358</i>
    */
   static native void IXA_MOL_SetStereoParity(Pointer hStatus, Pointer hMolecule, Pointer vStereo, int vParity);
   /**
    * Functions to Navigate Within a Molecule<br>
    * Original signature : <code>INCHI_DECL IXA_MOL_GetNumAtoms(Pointer, Pointer)</code><br>
-   * <i>native declaration : line 368</i>
    */
   static native int IXA_MOL_GetNumAtoms(Pointer hStatus, Pointer hMolecule);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_GetNumBonds(Pointer, Pointer)</code><br>
-   * <i>native declaration : line 371</i>
    */
   static native int IXA_MOL_GetNumBonds(Pointer hStatus, Pointer hMolecule);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_GetAtomId(Pointer, Pointer, int)</code><br>
-   * <i>native declaration : line 374</i>
    */
   static native Pointer IXA_MOL_GetAtomId(Pointer hStatus, Pointer hMolecule, int vAtomIndex);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_GetBondId(Pointer, Pointer, int)</code><br>
-   * <i>native declaration : line 378</i>
    */
   static native Pointer IXA_MOL_GetBondId(Pointer hStatus, Pointer hMolecule, int vBondIndex);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_GetAtomIndex(Pointer, Pointer, Pointer)</code><br>
-   * <i>native declaration : line 382</i>
    */
   static native int IXA_MOL_GetAtomIndex(Pointer hStatus, Pointer hMolecule, Pointer vAtom);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_GetBondIndex(Pointer, Pointer, Pointer)</code><br>
-   * <i>native declaration : line 386</i>
    */
   static native int IXA_MOL_GetBondIndex(Pointer hStatus, Pointer hMolecule, Pointer vBond);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_GetAtomNumBonds(Pointer, Pointer, Pointer)</code><br>
-   * <i>native declaration : line 390</i>
    */
   static native int IXA_MOL_GetAtomNumBonds(Pointer hStatus, Pointer hMolecule, Pointer vAtom);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_GetAtomBond(Pointer, Pointer, Pointer, int)</code><br>
-   * <i>native declaration : line 394</i>
    */
   static native Pointer IXA_MOL_GetAtomBond(Pointer hStatus, Pointer hMolecule, Pointer vAtom, int vBondIndex);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_GetCommonBond(Pointer, Pointer, Pointer, Pointer)</code><br>
-   * <i>native declaration : line 399</i>
    */
   static native Pointer IXA_MOL_GetCommonBond(Pointer hStatus, Pointer hMolecule, Pointer vAtom1, Pointer vAtom2);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_GetBondAtom1(Pointer, Pointer, Pointer)</code><br>
-   * <i>native declaration : line 404</i>
    */
   static native Pointer IXA_MOL_GetBondAtom1(Pointer hStatus, Pointer hMolecule, Pointer vBond);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_GetBondAtom2(Pointer, Pointer, Pointer)</code><br>
-   * <i>native declaration : line 408</i>
    */
   static native Pointer IXA_MOL_GetBondAtom2(Pointer hStatus, Pointer hMolecule, Pointer vBond);
   /**
    * Functions to Return Information About Atoms<br>
    * Original signature : <code>INCHI_DECL IXA_MOL_GetAtomElement(Pointer, Pointer, Pointer)</code><br>
-   * <i>native declaration : line 416</i>
    */
   static native String IXA_MOL_GetAtomElement(Pointer hStatus, Pointer hMolecule, Pointer vAtom);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_GetAtomAtomicNumber(Pointer, Pointer, Pointer)</code><br>
-   * <i>native declaration : line 420</i>
    */
   static native int IXA_MOL_GetAtomAtomicNumber(Pointer hStatus, Pointer hMolecule, Pointer vAtom);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_GetAtomMass(Pointer, Pointer, Pointer)</code><br>
-   * <i>native declaration : line 424</i>
    */
   static native int IXA_MOL_GetAtomMass(Pointer hStatus, Pointer hMolecule, Pointer vAtom);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_GetAtomCharge(Pointer, Pointer, Pointer)</code><br>
-   * <i>native declaration : line 428</i>
    */
   static native int IXA_MOL_GetAtomCharge(Pointer hStatus, Pointer hMolecule, Pointer vAtom);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_GetAtomRadical(Pointer, Pointer, Pointer)</code><br>
-   * <i>native declaration : line 432</i>
    */
   static native int IXA_MOL_GetAtomRadical(Pointer hStatus, Pointer hMolecule, Pointer vAtom);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_GetAtomHydrogens(Pointer, Pointer, Pointer, int)</code><br>
-   * <i>native declaration : line 436</i>
    */
   static native int IXA_MOL_GetAtomHydrogens(Pointer hStatus, Pointer hMolecule, Pointer vAtom, int vHydrogenMassNumber);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_GetAtomX(Pointer, Pointer, Pointer)</code><br>
-   * <i>native declaration : line 441</i>
    */
   static native double IXA_MOL_GetAtomX(Pointer hStatus, Pointer hMolecule, Pointer vAtom);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_GetAtomY(Pointer, Pointer, Pointer)</code><br>
-   * <i>native declaration : line 445</i>
    */
   static native double IXA_MOL_GetAtomY(Pointer hStatus, Pointer hMolecule, Pointer vAtom);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_GetAtomZ(Pointer, Pointer, Pointer)</code><br>
-   * <i>native declaration : line 449</i>
    */
   static native double IXA_MOL_GetAtomZ(Pointer hStatus, Pointer hMolecule, Pointer vAtom);
   /**
    * Functions to Return Information About Bonds<br>
    * Original signature : <code>INCHI_DECL IXA_MOL_GetBondType(Pointer, Pointer, Pointer)</code><br>
-   * <i>native declaration : line 457</i>
    */
   static native int IXA_MOL_GetBondType(Pointer hStatus, Pointer hMolecule, Pointer vBond);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_GetBondWedge(Pointer, Pointer, Pointer, Pointer)</code><br>
-   * <i>native declaration : line 461</i>
    */
   static native int IXA_MOL_GetBondWedge(Pointer hStatus, Pointer hMolecule, Pointer vBond, Pointer vRefAtom);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_GetDblBondConfig(Pointer, Pointer, Pointer)</code><br>
-   * <i>native declaration : line 466</i>
    */
   static native int IXA_MOL_GetDblBondConfig(Pointer hStatus, Pointer hMolecule, Pointer vBond);
   /**
    * Functions to return Information About Stereodescriptors<br>
    * Original signature : <code>INCHI_DECL IXA_MOL_GetNumStereos(Pointer, Pointer)</code><br>
-   * <i>native declaration : line 474</i>
    */
   static native int IXA_MOL_GetNumStereos(Pointer hStatus, Pointer hMolecule);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_GetStereoId(Pointer, Pointer, int)</code><br>
-   * <i>native declaration : line 477</i>
    */
   static native Pointer IXA_MOL_GetStereoId(Pointer hStatus, Pointer hMolecule, int vStereoIndex);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_GetStereoIndex(Pointer, Pointer, Pointer)</code><br>
-   * <i>native declaration : line 481</i>
    */
   static native int IXA_MOL_GetStereoIndex(Pointer hStatus, Pointer hMolecule, Pointer vStereo);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_GetStereoTopology(Pointer, Pointer, Pointer)</code><br>
-   * <i>native declaration : line 485</i>
    */
   static native int IXA_MOL_GetStereoTopology(Pointer hStatus, Pointer hMolecule, Pointer vStereo);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_GetStereoCentralAtom(Pointer, Pointer, Pointer)</code><br>
-   * <i>native declaration : line 489</i>
    */
   static native Pointer IXA_MOL_GetStereoCentralAtom(Pointer hStatus, Pointer hMolecule, Pointer vStereo);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_GetStereoCentralBond(Pointer, Pointer, Pointer)</code><br>
-   * <i>native declaration : line 493</i>
    */
   static native Pointer IXA_MOL_GetStereoCentralBond(Pointer hStatus, Pointer hMolecule, Pointer vStereo);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_GetStereoNumVertices(Pointer, Pointer, Pointer)</code><br>
-   * <i>native declaration : line 497</i>
    */
   static native int IXA_MOL_GetStereoNumVertices(Pointer hStatus, Pointer hMolecule, Pointer vStereo);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_GetStereoVertex(Pointer, Pointer, Pointer, int)</code><br>
-   * <i>native declaration : line 501</i>
    */
   static native Pointer IXA_MOL_GetStereoVertex(Pointer hStatus, Pointer hMolecule, Pointer vStereo, int vVertexIndex);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_GetStereoParity(Pointer, Pointer, Pointer)</code><br>
-   * <i>native declaration : line 506</i>
    */
   static native int IXA_MOL_GetStereoParity(Pointer hStatus, Pointer hMolecule, Pointer vStereo);
   /**
    * Functions for Generating InChIs<br>
    * Original signature : <code>INCHI_DECL IXA_INCHIBUILDER_Create(Pointer)</code><br>
-   * <i>native declaration : line 513</i>
    */
   static native Pointer IXA_INCHIBUILDER_Create(Pointer hStatus);
   /**
    * Original signature : <code>INCHI_DECL IXA_INCHIBUILDER_SetMolecule(Pointer, Pointer, Pointer)</code><br>
-   * <i>native declaration : line 515</i>
    */
   static native void IXA_INCHIBUILDER_SetMolecule(Pointer hStatus, Pointer hInChIBuilder, Pointer hMolecule);
   /**
    * Original signature : <code>INCHI_DECL IXA_INCHIBUILDER_GetInChI(Pointer, Pointer)</code><br>
-   * <i>native declaration : line 519</i>
    */
   static native String IXA_INCHIBUILDER_GetInChI(Pointer hStatus, Pointer hInChIBuilder);
   /**
    * Original signature : <code>INCHI_DECL IXA_INCHIBUILDER_GetInChIEx(Pointer, Pointer)</code><br>
-   * <i>native declaration : line 522</i>
    */
   static native String IXA_INCHIBUILDER_GetInChIEx(Pointer hStatus, Pointer hBuilder);
   /**
    * Original signature : <code>INCHI_DECL IXA_INCHIBUILDER_GetAuxInfo(Pointer, Pointer)</code><br>
-   * <i>native declaration : line 525</i>
    */
   static native String IXA_INCHIBUILDER_GetAuxInfo(Pointer hStatus, Pointer hInChIBuilder);
   /**
    * Original signature : <code>INCHI_DECL IXA_INCHIBUILDER_GetLog(Pointer, Pointer)</code><br>
-   * <i>native declaration : line 528</i>
    */
   static native String IXA_INCHIBUILDER_GetLog(Pointer hStatus, Pointer hInChIBuilder);
   /**
    * Original signature : <code>INCHI_DECL IXA_INCHIBUILDER_Destroy(Pointer, Pointer)</code><br>
-   * <i>native declaration : line 531</i>
    */
   static native void IXA_INCHIBUILDER_Destroy(Pointer hStatus, Pointer hInChIBuilder);
   /**
    * Functions for Specifying InChI Generation Options<br>
    * Original signature : <code>INCHI_DECL IXA_INCHIBUILDER_SetOption(Pointer, Pointer, IXA_INCHIBUILDER_OPTION, IXA_BOOL)</code><br>
-   * <i>native declaration : line 540</i>
    */
   static native void IXA_INCHIBUILDER_SetOption(Pointer hStatus, Pointer hInChIBuilder, int vOption, boolean vValue);
   /**
    * Original signature : <code>INCHI_DECL IXA_INCHIBUILDER_SetOption_Stereo(Pointer, Pointer, IXA_INCHIBUILDER_STEREOOPTION)</code><br>
-   * <i>native declaration : line 545</i>
    */
   static native void IXA_INCHIBUILDER_SetOption_Stereo(Pointer hStatus, Pointer hInChIBuilder, int vValue);
   /**
    * Original signature : <code>INCHI_DECL IXA_INCHIBUILDER_SetOption_Timeout(Pointer, Pointer, int)</code><br>
-   * <i>native declaration : line 549</i>
    */
   static native void IXA_INCHIBUILDER_SetOption_Timeout(Pointer hStatus, Pointer hInChIBuilder, int vValue);
   /**
    * Functions for Generating InChI Keys<br>
    * Original signature : <code>INCHI_DECL IXA_INCHIKEYBUILDER_Create(Pointer)</code><br>
-   * <i>native declaration : line 558</i>
    */
   static native Pointer IXA_INCHIKEYBUILDER_Create(Pointer hStatus);
   /**
    * Original signature : <code>INCHI_DECL IXA_INCHIKEYBUILDER_SetInChI(Pointer, Pointer, const char*)</code><br>
-   * <i>native declaration : line 560</i>
    */
   static native void IXA_INCHIKEYBUILDER_SetInChI(Pointer hStatus, Pointer hInChIKeyBuilder, byte[] pInChI);
   /**
    * Original signature : <code>INCHI_DECL IXA_INCHIKEYBUILDER_GetInChIKey(Pointer, Pointer)</code><br>
-   * <i>native declaration : line 564</i>
    */
   static native String IXA_INCHIKEYBUILDER_GetInChIKey(Pointer hStatus, Pointer hInChIKeyBuilder);
   /**
    * Original signature : <code>INCHI_DECL IXA_INCHIKEYBUILDER_Destroy(Pointer, Pointer)</code><br>
-   * <i>native declaration : line 567</i>
    */
   static native void IXA_INCHIKEYBUILDER_Destroy(Pointer hStatus, Pointer hInChIKeyBuilder);
 
