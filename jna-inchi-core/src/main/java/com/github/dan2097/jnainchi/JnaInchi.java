@@ -64,6 +64,7 @@ public class JnaInchi {
 
     IXA_STATUS_HANDLE logger = IxaFunctions.IXA_STATUS_Create();
     IXA_MOL_HANDLE nativeMol = IxaFunctions.IXA_MOL_Create(logger);
+    IxaFunctions.IXA_MOL_ReserveSpace(logger, nativeMol, atomCount, bonds.size(), stereos.size());
     try {
       Map<InchiAtom, IXA_ATOMID> atomToNativeAtom = addAtoms(nativeMol, logger, atoms);
       addBonds(nativeMol, logger, bonds, atomToNativeAtom);
