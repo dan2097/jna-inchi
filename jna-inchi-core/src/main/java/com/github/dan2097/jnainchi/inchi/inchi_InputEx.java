@@ -53,12 +53,12 @@ public class inchi_InputEx extends Structure implements ByReference {
    */
   public short num_stereo0D;
   /**
-   * v. 1.05 extended data, polymers<br>
+   * v. 1.05+ extended data, polymers<br>
    * C type : inchi_Input_Polymer*
    */
   public inchi_Input_Polymer polymer;
   /**
-   * v. 1.05 extended data, V3000 Molfile features<br>
+   * v. 1.05+ extended data, V3000 Molfile features<br>
    * C type : inchi_Input_V3000*
    */
   public inchi_Input_V3000 v3000;
@@ -77,9 +77,9 @@ public class inchi_InputEx extends Structure implements ByReference {
    * C type : AT_NUM<br>
    * @param num_stereo0D number of 0D stereo elements<br>
    * C type : AT_NUM<br>
-   * @param polymer v. 1.05 extended data, polymers<br>
+   * @param polymer v. 1.05+ extended data, polymers<br>
    * C type : inchi_Input_Polymer*<br>
-   * @param v3000 v. 1.05 extended data, V3000 Molfile features<br>
+   * @param v3000 v. 1.05+ extended data, V3000 Molfile features<br>
    * C type : inchi_Input_V3000*
    */
   public inchi_InputEx(tagInchiAtom atom, tagINCHIStereo0D stereo0D, String szOptions, short num_atoms, short num_stereo0D, inchi_Input_Polymer polymer, inchi_Input_V3000 v3000) {

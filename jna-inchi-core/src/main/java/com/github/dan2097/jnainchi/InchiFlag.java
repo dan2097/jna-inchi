@@ -76,7 +76,7 @@ public enum InchiFlag {
   @Override
   public String toString() {
     if (this == OneFiveT) {
-      //Java doesn't allow enusm to start with digits
+      //Java doesn't allow enums to start with digits
       return "15T";
     }
     else {

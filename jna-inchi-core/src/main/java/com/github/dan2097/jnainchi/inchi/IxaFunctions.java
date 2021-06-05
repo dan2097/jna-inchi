@@ -17,6 +17,10 @@
  */
 package com.github.dan2097.jnainchi.inchi;
 
+import java.nio.ByteBuffer;
+import java.nio.DoubleBuffer;
+import java.nio.IntBuffer;
+
 import com.sun.jna.Pointer;
 import com.sun.jna.PointerType;
 
@@ -63,6 +67,15 @@ public class IxaFunctions {
         super(address);
     }
     public IXA_MOL_HANDLE() {
+        super();
+    }
+  };
+  
+  public static class IXA_POLYMERUNITID extends PointerType {
+    public IXA_POLYMERUNITID(Pointer address) {
+        super(address);
+    }
+    public IXA_POLYMERUNITID() {
         super();
     }
   };
@@ -217,6 +230,17 @@ public class IxaFunctions {
     InchiLibrary.IXA_MOL_SetStereoParity(hStatus.getPointer(), hMolecule.getPointer(), vStereo.getPointer(), vParity);
   }
 
+  public static int IXA_MOL_ReserveSpace(IXA_STATUS_HANDLE hStatus, IXA_MOL_HANDLE hMolecule, int num_atoms, int num_bonds, int num_stereos) {
+    return InchiLibrary.IXA_MOL_ReserveSpace(hStatus.getPointer(), hMolecule.getPointer(), num_atoms, num_bonds, num_stereos);
+  }
+
+  public static IXA_POLYMERUNITID IXA_MOL_CreatePolymerUnit(IXA_STATUS_HANDLE hStatus, IXA_MOL_HANDLE hMolecule) {
+    return new IXA_POLYMERUNITID(InchiLibrary.IXA_MOL_CreatePolymerUnit(hStatus.getPointer(), hMolecule.getPointer()));
+  }
+  public static void IXA_MOL_SetPolymerUnit(IXA_STATUS_HANDLE hStatus, IXA_MOL_HANDLE hMolecule, IXA_POLYMERUNITID vPunit, int vid, int vtype, int vsubtype, int vconn, int vlabel, int vna, int vnb, DoubleBuffer vxbr1, DoubleBuffer vxbr2, ByteBuffer vsmt, IntBuffer valist, IntBuffer vblist) {
+    InchiLibrary.IXA_MOL_SetPolymerUnit(hStatus.getPointer(), hMolecule.getPointer(), vPunit.getPointer(), vid, vtype, vsubtype, vconn, vlabel, vna, vnb, vxbr1, vxbr2, vsmt, valist, vblist);
+  } 
+
   public static int IXA_MOL_GetNumAtoms(IXA_STATUS_HANDLE hStatus, IXA_MOL_HANDLE hMolecule) {
     return InchiLibrary.IXA_MOL_GetNumAtoms(hStatus.getPointer(), hMolecule.getPointer());
   }
@@ -244,6 +268,14 @@ public class IxaFunctions {
   public static int IXA_MOL_GetAtomNumBonds(IXA_STATUS_HANDLE hStatus, IXA_MOL_HANDLE hMolecule, IXA_ATOMID vAtom) {
     return InchiLibrary.IXA_MOL_GetAtomNumBonds(hStatus.getPointer(), hMolecule.getPointer(), vAtom.getPointer());
   }
+  
+  public static IXA_POLYMERUNITID IXA_MOL_GetPolymerUnitId(IXA_STATUS_HANDLE hStatus, IXA_MOL_HANDLE hMolecule, int vPolymerUnitIndex) {
+    return new IXA_POLYMERUNITID(InchiLibrary.IXA_MOL_GetPolymerUnitId(hStatus.getPointer(), hMolecule.getPointer(), vPolymerUnitIndex));
+  }
+
+  public static int IXA_MOL_GetPolymerUnitIndex(IXA_STATUS_HANDLE hStatus, IXA_MOL_HANDLE hMolecule, IXA_POLYMERUNITID vPolymerUnit) {
+    return InchiLibrary.IXA_MOL_GetPolymerUnitIndex(hStatus.getPointer(), hMolecule.getPointer(), vPolymerUnit.getPointer());
+  }
 
   public static IXA_BONDID IXA_MOL_GetAtomBond(IXA_STATUS_HANDLE hStatus, IXA_MOL_HANDLE hMolecule, IXA_ATOMID vAtom, int vBondIndex) {
     return new IXA_BONDID(InchiLibrary.IXA_MOL_GetAtomBond(hStatus.getPointer(), hMolecule.getPointer(), vAtom.getPointer(), vBondIndex));
@@ -259,6 +291,10 @@ public class IxaFunctions {
 
   public static IXA_ATOMID IXA_MOL_GetBondAtom2(IXA_STATUS_HANDLE hStatus, IXA_MOL_HANDLE hMolecule, IXA_BONDID vBond) {
     return new IXA_ATOMID(InchiLibrary.IXA_MOL_GetBondAtom2(hStatus.getPointer(), hMolecule.getPointer(), vBond.getPointer()));
+  }
+  
+  public static IXA_ATOMID IXA_MOL_GetBondOtherAtom(IXA_STATUS_HANDLE hStatus, IXA_MOL_HANDLE hMolecule, IXA_BONDID vBond, IXA_ATOMID vAtom) {
+    return new IXA_ATOMID(InchiLibrary.IXA_MOL_GetBondOtherAtom(hStatus.getPointer(), hMolecule.getPointer(), vBond.getPointer(), vAtom.getPointer()));
   }
 
   public static String IXA_MOL_GetAtomElement(IXA_STATUS_HANDLE hStatus, IXA_MOL_HANDLE hMolecule, IXA_ATOMID vAtom) {
@@ -383,6 +419,22 @@ public class IxaFunctions {
 
   public static void IXA_INCHIBUILDER_SetOption_Timeout(IXA_STATUS_HANDLE hStatus, IXA_INCHIBUILDER_HANDLE hInChIBuilder, int vValue) {
     InchiLibrary.IXA_INCHIBUILDER_SetOption_Timeout(hStatus.getPointer(), hInChIBuilder.getPointer(), vValue);
+  }
+  
+  public static void IXA_INCHIBUILDER_SetOption_Timeout_MilliSeconds(IXA_STATUS_HANDLE hStatus, IXA_INCHIBUILDER_HANDLE hInChIBuilder, long vValue) {
+    InchiLibrary.IXA_INCHIBUILDER_SetOption_Timeout_MilliSeconds(hStatus.getPointer(), hInChIBuilder.getPointer(), vValue);
+  }
+
+  public static boolean IXA_INCHIBUILDER_CheckOption(IXA_STATUS_HANDLE hStatus, IXA_INCHIBUILDER_HANDLE hInChIBuilder, int vOption) {
+    return InchiLibrary.IXA_INCHIBUILDER_CheckOption(hStatus.getPointer(), hInChIBuilder.getPointer(), vOption);
+  }
+
+  public static boolean IXA_INCHIBUILDER_CheckOption_Stereo(IXA_STATUS_HANDLE hStatus, IXA_INCHIBUILDER_HANDLE hInChIBuilder, int vValue) {
+    return InchiLibrary.IXA_INCHIBUILDER_CheckOption_Stereo(hStatus.getPointer(), hInChIBuilder.getPointer(), vValue);
+  }
+
+  public static long IXA_INCHIBUILDER_GetOption_Timeout_MilliSeconds(IXA_STATUS_HANDLE hStatus, IXA_INCHIBUILDER_HANDLE hInChIBuilder) {
+    return InchiLibrary.IXA_INCHIBUILDER_GetOption_Timeout_MilliSeconds(hStatus.getPointer(), hInChIBuilder.getPointer());
   }
 
   public static IXA_INCHIKEYBUILDER_HANDLE IXA_INCHIKEYBUILDER_Create(IXA_STATUS_HANDLE hStatus) {

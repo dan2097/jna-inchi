@@ -41,9 +41,9 @@ public class inchi_Input_V3000 extends Structure implements ByReference {
    * C type : int*
    */
   public IntByReference atom_index_fin;
-  /** Not used. */
+  /** Not used yet. */
   public int n_sgroups;
-  /** Not used. */
+  /** Not used yet. */
   public int n_3d_constraints;
   public int n_collections;
   public int n_non_haptic_bonds;

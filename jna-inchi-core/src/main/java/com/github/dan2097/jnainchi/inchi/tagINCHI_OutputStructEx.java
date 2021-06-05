@@ -64,12 +64,12 @@ public class tagINCHI_OutputStructEx extends Structure implements ByReference {
    */
   public NativeLong[] WarningFlags = new NativeLong[((2) * (2))];
   /**
-   * v. 1.05 extended data, polymers<br>
+   * v. 1.05+ extended data, polymers<br>
    * C type : inchi_Output_Polymer*
    */
   public inchi_Input_Polymer polymer;
   /**
-   * v. 1.05 extended data, V3000 Molfile features<br>
+   * v. 1.05+ extended data, V3000 Molfile features<br>
    * C type : inchi_Output_V3000*
    */
   public inchi_Input_V3000 v3000;
@@ -92,9 +92,9 @@ public class tagINCHI_OutputStructEx extends Structure implements ByReference {
    * C type : char*<br>
    * @param WarningFlags warnings, see INCHIDIFF in inchicmp.h<br>
    * C type : unsigned long[2][2]<br>
-   * @param polymer v. 1.05 extended data, polymers<br>
+   * @param polymer v. 1.05+ extended data, polymers<br>
    * C type : inchi_Output_Polymer*<br>
-   * @param v3000 v. 1.05 extended data, V3000 Molfile features<br>
+   * @param v3000 v. 1.05+ extended data, V3000 Molfile features<br>
    * C type : inchi_Output_V3000*
    */
   public tagINCHI_OutputStructEx(tagInchiAtom atom, tagINCHIStereo0D stereo0D, short num_atoms, short num_stereo0D, String szMessage, String szLog, NativeLong WarningFlags[], inchi_Input_Polymer polymer, inchi_Input_V3000 v3000) {
