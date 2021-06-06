@@ -70,7 +70,11 @@ public class SmilesToInchi {
     InchiInput input = new InchiInput();
     for (int i = 0, len = g.order(); i < len; i++) {
       Atom smiAtom = g.atom(i);
-      InchiAtom a = new InchiAtom(smiAtom.element().symbol());
+      String elementSymbol = smiAtom.element().symbol();
+      if ("*".equals(elementSymbol)) {
+        elementSymbol = "Zz";
+      }
+      InchiAtom a = new InchiAtom(elementSymbol);
       a.setCharge(smiAtom.charge());
       a.setImplicitHydrogen(g.implHCount(i));
       if (smiAtom.isotope() != -1) {
