@@ -26,17 +26,17 @@ public class InchiOptions {
   private static final boolean IS_WINDOWS = System.getProperty("os.name", "").toLowerCase(Locale.ROOT).startsWith("windows");
 
   private final List<InchiFlag> flags;
-  private final int timeout;
+  private final long timeoutMilliSecs;
 
   private InchiOptions(InchiOptionsBuilder builder) {
     this.flags = builder.flags;
-    this.timeout = builder.timeout;
+    this.timeoutMilliSecs = builder.timeoutMilliSecs;
   }
 
   public static class InchiOptionsBuilder {
 
     private final List<InchiFlag> flags = new ArrayList<>();
-    private int timeout = 0;
+    private long timeoutMilliSecs = 0;
 
     public InchiOptionsBuilder withFlag(InchiFlag... flags) {
       for (InchiFlag flag : flags) {
@@ -47,14 +47,27 @@ public class InchiOptions {
     
     /**
      * Timeout in seconds (0 = infinite timeout)
-     * @param timeout
+     * @param timeoutSecs
      * @return
      */
-    public InchiOptionsBuilder withTimeout(int timeout) {
-      if (timeout < 0) {
-        throw new IllegalArgumentException("Timeout should be a time in seconds or 0 for infinite: " + timeout);
+    public InchiOptionsBuilder withTimeout(int timeoutSecs) {
+      if (timeoutSecs < 0) {
+        throw new IllegalArgumentException("Timeout should be a time in seconds or 0 for infinite: " + timeoutSecs);
       }
-      this.timeout = timeout;
+      this.timeoutMilliSecs = timeoutSecs * 1000;
+      return this;
+    }
+    
+    /**
+     * Timeout in milliseconds (0 = infinite timeout)
+     * @param timeoutMilliSecs
+     * @return
+     */
+    public InchiOptionsBuilder withTimeoutMilliSeconds(long timeoutMilliSecs) {
+      if (timeoutMilliSecs < 0) {
+        throw new IllegalArgumentException("Timeout should be a time in milliseconds or 0 for infinite: " + timeoutMilliSecs);
+      }
+      this.timeoutMilliSecs = timeoutMilliSecs;
       return this;
     }
 
@@ -68,7 +81,11 @@ public class InchiOptions {
   } 
   
   public int getTimeout() {
-    return timeout;
+    return (int) (timeoutMilliSecs/1000);
+  }
+
+  public long getTimeoutMilliSeconds() {
+    return timeoutMilliSecs;
   }
 
   @Override
@@ -81,13 +98,13 @@ public class InchiOptions {
       sb.append(IS_WINDOWS ? "/" : "-");
       sb.append(inchiFlag.toString());
     }
-    if (timeout != 0) {
+    if (timeoutMilliSecs != 0) {
       if (sb.length() > 0) {
         sb.append(' ');
       }
       sb.append(IS_WINDOWS ? "/" : "-");
-      sb.append("W");
-      sb.append(String.valueOf(timeout));
+      sb.append("WM");
+      sb.append(String.valueOf(timeoutMilliSecs));
     }
     return sb.toString();
   }

@@ -234,8 +234,9 @@ public class JnaInchi {
     try {
       IxaFunctions.IXA_INCHIBUILDER_SetMolecule(logger, builder, nativeMol);
       
-      if (options.getTimeout() != 0){
-        IxaFunctions.IXA_INCHIBUILDER_SetOption_Timeout(logger, builder, options.getTimeout());
+      long timeoutMilliSecs = options.getTimeoutMilliSeconds();
+      if (timeoutMilliSecs != 0) {
+        IxaFunctions.IXA_INCHIBUILDER_SetOption_Timeout_MilliSeconds(logger, builder, timeoutMilliSecs);
       }
       for (InchiFlag flag : options.getFlags()) {
         switch (flag) {
