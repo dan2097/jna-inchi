@@ -293,6 +293,33 @@ public class JnaInchi {
         case WarnOnEmptyStructure:
           IxaFunctions.IXA_INCHIBUILDER_SetOption(logger, builder, IXA_INCHIBUILDER_OPTION.IXA_INCHIBUILDER_OPTION_WarnOnEmptyStructure, true);
           break;
+        case NoWarnings:
+          IxaFunctions.IXA_INCHIBUILDER_SetOption(logger, builder, IXA_INCHIBUILDER_OPTION.IXA_INCHIBUILDER_OPTION_NoWarnings, true);
+          break;
+        case LooseTSACheck:
+          IxaFunctions.IXA_INCHIBUILDER_SetOption(logger, builder, IXA_INCHIBUILDER_OPTION.IXA_INCHIBUILDER_OPTION_LooseTSACheck, true);
+          break;
+        case Polymers:
+          IxaFunctions.IXA_INCHIBUILDER_SetOption(logger, builder, IXA_INCHIBUILDER_OPTION.IXA_INCHIBUILDER_OPTION_Polymers, true);
+          break;
+        case Polymers105:
+          IxaFunctions.IXA_INCHIBUILDER_SetOption(logger, builder, IXA_INCHIBUILDER_OPTION.IXA_INCHIBUILDER_OPTION_Polymers105, true);
+          break;
+        case FoldCRU:
+          IxaFunctions.IXA_INCHIBUILDER_SetOption(logger, builder, IXA_INCHIBUILDER_OPTION.IXA_INCHIBUILDER_OPTION_FoldCRU, true);
+          break;
+        case NoFrameShift:
+          IxaFunctions.IXA_INCHIBUILDER_SetOption(logger, builder, IXA_INCHIBUILDER_OPTION.IXA_INCHIBUILDER_OPTION_NoFrameShift, true);
+          break;
+        case NoEdits:
+          IxaFunctions.IXA_INCHIBUILDER_SetOption(logger, builder, IXA_INCHIBUILDER_OPTION.IXA_INCHIBUILDER_OPTION_NoEdits, true);
+          break;
+        case NPZz:
+          IxaFunctions.IXA_INCHIBUILDER_SetOption(logger, builder, IXA_INCHIBUILDER_OPTION.IXA_INCHIBUILDER_OPTION_NPZZ, true);
+          break;
+        case SAtZz:
+          IxaFunctions.IXA_INCHIBUILDER_SetOption(logger, builder, IXA_INCHIBUILDER_OPTION.IXA_INCHIBUILDER_OPTION_SATZZ, true);
+          break;
         default:
           throw new IllegalStateException("Unexpected InChI option flag: " + flag);
         }

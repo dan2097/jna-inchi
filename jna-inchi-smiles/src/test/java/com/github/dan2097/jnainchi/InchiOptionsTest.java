@@ -29,4 +29,15 @@ public class InchiOptionsTest {
     InchiOptions options = new InchiOptions.InchiOptionsBuilder().withFlag(InchiFlag.RecMet).build();
     assertEquals("InChI=1/2ClH.2H3N.Pt/h2*1H;2*1H3;/q;;;;+2/p-2/rCl2H6N2Pt/c1-5(2,3)4/h3-4H3", SmilesToInchi.toInchi(metalComplex, options).getInchi());
   }
+  
+  @Test
+  public void testWildcardAtoms() throws IOException {
+    String ethylFragment = "CC*";
+    InchiOptions options1 = new InchiOptions.InchiOptionsBuilder().withFlag(InchiFlag.NPZz).build();
+    assertEquals("InChI=1B/C2H5Zz/c1-2-3/h2H2,1H3", SmilesToInchi.toInchi(ethylFragment, options1).getInchi());
+    
+    String stereoExample = "Cl[C@@H](Br)*";
+    InchiOptions options = new InchiOptions.InchiOptionsBuilder().withFlag(InchiFlag.NPZz, InchiFlag.SAtZz).build();
+    assertEquals("InChI=1B/CHBrClZz/c2-1(3)4/h1H/t1-/m1/s1", SmilesToInchi.toInchi(stereoExample, options).getInchi());
+  }
 }

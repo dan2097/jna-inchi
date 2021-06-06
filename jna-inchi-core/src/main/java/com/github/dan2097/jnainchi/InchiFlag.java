@@ -71,7 +71,34 @@ public enum InchiFlag {
   WarnOnEmptyStructure,
   
   /** Save custom InChI creation options (non-standard InChI)*/
-  SaveOpt;
+  SaveOpt,
+  
+  /** Suppress all warning messages*/
+  NoWarnings,
+  
+  /** Relax criteria of ambiguous drawing for in-ring tetrahedral stereo*/
+  LooseTSACheck,
+  
+  /** Allow processing of polymers (experimental)*/
+  Polymers,
+  
+  /** Allow processing of polymers (experimental, legacy mode of v. 1.05)*/
+  Polymers105,
+  
+  /** Remove repeats within constitutional repeating units (CRU/SRU)*/
+  FoldCRU,
+  
+  /** Disable polymer CRU frame shift*/
+  NoFrameShift,
+  
+  /** Disable polymer CRU frame shift and folding*/
+  NoEdits,
+  
+  /** Allow non-polymer-related Zz atoms (pseudo element placeholders)*/
+  NPZz,
+  
+  /** Allow stereo at atoms connected to Zz*/
+  SAtZz;
   
   @Override
   public String toString() {
