@@ -17,8 +17,6 @@
  */
 package com.github.dan2097.jnainchi.inchi;
 import java.nio.ByteBuffer;
-import java.nio.DoubleBuffer;
-import java.nio.IntBuffer;
 
 import com.sun.jna.Library;
 import com.sun.jna.Native;
@@ -743,14 +741,15 @@ public class InchiLibrary implements Library {
   /*
    * Functions to to Treat Extended molecular data
    */
+  //FIXME IXA_MOL_CreatePolymerUnit and IXA_MOL_SetPolymerUnit are missing from Linux build
   /**
   * Original signature : <code>INCHI_DECL IXA_MOL_CreatePolymerUnit(IXA_STATUS_HANDLE, IXA_MOL_HANDLE)</code><br>
   */
-  static native Pointer IXA_MOL_CreatePolymerUnit(Pointer hStatus, Pointer hMolecule);
+  //static native Pointer IXA_MOL_CreatePolymerUnit(Pointer hStatus, Pointer hMolecule);
   /**
   * Original signature : <code>INCHI_DECL IXA_MOL_SetPolymerUnit(IXA_STATUS_HANDLE, IXA_MOL_HANDLE, IXA_POLYMERUNITID, int, int, int, int, int, int, int, double[4], double[4], char[80], int*, int*)</code><br>
   */
-  static native void IXA_MOL_SetPolymerUnit(Pointer hStatus, Pointer hMolecule, Pointer vPunit, int vid, int vtype, int vsubtype, int vconn, int vlabel, int vna, int vnb, DoubleBuffer vxbr1, DoubleBuffer vxbr2, ByteBuffer vsmt, IntBuffer valist, IntBuffer vblist);
+  //static native void IXA_MOL_SetPolymerUnit(Pointer hStatus, Pointer hMolecule, Pointer vPunit, int vid, int vtype, int vsubtype, int vconn, int vlabel, int vna, int vnb, DoubleBuffer vxbr1, DoubleBuffer vxbr2, ByteBuffer vsmt, IntBuffer valist, IntBuffer vblist);
   
   /*
    * Functions to Navigate Within a Molecule<br>
@@ -783,14 +782,15 @@ public class InchiLibrary implements Library {
    * Original signature : <code>INCHI_DECL IXA_MOL_GetAtomNumBonds(Pointer, Pointer, Pointer)</code><br>
    */
   static native int IXA_MOL_GetAtomNumBonds(Pointer hStatus, Pointer hMolecule, Pointer vAtom);
+  //FIXME IXA_MOL_GetPolymerUnitId and IXA_MOL_GetPolymerUnitIndex are missing from Linux build
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_GetPolymerUnitId(IXA_STATUS_HANDLE, IXA_MOL_HANDLE, int)</code><br>
    */
-  static native Pointer IXA_MOL_GetPolymerUnitId(Pointer hStatus, Pointer hMolecule, int vPolymerUnitIndex);
+ // static native Pointer IXA_MOL_GetPolymerUnitId(Pointer hStatus, Pointer hMolecule, int vPolymerUnitIndex);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_GetPolymerUnitIndex(IXA_STATUS_HANDLE, IXA_MOL_HANDLE, IXA_POLYMERUNITID)</code><br>
    */
-  static native int IXA_MOL_GetPolymerUnitIndex(Pointer hStatus, Pointer hMolecule, Pointer vPolymerUnit);
+  //static native int IXA_MOL_GetPolymerUnitIndex(Pointer hStatus, Pointer hMolecule, Pointer vPolymerUnit);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_GetAtomBond(Pointer, Pointer, Pointer, int)</code><br>
    */
@@ -962,10 +962,11 @@ public class InchiLibrary implements Library {
    * Original signature : <code>INCHI_DECL IXA_INCHIBUILDER_CheckOption_Stereo(IXA_STATUS_HANDLE, IXA_INCHIBUILDER_HANDLE, IXA_INCHIBUILDER_STEREOOPTION)</code><br>
    */
   static native boolean IXA_INCHIBUILDER_CheckOption_Stereo(Pointer hStatus, Pointer hInChIBuilder, int vValue);
+  //FIXME IXA_INCHIBUILDER_GetOption_Timeout_MilliSeconds is missing from Linux build
   /**
    * Original signature : <code>long INCHI_DECL IXA_INCHIBUILDER_GetOption_Timeout_MilliSeconds(IXA_STATUS_HANDLE, IXA_INCHIBUILDER_HANDLE)</code><br>
    */
-  static native long IXA_INCHIBUILDER_GetOption_Timeout_MilliSeconds(Pointer hStatus, Pointer hInChIBuilder);
+  //static native long IXA_INCHIBUILDER_GetOption_Timeout_MilliSeconds(Pointer hStatus, Pointer hInChIBuilder);
   /*
    * Functions for Generating InChI Keys<br>
    */
