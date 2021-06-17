@@ -1,5 +1,5 @@
 # JNA-InChI
-Wrapper to access InChI from Java. This is a work in progress to wrap the latest version of [InChI](https://www.inchi-trust.org/) (1.05) using [JNA](https://github.com/java-native-access/jna). A simple native Java interface can then be used to call InChI.
+Wrapper to access InChI from Java. This is a work in progress to wrap the latest version of [InChI](https://www.inchi-trust.org/) (1.06) using [JNA](https://github.com/java-native-access/jna). A simple native Java interface can then be used to call InChI.
 
 ## Examples
 Mol file to StdInChI
