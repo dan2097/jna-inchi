@@ -7,11 +7,13 @@ on: [push, pull_request]
 
 jobs:
   build:
-    runs-on: ubuntu-20.04
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         # test against latest update of each major Java version:
         java: [ 8, 11, 16 ]
+        # test against major operating systems
+        os: [ubuntu-20.04, windows-latest, macos-latest]
     name: Java ${{ matrix.java }}
     steps:
       - uses: actions/checkout@v2
