@@ -37,3 +37,5 @@ InchiOutput output = JnaInchi.toInchi(inchiInput);
 
 ## License
 This project is licensed under the GNU Lesser General Public License v2.1 or later
+
+![Build Status](https://github.com/dan2097/jna-inchi/workflows/ci_build/badge.svg)
