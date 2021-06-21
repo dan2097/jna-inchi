@@ -43,7 +43,7 @@ public class tagINCHI_Input extends Structure implements ByReference {
    */
   public String szOptions;
   /**
-   * number of atoms in the structure < MAX_ATOMS<br>
+   * number of atoms in the structure &lt; MAX_ATOMS<br>
    * C type : AT_NUM
    */
   public short num_atoms;
@@ -63,7 +63,7 @@ public class tagINCHI_Input extends Structure implements ByReference {
    * C type : inchi_Stereo0D*<br>
    * @param szOptions InChI options: space-delimited; each is preceded by<br>
    * C type : char*<br>
-   * @param num_atoms number of atoms in the structure < MAX_ATOMS<br>
+   * @param num_atoms number of atoms in the structure &lt; MAX_ATOMS<br>
    * C type : AT_NUM<br>
    * @param num_stereo0D number of 0D stereo elements<br>
    * C type : AT_NUM

@@ -313,7 +313,7 @@ public class InchiLibrary implements Library {
    * bDoNotAddH:    if 0 then InChI will be allowed to add implicit H<br>
    * bDiffUnkUndfStereo<br>
    * if not 0, use different labels for unknown and undefined stereo<br>
-   * pInchiInp:     should have a valid pointer pInchiInp->pInp to an empty<br>
+   * pInchiInp:     should have a valid pointer pInchiInp-&gt;pInp to an empty<br>
    * (all members = 0) inchi_Input structure<br>
    * Output:<br>
    * pInchiInp:     The following members of pInp may be filled during the call:<br>
@@ -330,7 +330,7 @@ public class InchiLibrary implements Library {
   /**
    * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^<br>
    * Free_inchi_Input / Free_std_inchi_Input<br>
-   * To deallocate and write zeroes into the changed members of pInchiInp->pInp call<br>
+   * To deallocate and write zeroes into the changed members of pInchiInp-&gt;pInp call<br>
    * Free_inchi_Input( inchi_Input *pInp )<br>
    * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^<br>
    * Original signature : <code>void Free_inchi_Input(inchi_Input*)</code><br>

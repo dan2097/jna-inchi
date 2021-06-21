@@ -54,7 +54,7 @@ public class tagNormAtom extends Structure implements ByReference {
   public short orig_compt_at_numb;
   /**
    * 1=Up,4=Either,6=Down (this atom is at the pointing wedge)<br>
-   * negative => on the opposite side of the wedge; 3=Either double bond<br>
+   * negative =&gt; on the opposite side of the wedge; 3=Either double bond<br>
    * C type : S_CHAR[20]
    */
   public byte[] bond_stereo = new byte[20];
@@ -79,12 +79,12 @@ public class tagNormAtom extends Structure implements ByReference {
    */
   public byte num_H;
   /**
-   * number of adjacent implicit 1H(protium), 2H(D), 3H(T) < 16<br>
+   * number of adjacent implicit 1H(protium), 2H(D), 3H(T) &lt; 16<br>
    * C type : S_CHAR[3]
    */
   public byte[] num_iso_H = new byte[3];
   /**
-   * =0 => natural isotopic abundances<br>
+   * =0 =&gt; natural isotopic abundances<br>
    * C type : S_CHAR
    */
   public byte iso_atw_diff;
@@ -114,7 +114,7 @@ public class tagNormAtom extends Structure implements ByReference {
    */
   public short at_type;
   /**
-   * number of the structure component > 0<br>
+   * number of the structure component &gt; 0<br>
    * C type : AT_NUMBR
    */
   public short component;
@@ -135,7 +135,7 @@ public class tagNormAtom extends Structure implements ByReference {
   /** x coordinate */
   public double z;
   /**
-   * bit=1 => stereobond; bit=2 => stereocenter<br>
+   * bit=1 =&gt; stereobond; bit=2 =&gt; stereocenter<br>
    * C type : S_CHAR
    */
   public byte bUsed0DParity;
@@ -145,7 +145,7 @@ public class tagNormAtom extends Structure implements ByReference {
    */
   public byte p_parity;
   /**
-   * orig_at_number of each neighbor > 0; 0=> no neighbor<br>
+   * orig_at_number of each neighbor &gt; 0; 0=&gt; no neighbor<br>
    * C type : AT_NUMBR[4]
    */
   public short[] p_orig_at_num = new short[4];
@@ -166,7 +166,7 @@ public class tagNormAtom extends Structure implements ByReference {
    */
   public byte[] sb_parity = new byte[3];
   /**
-   * orig_at_number of sn_ord[] neighbor > 0<br>
+   * orig_at_number of sn_ord[] neighbor &gt; 0<br>
    * C type : AT_NUMBR[3]
    */
   public short[] sn_orig_at_num = new short[3];

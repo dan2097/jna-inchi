@@ -61,7 +61,7 @@ public class tagInchiAtom extends Structure implements ByReference {
    */
   public byte[] num_iso_H = new byte[3 + 1];
   /**
-   * 0 => non-isotopic; isotopic mass or<br>
+   * 0 =&gt; non-isotopic; isotopic mass or<br>
    * C type : AT_NUM
    */
   public short isotopic_mass;
@@ -71,7 +71,7 @@ public class tagInchiAtom extends Structure implements ByReference {
    */
   public byte radical;
   /**
-   * positive or negative; 0 => no charge<br>
+   * positive or negative; 0 =&gt; no charge<br>
    * C type : S_CHAR
    */
   public byte charge;

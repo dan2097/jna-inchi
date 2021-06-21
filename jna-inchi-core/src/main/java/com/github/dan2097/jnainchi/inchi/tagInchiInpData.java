@@ -32,7 +32,7 @@ public class tagInchiInpData extends Structure implements ByReference {
    * C type : inchi_Input*
    */
   public tagINCHI_Input pInp;
-  /** 1 => the structure was marked as chiral, 2=> not chiral, 0=> not marked */
+  /** 1 =&gt; the structure was marked as chiral, 2=&gt; not chiral, 0=&gt; not marked */
   public int bChiral;
   /** C type : char[256] */
   public byte[] szErrMsg = new byte[256];
@@ -43,7 +43,7 @@ public class tagInchiInpData extends Structure implements ByReference {
   /**
    * @param pInp a pointer to pInp that has all items 0 or NULL<br>
    * C type : inchi_Input*<br>
-   * @param bChiral 1 => the structure was marked as chiral, 2=> not chiral, 0=> not marked<br>
+   * @param bChiral 1 =&gt; the structure was marked as chiral, 2=&gt; not chiral, 0=&gt; not marked<br>
    * @param szErrMsg C type : char[256]
    */
   public tagInchiInpData(tagINCHI_Input pInp, int bChiral, byte szErrMsg[]) {

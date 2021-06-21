@@ -53,10 +53,11 @@ public class InchiInputFromInchiOutput {
    * see INCHIDIFF in inchicmp.h.
    *
    * [x][y]:
-   * x=0 => Reconnected if present in InChI otherwise Disconnected/Normal
-   * x=1 => Disconnected layer if Reconnected layer is present
-   * y=1 => Main layer or Mobile-H
-   * y=0 => Fixed-H layer
+   * x=0 =&gt; Reconnected if present in InChI otherwise Disconnected/Normal
+   * x=1 =&gt; Disconnected layer if Reconnected layer is present
+   * y=1 =&gt; Main layer or Mobile-H
+   * y=0 =&gt; Fixed-H layer
+   * @return
    */
   public long[][] getWarningFlags() {
     return warningFlags;
