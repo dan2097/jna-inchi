@@ -22,7 +22,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.github.dan2097.jnainchi.InchiOptions.InchiOptionsBuilder;
 import com.github.dan2097.jnainchi.inchi.InchiLibrary;
 import com.github.dan2097.jnainchi.inchi.tagINCHIStereo0D;
 import com.github.dan2097.jnainchi.inchi.tagINCHI_Input;
@@ -45,9 +44,9 @@ import com.github.dan2097.jnainchi.inchi.IxaFunctions.IXA_STEREOID;
 import com.sun.jna.NativeLong;
 
 public class JnaInchi {
-  
+    
   public static InchiOutput toInchi(InchiInput inchiInput) {
-    return toInchi(inchiInput, new InchiOptionsBuilder().build());
+    return toInchi(inchiInput, InchiOptions.DEFAULT_OPTIONS);
   }
   
   public static InchiOutput toInchi(InchiInput inchiInput, InchiOptions options) {
@@ -354,7 +353,7 @@ public class JnaInchi {
   }
 
   public static InchiOutput molToInchi(String molText) {
-    return molToInchi(molText, new InchiOptionsBuilder().build());
+    return molToInchi(molText, InchiOptions.DEFAULT_OPTIONS);
   }
   
   public static InchiOutput molToInchi(String molText, InchiOptions options) {
@@ -471,7 +470,7 @@ public class JnaInchi {
   }
   
   public static InchiInputFromInchiOutput getInchiInputFromInchi(String inchi) {
-    return getInchiInputFromInchi(inchi, new InchiOptionsBuilder().build());
+    return getInchiInputFromInchi(inchi, InchiOptions.DEFAULT_OPTIONS);
   }
   
   public static InchiInputFromInchiOutput getInchiInputFromInchi(String inchi, InchiOptions options) {

@@ -21,8 +21,6 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
-import com.github.dan2097.jnainchi.InchiOptions.InchiOptionsBuilder;
-
 import uk.ac.ebi.beam.Atom;
 import uk.ac.ebi.beam.Bond;
 import uk.ac.ebi.beam.Configuration;
@@ -41,7 +39,7 @@ public class SmilesToInchi {
    * @throws IOException
    */
   public static InchiOutput toInchi(String smiles) throws IOException {
-    return toInchi(smiles, new InchiOptionsBuilder().build());
+    return toInchi(smiles, InchiOptions.DEFAULT_OPTIONS);
   }
   
   /**

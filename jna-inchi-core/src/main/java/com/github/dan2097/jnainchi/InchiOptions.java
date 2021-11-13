@@ -23,6 +23,9 @@ import java.util.List;
 import java.util.Locale;
 
 public class InchiOptions {
+  
+  static final InchiOptions DEFAULT_OPTIONS = new InchiOptionsBuilder().build();
+  
   private static final boolean IS_WINDOWS = System.getProperty("os.name", "").toLowerCase(Locale.ROOT).startsWith("windows");
 
   private final List<InchiFlag> flags;
