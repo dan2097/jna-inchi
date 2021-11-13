@@ -52,4 +52,9 @@ public class InchiOutput {
   public InchiStatus getStatus() {
     return status;
   }
+  
+  @Override
+  public String toString() {
+    return inchi;
+  }
 }
