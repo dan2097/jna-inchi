@@ -57,7 +57,7 @@ public class InchiOptions {
       if (timeoutSecs < 0) {
         throw new IllegalArgumentException("Timeout should be a time in seconds or 0 for infinite: " + timeoutSecs);
       }
-      this.timeoutMilliSecs = timeoutSecs * 1000;
+      this.timeoutMilliSecs = (long) timeoutSecs * 1000;
       return this;
     }
     
