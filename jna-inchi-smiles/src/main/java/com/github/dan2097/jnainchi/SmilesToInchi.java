@@ -195,6 +195,8 @@ public class SmilesToInchi {
     if (bonds.size() !=2 || bonds.get(0).bond().order() != 2 || bonds.get(1).bond().order() != 2) {
       return;
     }
+    int doubleBondsInCumulene = 2;
+    
     int next1 = bonds.get(0).other(allenalCenter);
     int next2 = bonds.get(1).other(allenalCenter);
     int prev1 = allenalCenter;
@@ -207,29 +209,38 @@ public class SmilesToInchi {
       prev2 = next2;
       next1 = tmp1;
       next2 = tmp2;
+      doubleBondsInCumulene +=2;
+    }
+    if (doubleBondsInCumulene > 2) {
+      return;//Not currently supported by InChI
     }
     int[] atomIdxs = new int[4];
+    int pos = 0;
     for (Edge e : g.edges(next1)) {
-        if (e.bond().order() == 1) {
-          atomIdxs[0] = e.other(next1);
-        }
-    }
-    atomIdxs[1] = next1;
-    atomIdxs[2] = next2;
-    for (Edge e : g.edges(next2)) {
-      if (e.bond().order() == 1) {
-        atomIdxs[3] = e.other(next2);
+      if (e.bond().order() == 2) {
+        continue;
       }
+      atomIdxs[pos++] = e.other(next1);
+    }
+    if (pos != 2) {
+      return;//incorrect number of substituents for allenal stereo
+    }
+    for (Edge e : g.edges(next2)) {
+      if (e.bond().order() == 2) {
+        continue;
+      }
+      atomIdxs[pos++] = e.other(next2);
+    }
+    if (pos != 4) {
+      return;//incorrect number of substituents for allenal stereo
     }
     Arrays.sort(atomIdxs);
-    
     InchiAtom[] atoms = new InchiAtom[4];
     for (int i = 0; i < atomIdxs.length; i++) {
       atoms[i] = input.getAtom(atomIdxs[i]);
     }
     InchiStereoParity parity = (g.configurationOf(allenalCenter) == Configuration.AL1) ? InchiStereoParity.ODD : InchiStereoParity.EVEN; 
     input.addStereo(new InchiStereo(atoms, input.getAtom(allenalCenter), InchiStereoType.Allene, parity));
-    //FIXME ...is this actually correctly implemented right?
   }
 
   private static int nextDb(Graph g, int current, int prev) {
