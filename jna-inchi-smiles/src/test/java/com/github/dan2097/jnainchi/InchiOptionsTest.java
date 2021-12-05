@@ -17,14 +17,14 @@
  */
 package com.github.dan2097.jnainchi;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.io.IOException;
-
-import org.junit.Ignore;
-import org.junit.Test;
 
 public class InchiOptionsTest {
 
@@ -136,11 +136,9 @@ public class InchiOptionsTest {
     InchiOptions options = new InchiOptions.InchiOptionsBuilder().withFlag(InchiFlag.AuxNone).build();
     assertNull(SmilesToInchi.toInchi("C", options).getAuxInfo());
   }
-  
-  
-  //Might be an InChI library bug
+
   @Test
-  @Ignore
+  @Disabled("Might be an InChI library bug")
   public void testWarnOnEmptyStructure() throws IOException {
     InchiOutput result1 = SmilesToInchi.toInchi("");
     assertEquals(InchiStatus.ERROR, result1.getStatus());

@@ -17,7 +17,8 @@
  */
 package com.github.dan2097.jnainchi;
 
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.IOException;
 
@@ -26,16 +27,14 @@ import org.junit.jupiter.params.provider.CsvFileSource;
 
 public class SmilesToInchiTest {
 
-	@ParameterizedTest
-	@CsvFileSource(resources = "smilesintegrationtests.smi", delimiter='\t')
-    public void testConversion(String smiles, String expectedInchi) throws IOException {
-      String inchi = SmilesToInchi.toInchi(smiles).getInchi();
-      if (inchi!=null) {
-          if (!inchi.equals(expectedInchi)){
-              fail(smiles +" was misconverted as: " + inchi);
-          }
-      } else {
-          fail(smiles +" was not converted");
-      }
+  @ParameterizedTest
+  @CsvFileSource(resources = "smilesintegrationtests.smi", delimiter = '\t')
+  public void testConversion(String smiles, String expectedInchi) throws IOException {
+    String inchi = SmilesToInchi.toInchi(smiles).getInchi();
+    if (inchi != null) {
+      assertEquals(expectedInchi, inchi, smiles + " was misconverted as: " + inchi);
+    } else {
+      fail(smiles + " was not converted");
     }
+  }
 }
