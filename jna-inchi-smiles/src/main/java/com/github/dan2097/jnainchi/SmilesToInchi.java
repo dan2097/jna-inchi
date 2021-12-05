@@ -109,7 +109,7 @@ public class SmilesToInchi {
         }
 
         InchiStereoParity parity = stereoConfig == Configuration.TH1 ? InchiStereoParity.ODD : InchiStereoParity.EVEN;
-        input.addStereo(new InchiStereo(atoms, a, InchiStereoType.Tetrahedral, parity));
+        input.addStereo(InchiStereo.createTetrahedralStereo(a, atoms[0], atoms[1], atoms[2], atoms[3], parity));
       }
         break;
       case ExtendedTetrahedral:
@@ -168,14 +168,12 @@ public class SmilesToInchi {
           if (dirEdge2 != null) {
             InchiStereoParity parity = (dirEdge1.bond(start) == dirEdge2.bond(end)) ? InchiStereoParity.ODD
                 : InchiStereoParity.EVEN;
-
-            InchiAtom[] atoms = new InchiAtom[4];
-            atoms[0] = input.getAtom(dirEdge1.other(start));
-            atoms[1] = input.getAtom(start);
-            atoms[2] = input.getAtom(end);
-            atoms[3] = input.getAtom(dirEdge2.other(end));
-
-            input.addStereo(new InchiStereo(atoms, null, InchiStereoType.DoubleBond, parity));
+            
+            InchiAtom atom1 = input.getAtom(dirEdge1.other(start));
+            InchiAtom atom2 = input.getAtom(start);
+            InchiAtom atom3 = input.getAtom(end);
+            InchiAtom atom4 = input.getAtom(dirEdge2.other(end));
+            input.addStereo(InchiStereo.createDoubleBondStereo(atom1, atom2, atom3, atom4, parity));     
           }
         }
       }
@@ -262,8 +260,8 @@ public class SmilesToInchi {
       int idx = atomIdxs[i];
       atoms[i] = (idx == next1 || idx == next2) ? InchiStereo.STEREO_IMPLICIT_H :  input.getAtom(idx);
     }
-    InchiStereoParity parity = (g.configurationOf(allenalCenter) == Configuration.AL1) ? InchiStereoParity.ODD : InchiStereoParity.EVEN; 
-    input.addStereo(new InchiStereo(atoms, input.getAtom(allenalCenter), InchiStereoType.Allene, parity));
+    InchiStereoParity parity = (g.configurationOf(allenalCenter) == Configuration.AL1) ? InchiStereoParity.ODD : InchiStereoParity.EVEN;
+    input.addStereo(InchiStereo.createAllenalStereo(input.getAtom(allenalCenter), atoms[0], atoms[1], atoms[2], atoms[3], parity));
   }
 
   private static int nextDb(Graph g, int current, int prev) {

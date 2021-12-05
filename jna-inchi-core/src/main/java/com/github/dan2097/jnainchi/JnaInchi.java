@@ -202,7 +202,8 @@ public class JnaInchi {
       case DoubleBond:
       {
         IXA_BONDID centralBond = IxaFunctions.IXA_MOL_GetCommonBond(logger, nativeMol, vertex2, vertex3);
-        IXA_STEREOID center = IxaFunctions.IXA_MOL_CreateStereoRectangle(logger, nativeMol, centralBond, vertex1, vertex2, vertex3, vertex4);
+        //We intentionally pass dummy values for vertex2/vertex3, as the IXA API doesn't actually need these as long as vertex1 and vertex4 aren't implicit hydrogen
+        IXA_STEREOID center = IxaFunctions.IXA_MOL_CreateStereoRectangle(logger, nativeMol, centralBond, vertex1, IxaFunctions.IXA_ATOMID_IMPLICIT_H, IxaFunctions.IXA_ATOMID_IMPLICIT_H, vertex4);
         byte parity = stereo.getParity().getCode();
         IxaFunctions.IXA_MOL_SetStereoParity(logger, nativeMol, center, parity);
         break;

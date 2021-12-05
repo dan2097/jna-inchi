@@ -28,14 +28,9 @@ public class InchiStereo {
   private final InchiAtom centralAtom;
   private final InchiStereoType type;
   private final InchiStereoParity parity;
+  
 
-  /**
-   * @param atoms Must be exactly 4 non-null atoms, {@link InchiStereo#STEREO_IMPLICIT_H} for implicit hydrogen, the atom with a lone pair for lone pairs
-   * @param centralAtom Null for double bond
-   * @param type
-   * @param parity
-   */
-  public InchiStereo(InchiAtom[] atoms, InchiAtom centralAtom, InchiStereoType type, InchiStereoParity parity) {
+  InchiStereo(InchiAtom[] atoms, InchiAtom centralAtom, InchiStereoType type, InchiStereoParity parity) {
     if (atoms == null) {
       throw new IllegalArgumentException("atoms was null");
     }
@@ -53,10 +48,109 @@ public class InchiStereo {
         throw new IllegalArgumentException("Atom at index " + i + " was null, use STEREO_IMPLICIT_H for implicit hydrogen, and the atom with a lone pair for lone pairs");
       }
     }
+    if (type != InchiStereoType.DoubleBond && centralAtom == null) {
+      throw new IllegalArgumentException("centralAtom was null");
+    }
     this.atoms = atoms;
     this.centralAtom = centralAtom;
     this.type = type;
     this.parity = parity;
+  }
+  
+  /**
+   * Defines the stereo configuration around the give centralAtom. The four vertexes of the tetrahedral centre should be given along with the parity.
+   * If one of the vertexes is an implicit hydrogen use {@link #STEREO_IMPLICIT_H}. If one is a lone pair, use the centralAtom for this vertex
+   * @param centralAtom
+   * @param atom1
+   * @param atom2
+   * @param atom3
+   * @param atom4
+   * @param parity
+   * @return
+   */
+  public static InchiStereo createTetrahedralStereo(InchiAtom centralAtom, InchiAtom atom1, InchiAtom atom2, InchiAtom atom3, InchiAtom atom4, InchiStereoParity parity) {
+    return new InchiStereo(new InchiAtom[] {atom1, atom2, atom3, atom4}, centralAtom, InchiStereoType.Tetrahedral, parity);
+  }
+
+  /**
+   * <pre>
+   * Given
+   * A       E
+   *  \     /
+   *   C = D
+   *  /     \
+   * B       F
+   * 
+   * atom1 is A (or B)
+   * atom2 is C
+   * atom3 is D
+   * atom4 is E (or F)
+   * and the parity is whether atom1 and atom2 are on the same side.
+   * Atom1/2 should be chosen such that neither are implicit hydrogen
+   * 
+   * For a cumulene (NOTE stereochemistry on cumulenes with more than 3 double bonds are unsupported by InChI)
+   * Given
+   * A               G
+   *  \             /
+   *   C = D = E = F
+   *  /             \
+   * B               H
+   * 
+   * atom1 is A (or B)
+   * atom2 is D
+   * atom3 is E
+   * atom4 is G (or H)
+   * 
+   * Atom1/2 should be chosen such that neither are implicit hydrogen
+   * 
+   * For the 2 adjacent double-bond case use {@link #createAllenalStereo()}
+   * </pre>
+   * @param centralBond
+   * @param atom1
+   * @param atom2
+   * @param atom3
+   * @param atom4
+   * @param parity
+   * @return
+   */
+  public static InchiStereo createDoubleBondStereo(InchiAtom atom1, InchiAtom atom2, InchiAtom atom3, InchiAtom atom4, InchiStereoParity parity) {
+    if (STEREO_IMPLICIT_H == atom1 || STEREO_IMPLICIT_H == atom2|| STEREO_IMPLICIT_H == atom3 || STEREO_IMPLICIT_H == atom4) {
+      throw new IllegalArgumentException("Double bond stereo should use non-implicit hydrogn atoms");
+    }
+    return new InchiStereo(new InchiAtom[] {atom1, atom2, atom3, atom4}, null, InchiStereoType.DoubleBond, parity);
+  }
+  
+  /**
+   * <pre>
+   * Defines the stereo configuration of an allenal stereocentre, these behave like an extended tetrahedron.
+   * The four vertexes of the tetrahedron should be given along with the parity.
+   * If one of the vertexes is an implicit hydrogen use {@link #STEREO_IMPLICIT_H}.
+   * 
+   * Given
+   * A           F
+   *  \         /
+   *   C = D = E
+   *  /         \
+   * B           G
+   * 
+   * centralAtom is D
+   * atom1 is A 
+   * atom2 is B
+   * atom3 is F
+   * atom4 is G
+   * 
+   * (NOTE allenal centers with more than 2 double bonds are unsupported by InChI)
+   * </pre>
+   * @param centralAtom
+   * @param atom1
+   * @param atom2
+   * @param atom3
+   * @param atom4
+   * @param parity
+   * @return
+   */
+  public static InchiStereo createAllenalStereo(InchiAtom centralAtom, InchiAtom atom1, InchiAtom atom2, InchiAtom atom3, InchiAtom atom4, InchiStereoParity parity) {
+    return new InchiStereo(new InchiAtom[] {atom1, atom2, atom3, atom4}, centralAtom, InchiStereoType.Allene, parity);
   }
   
   public InchiAtom[] getAtoms() {
