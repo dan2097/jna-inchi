@@ -86,23 +86,29 @@ public class SmilesToInchi {
       switch (stereoConfig.type()) {
       case Tetrahedral: {
         int[] neighbours = g.neighbors(i);
-        InchiStereoParity parity;
+        int implicitHydrogen = g.implHCount(i);
         InchiAtom[] atoms = new InchiAtom[4];
-        if (neighbours.length == 3) {
-          // implicit hydrogen/lone pair
+        if (neighbours.length == 3 && implicitHydrogen <= 1) {
+          // implicit hydrogen (implicitHydrogen = 1) or lone pair (implicitHydrogen = 0)
           neighbours = Arrays.copyOf(neighbours, 4);
           neighbours[3] = i;
-          Arrays.sort(neighbours);
+          Arrays.sort(neighbours);//In SMILES the implicit hydrogen/lone pair occurs at the same position as the central atom
+          for (int j = 0; j < 4; j++) {
+            int idx = neighbours[j];
+            atoms[j] = idx == i && implicitHydrogen == 1 ? InchiStereo.STEREO_IMPLICIT_H : input.getAtom(idx);
+          }
         }
-        if (neighbours.length == 4) {
+        else if (neighbours.length == 4 && implicitHydrogen == 0) {
           for (int j = 0; j < 4; j++) {
             atoms[j] = input.getAtom(neighbours[j]);
           }
-        } else {
+        }
+        else {
           // is this actually tetrahedral???
           continue;
         }
-        parity = stereoConfig == Configuration.TH1 ? InchiStereoParity.ODD : InchiStereoParity.EVEN;
+
+        InchiStereoParity parity = stereoConfig == Configuration.TH1 ? InchiStereoParity.ODD : InchiStereoParity.EVEN;
         input.addStereo(new InchiStereo(atoms, a, InchiStereoType.Tetrahedral, parity));
       }
         break;
@@ -222,6 +228,14 @@ public class SmilesToInchi {
       }
       atomIdxs[pos++] = e.other(next1);
     }
+    int implHyd1 = g.implHCount(next1);
+    if (implHyd1 > 0) {
+      if (implHyd1 > 1) {
+        return;
+      }
+      atomIdxs[pos++] = next1;
+    }
+    
     if (pos != 2) {
       return;//incorrect number of substituents for allenal stereo
     }
@@ -231,13 +245,22 @@ public class SmilesToInchi {
       }
       atomIdxs[pos++] = e.other(next2);
     }
+    int implHyd2 = g.implHCount(next2);
+    if (implHyd2 > 0) {
+      if (implHyd2 > 1) {
+        return;
+      }
+      atomIdxs[pos++] = next2;
+    }
+    
     if (pos != 4) {
       return;//incorrect number of substituents for allenal stereo
     }
     Arrays.sort(atomIdxs);
     InchiAtom[] atoms = new InchiAtom[4];
     for (int i = 0; i < atomIdxs.length; i++) {
-      atoms[i] = input.getAtom(atomIdxs[i]);
+      int idx = atomIdxs[i];
+      atoms[i] = (idx == next1 || idx == next2) ? InchiStereo.STEREO_IMPLICIT_H :  input.getAtom(idx);
     }
     InchiStereoParity parity = (g.configurationOf(allenalCenter) == Configuration.AL1) ? InchiStereoParity.ODD : InchiStereoParity.EVEN; 
     input.addStereo(new InchiStereo(atoms, input.getAtom(allenalCenter), InchiStereoType.Allene, parity));

@@ -21,6 +21,8 @@ import com.sun.jna.Pointer;
 import com.sun.jna.PointerType;
 
 public class IxaFunctions {
+  
+  public static final IXA_ATOMID IXA_ATOMID_IMPLICIT_H = new IXA_ATOMID(Pointer.createConstant(-1));
 
   public static class IXA_ATOMID extends PointerType {
     public IXA_ATOMID(Pointer address) {

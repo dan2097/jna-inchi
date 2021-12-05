@@ -166,21 +166,23 @@ public class JnaInchi {
   }
   private static void addStereos(IXA_MOL_HANDLE nativeMol, IXA_STATUS_HANDLE logger, List<InchiStereo> stereos, Map<InchiAtom, IXA_ATOMID> atomToNativeAtom) {
     for (InchiStereo stereo : stereos) {
-      switch (stereo.getType()) {
+      InchiStereoType type = stereo.getType();
+      if (type == InchiStereoType.None) {
+        continue;
+      }
+      InchiAtom[] atomsInCenter = stereo.getAtoms();      
+      IXA_ATOMID vertex1 = getStereoVertex(atomToNativeAtom, atomsInCenter[0]);
+      IXA_ATOMID vertex2 = getStereoVertex(atomToNativeAtom, atomsInCenter[1]);
+      IXA_ATOMID vertex3 = getStereoVertex(atomToNativeAtom, atomsInCenter[2]);
+      IXA_ATOMID vertex4 = getStereoVertex(atomToNativeAtom, atomsInCenter[3]);
+      
+      switch (type) {
       case Tetrahedral:
       {
         IXA_ATOMID centralAtom = atomToNativeAtom.get(stereo.getCentralAtom());
-        InchiAtom[] atomsInCenter = stereo.getAtoms();
-        InchiAtom atomsInCenter1 = atomsInCenter[0];
-        InchiAtom atomsInCenter2 = atomsInCenter[1];
-        InchiAtom atomsInCenter3 = atomsInCenter[2];
-        InchiAtom atomsInCenter4 = atomsInCenter[3];
-        
-        IXA_ATOMID vertex1 = atomsInCenter1 != null ? atomToNativeAtom.get(atomsInCenter1) : null;
-        IXA_ATOMID vertex2 = atomsInCenter2 != null ? atomToNativeAtom.get(atomsInCenter2) : null;
-        IXA_ATOMID vertex3 = atomsInCenter3 != null ? atomToNativeAtom.get(atomsInCenter3) : null;
-        IXA_ATOMID vertex4 = atomsInCenter4 != null ? atomToNativeAtom.get(atomsInCenter4) : null;
-  
+        if (centralAtom == null) {
+          throw new IllegalStateException("Stereo configuration central atom referenced an atom that does not exist");
+        }
         IXA_STEREOID center = IxaFunctions.IXA_MOL_CreateStereoTetrahedron(logger, nativeMol, centralAtom, vertex1, vertex2, vertex3, vertex4);
         byte parity = stereo.getParity().getCode();
         IxaFunctions.IXA_MOL_SetStereoParity(logger, nativeMol, center, parity);
@@ -189,16 +191,9 @@ public class JnaInchi {
       case Allene:
       {
         IXA_ATOMID centralAtom = atomToNativeAtom.get(stereo.getCentralAtom());
-        InchiAtom[] atomsInCenter = stereo.getAtoms();
-        InchiAtom atomsInCenter1 = atomsInCenter[0];
-        InchiAtom atomsInCenter2 = atomsInCenter[1];
-        InchiAtom atomsInCenter3 = atomsInCenter[2];
-        InchiAtom atomsInCenter4 = atomsInCenter[3];
-        
-        IXA_ATOMID vertex1 = atomToNativeAtom.get(atomsInCenter1);
-        IXA_ATOMID vertex2 = atomToNativeAtom.get(atomsInCenter2);
-        IXA_ATOMID vertex3 = atomToNativeAtom.get(atomsInCenter3);
-        IXA_ATOMID vertex4 = atomToNativeAtom.get(atomsInCenter4);
+        if (centralAtom == null) {
+          throw new IllegalStateException("Stereo configuration central atom referenced an atom that does not exist");
+        }
         IXA_STEREOID center = IxaFunctions.IXA_MOL_CreateStereoAntiRectangle(logger, nativeMol, centralAtom, vertex1, vertex2, vertex3, vertex4);
         byte parity = stereo.getParity().getCode();
         IxaFunctions.IXA_MOL_SetStereoParity(logger, nativeMol, center, parity);
@@ -206,16 +201,6 @@ public class JnaInchi {
       }
       case DoubleBond:
       {
-        InchiAtom[] atomsInCenter = stereo.getAtoms();
-        InchiAtom atomsInCenter1 = atomsInCenter[0];
-        InchiAtom atomsInCenter2 = atomsInCenter[1];
-        InchiAtom atomsInCenter3 = atomsInCenter[2];
-        InchiAtom atomsInCenter4 = atomsInCenter[3];
-  
-        IXA_ATOMID vertex1 = atomToNativeAtom.get(atomsInCenter1);
-        IXA_ATOMID vertex2 = atomToNativeAtom.get(atomsInCenter2);
-        IXA_ATOMID vertex3 = atomToNativeAtom.get(atomsInCenter3);
-        IXA_ATOMID vertex4 = atomToNativeAtom.get(atomsInCenter4);
         IXA_BONDID centralBond = IxaFunctions.IXA_MOL_GetCommonBond(logger, nativeMol, vertex2, vertex3);
         IXA_STEREOID center = IxaFunctions.IXA_MOL_CreateStereoRectangle(logger, nativeMol, centralBond, vertex1, vertex2, vertex3, vertex4);
         byte parity = stereo.getParity().getCode();
@@ -223,9 +208,20 @@ public class JnaInchi {
         break;
       }
       default:
-        break;
+        throw new IllegalStateException("Unexpected InChI stereo type:" + type);
       }
     }
+  }
+
+  private static IXA_ATOMID getStereoVertex(Map<InchiAtom, IXA_ATOMID> atomToNativeAtom, InchiAtom inchiAtom) {
+    if (InchiStereo.STEREO_IMPLICIT_H == inchiAtom) {
+      return IxaFunctions.IXA_ATOMID_IMPLICIT_H;
+    }
+    IXA_ATOMID vertex = atomToNativeAtom.get(inchiAtom);
+    if (vertex == null) {
+      throw new IllegalStateException("Stereo configuration referenced an atom that does not exist");
+    }
+    return vertex;
   }
 
   private static InchiOutput buildInchi(IXA_STATUS_HANDLE logger, IXA_MOL_HANDLE nativeMol, InchiOptions options) {

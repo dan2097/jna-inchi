@@ -19,23 +19,39 @@ package com.github.dan2097.jnainchi;
 
 public class InchiStereo {
   
+  /**
+   * Use when a stereocentre's configuration references an implicit hydrogen 
+   */
+  public static final InchiAtom STEREO_IMPLICIT_H = new InchiAtom("H");
+  
   private final InchiAtom[] atoms;
   private final InchiAtom centralAtom;
   private final InchiStereoType type;
   private final InchiStereoParity parity;
 
   /**
-   * @param atoms [must be 4 atoms]
-   * @param centralAtom [null for double bond]
+   * @param atoms Must be exactly 4 non-null atoms, {@link InchiStereo#STEREO_IMPLICIT_H} for implicit hydrogen, the atom with a lone pair for lone pairs
+   * @param centralAtom Null for double bond
    * @param type
    * @param parity
    */
   public InchiStereo(InchiAtom[] atoms, InchiAtom centralAtom, InchiStereoType type, InchiStereoParity parity) {
-    if (atoms == null || type == null || parity == null) {
-      throw new IllegalArgumentException("null parameter");
+    if (atoms == null) {
+      throw new IllegalArgumentException("atoms was null");
+    }
+    if (type == null) {
+      throw new IllegalArgumentException("type was null");
+    }
+    if (parity == null) {
+      throw new IllegalArgumentException("parity was null");
     }
     if (atoms.length != 4) {
       throw new IllegalArgumentException("Atoms array should be length 4");
+    }
+    for (int i = 0; i < atoms.length; i++) {
+      if (atoms[i] == null) {
+        throw new IllegalArgumentException("Atom at index " + i + " was null, use STEREO_IMPLICIT_H for implicit hydrogen, and the atom with a lone pair for lone pairs");
+      }
     }
     this.atoms = atoms;
     this.centralAtom = centralAtom;
@@ -47,6 +63,10 @@ public class InchiStereo {
     return atoms;
   }
 
+  /**
+   * Null for {@link InchiStereoType#DoubleBond}
+   * @return
+   */
   public InchiAtom getCentralAtom() {
     return centralAtom;
   }
