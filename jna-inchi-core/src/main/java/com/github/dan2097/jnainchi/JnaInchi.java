@@ -17,18 +17,12 @@
  */
 package com.github.dan2097.jnainchi;
 
-import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.github.dan2097.jnainchi.inchi.InchiLibrary;
-import com.github.dan2097.jnainchi.inchi.tagINCHIStereo0D;
-import com.github.dan2097.jnainchi.inchi.tagINCHI_Input;
-import com.github.dan2097.jnainchi.inchi.tagINCHI_InputINCHI;
-import com.github.dan2097.jnainchi.inchi.tagINCHI_OutputStruct;
-import com.github.dan2097.jnainchi.inchi.tagInchiAtom;
-import com.github.dan2097.jnainchi.inchi.tagInchiInpData;
 import com.github.dan2097.jnainchi.inchi.InchiLibrary.IXA_BOND_WEDGE;
 import com.github.dan2097.jnainchi.inchi.InchiLibrary.IXA_DBLBOND_CONFIG;
 import com.github.dan2097.jnainchi.inchi.InchiLibrary.IXA_INCHIBUILDER_OPTION;
@@ -41,6 +35,12 @@ import com.github.dan2097.jnainchi.inchi.IxaFunctions.IXA_INCHIBUILDER_HANDLE;
 import com.github.dan2097.jnainchi.inchi.IxaFunctions.IXA_MOL_HANDLE;
 import com.github.dan2097.jnainchi.inchi.IxaFunctions.IXA_STATUS_HANDLE;
 import com.github.dan2097.jnainchi.inchi.IxaFunctions.IXA_STEREOID;
+import com.github.dan2097.jnainchi.inchi.tagINCHIStereo0D;
+import com.github.dan2097.jnainchi.inchi.tagINCHI_Input;
+import com.github.dan2097.jnainchi.inchi.tagINCHI_InputINCHI;
+import com.github.dan2097.jnainchi.inchi.tagINCHI_OutputStruct;
+import com.github.dan2097.jnainchi.inchi.tagInchiAtom;
+import com.github.dan2097.jnainchi.inchi.tagInchiInpData;
 import com.sun.jna.NativeLong;
 
 public class JnaInchi {
@@ -393,12 +393,7 @@ public class JnaInchi {
     byte[] szXtra1 = new byte[65];
     byte[] szXtra2 = new byte[65];
     InchiKeyStatus ret = InchiKeyStatus.of(InchiLibrary.GetINCHIKeyFromINCHI(inchi, 1, 1, inchiKey, szXtra1, szXtra2));
-    try {
-      return new InchiKeyOutput(new String(inchiKey, "UTF-8"), ret);
-    } catch (UnsupportedEncodingException e) {
-      // broken VM
-      throw new RuntimeException(e);
-    }
+    return new InchiKeyOutput(new String(inchiKey, StandardCharsets.UTF_8), ret);
   }
   
   /**
