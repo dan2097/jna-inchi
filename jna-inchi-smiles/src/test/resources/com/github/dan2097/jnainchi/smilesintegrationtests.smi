@@ -35,7 +35,9 @@ IC(Br)=[C@AL2]=C(F)Cl	InChI=1S/C3BrClFI/c4-2(7)1-3(5)6/t1-/m0/s1
 IC(Br)=[C@AL1]=CCl	InChI=1S/C3HBrClI/c4-3(6)1-2-5/h2H/t1-/m0/s1
 IC(Br)=[C@AL2]=CCl	InChI=1S/C3HBrClI/c4-3(6)1-2-5/h2H/t1-/m1/s1
 BrC(I)=[C@AL1]=CCl	InChI=1S/C3HBrClI/c4-3(6)1-2-5/h2H/t1-/m1/s1
-#IC(/Br)=C=C=C(Cl)\F	InChI=1/C4BrClFI/c5-3(8)1-2-4(6)7/b4-3+
+IC(/Br)=C=C=C(Cl)/F	InChI=1S/C4BrClFI/c5-3(8)1-2-4(6)7/b4-3+
+IC(/Br)=C=C=C(Cl)\F	InChI=1S/C4BrClFI/c5-3(8)1-2-4(6)7/b4-3-
 #Stereochemistry not yet supported by InChI
 IC(Br)=C=[C@AL1]=C=C(Cl)F	InChI=1S/C5BrClFI/c6-4(9)2-1-3-5(7)8
 Cl[Pt@SP1](Cl)([NH3])[NH3]	InChI=1S/2ClH.2H3N.Pt/h2*1H;2*1H3;/q;;;;+2/p-2
+IC(/Br)=C=C=C=C=C(Cl)\F	InChI=1S/C6BrClFI/c7-5(10)3-1-2-4-6(8)9

@@ -162,23 +162,65 @@ public class SmilesToInchi {
 
       if (smiBond.bond().order() == 2) {
         // find double bond stereochemistry
-        Edge dirEdge1 = findDirectionalEdge(g, start);
-        if (dirEdge1 != null) {
-          Edge dirEdge2 = findDirectionalEdge(g, end);
-          if (dirEdge2 != null) {
-            InchiStereoParity parity = (dirEdge1.bond(start) == dirEdge2.bond(end)) ? InchiStereoParity.ODD
-                : InchiStereoParity.EVEN;
-            
-            InchiAtom atom1 = input.getAtom(dirEdge1.other(start));
-            InchiAtom atom2 = input.getAtom(start);
-            InchiAtom atom3 = input.getAtom(end);
-            InchiAtom atom4 = input.getAtom(dirEdge2.other(end));
-            input.addStereo(InchiStereo.createDoubleBondStereo(atom1, atom2, atom3, atom4, parity));     
-          }
+        if (!findDoublebondStereo(g, input, start, end)) {
+          findCumuleneStereo(g, input, start, end);
         }
       }
     }
     return input;
+  }
+
+  private static boolean findDoublebondStereo(Graph g, InchiInput input, int start, int end) {
+    Edge dirEdge1 = findDirectionalEdge(g, start);
+    if (dirEdge1 == null) {
+      return false;
+    }
+    
+    Edge dirEdge2 = findDirectionalEdge(g, end);
+    if (dirEdge2 == null) {
+      return false;
+    }
+    InchiStereoParity parity = (dirEdge1.bond(start) == dirEdge2.bond(end)) ? InchiStereoParity.ODD
+        : InchiStereoParity.EVEN;
+    
+    InchiAtom atom1 = input.getAtom(dirEdge1.other(start));
+    InchiAtom atom2 = input.getAtom(start);
+    InchiAtom atom3 = input.getAtom(end);
+    InchiAtom atom4 = input.getAtom(dirEdge2.other(end));
+    input.addStereo(InchiStereo.createDoubleBondStereo(atom1, atom2, atom3, atom4, parity));
+    return true;
+  }
+
+  private static boolean findCumuleneStereo(Graph g, InchiInput input, int start, int end) {
+    int nextDb1 = nextDb(g, start, end);
+    if (nextDb1 < 0) {
+      return false;
+    }
+    
+    int nextDb2 = nextDb(g, end, start);
+    if (nextDb1 < 0) {
+      return false;
+    }
+    //cumulenes longer than 3 double bonds are not supported by InChI
+    Edge dirEdge1 = findDirectionalEdge(g, nextDb1);
+    if (dirEdge1 == null) {
+      return false;
+    }
+    
+    Edge dirEdge2 = findDirectionalEdge(g, nextDb2);
+    if (dirEdge2 == null) {
+      return false;
+    }
+
+    InchiStereoParity parity = (dirEdge1.bond(nextDb1) == dirEdge2.bond(nextDb2)) ? InchiStereoParity.ODD
+        : InchiStereoParity.EVEN;
+
+    InchiAtom atom1 = input.getAtom(dirEdge1.other(nextDb1));
+    InchiAtom atom2 = input.getAtom(start);
+    InchiAtom atom3 = input.getAtom(end);
+    InchiAtom atom4 = input.getAtom(dirEdge2.other(nextDb2));
+    input.addStereo(InchiStereo.createDoubleBondStereo(atom1, atom2, atom3, atom4, parity));
+    return true;
   }
 
   private static Edge findDirectionalEdge(Graph g, int atom) {
