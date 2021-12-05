@@ -175,7 +175,8 @@ public class JnaInchi {
       IXA_ATOMID vertex2 = getStereoVertex(atomToNativeAtom, atomsInCenter[1]);
       IXA_ATOMID vertex3 = getStereoVertex(atomToNativeAtom, atomsInCenter[2]);
       IXA_ATOMID vertex4 = getStereoVertex(atomToNativeAtom, atomsInCenter[3]);
-      
+     
+      IXA_STEREOID center;
       switch (type) {
       case Tetrahedral:
       {
@@ -183,9 +184,7 @@ public class JnaInchi {
         if (centralAtom == null) {
           throw new IllegalStateException("Stereo configuration central atom referenced an atom that does not exist");
         }
-        IXA_STEREOID center = IxaFunctions.IXA_MOL_CreateStereoTetrahedron(logger, nativeMol, centralAtom, vertex1, vertex2, vertex3, vertex4);
-        byte parity = stereo.getParity().getCode();
-        IxaFunctions.IXA_MOL_SetStereoParity(logger, nativeMol, center, parity);
+        center = IxaFunctions.IXA_MOL_CreateStereoTetrahedron(logger, nativeMol, centralAtom, vertex1, vertex2, vertex3, vertex4);
         break;
       }
       case Allene:
@@ -194,23 +193,24 @@ public class JnaInchi {
         if (centralAtom == null) {
           throw new IllegalStateException("Stereo configuration central atom referenced an atom that does not exist");
         }
-        IXA_STEREOID center = IxaFunctions.IXA_MOL_CreateStereoAntiRectangle(logger, nativeMol, centralAtom, vertex1, vertex2, vertex3, vertex4);
-        byte parity = stereo.getParity().getCode();
-        IxaFunctions.IXA_MOL_SetStereoParity(logger, nativeMol, center, parity);
+        center = IxaFunctions.IXA_MOL_CreateStereoAntiRectangle(logger, nativeMol, centralAtom, vertex1, vertex2, vertex3, vertex4);
         break;
       }
       case DoubleBond:
       {
         IXA_BONDID centralBond = IxaFunctions.IXA_MOL_GetCommonBond(logger, nativeMol, vertex2, vertex3);
+        if (centralBond == null) {
+          throw new IllegalStateException("Could not find olefin/cumulene central bond");
+        }
         //We intentionally pass dummy values for vertex2/vertex3, as the IXA API doesn't actually need these as long as vertex1 and vertex4 aren't implicit hydrogen
-        IXA_STEREOID center = IxaFunctions.IXA_MOL_CreateStereoRectangle(logger, nativeMol, centralBond, vertex1, IxaFunctions.IXA_ATOMID_IMPLICIT_H, IxaFunctions.IXA_ATOMID_IMPLICIT_H, vertex4);
-        byte parity = stereo.getParity().getCode();
-        IxaFunctions.IXA_MOL_SetStereoParity(logger, nativeMol, center, parity);
+        center = IxaFunctions.IXA_MOL_CreateStereoRectangle(logger, nativeMol, centralBond, vertex1, IxaFunctions.IXA_ATOMID_IMPLICIT_H, IxaFunctions.IXA_ATOMID_IMPLICIT_H, vertex4);
         break;
       }
       default:
         throw new IllegalStateException("Unexpected InChI stereo type:" + type);
       }
+      byte parity = stereo.getParity().getCode();
+      IxaFunctions.IXA_MOL_SetStereoParity(logger, nativeMol, center, parity);
     }
   }
 
