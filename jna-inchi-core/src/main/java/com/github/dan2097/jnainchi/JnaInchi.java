@@ -389,11 +389,14 @@ public class JnaInchi {
   }
 
   public static InchiKeyOutput inchiToInchiKey(String inchi){
-    byte[] inchiKey = new byte[28];
-    byte[] szXtra1 = new byte[65];
-    byte[] szXtra2 = new byte[65];
-    InchiKeyStatus ret = InchiKeyStatus.of(InchiLibrary.GetINCHIKeyFromINCHI(inchi, 1, 1, inchiKey, szXtra1, szXtra2));
-    return new InchiKeyOutput(new String(inchiKey, StandardCharsets.UTF_8), ret);
+    byte[] inchiKeyBytes = new byte[28];
+    byte[] szXtra1Bytes = new byte[65];
+    byte[] szXtra2Bytes = new byte[65];
+    InchiKeyStatus ret = InchiKeyStatus.of(InchiLibrary.GetINCHIKeyFromINCHI(inchi, 1, 1, inchiKeyBytes, szXtra1Bytes, szXtra2Bytes));
+    String inchiKeyStr = new String(inchiKeyBytes, StandardCharsets.UTF_8).trim();
+    String szXtra1 = new String(szXtra1Bytes, StandardCharsets.UTF_8).trim();
+    String szXtra2 = new String(szXtra2Bytes, StandardCharsets.UTF_8).trim();
+    return new InchiKeyOutput(inchiKeyStr, ret, szXtra1, szXtra2);
   }
   
   /**

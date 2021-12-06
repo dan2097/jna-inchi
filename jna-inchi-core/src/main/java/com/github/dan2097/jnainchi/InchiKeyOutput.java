@@ -21,10 +21,14 @@ public class InchiKeyOutput {
 
   private final String inchiKey;
   private final InchiKeyStatus status;
+  private final String szXtra1;
+  private final String szXtra2;
   
-  public InchiKeyOutput(String inchiKey, InchiKeyStatus status) {
+  InchiKeyOutput(String inchiKey, InchiKeyStatus status, String szXtra1, String szXtra2) {
     this.inchiKey = inchiKey;
     this.status = status;
+    this.szXtra1 = szXtra1;
+    this.szXtra2 = szXtra2;
   }
 
   public String getInchiKey() {
@@ -33,6 +37,22 @@ public class InchiKeyOutput {
 
   public InchiKeyStatus getStatus() {
     return status;
+  }
+  
+  /**
+   * Returns the rest of the 256-bit SHA-2 signature for the first block
+   * @return
+   */
+  public String getBlock1HashExtension() {
+    return szXtra1;
+  }
+
+  /**
+   * Returns the rest of the 256-bit SHA-2 signature for the second block
+   * @return
+   */
+  public String getBlock2HashExtension() {
+    return szXtra2;
   }
 
 }
