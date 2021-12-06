@@ -8,12 +8,44 @@
   </parent>
   <artifactId>jna-inchi-core</artifactId>
   <name>JNA InChI Core</name>
-  <description>Functionality for calling the InChI library from Java</description>
-
+  <description>Functionality for calling the InChI library from Java (binaries included)</description>
   <dependencies>
     <dependency>
-      <groupId>net.java.dev.jna</groupId>
-      <artifactId>jna</artifactId>
+      <groupId>com.github.dan2097</groupId>
+      <artifactId>jna-inchi-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.github.dan2097</groupId>
+      <artifactId>jna-inchi-darwin-aarch64</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.github.dan2097</groupId>
+      <artifactId>jna-inchi-darwin-x86-64</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.github.dan2097</groupId>
+      <artifactId>jna-inchi-linux-arm</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.github.dan2097</groupId>
+      <artifactId>jna-inchi-linux-x86</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.github.dan2097</groupId>
+      <artifactId>jna-inchi-linux-x86-64</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.github.dan2097</groupId>
+      <artifactId>jna-inchi-win32-x86</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.github.dan2097</groupId>
+      <artifactId>jna-inchi-win32-x86-64</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <scope>test</scope>
     </dependency>
   </dependencies>
 </project>

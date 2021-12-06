@@ -6,17 +6,13 @@
     <artifactId>jna-inchi</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
-  <artifactId>jna-inchi-smiles</artifactId>
-  <name>JNA InChI SMILES</name>
-  <description>Functionality for converting SMILES to InChI. Requires an appropriate InChI binary on the classpath to use</description>
+  <artifactId>jna-inchi-api</artifactId>
+  <name>JNA InChI API</name>
+  <description>Functionality for calling the InChI library from Java. Requires an appropriate InChI binary on the classpath to use</description>
   <dependencies>
     <dependency>
-      <groupId>com.github.dan2097</groupId>
-      <artifactId>jna-inchi-api</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>uk.ac.ebi.beam</groupId>
-      <artifactId>beam-core</artifactId>
+      <groupId>net.java.dev.jna</groupId>
+      <artifactId>jna</artifactId>
     </dependency>
   </dependencies>
 </project>
