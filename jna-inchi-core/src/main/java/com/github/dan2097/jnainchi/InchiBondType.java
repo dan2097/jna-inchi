@@ -53,7 +53,7 @@ public enum InchiBondType {
     }
   }
   
-  static InchiBondType of(byte code) {
+  public static InchiBondType of(byte code) {
     return map.get(code);
   }
 }
