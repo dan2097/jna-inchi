@@ -36,6 +36,38 @@ inchiInput.addStereo(stereo);
 InchiOutput output = JnaInchi.toInchi(inchiInput);
 ```
 
+## Supported platforms
+InChI is a C library and hence requires a platform-specific binary. Linux (x86/x86-64/ARM), Mac (ARM64/x86-64) and Windows (x86/x86-64) are currently supported. Pull requests for other platforms are welcome.
+
+## Maven artifacts
+The simplest way to use the library is with:
+```
+<dependency>
+  <groupId>com.github.dan2097</groupId>
+  <artifactId>jna-inchi-all</artifactId>
+  <version>x.y</version>
+</dependency>
+```
+which includes binaries for most common platforms and support for converting SMILES to InChI/InChIKey.
+
+If you don't need SMILES support or do not require support for all platforms, the dependency size can be reduced by only including the required modules.
+
+| Artifact                 | Description                                   |
+|--------------------------|-----------------------------------------------|
+| jna-inchi-all            | Includes all artifacts                        |
+| jna-inchi-smiles         | JNA-InChI API with SMILES to InChI support    |
+| jna-inchi-core           | JNA-InChI API with binaries for all  platforms|
+| jna-inchi-api            | JNA-InChI API                                 |
+| jna-inchi-darwin-aarch64 | 64-bit ARM Mac support                        |
+| jna-inchi-darwin-x86-64  | 64-bit Intel Mac support                      |
+| jna-inchi-linux-arm      | 64-bit ARM Linux support e.g. Raspberry Pi    |
+| jna-inchi-linux-x86      | 32-bit Linux support                          |
+| jna-inchi-linux-x86-64   | 64-bit Linux support                          |
+| jna-inchi-win32-x86      | 32-bit Windows support                        |
+| jna-inchi-win32-x86-64   | 64-bit Windows support                        |
+
+For example, `jna-inchi-core` omits SMILES support. If one solely needed 64-bit linux support, depending on if SMILES support was desired, one would choose `jna-inchi-smiles` + `jna-inchi-linux-x86-64`, or `jna-inchi-api` + `jna-inchi-linux-x86-64`
+
 ## License
 This project is licensed under the GNU Lesser General Public License v2.1 or later
 
