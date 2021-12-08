@@ -588,71 +588,106 @@ public class InchiLibrary implements Library {
   public static final int IXA_EXT_POLYMER_INVALID = (int)(-1);
   public static final int IXA_EXT_V3000_INVALID = (int)(-1);
   public static final int IXA_USES_SMART_ALLOCS = (int)1;
-  /**
+  /*
    * Functions handling IXA Status Objects<br>
+   */
+  /**
    * Original signature : <code>INCHI_DECL IXA_STATUS_Create()</code><br>
+   * @return
    */
   static native Pointer IXA_STATUS_Create();
   /**
    * Original signature : <code>INCHI_DECL IXA_STATUS_Clear(Pointer)</code><br>
+   * @param hStatus
    */
   static native void IXA_STATUS_Clear(Pointer hStatus);
   /**
    * Original signature : <code>INCHI_DECL IXA_STATUS_Destroy(Pointer)</code><br>
+   * @param hStatus
    */
   static native void IXA_STATUS_Destroy(Pointer hStatus);
   /**
    * Original signature : <code>INCHI_DECL IXA_STATUS_HasError(Pointer)</code><br>
+   * @param hStatus
+   * @return
    */
   static native boolean IXA_STATUS_HasError(Pointer hStatus);
   /**
    * Original signature : <code>INCHI_DECL IXA_STATUS_HasWarning(Pointer)</code><br>
+   * @param hStatus
+   * @return
    */
   static native boolean IXA_STATUS_HasWarning(Pointer hStatus);
   /**
    * Original signature : <code>INCHI_DECL IXA_STATUS_GetCount(Pointer)</code><br>
+   * @param hStatus
+   * @return
    */
   static native int IXA_STATUS_GetCount(Pointer hStatus);
   /**
    * Original signature : <code>INCHI_DECL IXA_STATUS_GetSeverity(Pointer, int)</code><br>
+   * @param hStatus
+   * @param vIndex
+   * @return
    */
   static native int IXA_STATUS_GetSeverity(Pointer hStatus, int vIndex);
   /**
    * Original signature : <code>INCHI_DECL IXA_STATUS_GetMessage(Pointer, int)</code><br>
+   * @param hStatus
+   * @param vIndex
+   * @return
    */
   static native String IXA_STATUS_GetMessage(Pointer hStatus, int vIndex);
   /*
    * Functions to Create, Clear and Destroy Molecule Objects<br>
    */
-   /**
+  /**
    * Original signature : <code>INCHI_DECL IXA_MOL_Create(Pointer)</code><br>
+   * @param hStatus
+   * @return
    */
   static native Pointer IXA_MOL_Create(Pointer hStatus);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_Clear(Pointer, Pointer)</code><br>
+   * @param hStatus
+   * @param hMolecule
    */
   static native void IXA_MOL_Clear(Pointer hStatus, Pointer hMolecule);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_Destroy(Pointer, Pointer)</code><br>
+   * @param hStatus
+   * @param hMolecule
    */
   static native void IXA_MOL_Destroy(Pointer hStatus, Pointer hMolecule);
   /*
    * Functions Operating on Complete Molecules<br>
    */
-   /**
+  /**
    * Original signature : <code>INCHI_DECL IXA_MOL_ReadMolfile(Pointer, Pointer, const char*)</code><br>
+   * @param hStatus
+   * @param hMolecule
+   * @param pBytes
    */
   static native void IXA_MOL_ReadMolfile(Pointer hStatus, Pointer hMolecule, byte[] pBytes);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_ReadInChI(Pointer, Pointer, const char*)</code><br>
+   * @param hStatus
+   * @param hMolecule
+   * @param pInChI
    */
   static native void IXA_MOL_ReadInChI(Pointer hStatus, Pointer hMolecule, byte[] pInChI);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_SetChiral(Pointer, Pointer, IXA_BOOL)</code><br>
+   * @param hStatus
+   * @param hMolecule
+   * @param vChiral
    */
   static native void IXA_MOL_SetChiral(Pointer hStatus, Pointer hMolecule, boolean vChiral);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_GetChiral(Pointer, Pointer)</code><br>
+   * @param hStatus
+   * @param hMolecule
+   * @return
    */
   static native boolean IXA_MOL_GetChiral(Pointer hStatus, Pointer hMolecule);
   /*
@@ -660,42 +695,82 @@ public class InchiLibrary implements Library {
    */
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_CreateAtom(Pointer, Pointer)</code><br>
+   * @param hStatus
+   * @param hMolecule
+   * @return
    */
   static native Pointer IXA_MOL_CreateAtom(Pointer hStatus, Pointer hMolecule);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_SetAtomElement(Pointer, Pointer, Pointer, const char*)</code><br>
+   * @param hStatus
+   * @param hMolecule
+   * @param vAtom
+   * @param pElement
    */
   static native void IXA_MOL_SetAtomElement(Pointer hStatus, Pointer hMolecule, Pointer vAtom, byte[] pElement);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_SetAtomAtomicNumber(Pointer, Pointer, Pointer, int)</code><br>
+   * @param hStatus
+   * @param hMolecule
+   * @param vAtom
+   * @param vAtomicNumber
    */
   static native void IXA_MOL_SetAtomAtomicNumber(Pointer hStatus, Pointer hMolecule, Pointer vAtom, int vAtomicNumber);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_SetAtomMass(Pointer, Pointer, Pointer, int)</code><br>
+   * @param hStatus
+   * @param hMolecule
+   * @param vAtom
+   * @param vMassNumber
    */
   static native void IXA_MOL_SetAtomMass(Pointer hStatus, Pointer hMolecule, Pointer vAtom, int vMassNumber);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_SetAtomCharge(Pointer, Pointer, Pointer, int)</code><br>
+   * @param hStatus
+   * @param hMolecule
+   * @param vAtom
+   * @param vCharge
    */
   static native void IXA_MOL_SetAtomCharge(Pointer hStatus, Pointer hMolecule, Pointer vAtom, int vCharge);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_SetAtomRadical(Pointer, Pointer, Pointer, IXA_ATOM_RADICAL)</code><br>
+   * @param hStatus
+   * @param hMolecule
+   * @param vAtom
+   * @param vRadical
    */
   static native void IXA_MOL_SetAtomRadical(Pointer hStatus, Pointer hMolecule, Pointer vAtom, int vRadical);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_SetAtomHydrogens(Pointer, Pointer, Pointer, int, int)</code><br>
+   * @param hStatus
+   * @param hMolecule
+   * @param vAtom
+   * @param vHydrogenMassNumber
+   * @param vHydrogenCount
    */
   static native void IXA_MOL_SetAtomHydrogens(Pointer hStatus, Pointer hMolecule, Pointer vAtom, int vHydrogenMassNumber, int vHydrogenCount);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_SetAtomX(Pointer, Pointer, Pointer, double)</code><br>
+   * @param hStatus
+   * @param hMolecule
+   * @param vAtom
+   * @param vX
    */
   static native void IXA_MOL_SetAtomX(Pointer hStatus, Pointer hMolecule, Pointer vAtom, double vX);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_SetAtomY(Pointer, Pointer, Pointer, double)</code><br>
+   * @param hStatus
+   * @param hMolecule
+   * @param vAtom
+   * @param vY
    */
   static native void IXA_MOL_SetAtomY(Pointer hStatus, Pointer hMolecule, Pointer vAtom, double vY);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_SetAtomZ(Pointer, Pointer, Pointer, double)</code><br>
+   * @param hStatus
+   * @param hMolecule
+   * @param vAtom
+   * @param vZ
    */
   static native void IXA_MOL_SetAtomZ(Pointer hStatus, Pointer hMolecule, Pointer vAtom, double vZ);
   /*
@@ -703,52 +778,126 @@ public class InchiLibrary implements Library {
    */
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_CreateBond(Pointer, Pointer, Pointer, Pointer)</code><br>
+   * @param hStatus
+   * @param hMolecule
+   * @param vAtom1
+   * @param vAtom2
+   * @return
    */
   static native Pointer IXA_MOL_CreateBond(Pointer hStatus, Pointer hMolecule, Pointer vAtom1, Pointer vAtom2);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_SetBondType(Pointer, Pointer, Pointer, IXA_BOND_TYPE)</code><br>
+   * @param hStatus
+   * @param hMolecule
+   * @param vBond
+   * @param vType
    */
   static native void IXA_MOL_SetBondType(Pointer hStatus, Pointer hMolecule, Pointer vBond, int vType);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_SetBondWedge(Pointer, Pointer, Pointer, Pointer, IXA_BOND_WEDGE)</code><br>
+   * @param hStatus
+   * @param hMolecule
+   * @param vBond
+   * @param vRefAtom
+   * @param vDirection
    */
   static native void IXA_MOL_SetBondWedge(Pointer hStatus, Pointer hMolecule, Pointer vBond, Pointer vRefAtom, int vDirection);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_SetDblBondConfig(Pointer, Pointer, Pointer, IXA_DBLBOND_CONFIG)</code><br>
+   * @param hStatus
+   * @param hMolecule
+   * @param vBond
+   * @param vConfig
    */
   static native void IXA_MOL_SetDblBondConfig(Pointer hStatus, Pointer hMolecule, Pointer vBond, int vConfig);
-  /**
+  
+  /*
    * Functions to Add and Define Stereodescriptors<br>
+   */
+  /**
    * Original signature : <code>INCHI_DECL IXA_MOL_CreateStereoTetrahedron(Pointer, Pointer, Pointer, Pointer, Pointer, Pointer, Pointer)</code><br>
+   * @param hStatus
+   * @param hMolecule
+   * @param vCentralAtom
+   * @param vVertex1
+   * @param vVertex2
+   * @param vVertex3
+   * @param vVertex4
+   * @return
    */
   static native Pointer IXA_MOL_CreateStereoTetrahedron(Pointer hStatus, Pointer hMolecule, Pointer vCentralAtom, Pointer vVertex1, Pointer vVertex2, Pointer vVertex3, Pointer vVertex4);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_CreateStereoRectangle(Pointer, Pointer, Pointer, Pointer, Pointer, Pointer, Pointer)</code><br>
+   * @param hStatus
+   * @param hMolecule
+   * @param vCentralBond
+   * @param vVertex1
+   * @param vVertex2
+   * @param vVertex3
+   * @param vVertex4
+   * @return
    */
   static native Pointer IXA_MOL_CreateStereoRectangle(Pointer hStatus, Pointer hMolecule, Pointer vCentralBond, Pointer vVertex1, Pointer vVertex2, Pointer vVertex3, Pointer vVertex4);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_CreateStereoAntiRectangle(Pointer, Pointer, Pointer, Pointer, Pointer, Pointer, Pointer)</code><br>
+   * @param hStatus
+   * @param hMolecule
+   * @param vCentralAtom
+   * @param vVertex1
+   * @param vVertex2
+   * @param vVertex3
+   * @param vVertex4
+   * @return
    */
   static native Pointer IXA_MOL_CreateStereoAntiRectangle(Pointer hStatus, Pointer hMolecule, Pointer vCentralAtom, Pointer vVertex1, Pointer vVertex2, Pointer vVertex3, Pointer vVertex4);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_SetStereoParity(Pointer, Pointer, Pointer, IXA_STEREO_PARITY)</code><br>
+   * @param hStatus
+   * @param hMolecule
+   * @param vStereo
+   * @param vParity
    */
   static native void IXA_MOL_SetStereoParity(Pointer hStatus, Pointer hMolecule, Pointer vStereo, int vParity);
   /**
-  * Original signature : <code>INCHI_DECL IXA_MOL_ReserveSpace(IXA_STATUS_HANDLE, IXA_MOL_HANDLE, int, int, int)</code><br>
-  */
+   * Original signature : <code>INCHI_DECL IXA_MOL_ReserveSpace(IXA_STATUS_HANDLE, IXA_MOL_HANDLE, int, int, int)</code><br>
+   * @param hStatus
+   * @param hMolecule
+   * @param num_atoms
+   * @param num_bonds
+   * @param num_stereos
+   * @return
+   */
   static native int IXA_MOL_ReserveSpace(Pointer hStatus, Pointer hMolecule, int num_atoms, int num_bonds, int num_stereos);
+  
   /*
    * Functions to to Treat Extended molecular data
    */
   //FIXME IXA_MOL_CreatePolymerUnit and IXA_MOL_SetPolymerUnit are missing from Linux build
   /**
-  * Original signature : <code>INCHI_DECL IXA_MOL_CreatePolymerUnit(IXA_STATUS_HANDLE, IXA_MOL_HANDLE)</code><br>
-  */
+   * Original signature : <code>INCHI_DECL IXA_MOL_CreatePolymerUnit(IXA_STATUS_HANDLE, IXA_MOL_HANDLE)</code><br>
+   * @param hStatus
+   * @param hMolecule
+   * @return
+   */
   //static native Pointer IXA_MOL_CreatePolymerUnit(Pointer hStatus, Pointer hMolecule);
   /**
-  * Original signature : <code>INCHI_DECL IXA_MOL_SetPolymerUnit(IXA_STATUS_HANDLE, IXA_MOL_HANDLE, IXA_POLYMERUNITID, int, int, int, int, int, int, int, double[4], double[4], char[80], int*, int*)</code><br>
-  */
+   * Original signature : <code>INCHI_DECL IXA_MOL_SetPolymerUnit(IXA_STATUS_HANDLE, IXA_MOL_HANDLE, IXA_POLYMERUNITID, int, int, int, int, int, int, int, double[4], double[4], char[80], int*, int*)</code><br>
+   * @param hStatus
+   * @param hMolecule
+   * @param vPunit
+   * @param vid
+   * @param vtype
+   * @param vsubtype
+   * @param vconn
+   * @param vlabel
+   * @param vna
+   * @param vnb
+   * @param vxbr1
+   * @param vxbr2
+   * @param vsmt
+   * @param valist
+   * @param vblist
+   */
   //static native void IXA_MOL_SetPolymerUnit(Pointer hStatus, Pointer hMolecule, Pointer vPunit, int vid, int vtype, int vsubtype, int vconn, int vlabel, int vna, int vnb, DoubleBuffer vxbr1, DoubleBuffer vxbr2, ByteBuffer vsmt, IntBuffer valist, IntBuffer vblist);
   
   /*
@@ -756,234 +905,436 @@ public class InchiLibrary implements Library {
    */
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_GetNumAtoms(Pointer, Pointer)</code><br>
+   * @param hStatus
+   * @param hMolecule
+   * @return
    */
   static native int IXA_MOL_GetNumAtoms(Pointer hStatus, Pointer hMolecule);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_GetNumBonds(Pointer, Pointer)</code><br>
+   * @param hStatus
+   * @param hMolecule
+   * @return
    */
   static native int IXA_MOL_GetNumBonds(Pointer hStatus, Pointer hMolecule);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_GetAtomId(Pointer, Pointer, int)</code><br>
+   * @param hStatus
+   * @param hMolecule
+   * @param vAtomIndex
+   * @return
    */
   static native Pointer IXA_MOL_GetAtomId(Pointer hStatus, Pointer hMolecule, int vAtomIndex);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_GetBondId(Pointer, Pointer, int)</code><br>
+   * @param hStatus
+   * @param hMolecule
+   * @param vBondIndex
+   * @return
    */
   static native Pointer IXA_MOL_GetBondId(Pointer hStatus, Pointer hMolecule, int vBondIndex);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_GetAtomIndex(Pointer, Pointer, Pointer)</code><br>
+   * @param hStatus
+   * @param hMolecule
+   * @param vAtom
+   * @return
    */
   static native int IXA_MOL_GetAtomIndex(Pointer hStatus, Pointer hMolecule, Pointer vAtom);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_GetBondIndex(Pointer, Pointer, Pointer)</code><br>
+   * @param hStatus
+   * @param hMolecule
+   * @param vBond
+   * @return
    */
   static native int IXA_MOL_GetBondIndex(Pointer hStatus, Pointer hMolecule, Pointer vBond);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_GetAtomNumBonds(Pointer, Pointer, Pointer)</code><br>
+   * @param hStatus
+   * @param hMolecule
+   * @param vAtom
+   * @return
    */
   static native int IXA_MOL_GetAtomNumBonds(Pointer hStatus, Pointer hMolecule, Pointer vAtom);
   //FIXME IXA_MOL_GetPolymerUnitId and IXA_MOL_GetPolymerUnitIndex are missing from Linux build
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_GetPolymerUnitId(IXA_STATUS_HANDLE, IXA_MOL_HANDLE, int)</code><br>
+   * @param hStatus
+   * @param hMolecule
+   * @param vPolymerUnitIndex
+   * @return
    */
- // static native Pointer IXA_MOL_GetPolymerUnitId(Pointer hStatus, Pointer hMolecule, int vPolymerUnitIndex);
+  //static native Pointer IXA_MOL_GetPolymerUnitId(Pointer hStatus, Pointer hMolecule, int vPolymerUnitIndex);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_GetPolymerUnitIndex(IXA_STATUS_HANDLE, IXA_MOL_HANDLE, IXA_POLYMERUNITID)</code><br>
+   * @param hStatus
+   * @param hMolecule
+   * @param vPolymerUnit
+   * @return
    */
   //static native int IXA_MOL_GetPolymerUnitIndex(Pointer hStatus, Pointer hMolecule, Pointer vPolymerUnit);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_GetAtomBond(Pointer, Pointer, Pointer, int)</code><br>
+   * @param hStatus
+   * @param hMolecule
+   * @param vAtom
+   * @param vBondIndex
+   * @return
    */
   static native Pointer IXA_MOL_GetAtomBond(Pointer hStatus, Pointer hMolecule, Pointer vAtom, int vBondIndex);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_GetCommonBond(Pointer, Pointer, Pointer, Pointer)</code><br>
+   * @param hStatus
+   * @param hMolecule
+   * @param vAtom1
+   * @param vAtom2
+   * @return
    */
   static native Pointer IXA_MOL_GetCommonBond(Pointer hStatus, Pointer hMolecule, Pointer vAtom1, Pointer vAtom2);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_GetBondAtom1(Pointer, Pointer, Pointer)</code><br>
+   * @param hStatus
+   * @param hMolecule
+   * @param vBond
+   * @return
    */
   static native Pointer IXA_MOL_GetBondAtom1(Pointer hStatus, Pointer hMolecule, Pointer vBond);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_GetBondAtom2(Pointer, Pointer, Pointer)</code><br>
+   * @param hStatus
+   * @param hMolecule
+   * @param vBond
+   * @return
    */
   static native Pointer IXA_MOL_GetBondAtom2(Pointer hStatus, Pointer hMolecule, Pointer vBond);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_GetBondOtherAtom(IXA_STATUS_HANDLE, IXA_MOL_HANDLE, IXA_BONDID, IXA_ATOMID)</code><br>
+   * @param hStatus
+   * @param hMolecule
+   * @param vBond
+   * @param vAtom
+   * @return
    */
   static native Pointer IXA_MOL_GetBondOtherAtom(Pointer hStatus, Pointer hMolecule, Pointer vBond, Pointer vAtom);
+  
   /*
    * Functions to Return Information About Atoms<br>
    */
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_GetAtomElement(Pointer, Pointer, Pointer)</code><br>
+   * @param hStatus
+   * @param hMolecule
+   * @param vAtom
+   * @return
    */
   static native String IXA_MOL_GetAtomElement(Pointer hStatus, Pointer hMolecule, Pointer vAtom);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_GetAtomAtomicNumber(Pointer, Pointer, Pointer)</code><br>
+   * @param hStatus
+   * @param hMolecule
+   * @param vAtom
+   * @return
    */
   static native int IXA_MOL_GetAtomAtomicNumber(Pointer hStatus, Pointer hMolecule, Pointer vAtom);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_GetAtomMass(Pointer, Pointer, Pointer)</code><br>
+   * @param hStatus
+   * @param hMolecule
+   * @param vAtom
+   * @return
    */
   static native int IXA_MOL_GetAtomMass(Pointer hStatus, Pointer hMolecule, Pointer vAtom);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_GetAtomCharge(Pointer, Pointer, Pointer)</code><br>
+   * @param hStatus
+   * @param hMolecule
+   * @param vAtom
+   * @return
    */
   static native int IXA_MOL_GetAtomCharge(Pointer hStatus, Pointer hMolecule, Pointer vAtom);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_GetAtomRadical(Pointer, Pointer, Pointer)</code><br>
+   * @param hStatus
+   * @param hMolecule
+   * @param vAtom
+   * @return
    */
   static native int IXA_MOL_GetAtomRadical(Pointer hStatus, Pointer hMolecule, Pointer vAtom);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_GetAtomHydrogens(Pointer, Pointer, Pointer, int)</code><br>
+   * @param hStatus
+   * @param hMolecule
+   * @param vAtom
+   * @param vHydrogenMassNumber
+   * @return
    */
   static native int IXA_MOL_GetAtomHydrogens(Pointer hStatus, Pointer hMolecule, Pointer vAtom, int vHydrogenMassNumber);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_GetAtomX(Pointer, Pointer, Pointer)</code><br>
+   * @param hStatus
+   * @param hMolecule
+   * @param vAtom
+   * @return
    */
   static native double IXA_MOL_GetAtomX(Pointer hStatus, Pointer hMolecule, Pointer vAtom);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_GetAtomY(Pointer, Pointer, Pointer)</code><br>
+   * @param hStatus
+   * @param hMolecule
+   * @param vAtom
+   * @return
    */
   static native double IXA_MOL_GetAtomY(Pointer hStatus, Pointer hMolecule, Pointer vAtom);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_GetAtomZ(Pointer, Pointer, Pointer)</code><br>
+   * @param hStatus
+   * @param hMolecule
+   * @param vAtom
+   * @return
    */
   static native double IXA_MOL_GetAtomZ(Pointer hStatus, Pointer hMolecule, Pointer vAtom);
+  
   /*
    * Functions to Return Information About Bonds<br>
    */
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_GetBondType(Pointer, Pointer, Pointer)</code><br>
+   * @param hStatus
+   * @param hMolecule
+   * @param vBond
+   * @return
    */
   static native int IXA_MOL_GetBondType(Pointer hStatus, Pointer hMolecule, Pointer vBond);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_GetBondWedge(Pointer, Pointer, Pointer, Pointer)</code><br>
+   * @param hStatus
+   * @param hMolecule
+   * @param vBond
+   * @param vRefAtom
+   * @return
    */
   static native int IXA_MOL_GetBondWedge(Pointer hStatus, Pointer hMolecule, Pointer vBond, Pointer vRefAtom);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_GetDblBondConfig(Pointer, Pointer, Pointer)</code><br>
+   * @param hStatus
+   * @param hMolecule
+   * @param vBond
+   * @return
    */
   static native int IXA_MOL_GetDblBondConfig(Pointer hStatus, Pointer hMolecule, Pointer vBond);
+  
   /*
    * Functions to return Information About Stereodescriptors<br>
    */
-   /**
+  /**
    * Original signature : <code>INCHI_DECL IXA_MOL_GetNumStereos(Pointer, Pointer)</code><br>
+   * @param hStatus
+   * @param hMolecule
+   * @return
    */
   static native int IXA_MOL_GetNumStereos(Pointer hStatus, Pointer hMolecule);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_GetStereoId(Pointer, Pointer, int)</code><br>
+   * @param hStatus
+   * @param hMolecule
+   * @param vStereoIndex
+   * @return
    */
   static native Pointer IXA_MOL_GetStereoId(Pointer hStatus, Pointer hMolecule, int vStereoIndex);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_GetStereoIndex(Pointer, Pointer, Pointer)</code><br>
+   * @param hStatus
+   * @param hMolecule
+   * @param vStereo
+   * @return
    */
   static native int IXA_MOL_GetStereoIndex(Pointer hStatus, Pointer hMolecule, Pointer vStereo);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_GetStereoTopology(Pointer, Pointer, Pointer)</code><br>
+   * @param hStatus
+   * @param hMolecule
+   * @param vStereo
+   * @return
    */
   static native int IXA_MOL_GetStereoTopology(Pointer hStatus, Pointer hMolecule, Pointer vStereo);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_GetStereoCentralAtom(Pointer, Pointer, Pointer)</code><br>
+   * @param hStatus
+   * @param hMolecule
+   * @param vStereo
+   * @return
    */
   static native Pointer IXA_MOL_GetStereoCentralAtom(Pointer hStatus, Pointer hMolecule, Pointer vStereo);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_GetStereoCentralBond(Pointer, Pointer, Pointer)</code><br>
+   * @param hStatus
+   * @param hMolecule
+   * @param vStereo
+   * @return
    */
   static native Pointer IXA_MOL_GetStereoCentralBond(Pointer hStatus, Pointer hMolecule, Pointer vStereo);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_GetStereoNumVertices(Pointer, Pointer, Pointer)</code><br>
+   * @param hStatus
+   * @param hMolecule
+   * @param vStereo
+   * @return
    */
   static native int IXA_MOL_GetStereoNumVertices(Pointer hStatus, Pointer hMolecule, Pointer vStereo);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_GetStereoVertex(Pointer, Pointer, Pointer, int)</code><br>
+   * @param hStatus
+   * @param hMolecule
+   * @param vStereo
+   * @param vVertexIndex
+   * @return
    */
   static native Pointer IXA_MOL_GetStereoVertex(Pointer hStatus, Pointer hMolecule, Pointer vStereo, int vVertexIndex);
   /**
    * Original signature : <code>INCHI_DECL IXA_MOL_GetStereoParity(Pointer, Pointer, Pointer)</code><br>
+   * @param hStatus
+   * @param hMolecule
+   * @param vStereo
+   * @return
    */
   static native int IXA_MOL_GetStereoParity(Pointer hStatus, Pointer hMolecule, Pointer vStereo);
+  
   /*
    * Functions for Generating InChIs<br>
    */
   /**
    * Original signature : <code>INCHI_DECL IXA_INCHIBUILDER_Create(Pointer)</code><br>
+   * @param hStatus
+   * @return
    */
   static native Pointer IXA_INCHIBUILDER_Create(Pointer hStatus);
   /**
    * Original signature : <code>INCHI_DECL IXA_INCHIBUILDER_SetMolecule(Pointer, Pointer, Pointer)</code><br>
+   * @param hStatus
+   * @param hInChIBuilder
+   * @param hMolecule
    */
   static native void IXA_INCHIBUILDER_SetMolecule(Pointer hStatus, Pointer hInChIBuilder, Pointer hMolecule);
   /**
    * Original signature : <code>INCHI_DECL IXA_INCHIBUILDER_GetInChI(Pointer, Pointer)</code><br>
+   * @param hStatus
+   * @param hInChIBuilder
+   * @return
    */
   static native String IXA_INCHIBUILDER_GetInChI(Pointer hStatus, Pointer hInChIBuilder);
   /**
    * Original signature : <code>INCHI_DECL IXA_INCHIBUILDER_GetInChIEx(Pointer, Pointer)</code><br>
+   * @param hStatus
+   * @param hBuilder
+   * @return
    */
   static native String IXA_INCHIBUILDER_GetInChIEx(Pointer hStatus, Pointer hBuilder);
   /**
    * Original signature : <code>INCHI_DECL IXA_INCHIBUILDER_GetAuxInfo(Pointer, Pointer)</code><br>
+   * @param hStatus
+   * @param hInChIBuilder
+   * @return
    */
   static native String IXA_INCHIBUILDER_GetAuxInfo(Pointer hStatus, Pointer hInChIBuilder);
   /**
    * Original signature : <code>INCHI_DECL IXA_INCHIBUILDER_GetLog(Pointer, Pointer)</code><br>
+   * @param hStatus
+   * @param hInChIBuilder
+   * @return
    */
   static native String IXA_INCHIBUILDER_GetLog(Pointer hStatus, Pointer hInChIBuilder);
   /**
    * Original signature : <code>INCHI_DECL IXA_INCHIBUILDER_Destroy(Pointer, Pointer)</code><br>
+   * @param hStatus
+   * @param hInChIBuilder
    */
   static native void IXA_INCHIBUILDER_Destroy(Pointer hStatus, Pointer hInChIBuilder);
+
   /*
    * Functions for Specifying InChI Generation Options<br>
    */
   /**
    * Original signature : <code>INCHI_DECL IXA_INCHIBUILDER_SetOption(Pointer, Pointer, IXA_INCHIBUILDER_OPTION, IXA_BOOL)</code><br>
+   * @param hStatus
+   * @param hInChIBuilder
+   * @param vOption
+   * @param vValue
    */
   static native void IXA_INCHIBUILDER_SetOption(Pointer hStatus, Pointer hInChIBuilder, int vOption, boolean vValue);
   /**
    * Original signature : <code>INCHI_DECL IXA_INCHIBUILDER_SetOption_Stereo(Pointer, Pointer, IXA_INCHIBUILDER_STEREOOPTION)</code><br>
+   * @param hStatus
+   * @param hInChIBuilder
+   * @param vValue
    */
   static native void IXA_INCHIBUILDER_SetOption_Stereo(Pointer hStatus, Pointer hInChIBuilder, int vValue);
   /**
    * Original signature : <code>INCHI_DECL IXA_INCHIBUILDER_SetOption_Timeout(Pointer, Pointer, int)</code><br>
+   * @param hStatus
+   * @param hInChIBuilder
+   * @param vValue
    */
   static native void IXA_INCHIBUILDER_SetOption_Timeout(Pointer hStatus, Pointer hInChIBuilder, int vValue);
   /**
    * Original signature : <code>INCHI_DECL IXA_INCHIBUILDER_SetOption_Timeout_MilliSeconds(IXA_STATUS_HANDLE, IXA_INCHIBUILDER_HANDLE, long)</code><br>
+   * @param hStatus
+   * @param hInChIBuilder
+   * @param vValue
    */
   static native void IXA_INCHIBUILDER_SetOption_Timeout_MilliSeconds(Pointer hStatus, Pointer hInChIBuilder, long vValue);
   /**
    * Original signature : <code>INCHI_DECL IXA_INCHIBUILDER_CheckOption(IXA_STATUS_HANDLE, IXA_INCHIBUILDER_HANDLE, IXA_INCHIBUILDER_OPTION)</code><br>
+   * @param hStatus
+   * @param hInChIBuilder
+   * @param vOption
+   * @return
    */
   static native boolean IXA_INCHIBUILDER_CheckOption(Pointer hStatus, Pointer hInChIBuilder, int vOption);
   /**
    * Original signature : <code>INCHI_DECL IXA_INCHIBUILDER_CheckOption_Stereo(IXA_STATUS_HANDLE, IXA_INCHIBUILDER_HANDLE, IXA_INCHIBUILDER_STEREOOPTION)</code><br>
+   * @param hStatus
+   * @param hInChIBuilder
+   * @param vValue
+   * @return
    */
   static native boolean IXA_INCHIBUILDER_CheckOption_Stereo(Pointer hStatus, Pointer hInChIBuilder, int vValue);
   //FIXME IXA_INCHIBUILDER_GetOption_Timeout_MilliSeconds is missing from Linux build
   /**
    * Original signature : <code>long INCHI_DECL IXA_INCHIBUILDER_GetOption_Timeout_MilliSeconds(IXA_STATUS_HANDLE, IXA_INCHIBUILDER_HANDLE)</code><br>
+   * @param hStatus
+   * @param hInChIBuilder
+   * @return
    */
   //static native long IXA_INCHIBUILDER_GetOption_Timeout_MilliSeconds(Pointer hStatus, Pointer hInChIBuilder);
+
   /*
    * Functions for Generating InChI Keys<br>
    */
   /**
    * Original signature : <code>INCHI_DECL IXA_INCHIKEYBUILDER_Create(Pointer)</code><br>
+   * @param hStatus
+   * @return
    */
   static native Pointer IXA_INCHIKEYBUILDER_Create(Pointer hStatus);
   /**
    * Original signature : <code>INCHI_DECL IXA_INCHIKEYBUILDER_SetInChI(Pointer, Pointer, const char*)</code><br>
+   * @param hStatus
+   * @param hInChIKeyBuilder
+   * @param pInChI
    */
   static native void IXA_INCHIKEYBUILDER_SetInChI(Pointer hStatus, Pointer hInChIKeyBuilder, byte[] pInChI);
   /**
    * Original signature : <code>INCHI_DECL IXA_INCHIKEYBUILDER_GetInChIKey(Pointer, Pointer)</code><br>
+   * @param hStatus
+   * @param hInChIKeyBuilder
+   * @return
    */
   static native String IXA_INCHIKEYBUILDER_GetInChIKey(Pointer hStatus, Pointer hInChIKeyBuilder);
   /**
    * Original signature : <code>INCHI_DECL IXA_INCHIKEYBUILDER_Destroy(Pointer, Pointer)</code><br>
+   * @param hStatus
+   * @param hInChIKeyBuilder
    */
   static native void IXA_INCHIKEYBUILDER_Destroy(Pointer hStatus, Pointer hInChIKeyBuilder);
 
