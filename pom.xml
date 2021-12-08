@@ -32,10 +32,9 @@
   <developers>
     <developer>
       <name>Daniel Lowe</name>
-      <url>http://bitbucket.org/dan2097</url>
+      <url>https://github.com/dan2097</url>
     </developer>
   </developers>
-
   <build>
     <plugins>
       <!-- Java 8 -->
@@ -152,5 +151,4 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
-
 </project>
