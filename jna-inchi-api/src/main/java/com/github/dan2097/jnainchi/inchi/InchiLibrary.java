@@ -231,15 +231,24 @@ public class InchiLibrary implements Library {
    * /SaveOpt    Save custom InChI creation options (non-standard InChI)<br>
    * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^<br>
    * Original signature : <code>int GetINCHI(inchi_Input*, inchi_Output*)</code><br>
+   * @param inp
+   * @param out
+   * @return
    */
   public static native int GetINCHI(tagINCHI_Input inp, tagINCHI_Output out);
   /**
    * Original signature : <code>int GetStdINCHI(inchi_Input*, inchi_Output*)</code><br>
+   * @param inp
+   * @param out
+   * @return
    */
   public static native int GetStdINCHI(tagINCHI_Input inp, tagINCHI_Output out);
   /**
    * Extended version of GetINCHI supporting v. 1.05+ extensions: V3000; polymers<br>
    * Original signature : <code>int GetINCHIEx(inchi_InputEx*, inchi_Output*)</code><br>
+   * @param inp
+   * @param out
+   * @return
    */
   public static native int GetINCHIEx(inchi_InputEx inp, tagINCHI_Output out);
   /**
@@ -249,10 +258,12 @@ public class InchiLibrary implements Library {
    * obtained from each GetINCHI /GetStdINCHI call<br>
    * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^<br>
    * Original signature : <code>void FreeINCHI(inchi_Output*)</code><br>
+   * @param out
    */
   public static native void FreeINCHI(tagINCHI_Output out);
   /**
    * Original signature : <code>void FreeStdINCHI(inchi_Output*)</code><br>
+   * @param out
    */
   public static native void FreeStdINCHI(tagINCHI_Output out);
   /**
@@ -263,14 +274,23 @@ public class InchiLibrary implements Library {
    * Option /Inchi2Struct is not needed for GetStructFromINCHI()/GetStructFromStdINCHI()<br>
    * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^<br>
    * Original signature : <code>int GetStructFromINCHI(inchi_InputINCHI*, inchi_OutputStruct*)</code><br>
+   * @param inpInChI
+   * @param outStruct
+   * @return
    */
   public static native int GetStructFromINCHI(tagINCHI_InputINCHI inpInChI, tagINCHI_OutputStruct outStruct);
   /**
    * Original signature : <code>int GetStructFromStdINCHI(inchi_InputINCHI*, inchi_OutputStruct*)</code><br>
+   * @param inpInChI
+   * @param outStruct
+   * @return
    */
   public static native int GetStructFromStdINCHI(tagINCHI_InputINCHI inpInChI, tagINCHI_OutputStruct outStruct);
   /**
    * Original signature : <code>int GetStructFromINCHIEx(inchi_InputINCHI*, inchi_OutputStructEx*)</code><br>
+   * @param inpInChI
+   * @param outStruct
+   * @return
    */
   public static native int GetStructFromINCHIEx(tagINCHI_InputINCHI inpInChI, tagINCHI_OutputStructEx outStruct);
   /**
@@ -280,14 +300,17 @@ public class InchiLibrary implements Library {
    * GetStructFromStdINCHI / GetStructFromINCHI / GetStructFromINCHIEx<br>
    * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^<br>
    * Original signature : <code>void FreeStructFromINCHI(inchi_OutputStruct*)</code><br>
+   * @param out
    */
   public static native void FreeStructFromINCHI(tagINCHI_OutputStruct out);
   /**
    * Original signature : <code>void FreeStructFromStdINCHI(inchi_OutputStruct*)</code><br>
+   * @param out
    */
   public static native void FreeStructFromStdINCHI(tagINCHI_OutputStruct out);
   /**
    * Original signature : <code>void FreeStructFromINCHIEx(inchi_OutputStructEx*)</code><br>
+   * @param out
    */
   public static native void FreeStructFromINCHIEx(tagINCHI_OutputStructEx out);
   /**
@@ -302,6 +325,9 @@ public class InchiLibrary implements Library {
    * Note: there is no explicit tool to conversion from/to standard InChI<br>
    * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^<br>
    * Original signature : <code>int GetINCHIfromINCHI(inchi_InputINCHI*, inchi_Output*)</code><br>
+   * @param inpInChI
+   * @param out
+   * @return
    */
   public static native int GetINCHIfromINCHI(tagINCHI_InputINCHI inpInChI, tagINCHI_Output out);
   /**
@@ -321,10 +347,19 @@ public class InchiLibrary implements Library {
    * Return value:  see RetValGetINCHI<br>
    * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^<br>
    * Original signature : <code>int Get_inchi_Input_FromAuxInfo(char*, int, int, InchiInpData*)</code><br>
+   * @param szInchiAuxInfo
+   * @param bDoNotAddH
+   * @param bDiffUnkUndfStereo
+   * @param pInchiInp
+   * @return
    */
   public static native int Get_inchi_Input_FromAuxInfo(String szInchiAuxInfo, boolean bDoNotAddH, boolean bDiffUnkUndfStereo, tagInchiInpData pInchiInp);
   /**
    * Original signature : <code>int Get_std_inchi_Input_FromAuxInfo(char*, int, InchiInpData*)</code><br>
+   * @param szInchiAuxInfo
+   * @param bDoNotAddH
+   * @param pInchiInp
+   * @return
    */
   public static native int Get_std_inchi_Input_FromAuxInfo(String szInchiAuxInfo, boolean bDoNotAddH, tagInchiInpData pInchiInp);
   /**
@@ -334,10 +369,12 @@ public class InchiLibrary implements Library {
    * Free_inchi_Input( inchi_Input *pInp )<br>
    * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^<br>
    * Original signature : <code>void Free_inchi_Input(inchi_Input*)</code><br>
+   * @param pInp
    */
   public static native void Free_inchi_Input(tagINCHI_Input pInp);
   /**
    * Original signature : <code>void Free_std_inchi_Input(inchi_Input*)</code><br>
+   * @param pInp
    */
   public static native void Free_std_inchi_Input(tagINCHI_Input pInp);
   /**
@@ -355,6 +392,9 @@ public class InchiLibrary implements Library {
    * success/errors codes<br>
    * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^<br>
    * Original signature : <code>int CheckINCHI(const char*, const int)</code><br>
+   * @param szINCHI
+   * @param strict
+   * @return
    */
   public static native int CheckINCHI(String szINCHI, boolean strict);
   /**
@@ -382,6 +422,13 @@ public class InchiLibrary implements Library {
    * success/errors codes<br>
    * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^<br>
    * Original signature : <code>int GetINCHIKeyFromINCHI(const char*, const int, const int, char*, char*, char*)</code><br>
+   * @param szINCHISource
+   * @param xtra1
+   * @param xtra2
+   * @param szINCHIKey
+   * @param szXtra1
+   * @param szXtra2
+   * @return
    */
   public static native int GetINCHIKeyFromINCHI(String szINCHISource, int xtra1, int xtra2, byte[] szINCHIKey, byte[] szXtra1, byte[] szXtra2);
   /**
@@ -392,6 +439,9 @@ public class InchiLibrary implements Library {
    * To calculate extra hash(es), use GetINCHIKeyFromINCHI with stdInChI as input.<br>
    * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^<br>
    * Original signature : <code>int GetStdINCHIKeyFromStdINCHI(const char*, char*)</code><br>
+   * @param szINCHISource
+   * @param szINCHIKey
+   * @return
    */
   public static native int GetStdINCHIKeyFromStdINCHI(String szINCHISource, ByteBuffer szINCHIKey);
   /**
@@ -405,6 +455,8 @@ public class InchiLibrary implements Library {
    * success/errors codes<br>
    * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^<br>
    * Original signature : <code>int CheckINCHIKey(const char*)</code><br>
+   * @param szINCHIKey
+   * @return
    */
   public static native int CheckINCHIKey(String szINCHIKey);
   /**
@@ -414,10 +466,12 @@ public class InchiLibrary implements Library {
    * Returns handle of generator object or NULL on failure<br>
    * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^<br>
    * Original signature : <code>INCHIGEN_HANDLE INCHIGEN_Create()</code><br>
+   * @return
    */
   public static native Pointer INCHIGEN_Create();
   /**
    * Original signature : <code>INCHIGEN_HANDLE STDINCHIGEN_Create()</code><br>
+   * @return
    */
   public static native Pointer STDINCHIGEN_Create();
   /**
@@ -426,10 +480,18 @@ public class InchiLibrary implements Library {
    * InChI Generator: setup<br>
    * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^<br>
    * Original signature : <code>int INCHIGEN_Setup(INCHIGEN_HANDLE, INCHIGEN_DATA*, inchi_Input*)</code><br>
+   * @param HGen
+   * @param pGenData
+   * @param pInp
+   * @return
    */
   public static native int INCHIGEN_Setup(Pointer HGen, tagINCHIGEN_DATA pGenData, tagINCHI_Input pInp);
   /**
    * Original signature : <code>int STDINCHIGEN_Setup(INCHIGEN_HANDLE, INCHIGEN_DATA*, inchi_Input*)</code><br>
+   * @param HGen
+   * @param pGenData
+   * @param pInp
+   * @return
    */
   public static native int STDINCHIGEN_Setup(Pointer HGen, tagINCHIGEN_DATA pGenData, tagINCHI_Input pInp);
   /**
@@ -438,10 +500,16 @@ public class InchiLibrary implements Library {
    * InChI Generator: structure normalization stage<br>
    * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^<br>
    * Original signature : <code>int INCHIGEN_DoNormalization(INCHIGEN_HANDLE, INCHIGEN_DATA*)</code><br>
+   * @param HGen
+   * @param pGenData
+   * @return
    */
   public static native int INCHIGEN_DoNormalization(Pointer HGen, tagINCHIGEN_DATA pGenData);
   /**
    * Original signature : <code>int STDINCHIGEN_DoNormalization(INCHIGEN_HANDLE, INCHIGEN_DATA*)</code><br>
+   * @param HGen
+   * @param pGenData
+   * @return
    */
   public static native int STDINCHIGEN_DoNormalization(Pointer HGen, tagINCHIGEN_DATA pGenData);
   /**
@@ -450,10 +518,16 @@ public class InchiLibrary implements Library {
    * InChI Generator: structure canonicalization stage<br>
    * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^<br>
    * Original signature : <code>int INCHIGEN_DoCanonicalization(INCHIGEN_HANDLE, INCHIGEN_DATA*)</code><br>
+   * @param HGen
+   * @param pGenData
+   * @return
    */
   public static native int INCHIGEN_DoCanonicalization(Pointer HGen, tagINCHIGEN_DATA pGenData);
   /**
    * Original signature : <code>int STDINCHIGEN_DoCanonicalization(INCHIGEN_HANDLE, INCHIGEN_DATA*)</code><br>
+   * @param HGen
+   * @param pGenData
+   * @return
    */
   public static native int STDINCHIGEN_DoCanonicalization(Pointer HGen, tagINCHIGEN_DATA pGenData);
   /**
@@ -462,10 +536,18 @@ public class InchiLibrary implements Library {
    * InChI Generator: InChI serialization stage<br>
    * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^<br>
    * Original signature : <code>int INCHIGEN_DoSerialization(INCHIGEN_HANDLE, INCHIGEN_DATA*, inchi_Output*)</code><br>
+   * @param HGen
+   * @param pGenData
+   * @param pResults
+   * @return
    */
   public static native int INCHIGEN_DoSerialization(Pointer HGen, tagINCHIGEN_DATA pGenData, tagINCHI_Output pResults);
   /**
    * Original signature : <code>int STDINCHIGEN_DoSerialization(INCHIGEN_HANDLE, INCHIGEN_DATA*, inchi_Output*)</code><br>
+   * @param HGen
+   * @param pGenData
+   * @param pResults
+   * @return
    */
   public static native int STDINCHIGEN_DoSerialization(Pointer HGen, tagINCHIGEN_DATA pGenData, tagINCHI_Output pResults);
   /**
@@ -474,10 +556,16 @@ public class InchiLibrary implements Library {
    * InChI Generator: reset stage (use before get next structure)<br>
    * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^<br>
    * Original signature : <code>void INCHIGEN_Reset(INCHIGEN_HANDLE, INCHIGEN_DATA*, inchi_Output*)</code><br>
+   * @param HGen
+   * @param pGenData
+   * @param pResults
    */
   public static native void INCHIGEN_Reset(Pointer HGen, tagINCHIGEN_DATA pGenData, tagINCHI_Output pResults);
   /**
    * Original signature : <code>void STDINCHIGEN_Reset(INCHIGEN_HANDLE, INCHIGEN_DATA*, inchi_Output*)</code><br>
+   * @param HGen
+   * @param pGenData
+   * @param pResults
    */
   public static native void STDINCHIGEN_Reset(Pointer HGen, tagINCHIGEN_DATA pGenData, tagINCHI_Output pResults);
   /**
@@ -486,10 +574,12 @@ public class InchiLibrary implements Library {
    * InChI Generator: destroy generator<br>
    * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^<br>
    * Original signature : <code>void INCHIGEN_Destroy(INCHIGEN_HANDLE)</code><br>
+   * @param HGen
    */
   public static native void INCHIGEN_Destroy(Pointer HGen);
   /**
    * Original signature : <code>void STDINCHIGEN_Destroy(INCHIGEN_HANDLE)</code><br>
+   * @param HGen
    */
   public static native void STDINCHIGEN_Destroy(Pointer HGen);
   /**
@@ -498,6 +588,10 @@ public class InchiLibrary implements Library {
    * Direct generation of InChI from Molfile supplied as text<br>
    * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^<br>
    * Original signature : <code>int MakeINCHIFromMolfileText(const char*, char*, inchi_Output*)</code><br>
+   * @param moltext
+   * @param options
+   * @param result
+   * @return
    */
   public static native int MakeINCHIFromMolfileText(String moltext, String options, tagINCHI_Output result);
   
@@ -588,6 +682,7 @@ public class InchiLibrary implements Library {
   public static final int IXA_EXT_POLYMER_INVALID = (int)(-1);
   public static final int IXA_EXT_V3000_INVALID = (int)(-1);
   public static final int IXA_USES_SMART_ALLOCS = (int)1;
+
   /*
    * Functions handling IXA Status Objects<br>
    */

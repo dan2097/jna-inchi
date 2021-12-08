@@ -85,7 +85,7 @@ public class InchiStereo {
    * atom2 is C
    * atom3 is D
    * atom4 is E (or F)
-   * and the parity is whether atom1 and atom2 are on the same side.
+   * and the parity is whether atom1 and atom2 are on the same side; {@link InchiStereoParity#ODD} if on the same side
    * Atom1/2 should be chosen such that neither are implicit hydrogen
    * 
    * For a cumulene (NOTE stereochemistry on cumulenes with more than 3 double bonds are unsupported by InChI)
@@ -103,9 +103,8 @@ public class InchiStereo {
    * 
    * Atom1/2 should be chosen such that neither are implicit hydrogen
    * 
-   * For the 2 adjacent double-bond case use {@link #createAllenalStereo()}
+   * For the 2 adjacent double-bond case use {@link InchiStereo#createAllenalStereo(InchiAtom, InchiAtom, InchiAtom, InchiAtom, InchiAtom, InchiStereoParity)}
    * </pre>
-   * @param centralBond
    * @param atom1
    * @param atom2
    * @param atom3
