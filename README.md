@@ -66,7 +66,7 @@ If you don't need SMILES support or do not require support for all platforms, th
 | jna-inchi-win32-x86      | 32-bit Windows support                        |
 | jna-inchi-win32-x86-64   | 64-bit Windows support                        |
 
-For example, `jna-inchi-core` omits SMILES support. If one solely needed 64-bit linux support, depending on if SMILES support was desired, one would choose `jna-inchi-smiles` + `jna-inchi-linux-x86-64`, or `jna-inchi-api` + `jna-inchi-linux-x86-64`
+For example, `jna-inchi-core` omits SMILES support. If you only need 64-bit linux support, depending on if SMILES support was desired, you would choose `jna-inchi-smiles` + `jna-inchi-linux-x86-64`, or `jna-inchi-api` + `jna-inchi-linux-x86-64`
 
 ## License
 This project is licensed under the GNU Lesser General Public License v2.1 or later
