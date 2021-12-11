@@ -198,7 +198,7 @@ public class SmilesToInchi {
     }
     
     int nextDb2 = nextDb(g, end, start);
-    if (nextDb1 < 0) {
+    if (nextDb2 < 0) {
       return false;
     }
     //cumulenes longer than 3 double bonds are not supported by InChI
