@@ -9,10 +9,4 @@
   <artifactId>jna-inchi-linux-x86-64</artifactId>
   <name>JNA InChI Linux x86-64</name>
   <description>Binaries for 64-bit Linux</description>
-  <dependencies>
-    <dependency>
-      <groupId>com.github.dan2097</groupId>
-      <artifactId>jna-inchi-api</artifactId>
-    </dependency>
-  </dependencies>
 </project>

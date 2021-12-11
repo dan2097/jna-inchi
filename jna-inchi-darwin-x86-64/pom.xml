@@ -9,10 +9,4 @@
   <artifactId>jna-inchi-darwin-x86-64</artifactId>
   <name>JNA InChI Darwin x86-64</name>
   <description>Binaries for 64-bit Intel Mac</description>
-  <dependencies>
-    <dependency>
-      <groupId>com.github.dan2097</groupId>
-      <artifactId>jna-inchi-api</artifactId>
-    </dependency>
-  </dependencies>
 </project>

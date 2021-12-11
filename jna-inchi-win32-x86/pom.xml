@@ -9,10 +9,4 @@
   <artifactId>jna-inchi-win32-x86</artifactId>
   <name>JNA InChI Win32 x86</name>
   <description>Binaries for 32-bit Windows</description>
-  <dependencies>
-    <dependency>
-      <groupId>com.github.dan2097</groupId>
-      <artifactId>jna-inchi-api</artifactId>
-    </dependency>
-  </dependencies>
 </project>
