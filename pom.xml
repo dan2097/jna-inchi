@@ -7,6 +7,7 @@
   <packaging>pom</packaging>
   <name>JNA InChI</name>
   <description>Parent project for JNA InChI</description>
+  <url>https://github.com/dan2097/jna-inchi</url>
   <modules>
     <module>jna-inchi-api</module>
     <module>jna-inchi-core</module>
@@ -26,6 +27,15 @@
       <url>https://opensource.org/licenses/LGPL-2.1</url>
     </license>
   </licenses>
+  <scm>
+    <url>https://github.com/dan2097/jna-inchi/</url>
+    <connection>
+      scm:git:https://github.com/dan2097/jna-inchi
+    </connection>
+    <developerConnection>
+      scm:git:https://github.com/dan2097/jna-inchi
+    </developerConnection>
+  </scm>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
