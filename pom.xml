@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>com.github.dan2097</groupId>
+  <groupId>io.github.dan2097</groupId>
   <artifactId>jna-inchi</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
@@ -94,52 +94,52 @@
   <dependencyManagement>
     <dependencies>
       <dependency>
-        <groupId>com.github.dan2097</groupId>
+        <groupId>io.github.dan2097</groupId>
         <artifactId>jna-inchi-api</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>com.github.dan2097</groupId>
+        <groupId>io.github.dan2097</groupId>
         <artifactId>jna-inchi-core</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>com.github.dan2097</groupId>
+        <groupId>io.github.dan2097</groupId>
         <artifactId>jna-inchi-smiles</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>com.github.dan2097</groupId>
+        <groupId>io.github.dan2097</groupId>
         <artifactId>jna-inchi-darwin-aarch64</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>com.github.dan2097</groupId>
+        <groupId>io.github.dan2097</groupId>
         <artifactId>jna-inchi-darwin-x86-64</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>com.github.dan2097</groupId>
+        <groupId>io.github.dan2097</groupId>
         <artifactId>jna-inchi-linux-arm</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>com.github.dan2097</groupId>
+        <groupId>io.github.dan2097</groupId>
         <artifactId>jna-inchi-linux-x86</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>com.github.dan2097</groupId>
+        <groupId>io.github.dan2097</groupId>
         <artifactId>jna-inchi-linux-x86-64</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>com.github.dan2097</groupId>
+        <groupId>io.github.dan2097</groupId>
         <artifactId>jna-inchi-win32-x86</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>com.github.dan2097</groupId>
+        <groupId>io.github.dan2097</groupId>
         <artifactId>jna-inchi-win32-x86-64</artifactId>
         <version>${project.version}</version>
       </dependency>
