@@ -9,6 +9,27 @@
   <artifactId>jna-inchi-all</artifactId>
   <name>JNA InChI All</name>
   <description>Includes binaries for all supported platforms, and SMILES to InChI support</description>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>3.2.4</version>
+        <configuration>
+          <finalName>jna-inchi</finalName>
+          <createDependencyReducedPom>false</createDependencyReducedPom>
+        </configuration>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
   <dependencies>
     <dependency>
       <groupId>io.github.dan2097</groupId>
