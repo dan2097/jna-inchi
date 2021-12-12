@@ -43,7 +43,7 @@ InChI is a C library and hence requires a platform-specific binary. Linux (x86/x
 The simplest way to use the library is with:
 ```
 <dependency>
-  <groupId>com.github.dan2097</groupId>
+  <groupId>io.github.dan2097</groupId>
   <artifactId>jna-inchi-all</artifactId>
   <version>x.y</version>
 </dependency>
