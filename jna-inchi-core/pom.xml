@@ -9,6 +9,27 @@
   <artifactId>jna-inchi-core</artifactId>
   <name>JNA InChI Core</name>
   <description>Functionality for calling the InChI library from Java (binaries included)</description>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>3.2.4</version>
+        <configuration>
+          <finalName>jna-inchi-core</finalName>
+          <createDependencyReducedPom>false</createDependencyReducedPom>
+        </configuration>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
   <dependencies>
     <dependency>
       <groupId>io.github.dan2097</groupId>
