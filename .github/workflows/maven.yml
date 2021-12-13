@@ -11,7 +11,7 @@ jobs:
     strategy:
       matrix:
         # test against latest update of each major Java version:
-        java: [ 8, 11, 16 ]
+        java: [ 8, 11, 17 ]
         # test against major operating systems
         os: [ubuntu-20.04, windows-latest, macos-latest]
     name: Java ${{ matrix.java }} on ${{ matrix.os }}
