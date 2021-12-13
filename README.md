@@ -1,5 +1,5 @@
 # JNA-InChI
-Wrapper to access InChI from Java. This is a work in progress to wrap the latest version of [InChI](https://www.inchi-trust.org/) (1.06) using [JNA](https://github.com/java-native-access/jna). A simple native Java interface can then be used to call InChI.
+Wrapper to access InChI from Java. This wraps the latest version of [InChI](https://www.inchi-trust.org/) (1.06) using [JNA](https://github.com/java-native-access/jna). A simple native Java interface can then be used to call InChI.
 Java 8 or higher is required.
 
 ## Examples
@@ -45,7 +45,7 @@ The simplest way to use the library is with:
 <dependency>
   <groupId>io.github.dan2097</groupId>
   <artifactId>jna-inchi-all</artifactId>
-  <version>x.y</version>
+  <version>1.0</version>
 </dependency>
 ```
 which includes binaries for most common platforms and support for converting SMILES to InChI/InChIKey.
