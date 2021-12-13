@@ -3,7 +3,7 @@
   <parent>
     <groupId>io.github.dan2097</groupId>
     <artifactId>jna-inchi</artifactId>
-    <version>1.0</version>
+    <version>1.1-SNAPSHOT</version>
   </parent>
   <artifactId>jna-inchi-linux-x86</artifactId>
   <name>JNA InChI Linux x86</name>
