@@ -15,7 +15,7 @@
         <artifactId>maven-shade-plugin</artifactId>
         <version>3.2.4</version>
         <configuration>
-          <finalName>jna-inchi</finalName>
+          <finalName>jna-inchi-${project.version}</finalName>
           <createDependencyReducedPom>false</createDependencyReducedPom>
         </configuration>
         <executions>
