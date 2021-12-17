@@ -1,3 +1,5 @@
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.dan2097/jna-inchi-all.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.dan2097%22%20AND%20a:%22jna-inchi-all%22)
+
 # JNA-InChI
 Wrapper to access InChI from Java. This wraps the latest version of [InChI](https://www.inchi-trust.org/) (1.06) using [JNA](https://github.com/java-native-access/jna). A simple native Java interface can then be used to call InChI.
 Java 8 or higher is required.
