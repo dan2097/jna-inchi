@@ -19,6 +19,7 @@ package io.github.dan2097.jnainchi;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.EnumSet;
 import java.util.List;
 import java.util.Locale;
 
@@ -32,13 +33,13 @@ public class InchiOptions {
   private final long timeoutMilliSecs;
 
   private InchiOptions(InchiOptionsBuilder builder) {
-    this.flags = builder.flags;
+    this.flags = Collections.unmodifiableList(new ArrayList<InchiFlag>(builder.flags));
     this.timeoutMilliSecs = builder.timeoutMilliSecs;
   }
 
   public static class InchiOptionsBuilder {
 
-    private final List<InchiFlag> flags = new ArrayList<>();
+    private final EnumSet<InchiFlag> flags = EnumSet.noneOf(InchiFlag.class);
     private long timeoutMilliSecs = 0;
 
     public InchiOptionsBuilder withFlag(InchiFlag... flags) {
@@ -75,13 +76,38 @@ public class InchiOptions {
     }
 
     public InchiOptions build() {
+      int stereoOptionFlags = 0;
+      int chiralFlagFlags = 0;
+      for (InchiFlag flag : flags) {
+        switch (flag) {
+        case SNon:
+        case SRac:
+        case SRel:
+        case SUCF:
+        case SAbs:
+          stereoOptionFlags++;
+          break;
+        case ChiralFlagOFF:
+        case ChiralFlagON:
+          chiralFlagFlags++;
+          break;
+        default:
+          break;
+        }
+      }
+      if (stereoOptionFlags > 1) {
+        throw new IllegalArgumentException("Ambiguous flags: SAbs, SNon, SRel, SRac and SUCF are mutually exclusive");
+      }
+      if (chiralFlagFlags > 1) {
+        throw new IllegalArgumentException("Ambiguous flags: ChiralFlagOFF and ChiralFlagON are mutually exclusive");
+      }
       return new InchiOptions(this);
     }
   }
   
   public List<InchiFlag> getFlags() {
-    return Collections.unmodifiableList(flags);
-  } 
+    return flags;
+  }
   
   public int getTimeout() {
     return (int) (timeoutMilliSecs/1000);
