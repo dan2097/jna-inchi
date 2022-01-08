@@ -50,7 +50,7 @@ The simplest way to use the library is with:
 <dependency>
   <groupId>io.github.dan2097</groupId>
   <artifactId>jna-inchi-all</artifactId>
-  <version>1.0</version>
+  <version>1.x</version>
 </dependency>
 ```
 which includes binaries for most common platforms and support for converting SMILES to InChI/InChIKey.
