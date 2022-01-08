@@ -98,7 +98,13 @@ public enum InchiFlag {
   NPZz,
   
   /** Allow stereo at atoms connected to Zz*/
-  SAtZz;
+  SAtZz,
+  
+  /** Use absolute stereo (this is the default, so this flag is typically redundant) */
+  SAbs,
+  
+  /** Output an empty InChI ("InChI=1//" or "InChI=1S//") on error */
+  OutErrInChI;
   
   @Override
   public String toString() {

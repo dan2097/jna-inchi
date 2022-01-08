@@ -320,6 +320,12 @@ public class JnaInchi {
         case SAtZz:
           IxaFunctions.IXA_INCHIBUILDER_SetOption(logger, builder, IXA_INCHIBUILDER_OPTION.IXA_INCHIBUILDER_OPTION_SATZZ, true);
           break;
+        case SAbs:
+          IxaFunctions.IXA_INCHIBUILDER_SetOption_Stereo(logger, builder, IXA_INCHIBUILDER_STEREOOPTION.IXA_INCHIBUILDER_STEREOOPTION_SAbs);
+          break;
+        case OutErrInChI:
+          IxaFunctions.IXA_INCHIBUILDER_SetOption(logger, builder, IXA_INCHIBUILDER_OPTION.IXA_INCHIBUILDER_OPTION_OutErrInChI, true);
+          break;
         default:
           throw new IllegalStateException("Unexpected InChI option flag: " + flag);
         }

@@ -148,5 +148,17 @@ public class InchiOptionsTest {
     assertEquals(InchiStatus.WARNING, result2.getStatus());
     assertEquals("InChI=1S//", result2.getInchi());
   }
+  
+  @Test
+  public void testEmptyInchiOnError() throws IOException {
+    String smiles = "CC*";
+    InchiOutput result1 = SmilesToInchi.toInchi(smiles);
+    assertEquals(InchiStatus.ERROR, result1.getStatus());
+    assertNull(result1.getInchi());
+    InchiOptions options = new InchiOptions.InchiOptionsBuilder().withFlag(InchiFlag.OutErrInChI).build();
+    InchiOutput result2 = SmilesToInchi.toInchi(smiles, options);
+    assertEquals(InchiStatus.ERROR, result2.getStatus());
+    assertEquals("InChI=1S//", result2.getInchi());
+  }
 
 }
