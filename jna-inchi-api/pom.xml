@@ -8,6 +8,24 @@
   <artifactId>jna-inchi-api</artifactId>
   <name>JNA InChI API</name>
   <description>Functionality for calling the InChI library from Java. Requires an appropriate InChI binary on the classpath to use</description>
+  <build>
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>true</filtering>
+        <includes>
+          <include>**/*.props</include>
+        </includes>
+      </resource>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>false</filtering>
+        <excludes>
+          <exclude>**/*.props</exclude>
+        </excludes>
+      </resource>
+    </resources>
+  </build>
   <dependencies>
     <dependency>
       <groupId>net.java.dev.jna</groupId>

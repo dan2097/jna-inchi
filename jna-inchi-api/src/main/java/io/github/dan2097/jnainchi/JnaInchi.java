@@ -17,32 +17,34 @@
  */
 package io.github.dan2097.jnainchi;
 
+import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import com.sun.jna.NativeLong;
 
 import io.github.dan2097.jnainchi.inchi.InchiLibrary;
-import io.github.dan2097.jnainchi.inchi.IxaFunctions;
-import io.github.dan2097.jnainchi.inchi.tagINCHIStereo0D;
-import io.github.dan2097.jnainchi.inchi.tagINCHI_Input;
-import io.github.dan2097.jnainchi.inchi.tagINCHI_InputINCHI;
-import io.github.dan2097.jnainchi.inchi.tagINCHI_OutputStruct;
-import io.github.dan2097.jnainchi.inchi.tagInchiAtom;
-import io.github.dan2097.jnainchi.inchi.tagInchiInpData;
 import io.github.dan2097.jnainchi.inchi.InchiLibrary.IXA_BOND_WEDGE;
 import io.github.dan2097.jnainchi.inchi.InchiLibrary.IXA_DBLBOND_CONFIG;
 import io.github.dan2097.jnainchi.inchi.InchiLibrary.IXA_INCHIBUILDER_OPTION;
 import io.github.dan2097.jnainchi.inchi.InchiLibrary.IXA_INCHIBUILDER_STEREOOPTION;
 import io.github.dan2097.jnainchi.inchi.InchiLibrary.tagRetValGetINCHI;
+import io.github.dan2097.jnainchi.inchi.IxaFunctions;
 import io.github.dan2097.jnainchi.inchi.IxaFunctions.IXA_ATOMID;
 import io.github.dan2097.jnainchi.inchi.IxaFunctions.IXA_BONDID;
 import io.github.dan2097.jnainchi.inchi.IxaFunctions.IXA_INCHIBUILDER_HANDLE;
 import io.github.dan2097.jnainchi.inchi.IxaFunctions.IXA_MOL_HANDLE;
 import io.github.dan2097.jnainchi.inchi.IxaFunctions.IXA_STATUS_HANDLE;
 import io.github.dan2097.jnainchi.inchi.IxaFunctions.IXA_STEREOID;
+import io.github.dan2097.jnainchi.inchi.tagINCHIStereo0D;
+import io.github.dan2097.jnainchi.inchi.tagINCHI_Input;
+import io.github.dan2097.jnainchi.inchi.tagINCHI_InputINCHI;
+import io.github.dan2097.jnainchi.inchi.tagINCHI_OutputStruct;
+import io.github.dan2097.jnainchi.inchi.tagInchiAtom;
+import io.github.dan2097.jnainchi.inchi.tagInchiInpData;
 
 public class JnaInchi {
     
@@ -604,6 +606,37 @@ public class JnaInchi {
       sb.append(ch);
     }
     return sb.toString();
+  }
+  
+  
+  /**
+   * Returns the version of the wrapped InChI C library
+   * @return Version number String
+   */
+  public static String getInchiLibraryVersion() {
+      try(InputStream is = JnaInchi.class.getResourceAsStream("jnainchi_build.props")) {
+          Properties props = new Properties();
+          props.load(is);
+          return props.getProperty("inchi_version");
+      }
+      catch (Exception e) {
+          return null;
+      }
+  }
+  
+  /**
+   * Returns the version of the JNA-InChI Java library
+   * @return Version number String
+   */
+  public static String getJnaInchiVersion() {
+      try(InputStream is = JnaInchi.class.getResourceAsStream("jnainchi_build.props")) {
+          Properties props = new Properties();
+          props.load(is);
+          return props.getProperty("jnainchi_version");
+      }
+      catch (Exception e) {
+          return null;
+      }
   }
 
 }
