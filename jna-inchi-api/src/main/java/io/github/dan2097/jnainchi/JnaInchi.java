@@ -32,6 +32,7 @@ import io.github.dan2097.jnainchi.inchi.InchiLibrary.IXA_DBLBOND_CONFIG;
 import io.github.dan2097.jnainchi.inchi.InchiLibrary.IXA_INCHIBUILDER_OPTION;
 import io.github.dan2097.jnainchi.inchi.InchiLibrary.IXA_INCHIBUILDER_STEREOOPTION;
 import io.github.dan2097.jnainchi.inchi.InchiLibrary.tagRetValGetINCHI;
+import io.github.dan2097.jnainchi.inchi.InchiLibrary.tagRetValMOL2INCHI;
 import io.github.dan2097.jnainchi.inchi.IxaFunctions;
 import io.github.dan2097.jnainchi.inchi.IxaFunctions.IXA_ATOMID;
 import io.github.dan2097.jnainchi.inchi.IxaFunctions.IXA_BONDID;
@@ -42,6 +43,7 @@ import io.github.dan2097.jnainchi.inchi.IxaFunctions.IXA_STEREOID;
 import io.github.dan2097.jnainchi.inchi.tagINCHIStereo0D;
 import io.github.dan2097.jnainchi.inchi.tagINCHI_Input;
 import io.github.dan2097.jnainchi.inchi.tagINCHI_InputINCHI;
+import io.github.dan2097.jnainchi.inchi.tagINCHI_Output;
 import io.github.dan2097.jnainchi.inchi.tagINCHI_OutputStruct;
 import io.github.dan2097.jnainchi.inchi.tagInchiAtom;
 import io.github.dan2097.jnainchi.inchi.tagInchiInpData;
@@ -363,18 +365,35 @@ public class JnaInchi {
   }
   
   public static InchiOutput molToInchi(String molText, InchiOptions options) {
-    IXA_STATUS_HANDLE logger = IxaFunctions.IXA_STATUS_Create();
-    IXA_MOL_HANDLE nativeMol = IxaFunctions.IXA_MOL_Create(logger);
+    tagINCHI_Output nativeOutput = new tagINCHI_Output();
     try {
-      IxaFunctions.IXA_MOL_ReadMolfile(logger, nativeMol, molText);
-      return buildInchi(logger, nativeMol, options);
+      int ret = InchiLibrary.MakeINCHIFromMolfileText(molText, options.toString(), nativeOutput);
+      InchiStatus status;
+      switch (ret) {
+      case tagRetValMOL2INCHI.mol2inchi_Ret_OKAY:
+        status = InchiStatus.SUCCESS;
+        break;
+      case tagRetValMOL2INCHI.mol2inchi_Ret_WARNING:
+        status = InchiStatus.WARNING;
+        break;
+      case tagRetValMOL2INCHI.mol2inchi_Ret_EOF:
+      case tagRetValMOL2INCHI.mol2inchi_Ret_ERROR:
+      case tagRetValMOL2INCHI.mol2inchi_Ret_ERROR_get:
+      case tagRetValMOL2INCHI.mol2inchi_Ret_ERROR_comp:
+        status = InchiStatus.ERROR;
+        break;
+      default:
+        status = InchiStatus.ERROR;
+        break;
+      }
+      // The way nativeOutput.szLog is truncated can be a bit odd, but this seems pseudo-intentional, see copy_corrected_log_tail in inchi_dll.c 
+      return new InchiOutput(nativeOutput.szInChI, nativeOutput.szAuxInfo, nativeOutput.szMessage, nativeOutput.szLog, status);
     }
     finally {
-      IxaFunctions.IXA_MOL_Destroy(logger, nativeMol);
-      IxaFunctions.IXA_STATUS_Destroy(logger);
+      InchiLibrary.FreeINCHI(nativeOutput);
     }
   }
-  
+
   /**
    * Converts InChI into InChI for validation purposes.
    * It may also be used to filter out specific layers.

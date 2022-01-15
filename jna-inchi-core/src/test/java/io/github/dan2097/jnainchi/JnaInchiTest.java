@@ -18,7 +18,9 @@
 package io.github.dan2097.jnainchi;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import org.junit.jupiter.api.Test;
 
@@ -73,6 +75,28 @@ public class JnaInchiTest {
     InchiOutput output2 = JnaInchi.molToInchi(mol, new InchiOptions.InchiOptionsBuilder().withFlag(InchiFlag.SNon).build());
     assertEquals(InchiStatus.SUCCESS, output2.getStatus());
     assertEquals("InChI=1S/CHBrFI/c2-1(3)4/h1H", output2.getInchi());
+  }
+  
+  @Test
+  public void testPolymerToInChI() {
+    String mol = "poly(ethylene)\n  -INDIGO-01152200132D\n\n  4  3  0  0  0  0  0  0  0  0999 V2000\n   -1.9875    0.8946    0.0000 *   0  0  0  0  0  0  0  0  0  0  0  0\n   -1.1411    0.8839    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -0.4286    0.4714    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    0.5357    0.4661    0.0000 *   0  0  0  0  0  0  0  0  0  0  0  0\n  1  2  1  0  0  0  0\n  2  3  1  0  0  0  0\n  3  4  1  0  0  0  0\nM  STY  1   1 SRU\nM  SLB  1   1   1\nM  SCN  1   1 HT \nM  SAL   1  2   2   3\nM  SBL   1  2   1   3\nM  SMT   1 n\nM  SDI   1  4   -0.0268    0.8839   -0.0321    0.0589\nM  SDI   1  4   -1.4946    0.4768   -1.4839    1.3018\nM  END\n";
+    InchiOutput output1 = JnaInchi.molToInchi(mol);
+    assertEquals(InchiStatus.ERROR, output1.getStatus());
+    assertNull(output1.getInchi());
+    
+    InchiOutput output2 = JnaInchi.molToInchi(mol, new InchiOptions.InchiOptionsBuilder().withFlag(InchiFlag.Polymers).build());
+    assertEquals(InchiStatus.SUCCESS, output2.getStatus());
+    assertNotNull(output2.getInchi());//polymer support is still in beta so subject to change
+  }
+  
+  @Test
+  public void testUnsupportedSgroup() {
+    String mol = "\n OpenBabel12062120242D\n\n  5  4  0  0  1  0  0  0  0  0999 V2000\n    1.5000   -0.8660    0.0000 F   0  0  0  0  0  0  0  0  0  0  0  0\n    0.5000   -0.8660    0.0000 C   0  0  2  0  0  0  0  0  0  0  0  0\n   -0.3660   -1.3660    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0\n    0.5000   -1.8660    0.0000 Br  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.0000   -0.0000    0.0000 I   0  0  0  0  0  0  0  0  0  0  0  0\n  1  2  1  0  0  0  0\n  2  3  1  1  0  0  0\n  2  4  1  0  0  0  0\n  2  5  1  0  0  0  0\nM  STY  1   1 DAT\nM  END\n";
+    InchiOutput output = JnaInchi.molToInchi(mol);
+    //InChI 1.06 classic API gives a WARNING about ignoring polymer data
+    //InChI 1.06 IXA API gives an error as it implicitly reads the molfile as if InchiFlag.Polymers was set
+    assertFalse(output.getStatus() == InchiStatus.ERROR);
+    assertEquals("InChI=1S/CHBrFI/c2-1(3)4/h1H/t1-/m0/s1", output.getInchi());
   }
 
   @Test
