@@ -67,7 +67,8 @@ public enum InchiFlag {
   /** Omit auxiliary information*/
   AuxNone,
   
-  /** Warn and produce empty InChI for empty structure*/
+  /** Warn and produce empty InChI for empty structure
+   * NOTE: This option doesn't currently work due to an InChI library bug*/
   WarnOnEmptyStructure,
   
   /** Save custom InChI creation options (non-standard InChI)*/

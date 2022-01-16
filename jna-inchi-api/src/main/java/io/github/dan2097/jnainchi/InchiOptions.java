@@ -121,6 +121,9 @@ public class InchiOptions {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     for (InchiFlag inchiFlag : flags) {
+      if (inchiFlag == InchiFlag.SAbs) {
+        continue;
+      }
       if (sb.length() > 0) {
         sb.append(' ');
       }
