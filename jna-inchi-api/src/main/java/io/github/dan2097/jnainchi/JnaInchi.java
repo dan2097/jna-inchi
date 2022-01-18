@@ -25,6 +25,7 @@ import java.util.Map;
 import java.util.Properties;
 
 import com.sun.jna.NativeLong;
+import com.sun.jna.Platform;
 
 import io.github.dan2097.jnainchi.inchi.InchiLibrary;
 import io.github.dan2097.jnainchi.inchi.InchiLibrary.IXA_BOND_WEDGE;
@@ -49,12 +50,29 @@ import io.github.dan2097.jnainchi.inchi.tagInchiAtom;
 import io.github.dan2097.jnainchi.inchi.tagInchiInpData;
 
 public class JnaInchi {
+  
+  private static final String platform;
+  private static final Throwable libraryLoadingError;
+  static {
+    Throwable t = null;
+    String p = null;
+    try {
+      p = Platform.RESOURCE_PREFIX;
+      InchiLibrary.JNA_NATIVE_LIB.getName();
+    }
+    catch (Throwable e) { 
+      t = e;
+    }
+    platform = p;
+    libraryLoadingError = t;
+  }
     
   public static InchiOutput toInchi(InchiInput inchiInput) {
     return toInchi(inchiInput, InchiOptions.DEFAULT_OPTIONS);
   }
   
   public static InchiOutput toInchi(InchiInput inchiInput, InchiOptions options) {
+    checkLibrary();
     List<InchiAtom> atoms = inchiInput.getAtoms();
     int atomCount = atoms.size();
     if (atomCount > Short.MAX_VALUE) {
@@ -365,6 +383,7 @@ public class JnaInchi {
   }
   
   public static InchiOutput molToInchi(String molText, InchiOptions options) {
+    checkLibrary();
     tagINCHI_Output nativeOutput = new tagINCHI_Output();
     try {
       int ret = InchiLibrary.MakeINCHIFromMolfileText(molText, options.toString(), nativeOutput);
@@ -404,6 +423,7 @@ public class JnaInchi {
    * @return
    */
   public static InchiOutput inchiToInchi(String inchi, InchiOptions options) {
+    checkLibrary();
     IXA_STATUS_HANDLE logger = IxaFunctions.IXA_STATUS_Create();
     IXA_MOL_HANDLE nativeMol = IxaFunctions.IXA_MOL_Create(logger);
     try {
@@ -416,7 +436,8 @@ public class JnaInchi {
     }
   }
 
-  public static InchiKeyOutput inchiToInchiKey(String inchi){
+  public static InchiKeyOutput inchiToInchiKey(String inchi) {
+    checkLibrary();
     byte[] inchiKeyBytes = new byte[28];
     byte[] szXtra1Bytes = new byte[65];
     byte[] szXtra2Bytes = new byte[65];
@@ -436,6 +457,7 @@ public class JnaInchi {
    * @return InchiCheckStatus
    */
   public static InchiCheckStatus checkInchi(String inchi, boolean strict) {
+    checkLibrary();
     return InchiCheckStatus.of(InchiLibrary.CheckINCHI(inchi, strict));
   }
   
@@ -445,6 +467,7 @@ public class JnaInchi {
    * @return InchiKeyCheckStatus
    */
   public static InchiKeyCheckStatus checkInchiKey(String inchiKey) {
+    checkLibrary();
     return InchiKeyCheckStatus.of(InchiLibrary.CheckINCHIKey(inchiKey));
   }
   
@@ -457,6 +480,7 @@ public class JnaInchi {
    * @return
    */
   public static InchiInputFromAuxinfoOutput getInchiInputFromAuxInfo(String auxInfo, boolean doNotAddH, boolean diffUnkUndfStereo) {
+    checkLibrary();
     tagINCHI_Input pInp = new tagINCHI_Input();
     tagInchiInpData input = new tagInchiInpData(pInp);
     try {
@@ -497,6 +521,7 @@ public class JnaInchi {
   }
   
   public static InchiInputFromInchiOutput getInchiInputFromInchi(String inchi, InchiOptions options) {
+    checkLibrary();
     tagINCHI_InputINCHI input = new tagINCHI_InputINCHI(inchi, options.toString());
     tagINCHI_OutputStruct output = new tagINCHI_OutputStruct();
     try {
@@ -639,14 +664,14 @@ public class JnaInchi {
    * @return Version number String
    */
   public static String getInchiLibraryVersion() {
-      try(InputStream is = JnaInchi.class.getResourceAsStream("jnainchi_build.props")) {
-          Properties props = new Properties();
-          props.load(is);
-          return props.getProperty("inchi_version");
-      }
-      catch (Exception e) {
-          return null;
-      }
+    try(InputStream is = JnaInchi.class.getResourceAsStream("jnainchi_build.props")) {
+      Properties props = new Properties();
+      props.load(is);
+      return props.getProperty("inchi_version");
+    }
+    catch (Exception e) {
+      return null;
+    }
   }
   
   /**
@@ -654,14 +679,20 @@ public class JnaInchi {
    * @return Version number String
    */
   public static String getJnaInchiVersion() {
-      try(InputStream is = JnaInchi.class.getResourceAsStream("jnainchi_build.props")) {
-          Properties props = new Properties();
-          props.load(is);
-          return props.getProperty("jnainchi_version");
-      }
-      catch (Exception e) {
-          return null;
-      }
+    try(InputStream is = JnaInchi.class.getResourceAsStream("jnainchi_build.props")) {
+      Properties props = new Properties();
+      props.load(is);
+      return props.getProperty("jnainchi_version");
+    }
+    catch (Exception e) {
+      return null;
+    }
+  }
+
+  private static void checkLibrary() {
+    if (libraryLoadingError != null) {
+      throw new RuntimeException("Error loading InChI native code. Please check that the binaries for your platform (" + platform + ") have been included on the classpath.", libraryLoadingError);
+    }
   }
 
 }
