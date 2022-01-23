@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>io.github.dan2097</groupId>
   <artifactId>jna-inchi</artifactId>
-  <version>1.1-SNAPSHOT</version>
+  <version>1.1</version>
   <packaging>pom</packaging>
   <name>JNA InChI</name>
   <description>Parent project for JNA InChI</description>
@@ -34,7 +34,7 @@
     <developerConnection>
       scm:git:https://github.com/dan2097/jna-inchi
     </developerConnection>
-    <tag>HEAD</tag>
+    <tag>jna-inchi-1.1</tag>
   </scm>
   <distributionManagement><!--For deployment to Maven Central via OSSRH -->
     <snapshotRepository>
