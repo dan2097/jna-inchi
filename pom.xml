@@ -19,6 +19,7 @@
     <module>jna-inchi-linux-x86-64</module>
     <module>jna-inchi-win32-x86</module>
     <module>jna-inchi-win32-x86-64</module>
+    <module>jna-rinchi-api</module>
   </modules>
   <licenses>
     <license>
@@ -212,6 +213,11 @@
       <dependency>
         <groupId>io.github.dan2097</groupId>
         <artifactId>jna-inchi-win32-x86-64</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+       <dependency>
+        <groupId>io.github.dan2097</groupId>
+        <artifactId>jna-inchi-api</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
