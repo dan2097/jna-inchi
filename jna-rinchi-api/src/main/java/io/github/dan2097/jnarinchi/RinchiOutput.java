@@ -23,10 +23,12 @@ public class RinchiOutput {
 
 	private final String rinchi;
 	private final String auxInfo;
+	private final RinchiStatus status;
 
-	RinchiOutput(String rinchi, String auxInfo) {
+	RinchiOutput(String rinchi, String auxInfo, RinchiStatus status) {
 		this.rinchi = rinchi;
 		this.auxInfo = auxInfo;
+		this.status = status;
 	}
 
 	public String getRinchi() {
@@ -35,6 +37,10 @@ public class RinchiOutput {
 
 	public String getAuxInfo() {
 		return auxInfo;
+	}
+	
+	public RinchiStatus getStatus() {
+		return status;
 	}
 
 	@Override
