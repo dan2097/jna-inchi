@@ -23,10 +23,17 @@ public class RinchiKeyOutput
 {
 	private final String rinchiKey;
 	private final RinchiKeyType rinchiKeyType;
+	private final RinchiKeyStatus status;
+	private final int errorCode;
+	private final String errorMessage;
 	
-	public RinchiKeyOutput (String rinchiKey, RinchiKeyType rinchiKeyType) {
+	public RinchiKeyOutput (String rinchiKey, RinchiKeyType rinchiKeyType,
+				RinchiKeyStatus status, int errorCode, String errorMessage) {
 		this.rinchiKey = rinchiKey;
 		this.rinchiKeyType = rinchiKeyType;
+		this.status = status;
+		this.errorCode = errorCode;
+		this.errorMessage = errorMessage;
 	}
 
 	public String getRinchiKey() {
@@ -35,5 +42,17 @@ public class RinchiKeyOutput
 
 	public RinchiKeyType getRinchiKeyType() {
 		return rinchiKeyType;
+	}
+
+	public RinchiKeyStatus getStatus() {
+		return status;
+	}
+
+	public int getErrorCode() {
+		return errorCode;
+	}
+
+	public String getErrorMessage() {
+		return errorMessage;
 	}
 }
