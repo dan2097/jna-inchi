@@ -40,7 +40,7 @@ public class RinchiOptions
 	}
 	
 	private RinchiKeyType rinchiKeyType = RinchiKeyType.LONG;
-
+	private boolean forceEquilibrium = true;
 	
 	public RinchiKeyType getRinchiKeyType() {
 		return rinchiKeyType;
@@ -48,7 +48,13 @@ public class RinchiOptions
 
 	public void setRinchiKeyType(RinchiKeyType rinchiKeyType) {
 		this.rinchiKeyType = rinchiKeyType;
-	}	
-	
-	
+	}
+
+	public boolean isForceEquilibrium() {
+		return forceEquilibrium;
+	}
+
+	public void setForceEquilibrium(boolean forceEquilibrium) {
+		this.forceEquilibrium = forceEquilibrium;
+	}
 }
