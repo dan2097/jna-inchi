@@ -21,6 +21,10 @@ import java.io.InputStream;
 import java.util.Properties;
 
 import com.sun.jna.Platform;
+import com.sun.jna.Pointer;
+import com.sun.jna.ptr.PointerByReference;
+
+import io.github.dan2097.jnarinchi.RinchiOptions.ReactionFileFormat;
 
 
 
@@ -41,7 +45,39 @@ public class JnaRinchi
 		platform = p;
 		libraryLoadingError = t;
 	}
-
+	
+	
+	public static RinchiOutput fileTextToRinchi(String reactFileText) {
+		return fileTextToRinchi(ReactionFileFormat.AUTO, reactFileText, new RinchiOptions());
+	}
+	
+	public static RinchiOutput fileTextToRinchi(String reactFileText, RinchiOptions options) {
+		return fileTextToRinchi(ReactionFileFormat.AUTO, reactFileText, options);
+	}
+	
+	public static RinchiOutput fileTextToRinchi(ReactionFileFormat fileFormat, String reactFileText, RinchiOptions options) {
+		checkLibrary();
+		
+		PointerByReference out_rinchi_string_p = new PointerByReference();
+        PointerByReference out_rinchi_auxinfo_p = new PointerByReference();
+        
+        int errCode = RinchiLibrary.rinchilib_rinchi_from_file_text(fileFormat.toString(), reactFileText, 
+        		options.isForceEquilibrium(), out_rinchi_string_p, out_rinchi_auxinfo_p);        
+        
+        if (errCode != 0)
+        {
+        	String errMsg = RinchiLibrary.rinchilib_latest_err_msg();
+        	return new RinchiOutput("", "", RinchiStatus.ERROR, errCode, errMsg);
+        }      
+                
+        Pointer p = out_rinchi_string_p.getValue();
+        String rinchi = p.getString(0);
+        p = out_rinchi_auxinfo_p.getValue();
+        String auxInfo = p.getString(0);
+        
+        return new RinchiOutput(rinchi, auxInfo, RinchiStatus.ERROR, 0, "");
+	}
+	
 
 	/**
 	 * Returns the version of the wrapped RInChI C library
