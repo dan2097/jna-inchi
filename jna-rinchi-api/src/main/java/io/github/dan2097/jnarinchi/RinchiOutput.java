@@ -24,11 +24,15 @@ public class RinchiOutput {
 	private final String rinchi;
 	private final String auxInfo;
 	private final RinchiStatus status;
+	private final int errorCode;
+	private final String errorMessage;
 
-	RinchiOutput(String rinchi, String auxInfo, RinchiStatus status) {
+	RinchiOutput(String rinchi, String auxInfo, RinchiStatus status, int errorCode, String errorMessage) {
 		this.rinchi = rinchi;
 		this.auxInfo = auxInfo;
 		this.status = status;
+		this.errorCode = errorCode;
+		this.errorMessage = errorMessage;
 	}
 
 	public String getRinchi() {
@@ -41,6 +45,14 @@ public class RinchiOutput {
 	
 	public RinchiStatus getStatus() {
 		return status;
+	}
+	
+	public int getErrorCode() {
+		return errorCode;
+	}
+
+	public String getErrorMessage() {
+		return errorMessage;
 	}
 
 	@Override
