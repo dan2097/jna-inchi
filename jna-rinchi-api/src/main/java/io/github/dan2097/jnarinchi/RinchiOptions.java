@@ -35,6 +35,10 @@ public class RinchiOptions
 		}
 	}
 	
+	public static enum ReactionFileFormat {
+		RXN, RD, AUTO;
+	}
+	
 	private RinchiKeyType rinchiKeyType = RinchiKeyType.LONG;
 
 	
