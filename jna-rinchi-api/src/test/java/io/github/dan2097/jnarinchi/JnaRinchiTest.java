@@ -21,10 +21,9 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.BufferedReader;
-import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.URL;
+import java.util.Properties;
 
 
 public class JnaRinchiTest 
@@ -43,6 +42,18 @@ public class JnaRinchiTest
 				sb.append(line).append("\n");
 			}
 			return sb.toString();
+		}
+		catch (Exception e) {
+			return null;
+		}
+	}
+	
+	public static RinchiFullInfo readRinchiFullInfoFromResourceFile(String fileName) {
+		try (InputStream is = JnaRinchiTest.class.getResourceAsStream(fileName)) {
+			Properties props = new Properties();
+			props.load(is);
+			RinchiFullInfo rfi = new RinchiFullInfo(); 
+			return rfi;
 		}
 		catch (Exception e) {
 			return null;

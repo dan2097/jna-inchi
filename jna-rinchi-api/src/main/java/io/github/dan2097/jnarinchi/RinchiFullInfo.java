@@ -76,4 +76,20 @@ public class RinchiFullInfo
 	public void setRinchiKeyWeb(String rinchiKeyWeb) {
 		this.rinchiKeyWeb = rinchiKeyWeb;
 	}
+	
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		if (rinchi != null)
+			sb.append("RInChI=").append(rinchi).append("\n");
+		if (auxInfo != null)
+			sb.append("RAuxInfo=").append(auxInfo).append("\n");
+		if (rinchiKeyLong != null)
+			sb.append("Long-RInChIKey=").append(rinchiKeyLong).append("\n");
+		if (rinchiKeyShort != null)
+			sb.append("Short-RInChIKey=").append(rinchiKeyShort).append("\n");
+		if (rinchiKeyWeb != null)
+			sb.append("Web-RInChIKey=").append(rinchiKeyWeb).append("\n");
+		return sb.toString();
+	}
 }
