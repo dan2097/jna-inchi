@@ -35,11 +35,10 @@ public class JnaRinchiTest
 	}
 	
 	public static String readReactionFromResourceFile(String fileName) {
-		InputStream is = JnaRinchiTest.class.getResourceAsStream(fileName);
 		try {
 			StringBuilder sb = new StringBuilder();
-			try (BufferedReader br
-					= new BufferedReader(new InputStreamReader(is))) {
+			try (InputStream is = JnaRinchiTest.class.getResourceAsStream(fileName);
+					BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
 				String line;
 				while ((line = br.readLine()) != null) {
 					sb.append(line).append("\n");
@@ -50,5 +49,5 @@ public class JnaRinchiTest
 		catch (Exception e) {
 			return null;
 		}
-	}
+	}	
 }
