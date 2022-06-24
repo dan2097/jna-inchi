@@ -52,7 +52,12 @@ public class JnaRinchiTest
 		try (InputStream is = JnaRinchiTest.class.getResourceAsStream(fileName)) {
 			Properties props = new Properties();
 			props.load(is);
-			RinchiFullInfo rfi = new RinchiFullInfo(); 
+			RinchiFullInfo rfi = new RinchiFullInfo();
+			rfi.setRinchi(props.getProperty("RInChI"));
+			rfi.setAuxInfo(props.getProperty("RAuxInfo"));
+			rfi.setRinchiKeyLong(props.getProperty("Long-RInChIKey"));
+			rfi.setRinchiKeyShort(props.getProperty("Short-RInChIKey"));
+			rfi.setRinchiKeyWeb(props.getProperty("Web-RInChIKey"));
 			return rfi;
 		}
 		catch (Exception e) {
