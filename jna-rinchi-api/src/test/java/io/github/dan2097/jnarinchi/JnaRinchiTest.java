@@ -35,19 +35,17 @@ public class JnaRinchiTest
 	}
 	
 	public static String readReactionFromResourceFile(String fileName) {
-		try {
-			StringBuilder sb = new StringBuilder();
-			try (InputStream is = JnaRinchiTest.class.getResourceAsStream(fileName);
-					BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
-				String line;
-				while ((line = br.readLine()) != null) {
-					sb.append(line).append("\n");
-				}
+		StringBuilder sb = new StringBuilder();
+		try (InputStream is = JnaRinchiTest.class.getResourceAsStream(fileName);
+				BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
+			String line;
+			while ((line = br.readLine()) != null) {
+				sb.append(line).append("\n");
 			}
 			return sb.toString();
 		}
 		catch (Exception e) {
 			return null;
 		}
-	}	
+	}
 }
