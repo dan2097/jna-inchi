@@ -20,11 +20,35 @@ package io.github.dan2097.jnarinchi;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
+
 
 public class JnaRinchiTest 
 {
 	@Test 
 	public void testDummy() {
 		assertTrue(true);
+	}
+	
+	public static String readReactionFromResourceFile(String fileName) {
+		InputStream is = JnaRinchiTest.class.getResourceAsStream(fileName);
+		try {
+			StringBuilder sb = new StringBuilder();
+			try (BufferedReader br
+					= new BufferedReader(new InputStreamReader(is))) {
+				String line;
+				while ((line = br.readLine()) != null) {
+					sb.append(line).append("\n");
+				}
+			}
+			return sb.toString();
+		}
+		catch (Exception e) {
+			return null;
+		}
 	}
 }
