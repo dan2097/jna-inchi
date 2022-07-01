@@ -19,6 +19,7 @@ package io.github.dan2097.jnarinchi;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -64,4 +65,16 @@ public class JnaRinchiTest
 			return null;
 		}
 	}
+	
+	public static void genericExampleTest(String reactionFile, String rinchiFile) {
+		String reactText = readReactionFromResourceFile(reactionFile);
+		assertTrue(reactText != null);
+		RinchiFullInfo rfi = readRinchiFullInfoFromResourceFile(rinchiFile);
+		assertTrue(rfi != null);
+		
+		RinchiOutput rinchiOut = JnaRinchi.fileTextToRinchi(reactText);
+		assertEquals(rinchiOut.getRinchi(), rfi.getRinchi(), "Rinchi for " + reactionFile);		
+	}
+	
+	
 }
