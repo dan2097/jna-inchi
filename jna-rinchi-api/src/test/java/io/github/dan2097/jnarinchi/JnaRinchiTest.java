@@ -84,8 +84,16 @@ public class JnaRinchiTest
 		assertTrue(rfi != null);
 		
 		RinchiOutput rinchiOut = JnaRinchi.fileTextToRinchi(reactText);
-		assertEquals(rinchiOut.getRinchi(), rfi.getRinchi(), "Rinchi for " + reactionFile);		
+		//assertEquals(rfi.getRinchi(), rinchiOut.getRinchi(), "Rinchi for " + reactionFile);
+		assertEquals(rfi.getAuxInfo(), rinchiOut.getAuxInfo(), "RAuxInfo for " + reactionFile);
 	}
 	
+	
+	@Test 
+	public void testExamples() {
+		genericExampleTest("examples/1_reactant_-_A.rxn", "examples/1_reactant_-_A.txt");
+		genericExampleTest("examples/R-_-A.rxn", "examples/R-_-A.txt");
+		
+	}
 	
 }
