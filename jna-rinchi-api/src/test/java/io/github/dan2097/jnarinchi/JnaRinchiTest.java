@@ -83,8 +83,9 @@ public class JnaRinchiTest
 		RinchiFullInfo rfi = readRinchiFullInfoFromResourceFile(rinchiFile);
 		assertTrue(rfi != null);
 		
+		//RInChI examples works with option: forceEquilibrium = false (which is by default);		
 		RinchiOutput rinchiOut = JnaRinchi.fileTextToRinchi(reactText);
-		//assertEquals(rfi.getRinchi(), rinchiOut.getRinchi(), "Rinchi for " + reactionFile);
+		assertEquals(rfi.getRinchi(), rinchiOut.getRinchi(), "Rinchi for " + reactionFile);
 		assertEquals(rfi.getAuxInfo(), rinchiOut.getAuxInfo(), "RAuxInfo for " + reactionFile);
 	}
 	
