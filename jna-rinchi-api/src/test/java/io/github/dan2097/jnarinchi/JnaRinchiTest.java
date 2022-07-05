@@ -54,11 +54,22 @@ public class JnaRinchiTest
 			Properties props = new Properties();
 			props.load(is);
 			RinchiFullInfo rfi = new RinchiFullInfo();
-			rfi.setRinchi(props.getProperty("RInChI"));
-			rfi.setAuxInfo(props.getProperty("RAuxInfo"));
-			rfi.setRinchiKeyLong(props.getProperty("Long-RInChIKey"));
-			rfi.setRinchiKeyShort(props.getProperty("Short-RInChIKey"));
-			rfi.setRinchiKeyWeb(props.getProperty("Web-RInChIKey"));
+			String s;
+			s = props.getProperty("RInChI");
+			if (s != null)
+				rfi.setRinchi("RInChI=" + s);			
+			s = props.getProperty("RAuxInfo");
+			if (s != null)
+				rfi.setAuxInfo("RAuxInfo=" + s);
+			s = props.getProperty("Long-RInChIKey");
+			if (s != null)
+				rfi.setRinchiKeyLong("Long-RInChIKey=" + s);			
+			s = props.getProperty("Short-RInChIKey");
+			if (s != null)
+				rfi.setRinchiKeyShort("Short-RInChIKey" + s);
+			s = props.getProperty("Web-RInChIKey");
+			if (s != null)
+				rfi.setRinchiKeyWeb("Web-RInChIKey" + s);
 			return rfi;
 		}
 		catch (Exception e) {
