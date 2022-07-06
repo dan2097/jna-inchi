@@ -18,6 +18,9 @@
 package io.github.dan2097.jnarinchi;
 
 import org.junit.jupiter.api.Test;
+
+import io.github.dan2097.jnarinchi.RinchiOptions.RinchiKeyType;
+
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -83,10 +86,16 @@ public class JnaRinchiTest
 		RinchiFullInfo rfi = readRinchiFullInfoFromResourceFile(rinchiFile);
 		assertTrue(rfi != null);
 		
+		//Generate RInChI from mol file
 		//RInChI examples works with option: forceEquilibrium = false (which is by default);		
 		RinchiOutput rinchiOut = JnaRinchi.fileTextToRinchi(reactText);
 		assertEquals(rfi.getRinchi(), rinchiOut.getRinchi(), "Rinchi for " + reactionFile);
 		assertEquals(rfi.getAuxInfo(), rinchiOut.getAuxInfo(), "RAuxInfo for " + reactionFile);
+		
+		//Generate Long-RinchiKey from RInChI
+		RinchiKeyOutput rinchiKeyOut = JnaRinchi.rinchiKeyFromRinchi(RinchiKeyType.LONG, rinchiOut.getRinchi());
+		assertEquals(rfi.getRinchiKeyLong(), rinchiKeyOut.getRinchiKey(), "Long-RinchiKey for " + reactionFile 
+				+ " generated from RInChI" );
 	}
 	
 	
