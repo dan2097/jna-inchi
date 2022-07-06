@@ -25,6 +25,7 @@ import com.sun.jna.Pointer;
 import com.sun.jna.ptr.PointerByReference;
 
 import io.github.dan2097.jnarinchi.RinchiOptions.ReactionFileFormat;
+import io.github.dan2097.jnarinchi.RinchiOptions.RinchiKeyType;
 
 
 
@@ -75,7 +76,22 @@ public class JnaRinchi
         p = out_rinchi_auxinfo_p.getValue();
         String auxInfo = p.getString(0);
         
-        return new RinchiOutput(rinchi, auxInfo, RinchiStatus.ERROR, 0, "");
+        return new RinchiOutput(rinchi, auxInfo, RinchiStatus.SUCCESS, 0, "");
+	}
+	
+	public static RinchiKeyOutput rinchiKeyFromRinchi(RinchiKeyType keyType, String rinchi) {
+		
+		PointerByReference out_rinchi_key = new PointerByReference();        
+        int errCode = RinchiLibrary.rinchilib_rinchikey_from_rinchi(rinchi, keyType.getShortDeignation(), out_rinchi_key);
+        if (errCode != 0)
+        {  
+            String err = RinchiLibrary.rinchilib_latest_err_msg();
+            return new RinchiKeyOutput("", keyType, RinchiKeyStatus.ERROR, errCode, err);
+        }      
+        Pointer p = out_rinchi_key.getValue();
+        String rinchi_key = p.getString(0);
+        		
+		return new RinchiKeyOutput(rinchi_key, keyType, RinchiKeyStatus.SUCCESS, 0, "");
 	}
 	
 
