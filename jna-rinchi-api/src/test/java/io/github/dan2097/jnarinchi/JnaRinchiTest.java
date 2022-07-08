@@ -32,11 +32,7 @@ import java.util.Properties;
 
 public class JnaRinchiTest 
 {
-	@Test 
-	public void testDummy() {
-		assertTrue(true);
-	}
-	
+		
 	public static String readReactionFromResourceFile(String fileName) {
 		StringBuilder sb = new StringBuilder();
 		try (InputStream is = JnaRinchiTest.class.getResourceAsStream(fileName);
@@ -108,7 +104,20 @@ public class JnaRinchiTest
 				+ " generated from RInChI" );
 	}
 	
-	
+	@Test 
+	public void testCheckLibrary() {
+		boolean checkLib = true;
+		String errMsg = "";
+		try {
+			JnaRinchi.getJnaRinchiVersion();
+		}
+		catch (Exception x) {
+			checkLib = false;
+			errMsg = x.getMessage();
+		}
+		assertTrue(checkLib, errMsg);
+	}
+		
 	@Test 
 	public void testExamples() {
 		genericExampleTest("examples/1_reactant_-_A.rxn", "examples/1_reactant_-_A.txt");
