@@ -80,6 +80,7 @@ public class JnaRinchi
 	}
 	
 	public static RinchiKeyOutput rinchiKeyFromRinchi(RinchiKeyType keyType, String rinchi) {
+		checkLibrary();
 		
 		PointerByReference out_rinchi_key = new PointerByReference();        
         int errCode = RinchiLibrary.rinchilib_rinchikey_from_rinchi(rinchi, keyType.getShortDeignation(), out_rinchi_key);
