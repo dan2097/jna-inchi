@@ -70,10 +70,34 @@ public class JnaRinchi
         Pointer p = out_rinchi_string_p.getValue();
         String rinchi = p.getString(0);
         p = out_rinchi_auxinfo_p.getValue();
-        String auxInfo = p.getString(0);
-        
+        String auxInfo = p.getString(0);        
         return new RinchiOutput(rinchi, auxInfo, RinchiStatus.SUCCESS, 0, "");
 	}
+	
+	public static RinchiKeyOutput fileTextToRinchiKey(String reactFileText, RinchiKeyType keyType) {
+		return fileTextToRinchiKey(ReactionFileFormat.AUTO, reactFileText, keyType, new RinchiOptions());
+	}
+	
+	public static RinchiKeyOutput fileTextToRinchiKey(String reactFileText, RinchiKeyType keyType, RinchiOptions options) {
+		return fileTextToRinchiKey(ReactionFileFormat.AUTO, reactFileText, keyType, options);
+	}
+	
+	public static RinchiKeyOutput fileTextToRinchiKey(ReactionFileFormat fileFormat, String reactFileText, RinchiKeyType keyType, RinchiOptions options) {
+		checkLibrary();
+		
+		PointerByReference out_rinchi_key = new PointerByReference();
+		int errCode = RinchiLibrary.rinchilib_rinchikey_from_file_text(fileFormat.toString(), reactFileText, 
+				keyType.getShortDeignation(), options.isForceEquilibrium(), out_rinchi_key);
+		if (errCode != 0)
+        {  
+            String err = RinchiLibrary.rinchilib_latest_err_msg();
+            return new RinchiKeyOutput("", keyType, RinchiKeyStatus.ERROR, errCode, err);
+        }  
+		
+		Pointer p = out_rinchi_key.getValue();
+        String rinchi_key = p.getString(0);
+        return new RinchiKeyOutput(rinchi_key, keyType, RinchiKeyStatus.SUCCESS, 0, "");
+	}	
 		
 	public static RinchiKeyOutput rinchiKeyFromRinchi(RinchiKeyType keyType, String rinchi) {
 		checkLibrary();
@@ -85,10 +109,10 @@ public class JnaRinchi
             String err = RinchiLibrary.rinchilib_latest_err_msg();
             return new RinchiKeyOutput("", keyType, RinchiKeyStatus.ERROR, errCode, err);
         }      
+        
         Pointer p = out_rinchi_key.getValue();
         String rinchi_key = p.getString(0);
-        		
-		return new RinchiKeyOutput(rinchi_key, keyType, RinchiKeyStatus.SUCCESS, 0, "");
+        return new RinchiKeyOutput(rinchi_key, keyType, RinchiKeyStatus.SUCCESS, 0, "");
 	}
 	
 
