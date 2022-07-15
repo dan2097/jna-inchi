@@ -87,17 +87,17 @@ public class JnaRinchiTest
 		assertEquals(rfi.getAuxInfo(), rinchiOut.getAuxInfo(), "RAuxInfo for " + reactionFile);
 		
 		//Generate Long-RinchiKey from RInChI
-		RinchiKeyOutput rinchiKeyOut = JnaRinchi.rinchiKeyFromRinchi(RinchiKeyType.LONG, rinchiOut.getRinchi());
+		RinchiKeyOutput rinchiKeyOut = JnaRinchi.rinchiToRinchiKey(RinchiKeyType.LONG, rinchiOut.getRinchi());
 		assertEquals(rfi.getRinchiKeyLong(), rinchiKeyOut.getRinchiKey(), "Long-RinchiKey for " + reactionFile 
 				+ " generated from RInChI" );
 		
 		//Generate Short-RinchiKey from RInChI
-		rinchiKeyOut = JnaRinchi.rinchiKeyFromRinchi(RinchiKeyType.SHORT, rinchiOut.getRinchi());
+		rinchiKeyOut = JnaRinchi.rinchiToRinchiKey(RinchiKeyType.SHORT, rinchiOut.getRinchi());
 		assertEquals(rfi.getRinchiKeyShort(), rinchiKeyOut.getRinchiKey(), "Short-RinchiKey for " + reactionFile 
 				+ " generated from RInChI" );
 		
 		//Generate Web-RinchiKey from RInChI
-		rinchiKeyOut = JnaRinchi.rinchiKeyFromRinchi(RinchiKeyType.WEB, rinchiOut.getRinchi());
+		rinchiKeyOut = JnaRinchi.rinchiToRinchiKey(RinchiKeyType.WEB, rinchiOut.getRinchi());
 		assertEquals(rfi.getRinchiKeyWeb(), rinchiKeyOut.getRinchiKey(), "Web-RinchiKey for " + reactionFile 
 				+ " generated from RInChI" );
 	}

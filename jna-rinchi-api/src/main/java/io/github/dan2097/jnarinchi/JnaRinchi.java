@@ -99,7 +99,7 @@ public class JnaRinchi
         return new RinchiKeyOutput(rinchi_key, keyType, RinchiKeyStatus.SUCCESS, 0, "");
 	}	
 		
-	public static RinchiKeyOutput rinchiKeyFromRinchi(RinchiKeyType keyType, String rinchi) {
+	public static RinchiKeyOutput rinchiToRinchiKey(RinchiKeyType keyType, String rinchi) {
 		checkLibrary();
 		
 		PointerByReference out_rinchi_key = new PointerByReference();        
