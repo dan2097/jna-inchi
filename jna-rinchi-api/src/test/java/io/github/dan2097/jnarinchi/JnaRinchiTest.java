@@ -80,14 +80,29 @@ public class JnaRinchiTest
 		RinchiFullInfo rfi = readRinchiFullInfoFromResourceFile(rinchiFile);
 		assertTrue(rfi != null);
 		
-		//Generate RInChI from mol file
+		RinchiOutput rinchiOut;
+		RinchiKeyOutput rinchiKeyOut;
+		
+		//Generate RInChI from text file
 		//RInChI examples works with option: forceEquilibrium = false (which is by default);		
-		RinchiOutput rinchiOut = JnaRinchi.fileTextToRinchi(reactText);
+		rinchiOut = JnaRinchi.fileTextToRinchi(reactText);
 		assertEquals(rfi.getRinchi(), rinchiOut.getRinchi(), "Rinchi for " + reactionFile);
 		assertEquals(rfi.getAuxInfo(), rinchiOut.getAuxInfo(), "RAuxInfo for " + reactionFile);
 		
+		//Generate Long-RinchiKey from text file
+		rinchiKeyOut = JnaRinchi.fileTextToRinchiKey(reactText, RinchiKeyType.LONG);
+		assertEquals(rfi.getRinchiKeyLong(), rinchiKeyOut.getRinchiKey(), "Long-RinchiKey for " + reactionFile);
+		
+		//Generate Short-RinchiKey from text file
+		rinchiKeyOut = JnaRinchi.fileTextToRinchiKey(reactText, RinchiKeyType.SHORT);
+		assertEquals(rfi.getRinchiKeyShort(), rinchiKeyOut.getRinchiKey(), "Short-RinchiKey for " + reactionFile);
+				
+		//Generate Web-RinchiKey from text file
+		rinchiKeyOut = JnaRinchi.fileTextToRinchiKey(reactText, RinchiKeyType.WEB);
+		assertEquals(rfi.getRinchiKeyWeb(), rinchiKeyOut.getRinchiKey(), "Web-RinchiKey for " + reactionFile);
+
 		//Generate Long-RinchiKey from RInChI
-		RinchiKeyOutput rinchiKeyOut = JnaRinchi.rinchiToRinchiKey(RinchiKeyType.LONG, rinchiOut.getRinchi());
+		rinchiKeyOut = JnaRinchi.rinchiToRinchiKey(RinchiKeyType.LONG, rinchiOut.getRinchi());
 		assertEquals(rfi.getRinchiKeyLong(), rinchiKeyOut.getRinchiKey(), "Long-RinchiKey for " + reactionFile 
 				+ " generated from RInChI" );
 		
