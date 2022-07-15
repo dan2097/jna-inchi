@@ -35,7 +35,7 @@ public class RinchiLibrary implements Library
 	
 
 	public static native String rinchilib_latest_err_msg();
-
+	
 
 	public static native int rinchilib_rinchi_from_file_text(
 			String input_format, 
@@ -43,11 +43,14 @@ public class RinchiLibrary implements Library
 			boolean in_force_equilibrium,
 			PointerByReference out_rinchi_string_p,
 			PointerByReference out_rinchi_auxinfo_p);
-
-	public static native int rinchilib_rinchikey_from_rinchi(
-			String rinchi_string, 
-			String key_type, 
-			PointerByReference out_rinchi_key_p);
+	
+	public static native int rinchilib_rinchikey_from_file_text(
+			String input_format, 
+			String in_file_text,
+			String key_type,
+			boolean in_force_equilibrium,
+			PointerByReference out_rinchi_key_p
+			);
 
 	public static native int rinchilib_file_text_from_rinchi(
 			String rinchi_string,
@@ -55,4 +58,16 @@ public class RinchiLibrary implements Library
 			String output_format, 
 			PointerByReference out_file_text_p);
 
+	public static native int rinchilib_inchis_from_rinchi(
+			String rinchi_string,
+			String rinchi_auxinfo,
+			PointerByReference out_inchis_text_p
+			);
+	
+	public static native int rinchilib_rinchikey_from_rinchi(
+			String rinchi_string, 
+			String key_type, 
+			PointerByReference out_rinchi_key_p);
+
+	
 }
