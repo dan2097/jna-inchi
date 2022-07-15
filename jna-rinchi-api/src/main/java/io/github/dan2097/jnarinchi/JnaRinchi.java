@@ -24,10 +24,6 @@ import com.sun.jna.Platform;
 import com.sun.jna.Pointer;
 import com.sun.jna.ptr.PointerByReference;
 
-import io.github.dan2097.jnarinchi.RinchiOptions.ReactionFileFormat;
-import io.github.dan2097.jnarinchi.RinchiOptions.RinchiKeyType;
-
-
 
 public class JnaRinchi 
 {
@@ -78,7 +74,7 @@ public class JnaRinchi
         
         return new RinchiOutput(rinchi, auxInfo, RinchiStatus.SUCCESS, 0, "");
 	}
-	
+		
 	public static RinchiKeyOutput rinchiKeyFromRinchi(RinchiKeyType keyType, String rinchi) {
 		checkLibrary();
 		

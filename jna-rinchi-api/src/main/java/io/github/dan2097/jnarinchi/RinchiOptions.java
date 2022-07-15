@@ -18,38 +18,9 @@
 package io.github.dan2097.jnarinchi;
 
 public class RinchiOptions 
-{
-	public static enum RinchiKeyType {
-		LONG ("L"), 
-		SHORT ("S"), 
-		WEB ("W");
-		
-		private final String shortDeignation;
-		
-		private RinchiKeyType (String shortDeignation) {
-			this.shortDeignation = shortDeignation; 
-		}
-		
-		public String getShortDeignation() {
-			return shortDeignation;
-		}
-	}
-	
-	public static enum ReactionFileFormat {
-		RXN, RD, AUTO;
-	}
-	
-	private RinchiKeyType rinchiKeyType = RinchiKeyType.LONG;
+{		
 	private boolean forceEquilibrium = false;
 	
-	public RinchiKeyType getRinchiKeyType() {
-		return rinchiKeyType;
-	}
-
-	public void setRinchiKeyType(RinchiKeyType rinchiKeyType) {
-		this.rinchiKeyType = rinchiKeyType;
-	}
-
 	public boolean isForceEquilibrium() {
 		return forceEquilibrium;
 	}

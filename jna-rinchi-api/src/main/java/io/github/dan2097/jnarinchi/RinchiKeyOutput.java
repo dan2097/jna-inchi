@@ -17,7 +17,7 @@
  */
 package io.github.dan2097.jnarinchi;
 
-import io.github.dan2097.jnarinchi.RinchiOptions.RinchiKeyType;
+
 
 public class RinchiKeyOutput 
 {

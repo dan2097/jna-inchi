@@ -19,8 +19,6 @@ package io.github.dan2097.jnarinchi;
 
 import org.junit.jupiter.api.Test;
 
-import io.github.dan2097.jnarinchi.RinchiOptions.RinchiKeyType;
-
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
