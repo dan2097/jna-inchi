@@ -132,10 +132,117 @@ public class JnaRinchiTest
 	}
 		
 	@Test 
-	public void testExamples() {
-		genericExampleTest("examples/1_reactant_-_A.rxn", "examples/1_reactant_-_A.txt");
-		//genericExampleTest("examples/R-_-A.rxn", "examples/R-_-A.txt");
-		
+	public void testExample_1_reactant_A() {
+		genericExampleTest("examples/1_reactant_-_A.rxn", "examples/1_reactant_-_A.txt");		
 	}
 	
+	@Test 
+	public void testExample_1_reactant_no_product() {
+		genericExampleTest("examples/1_reactant_-_no_product.rxn", "examples/1_reactant_-_no_product.txt");		
+	}
+	
+	@Test 
+	public void testExample_1_reactant_no_structure() {
+		genericExampleTest("examples/1_reactant_-_no_structure.rxn", "examples/1_reactant_-_no_structure.txt");		
+	}
+	
+	@Test 
+	public void testExample_1_reactant_R() {
+		genericExampleTest("examples/1_reactant_-_R.rxn", "examples/1_reactant_-_R.txt");		
+	}
+	
+	@Test 
+	public void testExample_1_reactant_X() {
+		genericExampleTest("examples/1_reactant_-_X.rxn", "examples/1_reactant_-_X.txt");		
+	}
+	
+	@Test 
+	public void testExample_Esterification_01_flat() {
+		genericExampleTest("examples/Esterification_01_flat.rdf", "examples/Esterification_01_flat.txt");		
+	}
+	
+	@Test 
+	public void testExample_Esterification_01() {
+		genericExampleTest("examples/Esterification_01.rdf", "examples/Esterification_01.txt");		
+	}
+	
+	@Test 
+	public void testExample_Esterification_02() {
+		genericExampleTest("examples/Esterification_02.rdf", "examples/Esterification_02.txt");		
+	}
+	
+	@Test 
+	public void testExample_Esterification_03() {
+		genericExampleTest("examples/Esterification_03.rdf", "examples/Esterification_03.txt");		
+	}
+
+	@Test 
+	public void testExample_Inverted_stereochemistry() {
+		genericExampleTest("examples/Inverted_stereochemistry.rxn", "examples/Inverted_stereochemistry.txt");		
+	}
+	
+	@Test 
+	public void testExample_Multiplesteps() {
+		genericExampleTest("examples/Multiplesteps.rdf", "examples/Multiplesteps.txt");		
+	}
+	
+	@Test 
+	public void testExample_No_reactant_1_product_02() {
+		genericExampleTest("examples/No_reactant_-_1_product_02.rxn", "examples/No_reactant_-_1_product_02.txt");		
+	}
+	
+	@Test 
+	public void testExample_No_reactant_1_product() {
+		genericExampleTest("examples/No_reactant_-_1_product.rxn", "examples/No_reactant_-_1_product.txt");		
+	}
+	
+	@Test 
+	public void testExample_No_reactant_no_product() {
+		genericExampleTest("examples/No_reactant_-_no_product.rdf", "examples/No_reactant_-_no_product.txt");		
+	}
+	
+	@Test 
+	public void testExample_no_structure_1_product() {
+		genericExampleTest("examples/no_structure_-_1_product.rxn", "examples/no_structure_-_1_product.txt");		
+	}
+	
+	@Test 
+	public void testExample_No_Structure_0_02() {
+		genericExampleTest("examples/No_Structure_0-02.rdf", "examples/No_Structure_0-02.txt");		
+	}
+	
+	@Test 
+	public void testExample_Nnostruct_X() {
+		genericExampleTest("examples/nostruct_-_X.rxn", "examples/nostruct_-_X.txt");		
+	}
+	
+	@Test 
+	public void testExample_R__A() {
+		genericExampleTest("examples/R-_-A.rxn", "examples/R-_-A.txt");		
+	}
+	
+	@Test 
+	public void testExample_RingOpening01() {
+		genericExampleTest("examples/RingOpening01.rxn", "examples/RingOpening01.txt");		
+	}
+	
+	@Test 
+	public void testExample_star_star__nostruct() {
+		genericExampleTest("examples/star_star_-_nostruct.rxn", "examples/star_star_-_nostruct.txt");		
+	}
+	
+	@Test 
+	public void testExample_Styrene__Polystyrene_as_no_struct() {
+		genericExampleTest("examples/Styrene_-_Polystyrene_as_no-struct.rxn", "examples/Styrene_-_Polystyrene_as_no-struct.txt");		
+	}
+	
+	@Test 
+	public void testExample_Tautomerization_01() {
+		genericExampleTest("examples/Tautomerization_01.rxn", "examples/Tautomerization_01.txt");	
+	}
+	
+	@Test 
+	public void testExample_X__1_product() {
+		genericExampleTest("examples/X_-_1_product.rxn", "examples/X_-_1_product.txt");	
+	}
 }
