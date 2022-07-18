@@ -22,13 +22,15 @@ public class FileTextOutput
 {
 	private final String reactionFileText; 
 	private final ReactionFileFormat fileFormat;
+	private final FileTextStatus status;
 	private final int errorCode;
 	private final String errorMessage;
 	
 	public FileTextOutput (String reactionFileText, ReactionFileFormat fileFormat,
-			int errorCode, String errorMessage) {
+			FileTextStatus status, int errorCode, String errorMessage) {
 		this.reactionFileText = reactionFileText;
 		this.fileFormat = fileFormat;
+		this.status = status;
 		this.errorCode = errorCode;
 		this.errorMessage = errorMessage;
 	}
@@ -39,6 +41,10 @@ public class FileTextOutput
 
 	public ReactionFileFormat getFileFormat() {
 		return fileFormat;
+	}
+	
+	public FileTextStatus getStatus() {
+		return status;
 	}
 
 	public int getErrorCode() {
