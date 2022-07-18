@@ -21,14 +21,14 @@ package io.github.dan2097.jnarinchi;
 public class FileTextOutput 
 {
 	private final String reactionFileText; 
-	private final ReactionFileFormat format;
+	private final ReactionFileFormat fileFormat;
 	private final int errorCode;
 	private final String errorMessage;
 	
-	public FileTextOutput (String reactionFileText, ReactionFileFormat format,
+	public FileTextOutput (String reactionFileText, ReactionFileFormat fileFormat,
 			int errorCode, String errorMessage) {
 		this.reactionFileText = reactionFileText;
-		this.format = format;
+		this.fileFormat = fileFormat;
 		this.errorCode = errorCode;
 		this.errorMessage = errorMessage;
 	}
@@ -37,8 +37,8 @@ public class FileTextOutput
 		return reactionFileText;
 	}
 
-	public ReactionFileFormat getFormat() {
-		return format;
+	public ReactionFileFormat getFileFormat() {
+		return fileFormat;
 	}
 
 	public int getErrorCode() {
