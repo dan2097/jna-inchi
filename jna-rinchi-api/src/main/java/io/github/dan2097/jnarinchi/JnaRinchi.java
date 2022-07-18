@@ -97,8 +97,26 @@ public class JnaRinchi
 		Pointer p = out_rinchi_key.getValue();
         String rinchi_key = p.getString(0);
         return new RinchiKeyOutput(rinchi_key, keyType, RinchiKeyStatus.SUCCESS, 0, "");
-	}	
+	}
+	
+	
+	public static FileTextOutput rinchiToFileText(String rinchi, String auxInfo, ReactionFileFormat fileFormat) {
+		checkLibrary();
 		
+		PointerByReference out_file_text_p = new PointerByReference();
+		int errCode = RinchiLibrary.rinchilib_file_text_from_rinchi(rinchi, auxInfo, fileFormat.toString(), out_file_text_p);
+		if (errCode != 0)
+        {  
+            String err = RinchiLibrary.rinchilib_latest_err_msg();
+            return new FileTextOutput("", fileFormat, FileTextStatus.ERROR, errCode, err);
+        }  
+		
+		Pointer p = out_file_text_p.getValue();
+        String reactFileText = p.getString(0);
+		return new FileTextOutput(reactFileText, fileFormat, FileTextStatus.SUCCESS, 0, "");
+	}
+		
+	
 	public static RinchiKeyOutput rinchiToRinchiKey(RinchiKeyType keyType, String rinchi) {
 		checkLibrary();
 		
