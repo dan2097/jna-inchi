@@ -24,6 +24,6 @@ public enum RinchiStatus {
 	/** Success; warning(s) issued */
 	WARNING,
 
-	/** Error: no InChI has been created */
+	/** Error: no RInChI has been created */
 	ERROR,
 }
