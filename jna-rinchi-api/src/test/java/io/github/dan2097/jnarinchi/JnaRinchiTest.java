@@ -76,9 +76,9 @@ public class JnaRinchiTest
 	
 	public static void genericExampleTest(String reactionFile, String rinchiFile) {
 		String reactText = readReactionFromResourceFile(reactionFile);
-		assertTrue(reactText != null);
+		assertTrue(reactText != null, "Reading reaction from text file " + reactionFile);
 		RinchiFullInfo rfi = readRinchiFullInfoFromResourceFile(rinchiFile);
-		assertTrue(rfi != null);
+		assertTrue(rfi != null, "Reading Rinchi Full Infor from file " + rinchiFile);
 		
 		RinchiOutput rinchiOut;
 		RinchiKeyOutput rinchiKeyOut;
@@ -115,7 +115,26 @@ public class JnaRinchiTest
 		rinchiKeyOut = JnaRinchi.rinchiToRinchiKey(RinchiKeyType.WEB, rinchiOut.getRinchi());
 		assertEquals(rfi.getRinchiKeyWeb(), rinchiKeyOut.getRinchiKey(), "Web-RinchiKey for " + reactionFile 
 				+ " generated from RInChI" );
+		
 	}
+	
+	public static void doubleConversionExampleTest(String reactionFile, String rinchiFile, ReactionFileFormat format) {
+		//Double conversion test RIChI --> file text --> RInChI
+		String reactText = readReactionFromResourceFile(reactionFile);
+		assertTrue(reactText != null, "Reading reaction from text file " + reactionFile);
+		RinchiFullInfo rfi = readRinchiFullInfoFromResourceFile(rinchiFile);
+		assertTrue(rfi != null, "Reading Rinchi Full Infor from file " + rinchiFile);
+		
+		RinchiOutput rinchiOut;
+		RinchiKeyOutput rinchiKeyOut;
+		
+		FileTextOutput fileTextOut = JnaRinchi.rinchiToFileText(rfi.getRinchi(), rfi.getAuxInfo(), format);
+		assertTrue(fileTextOut.getStatus() == FileTextStatus.SUCCESS, "RIChI to FileText conversion status for " + rinchiFile);
+		rinchiOut = JnaRinchi.fileTextToRinchi(fileTextOut.getReactionFileText());
+		assertEquals(rfi.getRinchi(), rinchiOut.getRinchi(), "Rinchi for " + reactionFile);
+		assertEquals(rfi.getAuxInfo(), rinchiOut.getAuxInfo(), "RAuxInfo for " + reactionFile);	
+	}
+	
 	
 	@Test 
 	public void testCheckLibrary() {
