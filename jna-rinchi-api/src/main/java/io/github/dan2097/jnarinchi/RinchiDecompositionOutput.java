@@ -20,7 +20,7 @@ package io.github.dan2097.jnarinchi;
 
 public class RinchiDecompositionOutput 
 {			
-	private final int direction;		
+	private final ReactionDirection direction;		
 	private final String[] inchies;
 	private final String[] auxInfos;
 	private final ReactionComponentRole[] roles;
@@ -29,7 +29,7 @@ public class RinchiDecompositionOutput
 	private final String errorMessage;
 	
 	
-	public RinchiDecompositionOutput (int direction, String[] inchies, String[] auxInfos, ReactionComponentRole[] roles,
+	public RinchiDecompositionOutput (ReactionDirection direction, String[] inchies, String[] auxInfos, ReactionComponentRole[] roles,
 			RinchiDecompositionStatus status, int errorCode, String errorMessage) 
 	{
 		this.direction = direction;
@@ -41,7 +41,7 @@ public class RinchiDecompositionOutput
 		this.errorMessage =errorMessage;
 	}
 
-	public int getDirection() {
+	public ReactionDirection getDirection() {
 		return direction;
 	}
 
