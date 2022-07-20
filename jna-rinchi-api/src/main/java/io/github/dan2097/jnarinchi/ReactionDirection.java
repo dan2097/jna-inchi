@@ -19,5 +19,18 @@ package io.github.dan2097.jnarinchi;
 
 public enum ReactionDirection 
 {	
-	FORWARD, BACKWARD, EQUILIBRIUM
+	FORWARD ("+"), 
+	BACKWARD ("-"), 
+	EQUILIBRIUM ("=");
+	
+	private final String shortRinchiDeignation;
+	
+	private ReactionDirection(String shortRinchiDeignation) {
+		this.shortRinchiDeignation = shortRinchiDeignation;
+	}
+
+	public String getShortRinchiDeignation() {
+		return shortRinchiDeignation;
+	}
+	
 }
