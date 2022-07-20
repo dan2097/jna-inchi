@@ -225,12 +225,12 @@ public class JnaRinchi
 					errorBuffer.append("Incorrect RInChI component line: " + rinchiLine + "\n");
 				else {
 					role = ReactionComponentRole.getRoleFromShortDesignation(rinchiLine.substring(0,1));
-					if (role == null) {
+					if (role == null) 
 						errorBuffer.append("Incorrect RInChI component line: incorrect role: " + rinchiLine + "\n");
+					else {
+						inchis[i] = rinchiLine.substring(2);
 						flagRinciLineOK = true;
 					}	
-					else
-						inchis[i] = rinchiLine.substring(2);
 				}
 				
 				if (flagRinciLineOK) {
@@ -240,8 +240,10 @@ public class JnaRinchi
 						ReactionComponentRole role2 = ReactionComponentRole.getRoleFromShortDesignation(auxInfoLine.substring(0,1));
 						if (role2 == null || (role != role2) )
 							errorBuffer.append("Incorrect AuxInfo component line: incorrect role: " + auxInfoLine + "\n");
-						else 
+						else {
 							auxInfos[i] = auxInfoLine.substring(2);
+							roles[i] = role;
+						}	
 					}
 				}
 			}
