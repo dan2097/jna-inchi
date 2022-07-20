@@ -33,7 +33,7 @@ public enum ReactionDirection
 		return shortRinchiDeignation;
 	}
 	
-	public ReactionDirection getDirectionFromShortDesignation(String designation) {
+	public static ReactionDirection getDirectionFromShortDesignation(String designation) {
 		for (ReactionDirection dir : ReactionDirection.values())
 			if (dir.getShortRinchiDeignation().equals(designation))
 				return dir;
