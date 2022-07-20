@@ -32,4 +32,11 @@ public enum ReactionComponentRole
 	public String getShortRinchiDeignation() {
 		return shortRinchiDeignation;
 	}
+	
+	public static ReactionComponentRole getRoleFromShortDesignation(String designation) {
+		for (ReactionComponentRole role : ReactionComponentRole.values())
+			if (role.getShortRinchiDeignation().equals(designation))
+				return role;
+		return null;
+	}
 }
