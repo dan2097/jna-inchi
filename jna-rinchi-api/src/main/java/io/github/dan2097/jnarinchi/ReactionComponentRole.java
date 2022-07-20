@@ -19,5 +19,17 @@ package io.github.dan2097.jnarinchi;
 
 public enum ReactionComponentRole 
 {
-	REAGENT, PRODUCT, AGENT
+	REAGENT ("R"), 
+	PRODUCT ("P"), 
+	AGENT ("A");
+	
+	private final String shortRinchiDeignation;
+	
+	private ReactionComponentRole(String shortRinchiDeignation) {
+		this.shortRinchiDeignation = shortRinchiDeignation; 
+	}
+	
+	public String getShortRinchiDeignation() {
+		return shortRinchiDeignation;
+	}
 }
