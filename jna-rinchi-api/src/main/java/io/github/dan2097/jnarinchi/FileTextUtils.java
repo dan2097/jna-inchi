@@ -18,5 +18,23 @@
 package io.github.dan2097.jnarinchi;
 
 public class FileTextUtils {
-
+		
+	private String endLine = "\n";	
+	private StringBuilder strBuilder;	
+	
+	private void addRrinchiInputComponentToMolFile(RinchiInputComponent ric, String info) 
+	{
+		addMolHeader(info);
+		//TODO
+	}
+	
+	private void addMolHeader(String info) {
+		strBuilder.append(endLine);
+		strBuilder.append("  ");
+		strBuilder.append(info);
+		strBuilder.append(endLine);
+		strBuilder.append(endLine);
+	}
+	
+	
 }
