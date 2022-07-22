@@ -17,10 +17,27 @@
  */
 package io.github.dan2097.jnarinchi;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class FileTextUtils {
 		
 	private String endLine = "\n";	
 	private StringBuilder strBuilder;	
+	private List<String> errors = new ArrayList<String>();
+	private ReactionFileFormat format = ReactionFileFormat.RXN;
+	
+	
+	public String rinchiInputToFileText(RinchiInput rInput, ReactionFileFormat format) {
+		this.format = format;
+		strBuilder = new StringBuilder();
+		errors.clear();
+		
+		//TODO
+		
+		return strBuilder.toString();
+	}
+	
 	
 	private void addRrinchiInputComponentToMolFile(RinchiInputComponent ric, String info1, String info2) 
 	{
@@ -38,6 +55,9 @@ public class FileTextUtils {
 		strBuilder.append(endLine);
 		strBuilder.append(endLine);
 	}
-	
+
+	public List<String> getErrors() {
+		return errors;
+	}	
 	
 }
