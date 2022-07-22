@@ -22,16 +22,19 @@ public class FileTextUtils {
 	private String endLine = "\n";	
 	private StringBuilder strBuilder;	
 	
-	private void addRrinchiInputComponentToMolFile(RinchiInputComponent ric, String info) 
+	private void addRrinchiInputComponentToMolFile(RinchiInputComponent ric, String info1, String info2) 
 	{
-		addMolHeader(info);
+		addMolHeader(info1, info2);
 		//TODO
 	}
 	
-	private void addMolHeader(String info) {
+	private void addMolHeader(String info1, String info2) {
+		strBuilder.append("$MOL");
+		strBuilder.append(endLine);
+		strBuilder.append(info1);
 		strBuilder.append(endLine);
 		strBuilder.append("  ");
-		strBuilder.append(info);
+		strBuilder.append(info2);
 		strBuilder.append(endLine);
 		strBuilder.append(endLine);
 	}
