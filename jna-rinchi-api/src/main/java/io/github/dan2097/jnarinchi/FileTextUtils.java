@@ -25,19 +25,44 @@ public class FileTextUtils {
 	private String endLine = "\n";	
 	private StringBuilder strBuilder;	
 	private List<String> errors = new ArrayList<String>();
-	private ReactionFileFormat format = ReactionFileFormat.RXN;
+	private ReactionFileFormat format = ReactionFileFormat.RD;
+	private RinchiInput rInput = null;
+	private List<RinchiInputComponent> reagents = new ArrayList<RinchiInputComponent>();
+	private List<RinchiInputComponent> products = new ArrayList<RinchiInputComponent>();
+	private List<RinchiInputComponent> agents = new ArrayList<RinchiInputComponent>();
 	
+	public String rinchiInputToFileText(RinchiInput rInput) {
+		return rinchiInputToFileText(rInput, ReactionFileFormat.RD);
+	}
 	
 	public String rinchiInputToFileText(RinchiInput rInput, ReactionFileFormat format) {
+		this.rInput = rInput;		
 		this.format = format;
-		strBuilder = new StringBuilder();
-		errors.clear();
+		
+		if (rInput == null) {
+			errors.add("RinchiInput is null!");
+			return null;
+		}
+		
+		if (format == null) {
+			errors.add("Format is null!");
+			return null;
+		}
+		
+		reset();
 		
 		//TODO
 		
 		return strBuilder.toString();
 	}
 	
+	private void reset() {
+		strBuilder = new StringBuilder();
+		errors.clear();
+		reagents.clear();
+		products.clear();
+		agents.clear();
+	}
 	
 	private void addRrinchiInputComponentToMolFile(RinchiInputComponent ric, String info1, String info2) 
 	{
@@ -54,6 +79,10 @@ public class FileTextUtils {
 		strBuilder.append(info2);
 		strBuilder.append(endLine);
 		strBuilder.append(endLine);
+	}
+	
+	private void addRDFileHeader() {
+		//TODO
 	}
 
 	public List<String> getErrors() {
