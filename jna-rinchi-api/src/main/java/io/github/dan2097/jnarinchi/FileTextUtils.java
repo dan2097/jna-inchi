@@ -35,21 +35,23 @@ public class FileTextUtils {
 		return rinchiInputToFileText(rInput, ReactionFileFormat.RD);
 	}
 	
-	public String rinchiInputToFileText(RinchiInput rInput, ReactionFileFormat format) {
-		this.rInput = rInput;		
-		this.format = format;
-		
+	public String rinchiInputToFileText(RinchiInput rInp, ReactionFileFormat rFormat) {
+		this.rInput = rInp;		
+		this.format = rFormat;		
 		if (rInput == null) {
 			errors.add("RinchiInput is null!");
 			return null;
-		}
-		
+		}		
 		if (format == null) {
 			errors.add("Format is null!");
 			return null;
 		}
 		
 		reset();
+		analyzeComponents();
+		
+		if (format == ReactionFileFormat.RD || format == ReactionFileFormat.AUTO )
+			addRDFileHeader();
 		
 		//TODO
 		
@@ -83,6 +85,22 @@ public class FileTextUtils {
 	
 	private void addRDFileHeader() {
 		//TODO
+	}
+	
+	private void analyzeComponents() {
+		for (RinchiInputComponent ric : rInput.getComponents()) {
+			switch (ric.getRole()) {
+			case REAGENT:
+				reagents.add(ric);
+				break;
+			case PRODUCT:
+				products.add(ric);
+				break;
+			case AGENT:
+				agents.add(ric);
+				break;
+			}
+		}
 	}
 
 	public List<String> getErrors() {
