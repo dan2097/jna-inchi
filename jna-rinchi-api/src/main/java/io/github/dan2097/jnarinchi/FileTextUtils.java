@@ -23,6 +23,8 @@ import java.util.List;
 import java.util.Locale;
 
 import io.github.dan2097.jnainchi.InchiAtom;
+import io.github.dan2097.jnainchi.InchiBond;
+import io.github.dan2097.jnainchi.InchiBondType;
 
 public class FileTextUtils {
 	
@@ -134,7 +136,7 @@ public class FileTextUtils {
 		strBuilder.append(" 0"); 
 		//ccc
 		addInteger(getOldCTABChargeCoding(atom.getCharge()),3);
-		//sss stereoparity not specified yet
+		//sss stereoparity not specified yet - TODO
 		strBuilder.append("  0"); 
 		//hhh: implicit H atoms: used for query 
 		//addInteger(getImplicitHAtomCoding(atom),3);
@@ -147,6 +149,40 @@ public class FileTextUtils {
 		strBuilder.append("  0");
 		
 		//rrriiimmmnnneee are not specified
+	}
+	
+	private void addBondLine(InchiBond bond, RinchiInputComponent ric) {
+		//MDL bond line specification
+		//111222tttsssxxxrrrccc
+		
+		//111 firts atom
+		int firstAt = ric.getAtoms().indexOf(bond.getStart()) + 1; //1-based atom numbering
+		addInteger(firstAt, 3);
+		//222 second atom
+		int secondAt = ric.getAtoms().indexOf(bond.getEnd()) + 1; //1-based atom numbering
+		addInteger(secondAt, 3);
+		//ttt bond type
+		addInteger(getBondMDLBondCode(bond), 3);
+		//sss bond stereo - not specified - TODO
+		strBuilder.append("  0");
+		//xxx = not used
+		strBuilder.append("  0");
+		//rrr (bond topology, used only for SSS)
+		strBuilder.append("  0");
+		//ccc (reacting center status): 0 - unmarked 
+		strBuilder.append("  0");
+	}
+	
+	int getBondMDLBondCode(InchiBond bond) {
+		switch (bond.getType()) {
+		case SINGLE:
+			return 1;
+		case DOUBLE:
+			return 2;
+		case TRIPLE:
+			return 3;
+		};
+		return 1;
 	}
 	
 	private void analyzeComponents() {
