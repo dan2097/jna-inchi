@@ -17,13 +17,25 @@
  */
 package io.github.dan2097.jnarinchi;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class FileTextUtils {
 	
 	public static enum CTABVersion {
 		V2000, V3000
+	}
+	
+	public static NumberFormat mdlNumberFormat = NumberFormat.getNumberInstance(Locale.ENGLISH);
+	
+	static {
+		mdlNumberFormat.setMinimumIntegerDigits(1);
+		mdlNumberFormat.setMaximumIntegerDigits(4);
+		mdlNumberFormat.setMinimumFractionDigits(4);
+		mdlNumberFormat.setMaximumFractionDigits(4);
+		mdlNumberFormat.setGroupingUsed(false);
 	}
 	
 	private String endLine = "\n";	
@@ -111,6 +123,37 @@ public class FileTextUtils {
 	public void setFormat(ReactionFileFormat format) {
 		if (format != null)
 			this.format = format;
+	}
+	
+	private void addInteger(int value, int fixedSpace) {
+		String vStr = Integer.toString(value);
+		if (vStr.length() > fixedSpace)
+			vStr = "0";
+		//Adding empty spaces and value
+		int nEmptySpaces = fixedSpace - vStr.length();
+		for (int i = 0; i < nEmptySpaces; i++)
+			strBuilder.append(" ");
+		strBuilder.append(vStr);
+	}
+	
+	private void addDouble(Double value) {
+		addDouble(value, mdlNumberFormat, 10);
+	}
+	
+	private void addDouble(Double value, NumberFormat nf, int fixedSpace) {
+		String vStr;
+		if(Double.isNaN(value) || Double.isInfinite(value))
+			vStr = nf.format(0.0);
+		else
+			vStr = nf.format(value);
+		
+		if (vStr.length() > fixedSpace)
+			vStr = "0";
+		//Adding empty spaces and value
+		int nEmptySpaces = fixedSpace - vStr.length();
+		for (int i = 0; i < nEmptySpaces; i++)
+			strBuilder.append(" ");
+		strBuilder.append(vStr);
 	}
 	
 }
