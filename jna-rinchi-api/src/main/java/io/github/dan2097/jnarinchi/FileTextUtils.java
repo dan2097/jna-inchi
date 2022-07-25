@@ -69,7 +69,14 @@ public class FileTextUtils {
 		if (format == ReactionFileFormat.RD || format == ReactionFileFormat.AUTO )
 			addRDFileHeader();
 		
-		//TODO
+		//Add reagents
+		for (int i = 0; i < reagents.size(); i++) 
+			addRrinchiInputComponent(reagents.get(i), "Reagent " + (i+1), "  JNA-RIN", "");
+		//Add products
+		for (int i = 0; i < products.size(); i++) 
+			addRrinchiInputComponent(products.get(i), "Products " + (i+1), "  JNA-RIN", "");
+		
+		//TODO add agents for RDFile
 		
 		return strBuilder.toString();
 	}
@@ -82,20 +89,23 @@ public class FileTextUtils {
 		agents.clear();
 	}
 	
-	private void addRrinchiInputComponentToMolFile(RinchiInputComponent ric, String info1, String info2) 
+	private void addRrinchiInputComponent(RinchiInputComponent ric, String line1, String line2, String line3) 
 	{
-		addMolHeader(info1, info2);
-		//TODO
+		addMolHeader(line1, line2, line3);
+		addCTABBlockV2000(ric);
+		
+		strBuilder.append("M END");
+		strBuilder.append(endLine);
 	}
 	
-	private void addMolHeader(String info1, String info2) {
+	private void addMolHeader(String line1, String line2, String line3) {
 		strBuilder.append("$MOL");
 		strBuilder.append(endLine);
-		strBuilder.append(info1);
+		strBuilder.append(line1);
+		strBuilder.append(endLine);		
+		strBuilder.append(line2);
 		strBuilder.append(endLine);
-		strBuilder.append("  ");
-		strBuilder.append(info2);
-		strBuilder.append(endLine);
+		strBuilder.append(line3);
 		strBuilder.append(endLine);
 	}
 	
