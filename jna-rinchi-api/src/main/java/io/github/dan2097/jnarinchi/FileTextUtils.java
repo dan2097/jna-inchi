@@ -109,9 +109,10 @@ public class FileTextUtils {
 		strBuilder.append("  0"); //rrr
 		strBuilder.append("  0"); //ppp
 		strBuilder.append("  0"); //iii
-		strBuilder.append("  0"); //mmm
+		strBuilder.append("999"); //mmm
 		strBuilder.append(" V2000"); //vvvvvv
 		strBuilder.append(endLine);
+		
 	}
 	
 	private void analyzeComponents() {
