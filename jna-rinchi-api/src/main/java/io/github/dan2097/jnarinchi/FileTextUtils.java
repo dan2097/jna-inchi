@@ -31,19 +31,11 @@ public class FileTextUtils {
 	private List<RinchiInputComponent> products = new ArrayList<RinchiInputComponent>();
 	private List<RinchiInputComponent> agents = new ArrayList<RinchiInputComponent>();
 	
-	public String rinchiInputToFileText(RinchiInput rInput) {
-		return rinchiInputToFileText(rInput, ReactionFileFormat.RD);
-	}
-	
-	public String rinchiInputToFileText(RinchiInput rInp, ReactionFileFormat rFormat) {
-		this.rInput = rInp;		
-		this.format = rFormat;		
+		
+	public String rinchiInputToFileText(RinchiInput rInp) {
+		this.rInput = rInp;
 		if (rInput == null) {
 			errors.add("RinchiInput is null!");
-			return null;
-		}		
-		if (format == null) {
-			errors.add("Format is null!");
 			return null;
 		}
 		
@@ -105,6 +97,15 @@ public class FileTextUtils {
 
 	public List<String> getErrors() {
 		return errors;
-	}	
+	}
+
+	public ReactionFileFormat getFormat() {
+		return format;
+	}
+
+	public void setFormat(ReactionFileFormat format) {
+		if (format != null)
+			this.format = format;
+	}
 	
 }
