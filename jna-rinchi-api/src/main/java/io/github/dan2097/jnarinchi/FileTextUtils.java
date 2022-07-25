@@ -22,6 +22,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import io.github.dan2097.jnainchi.InchiAtom;
+
 public class FileTextUtils {
 	
 	public static enum CTABVersion {
@@ -43,6 +45,8 @@ public class FileTextUtils {
 	private StringBuilder strBuilder;	
 	private List<String> errors = new ArrayList<String>();
 	private ReactionFileFormat format = ReactionFileFormat.RD;
+	private boolean add_M_ISO_Line = false;
+	private boolean add_M_CHG_Line = false;
 	private CTABVersion ctabVersion = CTABVersion.V2000; //Currently only V2000 is supported
 	private RinchiInput rInput = null;
 	private List<RinchiInputComponent> reagents = new ArrayList<RinchiInputComponent>();
@@ -115,6 +119,17 @@ public class FileTextUtils {
 		
 	}
 	
+	private void addAtomLine(InchiAtom atom) {
+		//xxxxx.xxxxyyyyy.yyyyzzzzz.zzzz aaaddcccssshhhbbbvvvHHHrrriiimmmnnneee
+		addDouble(atom.getX());
+		addDouble(atom.getY());
+		addDouble(atom.getZ());
+		strBuilder.append(" ");
+		addString(atom.getElName(),3); //aaa
+		strBuilder.append(" 0"); //dd temporary
+		
+	}
+	
 	private void analyzeComponents() {
 		for (RinchiInputComponent ric : rInput.getComponents()) {
 			switch (ric.getRole()) {
@@ -131,17 +146,28 @@ public class FileTextUtils {
 		}
 	}
 
-	public List<String> getErrors() {
-		return errors;
+	
+	
+	private void addString(String vStr, int fixedSpace) {
+		addString(vStr, fixedSpace, true);
 	}
-
-	public ReactionFileFormat getFormat() {
-		return format;
-	}
-
-	public void setFormat(ReactionFileFormat format) {
-		if (format != null)
-			this.format = format;
+	
+	private void addString(String vStr, int fixedSpace, boolean spacesAtTheEnd) {
+		//Adding empty spaces and value
+		int nEmptySpaces = fixedSpace - vStr.length();
+		if (nEmptySpaces < 0) 
+			strBuilder.append(vStr.substring(fixedSpace));
+		else {
+			if (spacesAtTheEnd) {
+				strBuilder.append(vStr);
+				for (int i = 0; i < nEmptySpaces; i++)
+					strBuilder.append(" ");
+			} else {
+				for (int i = 0; i < nEmptySpaces; i++)
+					strBuilder.append(" ");
+				strBuilder.append(vStr);
+			}
+		}
 	}
 	
 	private void addInteger(int value, int fixedSpace) {
@@ -175,4 +201,34 @@ public class FileTextUtils {
 		strBuilder.append(vStr);
 	}
 	
+	
+	public List<String> getErrors() {
+		return errors;
+	}
+
+	public ReactionFileFormat getFormat() {
+		return format;
+	}
+
+	public void setFormat(ReactionFileFormat format) {
+		if (format != null)
+			this.format = format;
+	}
+
+	public boolean isAdd_M_ISO_Line() {
+		return add_M_ISO_Line;
+	}
+
+	public void setAdd_M_ISO_Line(boolean add_M_ISO_Line) {
+		this.add_M_ISO_Line = add_M_ISO_Line;
+	}
+
+	public boolean isAdd_M_CHG_Line() {
+		return add_M_CHG_Line;
+	}
+
+	public void setAdd_M_CHG_Line(boolean add_M_CHG_Line) {
+		this.add_M_CHG_Line = add_M_CHG_Line;
+	}
+		
 }
