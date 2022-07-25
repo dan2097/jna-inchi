@@ -21,11 +21,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FileTextUtils {
-		
+	
+	public static enum CTABVersion {
+		V2000, V3000
+	}
+	
 	private String endLine = "\n";	
 	private StringBuilder strBuilder;	
 	private List<String> errors = new ArrayList<String>();
 	private ReactionFileFormat format = ReactionFileFormat.RD;
+	private CTABVersion ctabVersion = CTABVersion.V2000; //Currently only V2000 is supported
 	private RinchiInput rInput = null;
 	private List<RinchiInputComponent> reagents = new ArrayList<RinchiInputComponent>();
 	private List<RinchiInputComponent> products = new ArrayList<RinchiInputComponent>();
