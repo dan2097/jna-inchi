@@ -97,6 +97,23 @@ public class FileTextUtils {
 		//TODO
 	}
 	
+	private void addCTABBlockV2000(RinchiInputComponent ric) {
+		//Counts line: aaabbblllfffcccsssxxxrrrpppiiimmmvvvvvv
+		addInteger(ric.getAtoms().size(), 3); //aaa
+		addInteger(ric.getBonds().size(), 3); //bbb
+		strBuilder.append("  0"); //lll
+		strBuilder.append("  0"); //fff
+		addInteger(ric.getStereos().size(), 3); //ccc
+		strBuilder.append("  0"); //sss
+		strBuilder.append("  0"); //xxx
+		strBuilder.append("  0"); //rrr
+		strBuilder.append("  0"); //ppp
+		strBuilder.append("  0"); //iii
+		strBuilder.append("  0"); //mmm
+		strBuilder.append(" V2000"); //vvvvvv
+		strBuilder.append(endLine);
+	}
+	
 	private void analyzeComponents() {
 		for (RinchiInputComponent ric : rInput.getComponents()) {
 			switch (ric.getRole()) {
