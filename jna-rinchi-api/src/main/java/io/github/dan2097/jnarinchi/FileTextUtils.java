@@ -129,6 +129,12 @@ public class FileTextUtils {
 		strBuilder.append(" V2000"); //vvvvvv
 		strBuilder.append(endLine);
 		
+		//Add Atom block
+		for (int i = 0; i < ric.getAtoms().size(); i++) 
+			addAtomLine(ric.getAtom(i));
+		//Add Bond block
+		for (int i = 0; i < ric.getBonds().size(); i++) 
+			addBondLine(ric.getBond(i), ric);
 	}
 	
 	private void addAtomLine(InchiAtom atom) {
@@ -159,6 +165,7 @@ public class FileTextUtils {
 		strBuilder.append("  0");
 		
 		//rrriiimmmnnneee are not specified
+		strBuilder.append(endLine);
 	}
 	
 	private void addBondLine(InchiBond bond, RinchiInputComponent ric) {
@@ -181,6 +188,7 @@ public class FileTextUtils {
 		strBuilder.append("  0");
 		//ccc (reacting center status): 0 - unmarked 
 		strBuilder.append("  0");
+		strBuilder.append(endLine);
 	}
 	
 	int getBondMDLBondCode(InchiBond bond) {
