@@ -28,7 +28,8 @@ public class FileTextUtils {
 		V2000, V3000
 	}
 	
-	public static NumberFormat mdlNumberFormat = NumberFormat.getNumberInstance(Locale.ENGLISH);
+	private static NumberFormat mdlNumberFormat = NumberFormat.getNumberInstance(Locale.ENGLISH);
+	private static final int MDL_FLOAT_SPACES = 10;
 	
 	static {
 		mdlNumberFormat.setMinimumIntegerDigits(1);
@@ -137,7 +138,7 @@ public class FileTextUtils {
 	}
 	
 	private void addDouble(Double value) {
-		addDouble(value, mdlNumberFormat, 10);
+		addDouble(value, mdlNumberFormat, MDL_FLOAT_SPACES);
 	}
 	
 	private void addDouble(Double value, NumberFormat nf, int fixedSpace) {
