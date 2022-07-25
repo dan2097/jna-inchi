@@ -120,14 +120,33 @@ public class FileTextUtils {
 	}
 	
 	private void addAtomLine(InchiAtom atom) {
+		//MDL atom line specification
 		//xxxxx.xxxxyyyyy.yyyyzzzzz.zzzz aaaddcccssshhhbbbvvvHHHrrriiimmmnnneee
+		
+		//x,y,z coordinates
 		addDouble(atom.getX());
 		addDouble(atom.getY());
 		addDouble(atom.getZ());
 		strBuilder.append(" ");
-		addString(atom.getElName(),3); //aaa
-		strBuilder.append(" 0"); //dd temporary
+		//aaa
+		addString(atom.getElName(),3); 
+		//dd not specified yet
+		strBuilder.append(" 0"); 
+		//ccc
+		addInteger(getOldCTABChargeCoding(atom.getCharge()),3);
+		//sss stereoparity not specified yet
+		strBuilder.append("  0"); 
+		//hhh: implicit H atoms: used for query 
+		//addInteger(getImplicitHAtomCoding(atom),3);
+		strBuilder.append("  0");
+		//bbb stereo box care: used for queries
+		strBuilder.append("  0");
+		//vvv valence
+		strBuilder.append("  0");
+		//HHH not specified
+		strBuilder.append("  0");
 		
+		//rrriiimmmnnneee are not specified
 	}
 	
 	private void analyzeComponents() {
@@ -145,8 +164,6 @@ public class FileTextUtils {
 			}
 		}
 	}
-
-	
 	
 	private void addString(String vStr, int fixedSpace) {
 		addString(vStr, fixedSpace, true);
@@ -200,6 +217,36 @@ public class FileTextUtils {
 			strBuilder.append(" ");
 		strBuilder.append(vStr);
 	}
+	
+	
+	private int getOldCTABChargeCoding(int charge) {
+		//MDL Charge designation/coding
+		//0 = uncharged or value other than these, 1 = +3, 2 = +2, 3 = +1,
+		//4 = doublet radical, 5 = -1, 6 = -2, 7 = -3
+		switch (charge) {
+		case +3:
+			return 1;
+		case +2:
+			return 2;
+		case +1:
+			return 1;
+		case -1:
+			return 5;
+		case -2:
+			return 6;
+		case -3:
+			return 7;
+		}
+		return 0;
+	}
+	
+	private int getImplicitHAtomCoding(InchiAtom atom) {
+		//Implicit H atoms coding: 1 = H0, 2 = H1, 3 = H2, 4 = H3, 5 = H4
+		if (atom.getImplicitHydrogen() == 0)
+			return 0;
+		else
+			return atom.getImplicitHydrogen() + 1; 
+	}	
 	
 	
 	public List<String> getErrors() {
