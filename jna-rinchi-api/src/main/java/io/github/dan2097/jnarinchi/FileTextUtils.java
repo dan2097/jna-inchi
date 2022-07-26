@@ -67,7 +67,7 @@ public class FileTextUtils {
 		analyzeComponents();
 		
 		if (format == ReactionFileFormat.RD || format == ReactionFileFormat.AUTO )
-			addRDFileHeader();
+			addRDFileHeader("1", "JNA-RIN", "");
 		
 		//Add reagents
 		for (int i = 0; i < reagents.size(); i++) 
@@ -75,6 +75,7 @@ public class FileTextUtils {
 		//Add products
 		for (int i = 0; i < products.size(); i++) 
 			addRrinchiInputComponent(products.get(i), "Products " + (i+1), "  JNA-RIN", "");
+		
 		
 		//TODO add agents for RDFile
 		
@@ -109,8 +110,16 @@ public class FileTextUtils {
 		strBuilder.append(endLine);
 	}
 	
-	private void addRDFileHeader() {
-		//TODO
+	private void addRDFileHeader(String info1, String info2, String info3) {
+		strBuilder.append("$RDFILE ");
+		strBuilder.append(info1);
+		strBuilder.append(endLine);
+		strBuilder.append("$DATM ");
+		strBuilder.append(info2);
+		strBuilder.append(endLine);
+		strBuilder.append("$RFMT ");		
+		strBuilder.append(info3);
+		strBuilder.append(endLine);
 	}
 	
 	private void addCTABBlockV2000(RinchiInputComponent ric) {
