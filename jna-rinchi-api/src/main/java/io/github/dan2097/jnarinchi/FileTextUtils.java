@@ -59,6 +59,9 @@ public class FileTextUtils {
 	private String inputString = null;
 	private BufferedReader inputReader = null;
 	private int curLineNum = 0;
+	private int numOfReagentsToRead = 0;
+	private int numOfProductsToRead = 0;
+	
 		
 	public RinchiInput fileTextToRinchiInput(String inputString) {
 		this.inputString = inputString;
@@ -126,6 +129,8 @@ public class FileTextUtils {
 		products.clear();
 		agents.clear();
 		curLineNum = 0;
+		numOfReagentsToRead = 0;
+		numOfProductsToRead = 0;
 	}
 	
 	private void addRrinchiInputComponent(RinchiInputComponent ric, String line1, String line2, String line3) 
@@ -373,9 +378,65 @@ public class FileTextUtils {
 	}
 	
 	private int iterateInputLines() {
-		//TODO
+		//Handle file header/headers according to format
+		switch(format) {
+		case AUTO:
+			readAutoFileHeader();
+			break;
+		case RXN:
+			readRXNFileHeader();
+			break;
+		case RD:
+			readRDFileHeader();
+			break;	
+		}
+		
+		if (!errors.isEmpty())
+			return errors.size();
+		
+		//Reading reagents
+		for (int i = 0; i< numOfReagentsToRead; i++) {
+			RinchiInputComponent ric = readMDLMolecule();
+			if (ric != null) {
+				ric.setRole(ReactionComponentRole.REAGENT);
+				rInput.addComponent(ric);
+			}
+			else
+				return errors.size();
+		}
+		
+		//Reading products
+		for (int i = 0; i< numOfProductsToRead; i++) {
+			RinchiInputComponent ric = readMDLMolecule();
+			if (ric != null) {
+				ric.setRole(ReactionComponentRole.PRODUCT);
+				rInput.addComponent(ric);
+			}
+			else
+				return errors.size();
+		}
+		
 		return 0;
 	};
+	
+	private void readAutoFileHeader() {
+		//TODO
+	}
+	
+	private void readRDFileHeader() {
+		//TODO
+	}
+	
+	private void readRXNFileHeader() {
+		//TODO
+	}
+	
+	private RinchiInputComponent readMDLMolecule() {
+		//TODO
+		return null;
+	}
+	
+	
 	
 	public List<String> getErrors() {
 		return errors;
