@@ -17,6 +17,8 @@
  */
 package io.github.dan2097.jnarinchi;
 
+import java.io.BufferedReader;
+import java.io.StringReader;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -54,8 +56,29 @@ public class FileTextUtils {
 	private List<RinchiInputComponent> reagents = new ArrayList<RinchiInputComponent>();
 	private List<RinchiInputComponent> products = new ArrayList<RinchiInputComponent>();
 	private List<RinchiInputComponent> agents = new ArrayList<RinchiInputComponent>();
-	
+	private String inputString = null;
+	private BufferedReader inputReader = null;
+	private int curLineNum = 0;
 		
+	public RinchiInput fileTextToRinchiInput(String inputString) {
+		this.inputString = inputString;
+		BufferedReader reader = new BufferedReader(new StringReader(inputString));
+		return fileTextToRinchiInput(reader);
+	}
+	
+	public RinchiInput fileTextToRinchiInput(BufferedReader inputReader) {
+		this.inputReader = inputReader;
+		resetForFileTextReading();
+		rInput = new RinchiInput();
+		
+		iterateInputLines();
+		
+		if (errors.isEmpty())
+			return rInput;
+		else
+			return null;
+	}
+	
 	public String rinchiInputToFileText(RinchiInput rInp) {
 		this.rInput = rInp;
 		if (rInput == null) {
@@ -89,12 +112,20 @@ public class FileTextUtils {
 		return strBuilder.toString();
 	}
 	
-	private void reset() {
+	private void reset() {		
 		strBuilder = new StringBuilder();
 		errors.clear();
 		reagents.clear();
 		products.clear();
 		agents.clear();
+	}
+	
+	private void resetForFileTextReading() {
+		errors.clear();
+		reagents.clear();
+		products.clear();
+		agents.clear();
+		curLineNum = 0;
 	}
 	
 	private void addRrinchiInputComponent(RinchiInputComponent ric, String line1, String line2, String line3) 
@@ -327,8 +358,24 @@ public class FileTextUtils {
 			return 0;
 		else
 			return atom.getImplicitHydrogen() + 1; 
-	}	
+	}
+			
+	private String readLine() {
+		String line = null;
+		curLineNum++;
+		try {
+			line = inputReader.readLine();
+		}
+		catch (Exception x) {
+			errors.add("Unable to read line " + curLineNum + ": " + x.getMessage());
+		}
+		return line; 
+	}
 	
+	private int iterateInputLines() {
+		//TODO
+		return 0;
+	};
 	
 	public List<String> getErrors() {
 		return errors;
