@@ -436,7 +436,19 @@ public class FileTextUtils {
 		return null;
 	}
 	
-	
+	private Integer readInteger(String line, int startPos, int lenght) {
+		int endPos = startPos + lenght;
+		if (startPos > line.length() || endPos > line.length())
+			return null;
+		String s = line.substring(startPos, endPos);
+		try {
+			int i = Integer.parseInt(s);
+			return i;
+		}
+		catch(Exception x) {
+			return null;
+		}
+	}
 	
 	public List<String> getErrors() {
 		return errors;
