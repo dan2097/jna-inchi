@@ -69,6 +69,8 @@ public class FileTextUtils {
 		if (format == ReactionFileFormat.RD || format == ReactionFileFormat.AUTO )
 			addRDFileHeader("1", "JNA-RIN", "");
 		
+		addRXNHeader("Reaction 1", "      JNA-RIN", "");
+		
 		//Add reagents
 		for (int i = 0; i < reagents.size(); i++) 
 			addRrinchiInputComponent(reagents.get(i), "Reagent " + (i+1), "  JNA-RIN", "");
@@ -119,6 +121,17 @@ public class FileTextUtils {
 		strBuilder.append(endLine);
 		strBuilder.append("$RFMT ");		
 		strBuilder.append(info3);
+		strBuilder.append(endLine);
+	}
+	
+	private void addRXNHeader(String line2, String line3, String line4) {
+		strBuilder.append("$RXN");
+		strBuilder.append(endLine);
+		strBuilder.append(line2);
+		strBuilder.append(endLine);
+		strBuilder.append(line3);
+		strBuilder.append(endLine);		
+		strBuilder.append(line4);
 		strBuilder.append(endLine);
 	}
 	
