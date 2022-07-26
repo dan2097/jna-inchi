@@ -71,6 +71,11 @@ public class FileTextUtils {
 		
 		addRXNHeader("Reaction 1", "      JNA-RIN", "");
 		
+		//Add RXN count line: rrrppp
+		addInteger(reagents.size(), 3); //rrr
+		addInteger(products.size(), 3); //ppp
+		strBuilder.append(endLine);
+		
 		//Add reagents
 		for (int i = 0; i < reagents.size(); i++) 
 			addRrinchiInputComponent(reagents.get(i), "Reagent " + (i+1), "  JNA-RIN", "");
@@ -97,7 +102,7 @@ public class FileTextUtils {
 		addMolHeader(line1, line2, line3);
 		addCTABBlockV2000(ric);
 		
-		strBuilder.append("M END");
+		strBuilder.append("M  END");
 		strBuilder.append(endLine);
 	}
 	
