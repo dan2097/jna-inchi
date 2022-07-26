@@ -446,9 +446,36 @@ public class FileTextUtils {
 			return i;
 		}
 		catch(Exception x) {
+			errors.add(errorPrefix() + "Error on parsing integer: " + s);
 			return null;
 		}
 	}
+	
+	private Double readMDLCoordinate(String line, int startPos) {
+		int endPos = startPos + MDL_FLOAT_SPACES;
+		if (startPos > line.length() || endPos > line.length())
+			return null;
+		
+		String s = line.substring(startPos, endPos);
+		if (line.charAt(startPos + 5) != '.') {
+			errors.add(errorPrefix() + "Incorrect coordinate format: " + s);
+			return null;
+		}	
+		
+		try {
+			double d = Double.parseDouble(s);
+			return d;
+		}
+		catch(Exception x) {
+			errors.add(errorPrefix() + "Error on parsing float: " + s);
+			return null;
+		}
+	}
+	
+	private String errorPrefix() {
+		return "Line " + curLineNum + ": "; 
+	}
+	
 	
 	public List<String> getErrors() {
 		return errors;
