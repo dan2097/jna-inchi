@@ -424,11 +424,40 @@ public class FileTextUtils {
 	}
 	
 	private void readRDFileHeader() {
-		//TODO
+		String line = readLine();
+		if (line == null || !line.startsWith("$RDFILE")) {
+			errors.add("RDFile Header: Line " + curLineNum + " is missing or does not start with $RDFILE");
+			return;
+		}
+		line = readLine();
+		if (line == null || !line.startsWith("$DATM")) {
+			errors.add("RDFile Header: Line " + curLineNum + " is missing or does not start with $DATM");
+			return;
+		}
 	}
 	
 	private void readRXNFileHeader() {
-		//TODO
+		String line = readLine();
+		if (line == null || !line.startsWith("$RXN")) {
+			errors.add("RXN Header: Line " + curLineNum + " is missing or does not start with $RXN");
+			return;
+		}		
+		line = readLine(); //Header Line 2 reaction name
+		if (line == null) {
+			errors.add("RXN Header (reaction name): Line " + curLineNum + " is missing");
+			return;
+		}
+		line = readLine(); //Header Line 3 user name, program, date
+		if (line == null) {
+			errors.add("RXN Header (user name, progra, date,...): Line " + curLineNum + " is missing");
+			return;
+		}
+		line = readLine(); //Header Line 4 comment
+		if (line == null) {
+			errors.add("RXN Header (comment or blank): Line " + curLineNum + " is missing");
+			return;
+		}
+		
 	}
 	
 	private RinchiInputComponent readMDLMolecule() {
