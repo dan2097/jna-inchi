@@ -56,6 +56,8 @@ public class JnaRinchi
 	}
 	
 	public static RinchiOutput toRinchi(RinchiInput rInp, RinchiOptions options) {
+		checkLibrary();
+		
 		//Converting RinchiInput to RXN/RDFile
 		FileTextUtils ftUtils = new FileTextUtils(); 
 		ftUtils.setFormat(ReactionFileFormat.RXN);
@@ -66,6 +68,8 @@ public class JnaRinchi
 		}
 		return fileTextToRinchi(fileText, options);
 	}
+	
+	
 	
 	public static RinchiOutput fileTextToRinchi(String reactFileText) {
 		return fileTextToRinchi(ReactionFileFormat.AUTO, reactFileText, new RinchiOptions());
