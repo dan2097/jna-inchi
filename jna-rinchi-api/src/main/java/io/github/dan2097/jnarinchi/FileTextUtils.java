@@ -520,7 +520,28 @@ public class FileTextUtils {
 	}
 	
 	private void readMOLCountsLine() {
-		//Counts line: aaabbblllfffcccsssxxxrrrpppiiimmmvvvvvv
+		//MOL Counts line: aaabbblllfffcccsssxxxrrrpppiiimmmvvvvvv
+		String line = readLine();		
+		if (line == null) {
+			errors.add("MOL counts Line " + curLineNum + " is missing !");
+			return;
+		}
+		Integer aaa = readInteger(line, 0, 3);
+		if (aaa == null || aaa < 0) {
+			errors.add("MOL counts (aaabbblll...) Line  " + curLineNum 
+					+ " : incorrect number of atoms (aaa part): " + line);
+			return;
+		}
+		else
+			numOfAtomsToRead = aaa;
+		Integer bbb = readInteger(line, 3, 3);
+		if (bbb == null || bbb < 0) {
+			errors.add("MOL counts (aaabbblll...) Line  " + curLineNum 
+					+ " : incorrect number of bonds (bbb part): " + line);
+			return;
+		}
+		else
+			numOfAtomsToRead = aaa;
 	}
 	
 	private void readMOLCTABBlock(RinchiInputComponent ric) {
