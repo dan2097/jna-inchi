@@ -35,7 +35,7 @@ public class PerTable {
 			"Uuu","Uub"							                 //111-120
 		};
 	
-	public static int getAtomicNumberFromElElement(String s)
+	public static int getAtomicNumberFromElSymbol(String s)
 	{
 		for (int i=1; i < mElementSymbol.length; i++)
 		{

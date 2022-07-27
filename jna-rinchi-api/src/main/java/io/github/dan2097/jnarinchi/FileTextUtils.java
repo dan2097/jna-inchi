@@ -27,6 +27,7 @@ import java.util.Locale;
 import io.github.dan2097.jnainchi.InchiAtom;
 import io.github.dan2097.jnainchi.InchiBond;
 import io.github.dan2097.jnainchi.InchiBondType;
+import io.github.dan2097.jnarinchi.cheminfo.PerTable;
 
 public class FileTextUtils {
 	
@@ -587,11 +588,17 @@ public class FileTextUtils {
 		String atSymbol = readString(line, 30, 4); //length 4 for: ' ' + aaa
 		if (atSymbol == null) {
 			errors.add(errorComponentContext + "MOL atom # " + (atomIndex + 1) 
-					+ " in Line " + curLineNum + " coordinate z error --> " + line);
+					+ " in Line " + curLineNum + " atom symbol error --> " + line);
 			return;
 		}
 		
-		//TODO check atom symbol
+		//Check atom symbol
+		int atNum = PerTable.getAtomicNumberFromElSymbol(atSymbol);
+		if (atNum == -1) {
+			errors.add(errorComponentContext + "MOL atom # " + (atomIndex + 1) 
+					+ " in Line " + curLineNum + " atom symbol error --> " + line);
+			return;
+		}
 		
 		InchiAtom atom = new InchiAtom(atSymbol, coordX, coordY, coordZ);
 		ric.addAtom(atom);
