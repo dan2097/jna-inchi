@@ -531,12 +531,11 @@ public class FileTextUtils {
 	}
 	
 	
-	
 	private Integer readInteger(String line, int startPos, int lenght) {
 		int endPos = startPos + lenght;
 		if (startPos > line.length() || endPos > line.length())
 			return null;
-		String s = line.substring(startPos, endPos);
+		String s = line.substring(startPos, endPos).trim();
 		try {
 			int i = Integer.parseInt(s);
 			return i;
@@ -552,7 +551,7 @@ public class FileTextUtils {
 		if (startPos > line.length() || endPos > line.length())
 			return null;
 		
-		String s = line.substring(startPos, endPos);
+		String s = line.substring(startPos, endPos).trim();
 		if (line.charAt(startPos + 5) != '.') {
 			errors.add(errorPrefix() + "Incorrect coordinate format: " + s);
 			return null;
