@@ -56,6 +56,8 @@ public class FileTextUtils {
 	private List<RinchiInputComponent> reagents = new ArrayList<RinchiInputComponent>();
 	private List<RinchiInputComponent> products = new ArrayList<RinchiInputComponent>();
 	private List<RinchiInputComponent> agents = new ArrayList<RinchiInputComponent>();
+	
+	//Reading work variables
 	private String inputString = null;
 	private BufferedReader inputReader = null;
 	private int curLineNum = 0;
@@ -389,8 +391,11 @@ public class FileTextUtils {
 		case RD:
 			readRDFileHeader();
 			break;	
-		}
+		}		
+		if (!errors.isEmpty())
+			return errors.size();
 		
+		readRXNCountLine();
 		if (!errors.isEmpty())
 			return errors.size();
 		
@@ -457,7 +462,29 @@ public class FileTextUtils {
 			errors.add("RXN Header (comment or blank): Line " + curLineNum + " is missing");
 			return;
 		}
-		
+	}
+	
+	public void readRXNCountLine() {
+		//Read RXN count line: rrrppp
+		String line = readLine();
+		if (line == null) {
+			errors.add("RXN counts Line " + curLineNum + " is missing !");
+			return;
+		}
+		Integer rrr = readInteger(line, 0, 3);
+		if (rrr == null || rrr < 0) {
+			errors.add("RXN counts (rrrppp) Line  " + curLineNum + " : incorrect number of reagents (rrr part): " + line);
+			return;
+		}
+		else
+			numOfReagentsToRead = rrr;
+		Integer ppp = readInteger(line, 3, 3);
+		if (ppp == null || ppp < 0) {
+			errors.add("RXN counts (rrrppp) Line  " + curLineNum + " : incorrect number of reagents (ppp part): " + line);
+			return;
+		}
+		else
+			numOfProductsToRead = ppp;
 	}
 	
 	private RinchiInputComponent readMDLMolecule() {
