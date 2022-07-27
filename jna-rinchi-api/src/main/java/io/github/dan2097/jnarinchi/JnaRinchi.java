@@ -50,6 +50,23 @@ public class JnaRinchi
 	private static final String RINCHI_DECOMPOSE_DIRECTION_SHORT_DESIGNATION = "D";
 	private static final int ERROR_CODE_DECOMPOSE_FROM_LINES = -1;
 
+	
+	public static RinchiOutput toRinchi(RinchiInput rInp) {
+		return toRinchi(rInp, new RinchiOptions());
+	}
+	
+	public static RinchiOutput toRinchi(RinchiInput rInp, RinchiOptions options) {
+		//Converting RinchiInput to RXN/RDFile
+		FileTextUtils ftUtils = new FileTextUtils(); 
+		ftUtils.setFormat(ReactionFileFormat.RXN);
+		String fileText = ftUtils.rinchiInputToFileText(rInp);
+		if (!ftUtils.getErrors().isEmpty()) {
+			return new RinchiOutput("", "", RinchiStatus.ERROR, -1, 
+					"Unable to convert RinchiInptu to RXN/RDFile.\n" + ftUtils.getAllErrors());
+		}
+		return fileTextToRinchi(fileText, options);
+	}
+	
 	public static RinchiOutput fileTextToRinchi(String reactFileText) {
 		return fileTextToRinchi(ReactionFileFormat.AUTO, reactFileText, new RinchiOptions());
 	}
@@ -138,8 +155,7 @@ public class JnaRinchi
 		String rinchi_key = p.getString(0);
 		return new RinchiKeyOutput(rinchi_key, keyType, RinchiKeyStatus.SUCCESS, 0, "");
 	}
-
-
+	
 	public static RinchiDecompositionOutput decomposeRinchi(String rinchi) {
 		return decomposeRinchi(rinchi, "");
 	}
@@ -162,7 +178,7 @@ public class JnaRinchi
 		return rdo;
 	}
 
-
+		
 	private static RinchiDecompositionOutput parseNativeOutInchisText(String outText) {
 		/*
 		 * Output from RInChI native library, function rinchilib_inchis_from_rinchi(), 
