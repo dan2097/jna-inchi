@@ -487,10 +487,48 @@ public class FileTextUtils {
 			numOfProductsToRead = ppp;
 	}
 	
-	private RinchiInputComponent readMDLMolecule() {
-		//TODO
-		return null;
+	private void readMOLHeader() {
+		String line = readLine();
+		if (line == null || !line.startsWith("$MOL")) {
+			errors.add("RXN Header: Line " + curLineNum + " is missing or does not start with $RXN");
+			return;
+		}	
 	}
+	
+	private void readMOLCountsLine() {
+		//Counts line: aaabbblllfffcccsssxxxrrrpppiiimmmvvvvvv
+	}
+	
+	private void readMOLCTABBlock(RinchiInputComponent ric) {
+		
+	}
+	
+	private void readMOLPropertiesBlock(RinchiInputComponent ric) {
+		
+	}
+	
+	private RinchiInputComponent readMDLMolecule() {
+		RinchiInputComponent ric = new RinchiInputComponent();
+		readMOLHeader();
+		if (!errors.isEmpty())
+			return null;
+		
+		readMOLCountsLine();
+		if (!errors.isEmpty())
+			return null;
+		
+		readMOLCTABBlock(ric);
+		if (!errors.isEmpty())
+			return null;
+		
+		readMOLPropertiesBlock(ric);
+		if (!errors.isEmpty())
+			return null;
+		
+		return ric;
+	}
+	
+	
 	
 	private Integer readInteger(String line, int startPos, int lenght) {
 		int endPos = startPos + lenght;
