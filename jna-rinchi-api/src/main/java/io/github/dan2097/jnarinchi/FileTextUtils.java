@@ -495,10 +495,28 @@ public class FileTextUtils {
 	private void readMOLHeader() {
 		String line = readLine();
 		if (line == null || !line.startsWith("$MOL")) {
-			errors.add(errorComponentContext + "MOL Header Line " 
-					+ curLineNum + " is missing or does not start with $MOL" + " -->" + line);
+			errors.add(errorComponentContext + "MOL Start section in Line " 
+					+ curLineNum + " is missing or does not start with $MOL" + " --> " + line);
 			return;
-		}	
+		}
+		line = readLine();
+		if (line == null) {
+			errors.add(errorComponentContext + "MOL Header (line 1) in Line" 
+					+ curLineNum + " is missing");
+			return;
+		}
+		line = readLine();
+		if (line == null) {
+			errors.add(errorComponentContext + "MOL Header (line 2) in Line" 
+					+ curLineNum + " is missing");
+			return;
+		}
+		line = readLine();
+		if (line == null) {
+			errors.add(errorComponentContext + "MOL Header (line 3) in Line" 
+					+ curLineNum + " is missing");
+			return;
+		}
 	}
 	
 	private void readMOLCountsLine() {
