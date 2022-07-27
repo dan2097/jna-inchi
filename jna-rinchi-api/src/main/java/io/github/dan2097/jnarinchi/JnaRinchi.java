@@ -163,7 +163,7 @@ public class JnaRinchi
 	}
 
 
-	public static RinchiDecompositionOutput parseNativeOutInchisText(String outText) {
+	private static RinchiDecompositionOutput parseNativeOutInchisText(String outText) {
 		/*
 		 * Output from RInChI native library, function rinchilib_inchis_from_rinchi(), 
 		 * is a text string with multiple lines in the following format:
