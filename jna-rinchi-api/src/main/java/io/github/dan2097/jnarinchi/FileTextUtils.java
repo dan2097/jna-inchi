@@ -65,6 +65,7 @@ public class FileTextUtils {
 	private int numOfProductsToRead = 0;
 	private int numOfAtomsToRead = 0;
 	private int numOfBondsToRead = 0;
+	private String errorComponentContext = "";
 	
 		
 	public RinchiInput fileTextToRinchiInput(String inputString) {
@@ -404,6 +405,7 @@ public class FileTextUtils {
 		//Reading reagents
 		for (int i = 0; i< numOfReagentsToRead; i++) {
 			RinchiInputComponent ric = readMDLMolecule();
+			errorComponentContext = "Reading reagent #" + (i+1) + " ";
 			if (ric != null) {
 				ric.setRole(ReactionComponentRole.REAGENT);
 				rInput.addComponent(ric);
@@ -415,6 +417,7 @@ public class FileTextUtils {
 		//Reading products
 		for (int i = 0; i< numOfProductsToRead; i++) {
 			RinchiInputComponent ric = readMDLMolecule();
+			errorComponentContext = "Reading product #" + (i+1) + " ";
 			if (ric != null) {
 				ric.setRole(ReactionComponentRole.PRODUCT);
 				rInput.addComponent(ric);
@@ -468,7 +471,7 @@ public class FileTextUtils {
 	
 	public void readRXNCountLine() {
 		//Read RXN count line: rrrppp
-		String line = readLine();
+		String line = readLine();		
 		if (line == null) {
 			errors.add("RXN counts Line " + curLineNum + " is missing !");
 			return;
@@ -492,7 +495,8 @@ public class FileTextUtils {
 	private void readMOLHeader() {
 		String line = readLine();
 		if (line == null || !line.startsWith("$MOL")) {
-			errors.add("RXN Header: Line " + curLineNum + " is missing or does not start with $RXN");
+			errors.add(errorComponentContext + "MOL Header Line " 
+					+ curLineNum + " is missing or does not start with $MOL" + " -->" + line);
 			return;
 		}	
 	}
@@ -506,7 +510,17 @@ public class FileTextUtils {
 	}
 	
 	private void readMOLPropertiesBlock(RinchiInputComponent ric) {
+		String line = readLine();
+		while (processPropertyLine(line, ric) == 0)
+			line = readLine();
+	}
+	
+	private int processPropertyLine(String line, RinchiInputComponent ric) {
+		if (line == null || line.startsWith("M  END"))
+			return -1;
 		
+		//TODO
+		return 0;
 	}
 	
 	private RinchiInputComponent readMDLMolecule() {
