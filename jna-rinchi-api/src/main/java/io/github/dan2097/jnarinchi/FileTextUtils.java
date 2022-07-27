@@ -63,6 +63,8 @@ public class FileTextUtils {
 	private int curLineNum = 0;
 	private int numOfReagentsToRead = 0;
 	private int numOfProductsToRead = 0;
+	private int numOfAtomsToRead = 0;
+	private int numOfBondsToRead = 0;
 	
 		
 	public RinchiInput fileTextToRinchiInput(String inputString) {
@@ -574,7 +576,14 @@ public class FileTextUtils {
 	public List<String> getErrors() {
 		return errors;
 	}
-
+	
+	public String getAllErrors() {
+		StringBuilder sb = new StringBuilder();
+		for (String err: errors)
+			sb.append(err).append("\n");
+		return sb.toString();
+	}
+	
 	public ReactionFileFormat getFormat() {
 		return format;
 	}
