@@ -607,9 +607,34 @@ public class FileTextUtils {
 	}
 	
 	private void readMOLBondLine(int bondIndex, RinchiInputComponent ric) {
-		String line = readLine();
-		//System.out.println("---> " + line);
-		//TODO
+		//Read MDL bond line
+		//111222tttsssxxxrrrccc
+		String line = readLine();		
+		if (line == null) {
+			errors.add(errorComponentContext + "MOL bond # " + (bondIndex + 1) 
+					+ " in Line " + curLineNum + " is missing !");
+			return;
+		}
+		Integer a1 = readInteger(line, 0, 3);
+		if (a1 == null || a1 < 0 || a1 > numOfAtomsToRead) {
+			errors.add("MOL counts (111222ttt...) Line  " + curLineNum 
+					+ " : incorrect atom number (111 part): " + line);
+			return;
+		}
+		Integer a2 = readInteger(line, 3, 3);
+		if (a2 == null || a2 < 0 || a2 > numOfAtomsToRead) {
+			errors.add("MOL counts (111222ttt...) Line  " + curLineNum 
+					+ " : incorrect atom number (222 part): " + line);
+			return;
+		}
+		Integer ttt = readInteger(line, 6, 3);
+		if (ttt == null || ttt < 0 || ttt > 3) {
+			errors.add("MOL counts (111222ttt...) Line  " + curLineNum 
+					+ " : incorrect bond typer (ttt part): " + line);
+			return;
+		}		
+		InchiBond bond = new InchiBond(ric.getAtom(a1-1), ric.getAtom(a2-1), InchiBondType.of((byte)ttt.intValue()));
+		ric.addBond(bond);
 	}
 	
 	private void readMOLPropertiesBlock(RinchiInputComponent ric) {
