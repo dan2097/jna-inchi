@@ -541,11 +541,68 @@ public class FileTextUtils {
 			return;
 		}
 		else
-			numOfAtomsToRead = aaa;
+			numOfBondsToRead = bbb;
 	}
 	
 	private void readMOLCTABBlock(RinchiInputComponent ric) {
+		for (int i = 0; i < numOfAtomsToRead; i++) {
+			readMOLAtomLine(i, ric);
+			if (!errors.isEmpty())
+				return;
+		}
+		for (int i = 0; i < numOfBondsToRead; i++) {
+			readMOLBondLine(i, ric);
+			if (!errors.isEmpty())
+				return;
+		}
+	}
+	
+	private void readMOLAtomLine(int atomIndex, RinchiInputComponent ric) {
+		//Read MDL atom line
+		//xxxxx.xxxxyyyyy.yyyyzzzzz.zzzz aaaddcccssshhhbbbvvvHHHrrriiimmmnnneee
+		String line = readLine();
+		if (line == null) {
+			errors.add(errorComponentContext + "MOL atom # " + (atomIndex + 1) 
+					+ " in Line " + curLineNum + " is missing !");
+			return;
+		}
+		Double coordX = readMDLCoordinate(line, 0);
+		if (coordX == null) {
+			errors.add(errorComponentContext + "MOL atom # " + (atomIndex + 1) 
+					+ " in Line " + curLineNum + " coordinate x error --> " + line);
+			return;
+		}
+		Double coordY = readMDLCoordinate(line, 10);
+		if (coordY == null) {
+			errors.add(errorComponentContext + "MOL atom # " + (atomIndex + 1) 
+					+ " in Line " + curLineNum + " coordinate y error --> " + line);
+			return;
+		}
+		Double coordZ = readMDLCoordinate(line, 20);
+		if (coordZ == null) {
+			errors.add(errorComponentContext + "MOL atom # " + (atomIndex + 1) 
+					+ " in Line " + curLineNum + " coordinate z error --> " + line);
+			return;
+		}
+		String atSymbol = readString(line, 30, 4); //length 4 for: ' ' + aaa
+		if (atSymbol == null) {
+			errors.add(errorComponentContext + "MOL atom # " + (atomIndex + 1) 
+					+ " in Line " + curLineNum + " coordinate z error --> " + line);
+			return;
+		}
 		
+		//TODO check atom symbol
+		
+		InchiAtom atom = new InchiAtom(atSymbol, coordX, coordY, coordZ);
+		ric.addAtom(atom);
+		
+		//TODO read charge
+	}
+	
+	private void readMOLBondLine(int bondIndex, RinchiInputComponent ric) {
+		String line = readLine();
+		//System.out.println("---> " + line);
+		//TODO
 	}
 	
 	private void readMOLPropertiesBlock(RinchiInputComponent ric) {
@@ -583,6 +640,14 @@ public class FileTextUtils {
 		return ric;
 	}
 	
+	
+	private String readString(String line, int startPos, int lenght) {
+		int endPos = startPos + lenght;
+		if (startPos > line.length() || endPos > line.length())
+			return null;
+		String s = line.substring(startPos, endPos).trim();
+		return s;
+	}
 	
 	private Integer readInteger(String line, int startPos, int lenght) {
 		int endPos = startPos + lenght;
