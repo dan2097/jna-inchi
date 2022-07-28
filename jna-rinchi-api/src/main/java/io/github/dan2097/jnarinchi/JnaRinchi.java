@@ -52,7 +52,7 @@ public class JnaRinchi
 
 	
 	public static RinchiOutput toRinchi(RinchiInput rInp) {
-		return toRinchi(rInp, new RinchiOptions());
+		return toRinchi(rInp, RinchiOptions.DEFAULT_OPTIONS);
 	}
 	
 	public static RinchiOutput toRinchi(RinchiInput rInp, RinchiOptions options) {
@@ -83,7 +83,7 @@ public class JnaRinchi
 	}
 	
 	public static RinchiOutput fileTextToRinchi(String reactFileText) {
-		return fileTextToRinchi(ReactionFileFormat.AUTO, reactFileText, new RinchiOptions());
+		return fileTextToRinchi(ReactionFileFormat.AUTO, reactFileText, RinchiOptions.DEFAULT_OPTIONS);
 	}
 
 	public static RinchiOutput fileTextToRinchi(String reactFileText, RinchiOptions options) {
@@ -95,9 +95,10 @@ public class JnaRinchi
 
 		PointerByReference out_rinchi_string_p = new PointerByReference();
 		PointerByReference out_rinchi_auxinfo_p = new PointerByReference();
-
+		
+		boolean forceEq = options.getFlags().contains(RinchiFlag.ForceEquilibrium);
 		int errCode = RinchiLibrary.rinchilib_rinchi_from_file_text(fileFormat.toString(), reactFileText, 
-				options.isForceEquilibrium(), out_rinchi_string_p, out_rinchi_auxinfo_p);        
+				forceEq, out_rinchi_string_p, out_rinchi_auxinfo_p);        
 
 		if (errCode != 0)
 		{
@@ -113,7 +114,7 @@ public class JnaRinchi
 	}
 
 	public static RinchiKeyOutput fileTextToRinchiKey(String reactFileText, RinchiKeyType keyType) {
-		return fileTextToRinchiKey(ReactionFileFormat.AUTO, reactFileText, keyType, new RinchiOptions());
+		return fileTextToRinchiKey(ReactionFileFormat.AUTO, reactFileText, keyType, RinchiOptions.DEFAULT_OPTIONS);
 	}
 
 	public static RinchiKeyOutput fileTextToRinchiKey(String reactFileText, RinchiKeyType keyType, RinchiOptions options) {
@@ -124,8 +125,9 @@ public class JnaRinchi
 		checkLibrary();
 
 		PointerByReference out_rinchi_key = new PointerByReference();
+		boolean forceEq = options.getFlags().contains(RinchiFlag.ForceEquilibrium);
 		int errCode = RinchiLibrary.rinchilib_rinchikey_from_file_text(fileFormat.toString(), reactFileText, 
-				keyType.getShortDeignation(), options.isForceEquilibrium(), out_rinchi_key);
+				keyType.getShortDeignation(), forceEq, out_rinchi_key);
 		if (errCode != 0)
 		{  
 			String err = RinchiLibrary.rinchilib_latest_err_msg();
