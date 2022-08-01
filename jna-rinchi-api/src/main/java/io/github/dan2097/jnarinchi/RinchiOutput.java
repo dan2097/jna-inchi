@@ -27,7 +27,7 @@ public class RinchiOutput {
 	private final int errorCode;
 	private final String errorMessage;
 
-	RinchiOutput(String rinchi, String auxInfo, RinchiStatus status, int errorCode, String errorMessage) {
+	public RinchiOutput(String rinchi, String auxInfo, RinchiStatus status, int errorCode, String errorMessage) {
 		this.rinchi = rinchi;
 		this.auxInfo = auxInfo;
 		this.status = status;
