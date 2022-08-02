@@ -80,7 +80,13 @@ public class FileTextUtils {
 		resetForFileTextReading();
 		rInput = new RinchiInput();
 		
-		iterateInputLines();
+		try {
+			iterateInputLines();
+			inputReader.close();
+		}
+		catch (Exception x) {
+			errors.add("Error on reading or closing input reader: " + x.getMessage());
+		}
 		
 		if (errors.isEmpty())
 			return rInput;
