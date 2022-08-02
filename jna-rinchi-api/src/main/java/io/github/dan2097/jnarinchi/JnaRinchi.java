@@ -67,7 +67,7 @@ public class JnaRinchi
 		return fileTextToRinchi(fileText, options);
 	}
 	
-	public static RinchiInputFromRinchiOutput getRnchiInputFromRinchi(String rinchi, String auxInfo) {
+	public static RinchiInputFromRinchiOutput getRinchiInputFromRinchi(String rinchi, String auxInfo) {
 		FileTextOutput ftOut = rinchiToFileText(rinchi, auxInfo, ReactionFileFormat.RXN);
 		if (ftOut.getStatus() != FileTextStatus.SUCCESS) 
 			return new RinchiInputFromRinchiOutput(null, RinchiStatus.ERROR, -1, ftOut.getErrorMessage());
