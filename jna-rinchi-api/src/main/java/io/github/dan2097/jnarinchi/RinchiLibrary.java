@@ -25,7 +25,7 @@ import com.sun.jna.ptr.PointerByReference;
 
 public class RinchiLibrary implements Library 	
 {
-	public static final String JNA_LIBRARY_NAME = "librinchi";
+	public static final String JNA_LIBRARY_NAME = "rinchi";
 	public static final NativeLibrary JNA_NATIVE_LIB = NativeLibrary.getInstance(RinchiLibrary.JNA_LIBRARY_NAME);
 
 	
