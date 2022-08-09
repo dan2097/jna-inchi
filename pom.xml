@@ -167,6 +167,28 @@
         </plugins>
       </build>
     </profile>
+    <profile>
+      <!--Skip MacOS tests for RInChI as IUPAC does not provide a precompiled native library-->
+      <id>skip-rinchi-tests</id>
+      <activation>
+        <os>
+          <family>mac</family>
+        </os>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <configuration>
+              <excludes>
+                <exclude>jnarinchi*/**</exclude>
+              </excludes>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
   </profiles>
   <dependencyManagement>
     <dependencies>
