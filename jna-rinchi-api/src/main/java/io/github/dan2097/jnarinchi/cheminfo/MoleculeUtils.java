@@ -80,6 +80,7 @@ public class MoleculeUtils {
 		switch (elName) {
 		case "H":
 			return 0;
+			
 		case "C" :	
 			switch (charge) {
 			case -3:
@@ -105,8 +106,64 @@ public class MoleculeUtils {
 				if (val <= 1) return 1;
 				break;
 			}
-			break;	
+			break;
+			
+		case "N":
+			switch (charge) {
+			case -2:
+				if (val <= 1) return 1;
+				break;
+			case -1:
+				if (val <= 2) return 2;
+				break;
+			case 0:
+				if (val <= 3) return 3;
+				if (val <= 5) return 5;
+				break;
+			case 1:
+				if (val <= 4) return 4;
+				break;
+			case 2:
+				if (val <= 3) return 3;
+				break;
+			case 3:
+				if (val <= 2) return 2;
+				break;
+			case 4:
+				if (val <= 1) return 1;
+				break;
+			}
+			break;
+			
+		case "O":
+			switch (charge) {
+			case -1:
+				if (val <= 1) return 1;
+				break;
+			case 0:
+				if (val <= 2) return 2;
+				break;
+			case 1:
+				if (val <= 3) return 3;
+				if (val <= 5) return 5;
+				break;
+			case 2:
+				if (val <= 4) return 4;
+				break;
+			case 3:
+				if (val <= 3) return 3;
+				break;
+			case 4:
+				if (val <= 2) return 2;
+				break;
+			case 5:
+				if (val <= 1) return 1;
+				break;
+			}
+			break;
+			
 		}
+		
 		return 0;
 	}
 	
