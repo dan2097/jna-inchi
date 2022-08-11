@@ -27,6 +27,7 @@ import java.util.Locale;
 import io.github.dan2097.jnainchi.InchiAtom;
 import io.github.dan2097.jnainchi.InchiBond;
 import io.github.dan2097.jnainchi.InchiBondType;
+import io.github.dan2097.jnarinchi.cheminfo.MoleculeUtils;
 import io.github.dan2097.jnarinchi.cheminfo.PerTable;
 
 public class FileTextUtils {
@@ -414,6 +415,7 @@ public class FileTextUtils {
 			RinchiInputComponent ric = readMDLMolecule();
 			errorComponentContext = "Reading reagent #" + (i+1) + " ";
 			if (ric != null) {
+				MoleculeUtils.setImplicitHydrogenAtoms(ric);
 				ric.setRole(ReactionComponentRole.REAGENT);
 				rInput.addComponent(ric);
 			}
@@ -426,6 +428,7 @@ public class FileTextUtils {
 			RinchiInputComponent ric = readMDLMolecule();
 			errorComponentContext = "Reading product #" + (i+1) + " ";
 			if (ric != null) {
+				MoleculeUtils.setImplicitHydrogenAtoms(ric);
 				ric.setRole(ReactionComponentRole.PRODUCT);
 				rInput.addComponent(ric);
 			}

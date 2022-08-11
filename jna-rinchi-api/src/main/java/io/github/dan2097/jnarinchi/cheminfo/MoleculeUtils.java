@@ -33,8 +33,10 @@ public class MoleculeUtils {
 			Integer explVal = atomExplVal.get(at);
 			if (explVal == null)
 				explVal = 0;
-			int implHydrogen = getImlicitHAtomsCount(at.getElName(), at.getCharge(), explVal);
-			at.setImplicitHydrogen(implHydrogen);
+			int maxImplHydrogen = getMaxImlicitHAtomsCount(at.getElName(), at.getCharge(), explVal) ;
+			
+			if (maxImplHydrogen >= explVal)
+				at.setImplicitHydrogen(maxImplHydrogen - explVal);
 		}
 	}
 	
@@ -74,7 +76,7 @@ public class MoleculeUtils {
 	}
 	
 	
-	public static int getImlicitHAtomsCount(String elName, int charge, int val) {
+	public static int getMaxImlicitHAtomsCount(String elName, int charge, int val) {
 		switch (elName) {
 		case "H":
 			return 0;
