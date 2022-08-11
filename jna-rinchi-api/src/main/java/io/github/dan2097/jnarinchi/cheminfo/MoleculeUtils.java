@@ -17,12 +17,95 @@
  */
 package io.github.dan2097.jnarinchi.cheminfo;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import io.github.dan2097.jnainchi.InchiAtom;
+import io.github.dan2097.jnainchi.InchiBond;
+import io.github.dan2097.jnainchi.InchiBondType;
 import io.github.dan2097.jnainchi.InchiInput;
 
 public class MoleculeUtils {
 	
-	public static void setImplicitHydrogenAtoms(InchiInput inchiInpup) {
-		//TODO
+	public static void setImplicitHydrogenAtoms(InchiInput inchiInput) {
+		Map<InchiAtom,Integer> atomExplVal =  getExplicitAtomValencies(inchiInput);
+		for (InchiAtom at : inchiInput.getAtoms()) {
+			Integer explVal = atomExplVal.get(at);
+			if (explVal == null)
+				explVal = 0;
+			int implHydrogen = getImlicitHAtomsCount(at.getElName(), at.getCharge(), explVal);
+			at.setImplicitHydrogen(implHydrogen);
+		}
+	}
+	
+	public static Map<InchiAtom,Integer> getExplicitAtomValencies(InchiInput inchiInput) {
+		Map<InchiAtom,Integer> atomVal = new HashMap<>();		
+		for (InchiBond bo : inchiInput.getBonds()) {
+			//start atom
+			Integer val = atomVal.get(bo.getStart());
+			if (val == null)
+				val = new Integer(getOrder(bo.getType()));
+			else
+				val = val + getOrder(bo.getType());
+			atomVal.put(bo.getStart(), val);
+			// end atom
+			val = atomVal.get(bo.getEnd());
+			if (val == null)
+				val = new Integer(getOrder(bo.getType()));
+			else
+				val = val + getOrder(bo.getType());
+			atomVal.put(bo.getEnd(), val);
+		}
+		return atomVal;
+	}
+			
+	public static int getOrder(InchiBondType ibt) {
+		switch (ibt) {
+		case NONE: 
+			return 0;
+		case SINGLE:
+			return 1;
+		case DOUBLE:
+			return 2;
+		case TRIPLE:
+			return 3;
+		}
+		return 0;
+	}
+	
+	
+	public static int getImlicitHAtomsCount(String elName, int charge, int val) {
+		switch (elName) {
+		case "H":
+			return 0;
+		case "C" :	
+			switch (charge) {
+			case -3:
+				if (val <= 1) return 1;
+				break;
+			case -2:
+				if (val <= 2) return 2;
+				break;
+			case -1:
+				if (val <= 3) return 3;
+				if (val <= 5) return 5;
+				break;
+			case 0:
+				if (val <= 4) return 4;
+				break;
+			case 1:
+				if (val <= 3) return 3;
+				break;
+			case 2:
+				if (val <= 2) return 2;
+				break;
+			case 3:
+				if (val <= 1) return 1;
+				break;
+			}
+			break;	
+		}
+		return 0;
 	}
 	
 }
