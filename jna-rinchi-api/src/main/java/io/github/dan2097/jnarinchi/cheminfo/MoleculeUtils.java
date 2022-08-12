@@ -76,10 +76,12 @@ public class MoleculeUtils {
 	}
 	
 	/**
-	 * Function returns the implicit valence (h atom count) for a given atom taking into account atom element, charge and
-	 * explicit valence (sum of all bond orders). Function 
-	 * 
-	 * Code of the function implements the MDL valence model and is based on: 
+	 * Function returns the implicit valence (h atom count) for a given atom,
+	 * taking into account atom element, charge and
+	 * explicit valence (sum of all bond orders). 
+	 * Code of the function implements the MDL valence model.
+	 * See CDK org.openscience.cdk.io.MDLValence.java
+	 *  
 	 *  <blockquote> $Id: MDLValence.h 2288 2012-11-26 03:39:27Z glandrum $
 	 *  	 
 	 * Copyright (C) 2012 NextMove Software
@@ -87,6 +89,8 @@ public class MoleculeUtils {
 	 * @@ All Rights Reserved @@ This file is part of the RDKit. The contents
 	 * are covered by the terms of the BSD license which is included in the file
 	 * license.txt, found at the root of the RDKit source tree. </blockquote>
+	 * 
+	 *  
 	 */
 	public static int getImlicitHAtomsCount(String elName, int charge, int val) {
 		switch (elName) {
