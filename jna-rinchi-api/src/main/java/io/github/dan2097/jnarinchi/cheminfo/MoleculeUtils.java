@@ -33,7 +33,7 @@ public class MoleculeUtils {
 			Integer explVal = atomExplVal.get(at);
 			if (explVal == null)
 				explVal = 0;
-			int maxImplHydrogen = getMaxImlicitHAtomsCount(at.getElName(), at.getCharge(), explVal) ;
+			int maxImplHydrogen = getImlicitHAtomsCount(at.getElName(), at.getCharge(), explVal) ;
 			
 			if (maxImplHydrogen >= explVal)
 				at.setImplicitHydrogen(maxImplHydrogen - explVal);
@@ -75,13 +75,32 @@ public class MoleculeUtils {
 		return 0;
 	}
 	
-	
-	public static int getMaxImlicitHAtomsCount(String elName, int charge, int val) {
+	/**
+	 * Function returns the implicit valence (h atom count) for a given atom taking into account atom element, charge and
+	 * explicit valence (sum of all bond orders). Function 
+	 * 
+	 * Code of the function implements the MDL valence model and is based on: 
+	 *  <blockquote> $Id: MDLValence.h 2288 2012-11-26 03:39:27Z glandrum $
+	 *  	 
+	 * Copyright (C) 2012 NextMove Software
+	 *
+	 * @@ All Rights Reserved @@ This file is part of the RDKit. The contents
+	 * are covered by the terms of the BSD license which is included in the file
+	 * license.txt, found at the root of the RDKit source tree. </blockquote>
+	 */
+	public static int getImlicitHAtomsCount(String elName, int charge, int val) {
 		switch (elName) {
-		case "H":
-			return 0;
-			
-		case "C" :	
+		case "H":  //1
+		case "Li": //3
+		case "Na": //11
+		case "K":  //19 
+		case "Rb": //37
+		case "Cs": //55
+		case "Fr": //87
+			if (charge == 0 && val <= 1) return 1;
+			break;
+
+		case "C" : //6	
 			switch (charge) {
 			case -3:
 				if (val <= 1) return 1;
@@ -108,7 +127,7 @@ public class MoleculeUtils {
 			}
 			break;
 			
-		case "N":
+		case "N": //7
 			switch (charge) {
 			case -2:
 				if (val <= 1) return 1;
@@ -135,7 +154,7 @@ public class MoleculeUtils {
 			}
 			break;
 			
-		case "O":
+		case "O": //8
 			switch (charge) {
 			case -1:
 				if (val <= 1) return 1;
