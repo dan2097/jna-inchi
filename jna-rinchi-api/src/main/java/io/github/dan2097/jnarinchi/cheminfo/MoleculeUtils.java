@@ -89,8 +89,7 @@ public class MoleculeUtils {
 	 * @@ All Rights Reserved @@ This file is part of the RDKit. The contents
 	 * are covered by the terms of the BSD license which is included in the file
 	 * license.txt, found at the root of the RDKit source tree. </blockquote>
-	 * 
-	 *  
+	 *   
 	 */
 	public static int getImlicitHAtomsCount(String elName, int charge, int val) {
 		switch (elName) {
@@ -103,6 +102,49 @@ public class MoleculeUtils {
 		case "Fr": //87
 			if (charge == 0 && val <= 1) return 1;
 			break;
+		
+		case "Be": //4
+		case "Mg": //12
+		case "Ca": //20
+		case "Sr": //38
+		case "Ba": //56
+		case "Ra": //88
+			switch (charge) {
+			case 0:
+				if (val <= 2) return 2;
+				break;
+			case 1:
+				if (val <= 1) return 1;
+				break;
+			}
+			break;
+             
+		case "B": //5
+			switch (charge) {
+			case -4:
+				if (val <= 1) return 1;
+				break;
+			case -3:
+				if (val <= 2) return 2;
+				break;
+			case -2:
+				if (val <= 3) return 3;
+				if (val <= 5) return 5;
+				break;
+			case -1:
+				if (val <= 4) return 4;
+				break;
+			case 0:
+				if (val <= 3) return 3;
+				break;
+			case 1:
+				if (val <= 2) return 2;
+				break;
+			case 2:
+				if (val <= 1) return 1;
+				break;
+			}
+			break;    
 
 		case "C" : //6	
 			switch (charge) {
