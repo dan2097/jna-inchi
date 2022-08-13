@@ -383,37 +383,37 @@ public class MoleculeUtils {
 			break;	
 		
 		case "Cl": //17
-            switch (charge) {
-                case 0:
-                    if (val <= 1) return 1;
-                    if (val <= 3) return 3;
-                    if (val <= 5) return 5;
-                    if (val <= 7) return 7;
-                    break;
-                case 1:
-                    if (val <= 2) return 2;
-                    if (val <= 4) return 4;
-                    if (val <= 6) return 6;
-                    break;
-                case 2:
-                    if (val <= 3) return 3;
-                    if (val <= 5) return 5;
-                    break;
-                case 3:
-                    if (val <= 4) return 4;
-                    break;
-                case 4:
-                    if (val <= 3) return 3;
-                    break;
-                case 5:
-                    if (val <= 2) return 2;
-                    break;
-                case 6:
-                    if (val <= 1) return 1;
-                    break;
-            }
-            break;
-        
+			switch (charge) {
+			case 0:
+				if (val <= 1) return 1;
+				if (val <= 3) return 3;
+				if (val <= 5) return 5;
+				if (val <= 7) return 7;
+				break;
+			case 1:
+				if (val <= 2) return 2;
+				if (val <= 4) return 4;
+				if (val <= 6) return 6;
+				break;
+			case 2:
+				if (val <= 3) return 3;
+				if (val <= 5) return 5;
+				break;
+			case 3:
+				if (val <= 4) return 4;
+				break;
+			case 4:
+				if (val <= 3) return 3;
+				break;
+			case 5:
+				if (val <= 2) return 2;
+				break;
+			case 6:
+				if (val <= 1) return 1;
+				break;
+			}
+			break;
+
 		case "Ga": //31
 			switch (charge) {
 			case -4:
@@ -442,7 +442,183 @@ public class MoleculeUtils {
 				break;
 			}
 			break;    
-            
+         
+		case "Ge": //32
+			switch (charge) {
+			case -3:
+				if (val <= 1) return 1;
+				if (val <= 3) return 3;
+				if (val <= 5) return 5;
+				if (val <= 7) return 7;
+				break;
+			case -2:
+				if (val <= 2) return 2;
+				if (val <= 4) return 4;
+				if (val <= 6) return 6;
+				break;
+			case -1:
+				if (val <= 3) return 3;
+				if (val <= 5) return 5;
+				break;
+			case 0:
+				if (val <= 4) return 4;
+				break;
+			case 1:
+				if (val <= 3) return 3;
+				break;
+			case 3:
+				if (val <= 1) return 1;
+				break;
+			}
+			break;
+			
+		case "As": //33
+			switch (charge) {
+			case -2:
+				if (val <= 1) return 1;
+				if (val <= 3) return 3;
+				if (val <= 5) return 5;
+				if (val <= 7) return 7;
+				break;
+			case -1:
+				if (val <= 2) return 2;
+				if (val <= 4) return 4;
+				if (val <= 6) return 6;
+				break;
+			case 0:
+				if (val <= 3) return 3;
+				if (val <= 5) return 5;
+				break;
+			case 1:
+				if (val <= 4) return 4;
+				break;
+			case 2:
+				if (val <= 3) return 3;
+				break;
+			case 4:
+				if (val <= 1) return 1;
+				break;
+			}
+			break;	
+		
+		case "Se": //34
+			switch (charge) {
+			case -1:
+				if (val <= 1) return 1;
+				if (val <= 3) return 3;
+				if (val <= 5) return 5;
+				if (val <= 7) return 7;
+				break;
+			case 0:
+				if (val <= 2) return 2;
+				if (val <= 4) return 4;
+				if (val <= 6) return 6;
+				break;
+			case 1:
+				if (val <= 3) return 3;
+				if (val <= 5) return 5;
+				break;
+			case 2:
+				if (val <= 4) return 4;
+				break;
+			case 3:
+				if (val <= 3) return 3;
+				break;
+			case 5:
+				if (val <= 1) return 1;
+				break;
+			}
+			break;
+		
+		case "Br": //35
+			switch (charge) {
+			case 0:
+				if (val <= 1) return 1;
+				if (val <= 3) return 3;
+				if (val <= 5) return 5;
+				if (val <= 7) return 7;
+				break;
+			case 1:
+				if (val <= 2) return 2;
+				if (val <= 4) return 4;
+				if (val <= 6) return 6;
+				break;
+			case 2:
+				if (val <= 3) return 3;
+				if (val <= 5) return 5;
+				break;
+			case 3:
+				if (val <= 4) return 4;
+				break;
+			case 4:
+				if (val <= 3) return 3;
+				break;
+			case 6:
+				if (val <= 1) return 1;
+				break;
+			}
+			break;
+		
+		case "In": //49
+			switch (charge) {
+			case -4:
+				if (val <= 1) return 1;
+				if (val <= 3) return 3;
+				if (val <= 5) return 5;
+				if (val <= 7) return 7;
+				break;
+			case -3:
+				if (val <= 2) return 2;
+				if (val <= 4) return 4;
+				if (val <= 6) return 6;
+				break;
+			case -2:
+				if (val <= 3) return 3;
+				if (val <= 5) return 5;
+				break;
+			case -1:
+				if (val <= 2) return 2;
+				if (val <= 4) return 4;
+				break;
+			case 0:
+				if (val <= 3) return 3;
+				break;
+			case 2:
+				if (val <= 1) return 1;
+				break;
+			}
+			break;	
+		
+		case "Sn": //50
+		case "Pb": //82
+			switch (charge) {
+			case -3:
+				if (val <= 1) return 1;
+				if (val <= 3) return 3;
+				if (val <= 5) return 5;
+				if (val <= 7) return 7;
+				break;
+			case -2:
+				if (val <= 2) return 2;
+				if (val <= 4) return 4;
+				if (val <= 6) return 6;
+				break;
+			case -1:
+				if (val <= 3) return 3;
+				if (val <= 5) return 5;
+				break;
+			case 0:
+				if (val <= 2) return 2;
+				if (val <= 4) return 4;
+				break;
+			case 1:
+				if (val <= 3) return 3;
+				break;
+			case 3:
+				if (val <= 1) return 1;
+				break;
+			}
+			break;
 			
 		}
 		
