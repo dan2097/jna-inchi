@@ -630,10 +630,21 @@ public class FileTextUtils {
 			return;
 		}
 		
+		//Check old CTAB charge style
+		Integer chCode = readInteger(line, 36, 3);
+		if (chCode == null || chCode < 0 || chCode > 7 ) {
+			errors.add(errorComponentContext + "MOL atom # " + (atomIndex + 1) 
+					+ " in Line " + curLineNum + " atom charge coding error --> " + line);
+			return;
+		}
+		int charge = getChargeFromOldCTABCoding(chCode);
+		
+		
 		InchiAtom atom = new InchiAtom(atSymbol, coordX, coordY, coordZ);
 		ric.addAtom(atom);
 		
-		//TODO read charge
+		if (charge != 0)
+			atom.setCharge(charge); //M  CHG molecule property takes precedence if present
 	}
 	
 	private void readMOLBondLine(int bondIndex, RinchiInputComponent ric) {
