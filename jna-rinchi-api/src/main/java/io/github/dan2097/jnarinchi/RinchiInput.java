@@ -47,4 +47,15 @@ public class RinchiInput {
 		this.direction = direction;
 	}
 	
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("Reaction direction: ").append(direction).append("\n");
+		for (int i = 0; i < components.size(); i++) {
+			sb.append("Component ").append(i+1);
+			sb.append(" ").append(components.get(i).getRole()).append("\n");
+			sb.append(components.get(i).toString());
+		}
+		return sb.toString();
+	}
+	
 }

@@ -17,6 +17,8 @@
  */
 package io.github.dan2097.jnarinchi;
 
+import io.github.dan2097.jnainchi.InchiAtom;
+import io.github.dan2097.jnainchi.InchiBond;
 import io.github.dan2097.jnainchi.InchiInput;
 
 public class RinchiInputComponent extends InchiInput {
@@ -29,5 +31,36 @@ public class RinchiInputComponent extends InchiInput {
 
 	public void setRole(ReactionComponentRole role) {
 		this.role = role;
+	}
+	
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("  Atoms:").append("\n");
+		for (int i = 0; i < getAtoms().size(); i++)
+			sb.append("    ").append(atomToString(i)).append("\n");
+		sb.append("  Bonds:").append("\n");
+		for (int i = 0; i < getBonds().size(); i++)
+			sb.append("    ").append(bondToString(i)).append("\n");
+		return sb.toString();
+	}
+	
+	private String atomToString(int i) {
+		InchiAtom at = getAtom(i);
+		String s = "" + (i+1) + " " + at.getElName();
+		if (at.getCharge() != 0)
+			s+= " " + at.getCharge();
+		if (at.getIsotopicMass() != 0)
+			s+= " " + at.getIsotopicMass();
+		if (at.getImplicitHydrogen() != 0)
+			s+= " H" + at.getImplicitHydrogen();
+		return s;
+	}
+	
+	private String bondToString(int i) {
+		InchiBond bo = getBond(i);
+		int at1Index = getAtoms().indexOf(bo.getStart()) + 1;
+		int at2Index = getAtoms().indexOf(bo.getEnd()) + 1;
+		String s = "" + at1Index + " " + at2Index + " " + bo.getType();
+		return s;
 	}
 }
