@@ -370,6 +370,27 @@ public class FileTextUtils {
 		return 0;
 	}
 	
+	private int getChargeFromOldCTABCoding(int code) {
+		//MDL Charge designation/coding
+		//0 = uncharged or value other than these, 1 = +3, 2 = +2, 3 = +1,
+		//4 = doublet radical, 5 = -1, 6 = -2, 7 = -3
+		switch (code) {
+		case 1:
+			return +3;
+		case 2:
+			return +2;
+		case 3:
+			return +1;
+		case 5:
+			return -1;
+		case 6:
+			return -2;
+		case 7:
+			return -3;
+		}
+		return 0;
+	}
+	
 	private int getImplicitHAtomCoding(InchiAtom atom) {
 		//Implicit H atoms coding: 1 = H0, 2 = H1, 3 = H2, 4 = H3, 5 = H4
 		if (atom.getImplicitHydrogen() == 0)
