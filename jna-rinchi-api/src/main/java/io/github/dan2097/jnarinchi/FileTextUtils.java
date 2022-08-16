@@ -688,7 +688,43 @@ public class FileTextUtils {
 		if (line == null || line.startsWith("M  END"))
 			return -1;
 		
-		//TODO
+		if (line.startsWith("M  ISO"))
+			readIsotopePropertyLine (line, ric);
+		
+		return 0;
+	}
+	
+	private int readIsotopePropertyLine(String line, RinchiInputComponent ric) {
+		//MDL format for isotope line: 
+		//M ISOnn8 aaa vvv ...
+		
+		Integer n = readInteger(line, 6, 3); //atom count
+		if (n == null || n < 1 || n > 8) {
+			errors.add("M ISO molecule property Line (M ISOnn8 aaa vvv ...) " + curLineNum 
+					+ " : incorrect number of atoms (nn8 part): " + line);
+			return -1;
+		}
+		
+		int pos = 9;
+		for (int i = 0; i < n; i++) {
+			// aaa
+			Integer atomIndex = readInteger(line, pos, 4);			
+			if (atomIndex == null || atomIndex < 1 || atomIndex > ric.getAtoms().size()) {
+				errors.add("M ISO molecule property Line (M ISOnn8 aaa vvv ...) " + curLineNum 
+						+ " : incorrect atom index for (aaa vvv) pair #" + (i+1) + " :" + line);
+				return -2;
+			}
+			pos += 4;
+			// vvv
+			Integer mass = readInteger(line, pos, 4);
+			if (mass == null || mass < 1 ) {
+				errors.add("M ISO molecule property Line (M ISOnn8 aaa vvv ...) " + curLineNum 
+						+ " : incorrect mass for (aaa vvv) pair #" + (i+1) + " :" + line);
+				return -3;
+			}
+			pos += 4;
+			ric.getAtom(atomIndex-1).setIsotopicMass(mass);
+		}		
 		return 0;
 	}
 	
