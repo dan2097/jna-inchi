@@ -150,7 +150,7 @@ public class FileTextUtils {
 	{
 		addMolHeader(line1, line2, line3);
 		addCTABBlockV2000(ric);
-		
+		addPropertyBlock(ric);
 		strBuilder.append("M  END");
 		strBuilder.append(endLine);
 	}
@@ -265,6 +265,33 @@ public class FileTextUtils {
 		//ccc (reacting center status): 0 - unmarked 
 		strBuilder.append("  0");
 		strBuilder.append(endLine);
+	}
+	
+	private void addPropertyBlock(RinchiInputComponent ric) {
+		List<Integer> atomList;
+		//Add charges
+		atomList = getAtomsWithCharge(ric);
+		//TODO
+		
+		//Add isotope masses
+		atomList = getAtomsWithIsotope(ric); 
+		//TODO
+	}
+	
+	private List<Integer> getAtomsWithCharge(RinchiInputComponent ric){
+		List<Integer> atomList = new ArrayList<>();
+		for (int i = 0; i < ric.getAtoms().size(); i++)
+			if (ric.getAtom(i).getCharge() != 0)
+				atomList.add(i);
+		return atomList;
+	}
+	
+	private List<Integer> getAtomsWithIsotope(RinchiInputComponent ric){
+		List<Integer> atomList = new ArrayList<>();
+		for (int i = 0; i < ric.getAtoms().size(); i++)
+			if (ric.getAtom(i).getIsotopicMass() != 0)
+				atomList.add(i);
+		return atomList;
 	}
 	
 	int getBondMDLBondCode(InchiBond bond) {
