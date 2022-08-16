@@ -47,12 +47,14 @@ public class RinchiInputComponent extends InchiInput {
 	private String atomToString(int i) {
 		InchiAtom at = getAtom(i);
 		String s = "" + (i+1) + " " + at.getElName();
+		if (at.getImplicitHydrogen() != 0)
+			s+= " H" + at.getImplicitHydrogen();
+		else
+			s+= "   ";
 		if (at.getCharge() != 0)
 			s+= " " + at.getCharge();
 		if (at.getIsotopicMass() != 0)
-			s+= " " + at.getIsotopicMass();
-		if (at.getImplicitHydrogen() != 0)
-			s+= " H" + at.getImplicitHydrogen();
+			s+= " iso " + at.getIsotopicMass();
 		return s;
 	}
 	
