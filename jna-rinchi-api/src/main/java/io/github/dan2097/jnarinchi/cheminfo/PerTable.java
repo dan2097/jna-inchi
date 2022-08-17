@@ -32,7 +32,7 @@ public class PerTable {
 			"Tl","Pb","Bi","Po","At","Rn","Fr","Ra","Ac","Th",   //81-90
 			"Pa","U","Np","Pu","Am","Cm","Bk","Cf","Es","Fm",    //91-100
 			"Md","No","Lr","Rf","Db","Sg","Bh","Hs","Mt","Uun",  //101-110
-			"Uuu","Uub"							                 //111-120
+			"Uuu","Uub","Uut","Uuq", "Uup"		                 //111-120
 		};
 	
 	public static int getAtomicNumberFromElSymbol(String s)
