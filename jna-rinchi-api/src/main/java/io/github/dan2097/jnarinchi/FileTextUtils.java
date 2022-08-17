@@ -268,14 +268,59 @@ public class FileTextUtils {
 	}
 	
 	private void addPropertyBlock(RinchiInputComponent ric) {
-		List<Integer> atomList;
+		List<Integer> atomList;		
+		
 		//Add charges
-		atomList = getAtomsWithCharge(ric);
-		//TODO
+		atomList = getAtomsWithCharge(ric);		
+		if (!atomList.isEmpty()) {
+			//Atom charges are added in sets of 8 atoms (M  CHGnn8 aaa vvv ...)
+			int numSets = atomList.size() / 8;
+			for (int curSet = 0; curSet < numSets; curSet++) {
+				strBuilder.append("M  CHG  8");
+				for (int i = 0; i < 8; i++) {
+					int atIndex = atomList.get(curSet * 8 + i);
+					addInteger(atIndex+1, 4);
+					addInteger(ric.getAtom(atIndex).getCharge(), 4);
+				}
+				strBuilder.append(endLine);
+			}			
+			//One additional set of k charged atoms (atomList.size() = 8 * numSets + k)
+			int k = atomList.size() % 8;
+			strBuilder.append("M  CHG");
+			addInteger(k,3);
+			for (int i = 0; i < k; i++) {
+				int atIndex = atomList.get(numSets * 8 + i);
+				addInteger(atIndex+1, 4);
+				addInteger(ric.getAtom(atIndex).getCharge(), 4);
+			}
+			strBuilder.append(endLine);
+		}
 		
 		//Add isotope masses
 		atomList = getAtomsWithIsotope(ric); 
-		//TODO
+		if (!atomList.isEmpty()) {
+			//Atom isotope masses are added in sets of 8 atoms (M  ISOnn8 aaa vvv ...)
+			int numSets = atomList.size() / 8;
+			for (int curSet = 0; curSet < numSets; curSet++) {
+				strBuilder.append("M  ISO  8");
+				for (int i = 0; i < 8; i++) {
+					int atIndex = atomList.get(curSet * 8 + i);
+					addInteger(atIndex+1, 4);
+					addInteger(ric.getAtom(atIndex).getIsotopicMass(), 4);
+				}
+				strBuilder.append(endLine);
+			}			
+			//One additional set of k isotope masses (atomList.size() = 8 * numSets + k)
+			int k = atomList.size() % 8;
+			strBuilder.append("M  ISO");
+			addInteger(k,3);
+			for (int i = 0; i < k; i++) {
+				int atIndex = atomList.get(numSets * 8 + i);
+				addInteger(atIndex+1, 4);
+				addInteger(ric.getAtom(atIndex).getIsotopicMass(), 4);
+			}
+			strBuilder.append(endLine);
+		}
 	}
 	
 	private List<Integer> getAtomsWithCharge(RinchiInputComponent ric){
