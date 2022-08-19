@@ -120,10 +120,13 @@ public class FileTextUtils {
 			addRrinchiInputComponent(reagents.get(i), "Reagent " + (i+1), "  JNA-RIN", "");
 		//Add products
 		for (int i = 0; i < products.size(); i++) 
-			addRrinchiInputComponent(products.get(i), "Products " + (i+1), "  JNA-RIN", "");
+			addRrinchiInputComponent(products.get(i), "Product " + (i+1), "  JNA-RIN", "");
 		
-		
-		//TODO add agents for RDFile
+		//Add agents for RDFile
+		if (format == ReactionFileFormat.RD || format == ReactionFileFormat.AUTO ) {
+			for (int i = 0; i < agents.size(); i++) 
+				addRrinchiInputComponentAsAgent(agents.get(i), i, "Agent " + (i+1), "  JNA-RIN", "");
+		}
 		
 		return strBuilder.toString();
 	}
@@ -149,6 +152,27 @@ public class FileTextUtils {
 	private void addRrinchiInputComponent(RinchiInputComponent ric, String line1, String line2, String line3) 
 	{
 		addMolHeader(line1, line2, line3);
+		addCTABBlockV2000(ric);
+		addPropertyBlock(ric);
+		strBuilder.append("M  END");
+		strBuilder.append(endLine);
+	}
+	
+	private void addRrinchiInputComponentAsAgent(RinchiInputComponent ric, int agentIndex, String line1, String line2, String line3) 
+	{
+		strBuilder.append("$DTYPE RXN:VARIATION(1):AGENT(" + (agentIndex + 1) + "):MOL(1):MOLSTRUCTURE");
+		strBuilder.append(endLine);
+		strBuilder.append("$DATUM $MFMT");
+		strBuilder.append(endLine);
+		
+		//Molecule header
+		strBuilder.append(line1);
+		strBuilder.append(endLine);		
+		strBuilder.append(line2);
+		strBuilder.append(endLine);
+		strBuilder.append(line3);
+		strBuilder.append(endLine);
+		
 		addCTABBlockV2000(ric);
 		addPropertyBlock(ric);
 		strBuilder.append("M  END");
