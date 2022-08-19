@@ -51,6 +51,7 @@ public class FileTextUtils {
 	private StringBuilder strBuilder;	
 	private List<String> errors = new ArrayList<String>();
 	private ReactionFileFormat format = ReactionFileFormat.RD;
+	private ReactionFileFormat autoRecognizedformat = null;
 	private boolean add_M_ISO_Line = false;
 	private boolean add_M_CHG_Line = false;
 	private CTABVersion ctabVersion = CTABVersion.V2000; //Currently only V2000 is supported
@@ -553,8 +554,16 @@ public class FileTextUtils {
 				return errors.size();
 		}
 		
+		if ((format == ReactionFileFormat.RD) || 
+				(format == ReactionFileFormat.AUTO && autoRecognizedformat == ReactionFileFormat.RD)) 
+			iterateAgentsDataLines();
+				
 		return 0;
 	};
+	
+	private void iterateAgentsDataLines() {
+		//TODO
+	}
 	
 	private void readAutoFileHeader() {
 		//TODO
