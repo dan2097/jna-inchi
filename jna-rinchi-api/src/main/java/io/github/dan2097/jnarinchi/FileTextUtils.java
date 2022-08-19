@@ -529,7 +529,7 @@ public class FileTextUtils {
 		
 		//Reading reagents
 		for (int i = 0; i< numOfReagentsToRead; i++) {
-			RinchiInputComponent ric = readMDLMolecule();
+			RinchiInputComponent ric = readMDLMolecule(true);
 			errorComponentContext = "Reading reagent #" + (i+1) + " ";
 			if (ric != null) {
 				MoleculeUtils.setImplicitHydrogenAtoms(ric);
@@ -542,7 +542,7 @@ public class FileTextUtils {
 		
 		//Reading products
 		for (int i = 0; i< numOfProductsToRead; i++) {
-			RinchiInputComponent ric = readMDLMolecule();
+			RinchiInputComponent ric = readMDLMolecule(true);
 			errorComponentContext = "Reading product #" + (i+1) + " ";
 			if (ric != null) {
 				MoleculeUtils.setImplicitHydrogenAtoms(ric);
@@ -619,12 +619,15 @@ public class FileTextUtils {
 			numOfProductsToRead = ppp;
 	}
 	
-	private void readMOLHeader() {
-		String line = readLine();
-		if (line == null || !line.startsWith("$MOL")) {
-			errors.add(errorComponentContext + "MOL Start section in Line " 
-					+ curLineNum + " is missing or does not start with $MOL" + " --> " + line);
-			return;
+	private void readMOLHeader(boolean readMOLline) {
+		String line;		
+		if (readMOLline) {
+			line = readLine();
+			if (line == null || !line.startsWith("$MOL")) {
+				errors.add(errorComponentContext + "MOL Start section in Line " 
+						+ curLineNum + " is missing or does not start with $MOL" + " --> " + line);
+				return;
+			}
 		}
 		line = readLine();
 		if (line == null) {
@@ -863,9 +866,9 @@ public class FileTextUtils {
 		return 0;
 	}
 	
-	private RinchiInputComponent readMDLMolecule() {
+	private RinchiInputComponent readMDLMolecule(boolean readMOLline) {
 		RinchiInputComponent ric = new RinchiInputComponent();
-		readMOLHeader();
+		readMOLHeader(readMOLline);
 		if (!errors.isEmpty())
 			return null;
 		
