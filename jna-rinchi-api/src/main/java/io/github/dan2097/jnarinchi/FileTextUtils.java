@@ -519,6 +519,7 @@ public class FileTextUtils {
 			break;
 		case RD:
 			readRDFileHeader();
+			readRXNFileHeader();
 			break;	
 		}		
 		if (!errors.isEmpty())
@@ -561,8 +562,24 @@ public class FileTextUtils {
 		return 0;
 	};
 	
-	private void iterateAgentsDataLines() {
-		//TODO
+	private void iterateAgentsDataLines() {		
+		String line;
+		int nAgents = 0;
+		while ((line = readLine()) != null) {
+			if (line.startsWith("$DATUM ")) {
+				String line1 = line.substring(7).trim();
+				if (line1.startsWith("$MFMT"));{
+					errorComponentContext = "Reading agent #" + (nAgents+1) + " ";
+					RinchiInputComponent ric = readMDLMolecule(false);
+					if (ric != null) {
+						MoleculeUtils.setImplicitHydrogenAtoms(ric);
+						ric.setRole(ReactionComponentRole.AGENT);
+						rInput.addComponent(ric);
+					}
+					nAgents++;
+				}	
+			}	
+		}
 	}
 	
 	private void readAutoFileHeader() {
@@ -578,6 +595,11 @@ public class FileTextUtils {
 		line = readLine();
 		if (line == null || !line.startsWith("$DATM")) {
 			errors.add("RDFile Header: Line " + curLineNum + " is missing or does not start with $DATM");
+			return;
+		}
+		line = readLine();
+		if (line == null || !line.startsWith("$RFMT")) {
+			errors.add("RDFile Header: Line " + curLineNum + " is missing or does not start with $RFMT");
 			return;
 		}
 	}
