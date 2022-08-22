@@ -58,23 +58,23 @@ public class JnaRinchi
 	public static RinchiOutput toRinchi(RinchiInput rInp, RinchiOptions options) {
 		//Converting RinchiInput to RXN/RDFile
 		FileTextUtils ftUtils = new FileTextUtils(); 
-		ftUtils.setFormat(ReactionFileFormat.RXN);
+		ftUtils.setFormat(ReactionFileFormat.RD);
 		String fileText = ftUtils.rinchiInputToFileText(rInp);
 		if (!ftUtils.getErrors().isEmpty()) {
 			return new RinchiOutput("", "", RinchiStatus.ERROR, -1, 
-					"Unable to convert RinchiInput to RXN/RDFile.\n" + ftUtils.getAllErrors());
+					"Unable to convert RinchiInput to RDFile.\n" + ftUtils.getAllErrors());
 		}
 		return fileTextToRinchi(fileText, options);
 	}
 	
 	public static RinchiInputFromRinchiOutput getRinchiInputFromRinchi(String rinchi, String auxInfo) {
-		FileTextOutput ftOut = rinchiToFileText(rinchi, auxInfo, ReactionFileFormat.RXN);
+		FileTextOutput ftOut = rinchiToFileText(rinchi, auxInfo, ReactionFileFormat.RD);
 		if (ftOut.getStatus() != FileTextStatus.SUCCESS) 
 			return new RinchiInputFromRinchiOutput(null, RinchiStatus.ERROR, -1, ftOut.getErrorMessage());
 		
 		//Converting RXN/RDFile to RinchiInput 
 		FileTextUtils ftUtils = new FileTextUtils(); 
-		ftUtils.setFormat(ReactionFileFormat.RXN);
+		ftUtils.setFormat(ReactionFileFormat.RD);
 		RinchiInput rInp = ftUtils.fileTextToRinchiInput(ftOut.getReactionFileText());
 		if (rInp == null) 
 			return new RinchiInputFromRinchiOutput(null, RinchiStatus.ERROR, -1, ftUtils.getAllErrors());
