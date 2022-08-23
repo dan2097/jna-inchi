@@ -42,6 +42,19 @@ public class MoleculeUtils {
 		return nTH;
 	}
 	
+	public static Map<InchiAtom,InchiStereoParity> getAtomParities(InchiInput inchiInput) {
+		Map<InchiAtom,InchiStereoParity> parities = new HashMap<>();
+		for (int i = 0; i < inchiInput.getStereos().size(); i++) {
+			InchiStereo stereo = inchiInput.getStereos().get(i);
+			if (stereo.getType() == InchiStereoType.Tetrahedral)
+				if (stereo.getParity() == InchiStereoParity.ODD || 
+					stereo.getParity() == InchiStereoParity.EVEN) {
+					parities.put(stereo.getCentralAtom(), stereo.getParity());
+				}	
+		}
+		return parities;
+	}
+	
 	public static void setImplicitHydrogenAtoms(InchiInput inchiInput) {
 		Map<InchiAtom,Integer> atomExplVal =  getExplicitAtomValencies(inchiInput);
 		for (InchiAtom at : inchiInput.getAtoms()) {

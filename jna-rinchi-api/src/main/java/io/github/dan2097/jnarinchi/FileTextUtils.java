@@ -23,10 +23,12 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import io.github.dan2097.jnainchi.InchiAtom;
 import io.github.dan2097.jnainchi.InchiBond;
 import io.github.dan2097.jnainchi.InchiBondType;
+import io.github.dan2097.jnainchi.InchiStereoParity;
 import io.github.dan2097.jnarinchi.cheminfo.MoleculeUtils;
 import io.github.dan2097.jnarinchi.cheminfo.PerTable;
 
@@ -220,7 +222,8 @@ public class FileTextUtils {
 		addInteger(ric.getBonds().size(), 3); //bbb
 		strBuilder.append("  0"); //lll
 		strBuilder.append("  0"); //fff
-		int nTHChiralAtoms = MoleculeUtils.getNumberOfTetrahedralChiralityAtoms(ric);
+		Map<InchiAtom,InchiStereoParity> parities = MoleculeUtils.getAtomParities(ric);
+		int nTHChiralAtoms = parities.size();
 		addInteger(nTHChiralAtoms, 3); //ccc
 		strBuilder.append("  0"); //sss
 		strBuilder.append("  0"); //xxx
