@@ -236,13 +236,13 @@ public class FileTextUtils {
 		
 		//Add Atom block
 		for (int i = 0; i < ric.getAtoms().size(); i++) 
-			addAtomLine(ric.getAtom(i));
+			addAtomLine(ric.getAtom(i), parities.get(ric.getAtom(i)));
 		//Add Bond block
 		for (int i = 0; i < ric.getBonds().size(); i++) 
 			addBondLine(ric.getBond(i), ric);
 	}
 	
-	private void addAtomLine(InchiAtom atom) {
+	private void addAtomLine(InchiAtom atom, InchiStereoParity parity) {
 		//MDL atom line specification
 		//xxxxx.xxxxyyyyy.yyyyzzzzz.zzzz aaaddcccssshhhbbbvvvHHHrrriiimmmnnneee
 		
@@ -257,8 +257,19 @@ public class FileTextUtils {
 		strBuilder.append(" 0"); 
 		//ccc
 		addInteger(getOldCTABChargeCoding(atom.getCharge()),3);
-		//sss stereoparity not specified yet - TODO
-		strBuilder.append("  0"); 
+		//sss stereo parity
+		if (parity != null) {
+			switch (parity) {
+			case ODD:
+				strBuilder.append("  1");
+				break;
+			case EVEN:
+				strBuilder.append("  2");
+				break;	
+			default:
+				strBuilder.append("  0");
+			}
+		}
 		//hhh: implicit H atoms: used for query 
 		//addInteger(getImplicitHAtomCoding(atom),3);
 		strBuilder.append("  0");
