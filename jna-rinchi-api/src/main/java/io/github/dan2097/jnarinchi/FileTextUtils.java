@@ -220,7 +220,8 @@ public class FileTextUtils {
 		addInteger(ric.getBonds().size(), 3); //bbb
 		strBuilder.append("  0"); //lll
 		strBuilder.append("  0"); //fff
-		addInteger(ric.getStereos().size(), 3); //ccc
+		int nTHChiralAtoms = MoleculeUtils.getNumberOfTetrahedralChiralityAtoms(ric);
+		addInteger(nTHChiralAtoms, 3); //ccc
 		strBuilder.append("  0"); //sss
 		strBuilder.append("  0"); //xxx
 		strBuilder.append("  0"); //rrr
