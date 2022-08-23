@@ -29,6 +29,7 @@ import java.util.Map;
 import io.github.dan2097.jnainchi.InchiAtom;
 import io.github.dan2097.jnainchi.InchiBond;
 import io.github.dan2097.jnainchi.InchiBondType;
+import io.github.dan2097.jnainchi.InchiStereo;
 import io.github.dan2097.jnainchi.InchiStereoParity;
 import io.github.dan2097.jnarinchi.cheminfo.MoleculeUtils;
 import io.github.dan2097.jnarinchi.cheminfo.PerTable;
@@ -732,7 +733,7 @@ public class FileTextUtils {
 	}
 	
 	private void readMOLCTABBlock(RinchiInputComponent ric) {
-		Map<InchiAtom,InchiStereoParity> parities = new HashMap<>();
+		Map<InchiAtom, InchiStereoParity> parities = new HashMap<>();
 		
 		for (int i = 0; i < numOfAtomsToRead; i++) {
 			readMOLAtomLine(i, ric, parities);
@@ -745,9 +746,12 @@ public class FileTextUtils {
 				return;
 		}
 		
-		if (!parities.isEmpty()) {
-			//TODO 
-		}
+		if (!parities.isEmpty()) 
+			for (Map.Entry<InchiAtom, InchiStereoParity> e : parities.entrySet()) {
+				InchiStereo stereo = MoleculeUtils.createTetrahedralStereo(e.getKey(), e.getValue());
+				if (stereo != null)
+					ric.addStereo(stereo);
+			}
 	}
 	
 	private void readMOLAtomLine(int atomIndex, RinchiInputComponent ric, Map<InchiAtom,InchiStereoParity> parities) {

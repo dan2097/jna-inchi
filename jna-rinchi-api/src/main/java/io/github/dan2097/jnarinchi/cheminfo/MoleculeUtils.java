@@ -56,6 +56,13 @@ public class MoleculeUtils {
 		return parities;
 	}
 	
+	public static InchiStereo createTetrahedralStereo(InchiAtom atom, InchiStereoParity parity) {
+		//TODO get atom neighbours and create stereo object
+		//InchiStereo stereo = createTetrahedralStereo(centralAtom, atom1, atom2, atom3, atom4, InchiStereoParity parity)
+		
+		return null;
+	}
+	
 	public static void setImplicitHydrogenAtoms(InchiInput inchiInput) {
 		Map<InchiAtom,Integer> atomExplVal =  getExplicitAtomValencies(inchiInput);
 		for (InchiAtom at : inchiInput.getAtoms()) {
