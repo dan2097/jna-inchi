@@ -266,7 +266,10 @@ public class FileTextUtils {
 				break;
 			case EVEN:
 				strBuilder.append("  2");
-				break;	
+				break;
+			case UNKNOWN:
+				strBuilder.append("  3");
+				break;		
 			default:
 				strBuilder.append("  0");
 			}

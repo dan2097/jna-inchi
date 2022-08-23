@@ -48,7 +48,8 @@ public class MoleculeUtils {
 			InchiStereo stereo = inchiInput.getStereos().get(i);
 			if (stereo.getType() == InchiStereoType.Tetrahedral)
 				if (stereo.getParity() == InchiStereoParity.ODD || 
-					stereo.getParity() == InchiStereoParity.EVEN) {
+					stereo.getParity() == InchiStereoParity.EVEN || 
+					stereo.getParity() == InchiStereoParity.UNKNOWN) {
 					parities.put(stereo.getCentralAtom(), stereo.getParity());
 				}	
 		}
