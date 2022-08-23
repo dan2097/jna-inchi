@@ -53,7 +53,8 @@ public class FileTextUtils {
 	private String endLine = "\n";	
 	private StringBuilder strBuilder;	
 	private List<String> errors = new ArrayList<String>();
-	private ReactionFileFormat format = ReactionFileFormat.RD;	
+	private ReactionFileFormat format = ReactionFileFormat.RD;
+	private boolean checkParityAccordingAtomNumbering = false;
 	private ReactionFileFormat autoRecognizedformat = null;
 	private CTABVersion ctabVersion = CTABVersion.V2000; //Currently only V2000 is supported
 	private RinchiInput rInput = null;
@@ -236,10 +237,12 @@ public class FileTextUtils {
 		//Add Atom block
 		for (int i = 0; i < ric.getAtoms().size(); i++) {
 			InchiStereoParity parity = parities.get(ric.getAtom(i));
-			//TODO 
-			//In general case the atoms within InchiStero object 
+			//In general, the atoms within InchiStero object 
 			//may have atom numbering which is not increasing within InchiInput object
 			//In this case parity value may need to be swapped.
+			if (checkParityAccordingAtomNumbering) {
+				//TODO
+			}
 			addAtomLine(ric.getAtom(i), parity);
 		}	
 		//Add Bond block
@@ -1038,6 +1041,14 @@ public class FileTextUtils {
 	public void setFormat(ReactionFileFormat format) {
 		if (format != null)
 			this.format = format;
-	}	
+	}
+
+	public boolean isCheckParityAccordingAtomNumbering() {
+		return checkParityAccordingAtomNumbering;
+	}
+
+	public void setCheckParityAccordingAtomNumbering(boolean checkParityAccordingAtomNumbering) {
+		this.checkParityAccordingAtomNumbering = checkParityAccordingAtomNumbering;
+	}
 		
 }
