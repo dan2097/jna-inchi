@@ -24,8 +24,23 @@ import io.github.dan2097.jnainchi.InchiAtom;
 import io.github.dan2097.jnainchi.InchiBond;
 import io.github.dan2097.jnainchi.InchiBondType;
 import io.github.dan2097.jnainchi.InchiInput;
+import io.github.dan2097.jnainchi.InchiStereo;
+import io.github.dan2097.jnainchi.InchiStereoParity;
+import io.github.dan2097.jnainchi.InchiStereoType;
 
 public class MoleculeUtils {
+	
+	public static int getNumberOfTetrahedralChiralityAtoms(InchiInput inchiInput) {
+		int nTH = 0;
+		for (int i = 0; i < inchiInput.getStereos().size(); i++) {
+			InchiStereo stereo = inchiInput.getStereos().get(i);
+			if (stereo.getType() == InchiStereoType.Tetrahedral)
+				if (stereo.getParity() == InchiStereoParity.ODD || 
+					stereo.getParity() == InchiStereoParity.EVEN)
+					nTH++;
+		}
+		return nTH;
+	}
 	
 	public static void setImplicitHydrogenAtoms(InchiInput inchiInput) {
 		Map<InchiAtom,Integer> atomExplVal =  getExplicitAtomValencies(inchiInput);
