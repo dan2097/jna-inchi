@@ -21,6 +21,7 @@ import java.io.BufferedReader;
 import java.io.StringReader;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -721,8 +722,10 @@ public class FileTextUtils {
 	}
 	
 	private void readMOLCTABBlock(RinchiInputComponent ric) {
+		Map<InchiAtom,InchiStereoParity> parities = new HashMap<>();
+		
 		for (int i = 0; i < numOfAtomsToRead; i++) {
-			readMOLAtomLine(i, ric);
+			readMOLAtomLine(i, ric, parities);
 			if (!errors.isEmpty())
 				return;
 		}
@@ -731,9 +734,13 @@ public class FileTextUtils {
 			if (!errors.isEmpty())
 				return;
 		}
+		
+		if (!parities.isEmpty()) {
+			//TODO 
+		}
 	}
 	
-	private void readMOLAtomLine(int atomIndex, RinchiInputComponent ric) {
+	private void readMOLAtomLine(int atomIndex, RinchiInputComponent ric, Map<InchiAtom,InchiStereoParity> parities) {
 		//Read MDL atom line
 		//xxxxx.xxxxyyyyy.yyyyzzzzz.zzzz aaaddcccssshhhbbbvvvHHHrrriiimmmnnneee
 		String line = readLine();
@@ -790,6 +797,29 @@ public class FileTextUtils {
 		
 		if (charge != 0)
 			atom.setCharge(charge); //M  CHG molecule property takes precedence if present
+		
+		//sss stereo parity
+		Integer parityCode = readInteger(line, 39, 3);
+		if (parityCode == null || parityCode < 0 || parityCode > 3) {
+			errors.add(errorComponentContext + "MOL atom # " + (atomIndex + 1) 
+					+ " in Line " + curLineNum + " atom parity coding error --> " + line);
+			return;
+		}
+		InchiStereoParity parity = getParity(parityCode);
+		if (parity != null)
+			parities.put(atom, parity);
+	}
+	
+	private InchiStereoParity getParity(int parityCode) {
+		switch (parityCode) {
+		case 1:
+			return InchiStereoParity.ODD;
+		case 2:	
+			return InchiStereoParity.EVEN;
+		case 3:
+			return InchiStereoParity.UNKNOWN;
+		}
+		return null;
 	}
 	
 	private void readMOLBondLine(int bondIndex, RinchiInputComponent ric) {
