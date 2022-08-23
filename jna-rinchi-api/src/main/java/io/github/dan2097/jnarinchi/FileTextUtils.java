@@ -236,8 +236,14 @@ public class FileTextUtils {
 		strBuilder.append(endLine);
 		
 		//Add Atom block
-		for (int i = 0; i < ric.getAtoms().size(); i++) 
-			addAtomLine(ric.getAtom(i), parities.get(ric.getAtom(i)));
+		for (int i = 0; i < ric.getAtoms().size(); i++) {
+			InchiStereoParity parity = parities.get(ric.getAtom(i));
+			//TODO 
+			//In general case the atoms within InchiStero object 
+			//may have atom numbering which is not increasing within InchiInput object
+			//In this case parity value may need to be swapped.
+			addAtomLine(ric.getAtom(i), parity);
+		}	
 		//Add Bond block
 		for (int i = 0; i < ric.getBonds().size(); i++) 
 			addBondLine(ric.getBond(i), ric);
