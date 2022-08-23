@@ -53,10 +53,8 @@ public class FileTextUtils {
 	private String endLine = "\n";	
 	private StringBuilder strBuilder;	
 	private List<String> errors = new ArrayList<String>();
-	private ReactionFileFormat format = ReactionFileFormat.RD;
+	private ReactionFileFormat format = ReactionFileFormat.RD;	
 	private ReactionFileFormat autoRecognizedformat = null;
-	private boolean add_M_ISO_Line = false;
-	private boolean add_M_CHG_Line = false;
 	private CTABVersion ctabVersion = CTABVersion.V2000; //Currently only V2000 is supported
 	private RinchiInput rInput = null;
 	private List<RinchiInputComponent> reagents = new ArrayList<RinchiInputComponent>();
@@ -1040,22 +1038,6 @@ public class FileTextUtils {
 	public void setFormat(ReactionFileFormat format) {
 		if (format != null)
 			this.format = format;
-	}
-
-	public boolean isAdd_M_ISO_Line() {
-		return add_M_ISO_Line;
-	}
-
-	public void setAdd_M_ISO_Line(boolean add_M_ISO_Line) {
-		this.add_M_ISO_Line = add_M_ISO_Line;
-	}
-
-	public boolean isAdd_M_CHG_Line() {
-		return add_M_CHG_Line;
-	}
-
-	public void setAdd_M_CHG_Line(boolean add_M_CHG_Line) {
-		this.add_M_CHG_Line = add_M_CHG_Line;
-	}
+	}	
 		
 }
