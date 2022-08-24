@@ -17,6 +17,9 @@
  */
 package io.github.dan2097.jnarinchi;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import io.github.dan2097.jnainchi.InchiAtom;
 import io.github.dan2097.jnainchi.InchiBond;
 import io.github.dan2097.jnainchi.InchiInput;
@@ -31,6 +34,21 @@ public class RinchiInputComponent extends InchiInput {
 
 	public void setRole(ReactionComponentRole role) {
 		this.role = role;
+	}
+	
+	public List<InchiAtom> getConectedAtomList(InchiAtom atom) {
+		if (atom == null)
+			return null;
+		List<InchiAtom> list = new ArrayList<>();
+
+		for (int i = 0; i < getBonds().size(); i++) {
+			InchiBond bo = getBond(i);
+			if (bo.getStart() == atom)
+				list.add(bo.getEnd());
+			else if (bo.getEnd() == atom)
+				list.add(bo.getStart());
+		}
+		return list;
 	}
 	
 	public String toString() {
