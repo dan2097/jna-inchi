@@ -748,7 +748,7 @@ public class FileTextUtils {
 		
 		if (!parities.isEmpty()) 
 			for (Map.Entry<InchiAtom, InchiStereoParity> e : parities.entrySet()) {
-				InchiStereo stereo = MoleculeUtils.createTetrahedralStereo(e.getKey(), e.getValue());
+				InchiStereo stereo = MoleculeUtils.createTetrahedralStereo(ric, e.getKey(), e.getValue());
 				if (stereo != null)
 					ric.addStereo(stereo);
 			}
