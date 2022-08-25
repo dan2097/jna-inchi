@@ -173,6 +173,26 @@ public class MoleculeUtils {
 		return 0;
 	}
 	
+	public static int[] coordinateStatistics (InchiInput inchiInput) {
+		if (inchiInput == null)
+			return null;
+		
+		int nX = 0;
+		int nY = 0;
+		int nZ = 0;
+		
+		for (int i = 0; i < inchiInput.getAtoms().size(); i++) {
+			InchiAtom at = inchiInput.getAtom(i);
+			if (at.getX() != 0.0)
+				nX++;
+			if (at.getY() != 0.0)
+				nY++;
+			if (at.getZ() != 0.0)
+				nZ++;
+		}
+		return new int[] {nX, nY, nZ};
+	}
+	
 	/**
 	 * Function returns the implicit valence (h atom count) for a given atom,
 	 * taking into account atom element, charge and
@@ -843,5 +863,7 @@ public class MoleculeUtils {
 		
 		return val;
 	}
+	
+	
 	
 }
