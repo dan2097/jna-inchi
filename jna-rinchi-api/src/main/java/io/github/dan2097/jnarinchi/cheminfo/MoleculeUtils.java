@@ -32,6 +32,10 @@ import io.github.dan2097.jnarinchi.RinchiInputComponent;
 
 public class MoleculeUtils {
 	
+	public static enum MolCoordinatesType {
+		_0D, _2D, _3D
+	}
+	
 	public static int getNumberOfTetrahedralChiralityAtoms(InchiInput inchiInput) {
 		int nTH = 0;
 		for (int i = 0; i < inchiInput.getStereos().size(); i++) {
@@ -191,6 +195,14 @@ public class MoleculeUtils {
 				nZ++;
 		}
 		return new int[] {nX, nY, nZ};
+	}
+	
+	public static MolCoordinatesType getMolCoordinatesType(int nX, int nY, int nZ) {
+		if (nZ != 0)
+			return MolCoordinatesType._3D;
+		if (nY != 0)
+			return MolCoordinatesType._2D;
+		return MolCoordinatesType._0D;
 	}
 	
 	/**
