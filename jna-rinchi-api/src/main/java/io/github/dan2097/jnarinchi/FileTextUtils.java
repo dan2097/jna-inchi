@@ -28,6 +28,7 @@ import java.util.Map;
 
 import io.github.dan2097.jnainchi.InchiAtom;
 import io.github.dan2097.jnainchi.InchiBond;
+import io.github.dan2097.jnainchi.InchiBondStereo;
 import io.github.dan2097.jnainchi.InchiBondType;
 import io.github.dan2097.jnainchi.InchiStereo;
 import io.github.dan2097.jnainchi.InchiStereoParity;
@@ -402,6 +403,30 @@ public class FileTextUtils {
 			return 3;
 		};
 		return 1;
+	}
+	
+	private int getStereoBondMDLCode(InchiBondStereo inchiBoStereo) {
+		switch (inchiBoStereo) {
+		case SINGLE_1UP:
+		case SINGLE_2UP:
+			return 1;
+		case SINGLE_1EITHER:
+		case SINGLE_2EITHER:
+			return 4;
+		case SINGLE_1DOWN:
+		case SINGLE_2DOWN:
+			return 6;
+		case DOUBLE_EITHER:
+			return 3;
+		}
+		return 0;
+	}
+	
+	private boolean isWedgeEndAtSecondAtom(InchiBondStereo inchiBoStereo) {
+		return (inchiBoStereo == InchiBondStereo.SINGLE_2UP 
+				|| inchiBoStereo == InchiBondStereo.SINGLE_2DOWN
+				|| inchiBoStereo == InchiBondStereo.SINGLE_2EITHER);
+		
 	}
 	
 	private void analyzeComponents() {
