@@ -320,8 +320,8 @@ public class FileTextUtils {
 		}
 		//ttt bond type
 		addInteger(getBondMDLBondCode(bond), 3);
-		//sss bond stereo - not specified - TODO
-		strBuilder.append("  0");
+		//sss bond stereo		
+		addInteger(getBondMDLStereoCode(bond), 3);
 		//xxx = not used
 		strBuilder.append("  0");
 		//rrr (bond topology, used only for SSS)
@@ -416,7 +416,8 @@ public class FileTextUtils {
 	}
 	
 	private int getBondMDLStereoCode(InchiBond bond) {
-		//TODO
+		if (bond.getStereo() != null)
+			return inchiBondStereoToMDLStereoCode(bond.getStereo());
 		return 0;
 	}
 	
