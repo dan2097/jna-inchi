@@ -33,6 +33,7 @@ import io.github.dan2097.jnainchi.InchiStereo;
 import io.github.dan2097.jnainchi.InchiStereoParity;
 import io.github.dan2097.jnarinchi.cheminfo.MoleculeUtils;
 import io.github.dan2097.jnarinchi.cheminfo.PerTable;
+import io.github.dan2097.jnarinchi.cheminfo.StereoUtils;
 
 public class FileTextUtils {
 	
@@ -223,7 +224,7 @@ public class FileTextUtils {
 		addInteger(ric.getBonds().size(), 3); //bbb
 		strBuilder.append("  0"); //lll
 		strBuilder.append("  0"); //fff
-		Map<InchiAtom,InchiStereoParity> parities = MoleculeUtils.getAtomParities(ric);
+		Map<InchiAtom,InchiStereoParity> parities = StereoUtils.getAtomParities(ric);
 		int nTHChiralAtoms = parities.size();
 		addInteger(nTHChiralAtoms, 3); //ccc
 		strBuilder.append("  0"); //sss
@@ -748,7 +749,7 @@ public class FileTextUtils {
 		
 		if (!parities.isEmpty()) 
 			for (Map.Entry<InchiAtom, InchiStereoParity> e : parities.entrySet()) {
-				InchiStereo stereo = MoleculeUtils.createTetrahedralStereo(ric, e.getKey(), e.getValue());
+				InchiStereo stereo = StereoUtils.createTetrahedralStereo(ric, e.getKey(), e.getValue());
 				if (stereo != null)
 					ric.addStereo(stereo);
 			}
