@@ -543,11 +543,11 @@ public class FileTextUtils {
 			readAutoFileHeader();
 			break;
 		case RXN:
-			readRXNFileHeader();
+			readRXNFileHeader(true);
 			break;
 		case RD:
-			readRDFileHeader();
-			readRXNFileHeader();
+			readRDFileHeader(true);
+			readRXNFileHeader(true);
 			break;	
 		}		
 		if (!errors.isEmpty())
@@ -611,16 +611,30 @@ public class FileTextUtils {
 	}
 	
 	private void readAutoFileHeader() {
-		//TODO
-	}
-	
-	private void readRDFileHeader() {
 		String line = readLine();
-		if (line == null || !line.startsWith("$RDFILE")) {
-			errors.add("RDFile Header: Line " + curLineNum + " is missing or does not start with $RDFILE");
+		if (line == null || ( !line.startsWith("$RDFILE") && !line.startsWith("$RXN")) ) {
+			errors.add("RXN/RDFile Header: Line " + curLineNum + " is missing or does not start with $RXN or $RDFILE");
 			return;
 		}
-		line = readLine();
+		
+		if (line.startsWith("$RDFILE")) {
+			readRDFileHeader(false);
+			readRXNFileHeader(true);
+		}	
+		else  //line starts With "$RXN"
+			readRXNFileHeader(false);
+	}
+	
+	private void readRDFileHeader(boolean readRDFILELine) {
+		String line = readLine();
+		if (readRDFILELine) {
+			if (line == null || !line.startsWith("$RDFILE")) {
+				errors.add("RDFile Header: Line " + curLineNum + " is missing or does not start with $RDFILE");
+				return;
+			}		
+			line = readLine();
+		}
+		
 		if (line == null || !line.startsWith("$DATM")) {
 			errors.add("RDFile Header: Line " + curLineNum + " is missing or does not start with $DATM");
 			return;
@@ -632,13 +646,17 @@ public class FileTextUtils {
 		}
 	}
 	
-	private void readRXNFileHeader() {
+	private void readRXNFileHeader(boolean readRXNLine) {
 		String line = readLine();
-		if (line == null || !line.startsWith("$RXN")) {
-			errors.add("RXN Header: Line " + curLineNum + " is missing or does not start with $RXN");
-			return;
-		}		
-		line = readLine(); //Header Line 2 reaction name
+		if (readRXNLine) {
+			if (line == null || !line.startsWith("$RXN")) {
+				errors.add("RXN Header: Line " + curLineNum + " is missing or does not start with $RXN");
+				return;
+			}		
+			line = readLine();
+		}
+		
+		//Header Line 2 reaction name
 		if (line == null) {
 			errors.add("RXN Header (reaction name): Line " + curLineNum + " is missing");
 			return;
