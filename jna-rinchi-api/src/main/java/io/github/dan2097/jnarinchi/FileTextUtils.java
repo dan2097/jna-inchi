@@ -302,12 +302,22 @@ public class FileTextUtils {
 		//MDL bond line specification
 		//111222tttsssxxxrrrccc
 		
-		//111 firts atom
 		int firstAt = ric.getAtoms().indexOf(bond.getStart()) + 1; //1-based atom numbering
-		addInteger(firstAt, 3);
-		//222 second atom
 		int secondAt = ric.getAtoms().indexOf(bond.getEnd()) + 1; //1-based atom numbering
-		addInteger(secondAt, 3);
+		
+		//Writing 111222 portion
+		if (isWedgeEndAtSecondAtom(bond.getStereo())) {
+			//The places of atoms are swapped to match wedge direction
+			//111 first atom		
+			addInteger(secondAt, 3);
+			//222 second atom
+			addInteger(firstAt, 3);
+		} else {
+			//111 first atom		
+			addInteger(firstAt, 3);
+			//222 second atom		
+			addInteger(secondAt, 3);
+		}
 		//ttt bond type
 		addInteger(getBondMDLBondCode(bond), 3);
 		//sss bond stereo - not specified - TODO
@@ -405,7 +415,12 @@ public class FileTextUtils {
 		return 1;
 	}
 	
-	private int getStereoBondMDLCode(InchiBondStereo inchiBoStereo) {
+	private int getBondMDLStereoCode(InchiBond bond) {
+		//TODO
+		return 0;
+	}
+	
+	private int inchiBondStereoToMDLStereoCode(InchiBondStereo inchiBoStereo) {
 		switch (inchiBoStereo) {
 		case SINGLE_1UP:
 		case SINGLE_2UP:
@@ -423,10 +438,11 @@ public class FileTextUtils {
 	}
 	
 	private boolean isWedgeEndAtSecondAtom(InchiBondStereo inchiBoStereo) {
+		if (inchiBoStereo == null)
+			return false;
 		return (inchiBoStereo == InchiBondStereo.SINGLE_2UP 
 				|| inchiBoStereo == InchiBondStereo.SINGLE_2DOWN
-				|| inchiBoStereo == InchiBondStereo.SINGLE_2EITHER);
-		
+				|| inchiBoStereo == InchiBondStereo.SINGLE_2EITHER);		
 	}
 	
 	private void analyzeComponents() {
