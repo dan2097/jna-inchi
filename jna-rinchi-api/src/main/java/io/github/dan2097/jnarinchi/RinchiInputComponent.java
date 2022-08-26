@@ -23,6 +23,7 @@ import java.util.List;
 import io.github.dan2097.jnainchi.InchiAtom;
 import io.github.dan2097.jnainchi.InchiBond;
 import io.github.dan2097.jnainchi.InchiInput;
+import io.github.dan2097.jnainchi.InchiStereo;
 
 public class RinchiInputComponent extends InchiInput {
 	
@@ -56,9 +57,17 @@ public class RinchiInputComponent extends InchiInput {
 		sb.append("  Atoms:").append("\n");
 		for (int i = 0; i < getAtoms().size(); i++)
 			sb.append("    ").append(atomToString(i)).append("\n");
-		sb.append("  Bonds:").append("\n");
+		
+		if (!getBonds().isEmpty())
+			sb.append("  Bonds:").append("\n");
 		for (int i = 0; i < getBonds().size(); i++)
 			sb.append("    ").append(bondToString(i)).append("\n");
+		
+		if (!getStereos().isEmpty())
+			sb.append("  Stereos:").append("\n");
+		for (int i = 0; i < getStereos().size(); i++)
+			sb.append("    ").append(stereoToString(i)).append("\n");
+		
 		return sb.toString();
 	}
 	
@@ -81,6 +90,38 @@ public class RinchiInputComponent extends InchiInput {
 		int at1Index = getAtoms().indexOf(bo.getStart()) + 1;
 		int at2Index = getAtoms().indexOf(bo.getEnd()) + 1;
 		String s = "" + at1Index + " " + at2Index + " " + bo.getType();
+		return s;
+	}
+	
+	private String stereoToString(int atIndex) {
+		InchiStereo stereo = getStereos().get(atIndex);
+		String s = "" + stereo.getType().toString() + ": ";
+		
+		switch (stereo.getType()) {		
+		case Tetrahedral:
+			s += "center " + (getAtoms().indexOf(stereo.getCentralAtom()) + 1);
+			s += " ligands";
+			for (int i = 0; i < 4; i++)
+				s += " " + (getAtoms().indexOf(stereo.getAtoms()[i]) + 1);
+			break;
+		case DoubleBond:
+			s += " ";
+			s += (getAtoms().indexOf(stereo.getAtoms()[0]) + 1) + " - ";
+			s += (getAtoms().indexOf(stereo.getAtoms()[1]) + 1) + " = ";
+			s += (getAtoms().indexOf(stereo.getAtoms()[2]) + 1) + " - ";
+			s += (getAtoms().indexOf(stereo.getAtoms()[3]) + 1);
+			break;
+		case Allene:
+			s += " ";
+			s += (getAtoms().indexOf(stereo.getAtoms()[0]) + 1) + " - ";
+			s += (getAtoms().indexOf(stereo.getAtoms()[1]) + 1) + " = ";
+			s += (getAtoms().indexOf(stereo.getCentralAtom()) + 1) + " = ";
+			s += (getAtoms().indexOf(stereo.getAtoms()[2]) + 1) + " - ";
+			s += (getAtoms().indexOf(stereo.getAtoms()[3]) + 1);
+			break;
+		}
+		 
+		s += "  " + stereo.getParity();
 		return s;
 	}
 }
