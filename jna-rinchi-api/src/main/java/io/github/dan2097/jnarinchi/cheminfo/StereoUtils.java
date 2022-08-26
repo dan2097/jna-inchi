@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 import io.github.dan2097.jnainchi.InchiAtom;
+import io.github.dan2097.jnainchi.InchiBond;
 import io.github.dan2097.jnainchi.InchiInput;
 import io.github.dan2097.jnainchi.InchiStereo;
 import io.github.dan2097.jnainchi.InchiStereoParity;
@@ -58,6 +59,22 @@ public class StereoUtils {
 				}	
 		}
 		return parities;
+	}
+	
+	public static Map<InchiBond,InchiStereoParity> getDoubleBondParities(RinchiInputComponent ric) {
+		Map<InchiBond,InchiStereoParity> boParities = new HashMap<>();
+		for (int i = 0; i < ric.getStereos().size(); i++) {
+			InchiStereo stereo = ric.getStereos().get(i);
+			if (stereo.getType() == InchiStereoType.DoubleBond)
+				if (stereo.getParity() == InchiStereoParity.ODD || 
+					stereo.getParity() == InchiStereoParity.EVEN || 
+					stereo.getParity() == InchiStereoParity.UNKNOWN) {
+					InchiBond bo = ric.getBond(stereo.getAtoms()[1], stereo.getAtoms()[2]);
+					if (bo != null)
+						boParities.put(bo, stereo.getParity());
+				}	
+		}
+		return boParities;
 	}
 	
 	public static InchiStereo createTetrahedralStereo(RinchiInputComponent ric, InchiAtom atom, InchiStereoParity parity) {
