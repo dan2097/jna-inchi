@@ -51,6 +51,17 @@ public class RinchiInputComponent extends InchiInput {
 		}
 		return list;
 	}
+
+	public InchiBond getBond(InchiAtom at1, InchiAtom at2) {
+		for (int i = 0; i < getBonds().size(); i++) {
+			InchiBond bo = getBond(i);
+			if (bo.getStart() == at1 && bo.getEnd() == at2)
+				return bo;
+			if (bo.getStart() == at2 && bo.getEnd() == at1)
+				return bo;
+		}
+		return null;
+	}
 	
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
