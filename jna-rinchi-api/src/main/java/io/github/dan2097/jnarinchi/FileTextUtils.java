@@ -446,6 +446,11 @@ public class FileTextUtils {
 				|| inchiBoStereo == InchiBondStereo.SINGLE_2EITHER);		
 	}
 	
+	private InchiBondStereo getBondStereoFromMDLCode(int code) {
+		//TODO
+		return InchiBondStereo.NONE;
+	}
+	
 	private void analyzeComponents() {
 		for (RinchiInputComponent ric : rInput.getComponents()) {
 			switch (ric.getRole()) {
@@ -923,8 +928,21 @@ public class FileTextUtils {
 			errors.add("MOL counts (111222ttt...) Line  " + curLineNum 
 					+ " : incorrect bond typer (ttt part): " + line);
 			return;
-		}		
-		InchiBond bond = new InchiBond(ric.getAtom(a1-1), ric.getAtom(a2-1), InchiBondType.of((byte)ttt.intValue()));
+		}
+		Integer sss = readInteger(line, 9, 3);
+		if (sss == null ) {
+			errors.add("MOL counts (111222ttt...) Line  " + curLineNum 
+					+ " : incorrect bond stereo (sss part): " + line);
+			return;
+		}
+		InchiBondStereo ibs = getBondStereoFromMDLCode(sss);
+		if (ibs == null) {
+			errors.add("MOL counts (111222ttt...) Line  " + curLineNum 
+					+ " : incorrect bond stereo (sss part): " + line);
+			return;
+		}
+		
+		InchiBond bond = new InchiBond(ric.getAtom(a1-1), ric.getAtom(a2-1), InchiBondType.of((byte)ttt.intValue()), ibs);
 		ric.addBond(bond);
 	}
 	
