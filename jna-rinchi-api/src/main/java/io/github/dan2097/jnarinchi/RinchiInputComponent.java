@@ -89,11 +89,13 @@ public class RinchiInputComponent extends InchiInput {
 		if (at.getImplicitHydrogen() != 0)
 			s+= " H" + at.getImplicitHydrogen();
 		else
-			s+= "   ";
+			s+= "  ";
 		if (at.getCharge() != 0)
 			s+= " " + at.getCharge();
 		if (at.getIsotopicMass() != 0)
 			s+= " iso " + at.getIsotopicMass();
+		s+= "  " + at.getX() + "  " + at.getY() + "  " + at.getZ(); 
+		
 		return s;
 	}
 	
