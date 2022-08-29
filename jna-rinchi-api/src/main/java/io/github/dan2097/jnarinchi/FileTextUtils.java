@@ -447,8 +447,19 @@ public class FileTextUtils {
 	}
 	
 	private InchiBondStereo getBondStereoFromMDLCode(int code) {
-		//TODO
-		return InchiBondStereo.NONE;
+		switch (code) {
+		case 0:
+			return InchiBondStereo.NONE;
+		case 1:
+			return InchiBondStereo.SINGLE_1UP;
+		case 4:
+			return InchiBondStereo.SINGLE_1EITHER;
+		case 6:
+			return InchiBondStereo.SINGLE_1DOWN;
+		case 3:	
+			return InchiBondStereo.DOUBLE_EITHER;
+		}
+		return null;
 	}
 	
 	private void analyzeComponents() {
