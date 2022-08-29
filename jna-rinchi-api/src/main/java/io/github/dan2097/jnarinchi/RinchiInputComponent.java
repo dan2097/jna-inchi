@@ -22,6 +22,7 @@ import java.util.List;
 
 import io.github.dan2097.jnainchi.InchiAtom;
 import io.github.dan2097.jnainchi.InchiBond;
+import io.github.dan2097.jnainchi.InchiBondStereo;
 import io.github.dan2097.jnainchi.InchiInput;
 import io.github.dan2097.jnainchi.InchiStereo;
 
@@ -101,6 +102,8 @@ public class RinchiInputComponent extends InchiInput {
 		int at1Index = getAtoms().indexOf(bo.getStart()) + 1;
 		int at2Index = getAtoms().indexOf(bo.getEnd()) + 1;
 		String s = "" + at1Index + " " + at2Index + " " + bo.getType();
+		if (bo.getStereo() != InchiBondStereo.NONE)
+			s+= "  stereo " + bo.getStereo(); 
 		return s;
 	}
 	
