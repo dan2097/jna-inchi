@@ -137,6 +137,14 @@ public class StereoUtils {
 		objects[j] = obj;
 	}
 	
+	public static MolCoordinatesType getMolCoordinatesType(InchiInput inchiInput) {
+		int[] stat = coordinateStatistics(inchiInput);
+		if (stat != null)
+			return getMolCoordinatesType(stat[0], stat[1], stat[2]);
+		else
+			return null;
+	}
+	
 	public static int[] coordinateStatistics (InchiInput inchiInput) {
 		if (inchiInput == null)
 			return null;
