@@ -85,15 +85,17 @@ public class StereoUtils {
 		if (neighbAtoms.size() == 3) { 
 			if (atom.getImplicitHydrogen() == 1) {
 				if (MoleculeUtils.containsHydrogen(neighbAtoms))
-					return null; //one implicit and one explicit hydogen neighbors
+					return null; //one implicit and one explicit hydrogen neighbors
 				
 				neighbAtoms.add(InchiStereo.STEREO_IMPLICIT_H);
 			}	
-			else {
-				//TODO check for lone pair
+			else 				  
 				return null; //Unable to create stereo element
-			}	
 		}
+		
+		//Check for lone pair is not needed
+		//since InchiStereo encode lone pair by adding central atom within
+		//the list of ligands (i.e. in this case 4 ligands are present)
 		
 		InchiAtom[] sortedAtoms = sortAtomsToBeWithIncreasingIndices(ric, neighbAtoms);
 		
