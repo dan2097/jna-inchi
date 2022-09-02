@@ -225,7 +225,8 @@ public class FileTextUtils {
 		addInteger(ric.getBonds().size(), 3); //bbb
 		strBuilder.append("  0"); //lll
 		strBuilder.append("  0"); //fff
-		Map<InchiAtom,InchiStereoParity> parities = StereoUtils.getAtomParities(ric);
+		
+		Map<InchiAtom,InchiStereoParity> parities = StereoUtils.getAtomParities(ric, checkParityAccordingAtomNumbering);
 		int nTHChiralAtoms = parities.size();
 		addInteger(nTHChiralAtoms, 3); //ccc
 		strBuilder.append("  0"); //sss
@@ -242,10 +243,7 @@ public class FileTextUtils {
 			InchiStereoParity parity = parities.get(ric.getAtom(i));
 			//In general, the atoms within InchiStero object 
 			//may have atom numbering which is not increasing within InchiInput object
-			//In this case parity value may need to be swapped.
-			if (checkParityAccordingAtomNumbering) {
-				//TODO
-			}
+			//In this case parity value may need to be swapped.			
 			addAtomLine(ric.getAtom(i), parity);
 		}	
 		//Add Bond block

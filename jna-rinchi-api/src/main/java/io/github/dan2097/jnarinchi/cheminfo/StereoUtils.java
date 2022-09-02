@@ -47,14 +47,18 @@ public class StereoUtils {
 		return nTH;
 	}
 	
-	public static Map<InchiAtom,InchiStereoParity> getAtomParities(InchiInput inchiInput) {
+	public static Map<InchiAtom,InchiStereoParity> getAtomParities(InchiInput inchiInput, 
+				boolean checkParityAccordingAtomNumbering) {
 		Map<InchiAtom,InchiStereoParity> parities = new HashMap<>();
 		for (int i = 0; i < inchiInput.getStereos().size(); i++) {
 			InchiStereo stereo = inchiInput.getStereos().get(i);
 			if (stereo.getType() == InchiStereoType.Tetrahedral)
 				if (stereo.getParity() == InchiStereoParity.ODD || 
 					stereo.getParity() == InchiStereoParity.EVEN || 
-					stereo.getParity() == InchiStereoParity.UNKNOWN) {
+					stereo.getParity() == InchiStereoParity.UNKNOWN) 
+				{	
+					if (checkParityAccordingAtomNumbering)
+						stereo = sortLigandsToBeWithIncreasingIndices(inchiInput, stereo);
 					parities.put(stereo.getCentralAtom(), stereo.getParity());
 				}	
 		}
@@ -131,6 +135,36 @@ public class StereoUtils {
 					swap (i,j, sorted);
 			}
 		return sorted;
+	}
+	
+	public static InchiStereo sortLigandsToBeWithIncreasingIndices(InchiInput inchiInput, InchiStereo stereo) {
+		InchiAtom ligands[] = stereo.getAtoms();
+		int numOfSwaps = 0;
+		int n = ligands.length;
+		
+		//Handle implicit hydrogen ligand which must be the highest numbered atom
+		int numImplH = 0;
+		if (ligands[n-1] == InchiStereo.STEREO_IMPLICIT_H)
+			numImplH = 1;
+		for (int i = 0; i < n-1; i++) 
+			if (ligands[i] == InchiStereo.STEREO_IMPLICIT_H) {
+				if (numImplH > 0)
+					return null; //Incorrect chiral atom with 2 implicit H ligands
+				else {
+					numImplH = 1;
+					swap(i, n-1, ligands);
+					numOfSwaps++;
+				}
+			}		
+		
+		//Bubble sorting ligands 0, 1, ..., k-1  (k = n or n-1)		
+		int k = n-numImplH;
+		for (int i = k-1; i >= 0; i--) 
+			for (int j = 0; j < i; j++) {
+				if (inchiInput.getAtoms().indexOf(ligands[i]) > inchiInput.getAtoms().indexOf(ligands[j]))
+					swap (i,j, ligands);
+			}
+		return null;
 	}
 	
 	private static void swap(int i, int j, Object[] objects) {
