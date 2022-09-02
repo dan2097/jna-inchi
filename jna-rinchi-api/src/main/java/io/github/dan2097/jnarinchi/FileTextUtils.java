@@ -57,7 +57,7 @@ public class FileTextUtils {
 	private StringBuilder strBuilder;	
 	private List<String> errors = new ArrayList<String>();
 	private ReactionFileFormat format = ReactionFileFormat.RD;
-	private boolean checkParityAccordingAtomNumbering = false;
+	private boolean checkParityAccordingAtomNumbering = true;
 	private ReactionFileFormat autoRecognizedformat = null;
 	private CTABVersion ctabVersion = CTABVersion.V2000; //Currently only V2000 is supported
 	private RinchiInput rInput = null;

@@ -58,8 +58,9 @@ public class StereoUtils {
 					stereo.getParity() == InchiStereoParity.UNKNOWN) 
 				{	
 					if (checkParityAccordingAtomNumbering)
-						stereo = sortLigandsToBeWithIncreasingIndices(inchiInput, stereo);
-					parities.put(stereo.getCentralAtom(), stereo.getParity());
+						stereo = sortTetrahedralLigandsToBeWithIncreasingIndices(inchiInput, stereo);
+					if (stereo != null)
+						parities.put(stereo.getCentralAtom(), stereo.getParity());
 				}	
 		}
 		return parities;
@@ -137,7 +138,7 @@ public class StereoUtils {
 		return sorted;
 	}
 	
-	public static InchiStereo sortLigandsToBeWithIncreasingIndices(InchiInput inchiInput, InchiStereo stereo) {
+	public static InchiStereo sortTetrahedralLigandsToBeWithIncreasingIndices(InchiInput inchiInput, InchiStereo stereo) {
 		InchiAtom ligands[] = stereo.getAtoms();
 		int numOfSwaps = 0;
 		int n = ligands.length;
@@ -160,19 +161,35 @@ public class StereoUtils {
 		//Bubble sorting ligands 0, 1, ..., k-1  (k = n or n-1)		
 		int k = n-numImplH;
 		for (int i = k-1; i >= 0; i--) 
-			for (int j = 0; j < i; j++) {
-				if (inchiInput.getAtoms().indexOf(ligands[i]) > inchiInput.getAtoms().indexOf(ligands[j]))
+			for (int j = 0; j < i; j++) 
+				if (inchiInput.getAtoms().indexOf(ligands[i]) > inchiInput.getAtoms().indexOf(ligands[j])) {
 					swap (i,j, ligands);
-			}
-		return null;
+					numOfSwaps++;
+				}	
+		
+		//Invert parity for odd number of swaps
+		InchiStereoParity newParity = ((numOfSwaps % 2) == 0) ? stereo.getParity() : invert(stereo.getParity());
+		
+		//Create new tetrahedral stereo element
+		return InchiStereo.createTetrahedralStereo(stereo.getCentralAtom(), 
+				ligands[0], ligands[1], ligands[2], ligands[3], newParity);
 	}
 	
-	private static void swap(int i, int j, Object[] objects) {
+	public static void swap(int i, int j, Object[] objects) {
 		Object obj = objects[i];
 		objects[i] = objects[j];
 		objects[j] = obj;
 	}
 	
+	public static InchiStereoParity invert(InchiStereoParity parity) {
+		switch (parity) {
+		case ODD:
+			return InchiStereoParity.EVEN;
+		case EVEN:
+			return InchiStereoParity.ODD;	
+		}
+		return parity;
+	}	
 	public static MolCoordinatesType getMolCoordinatesType(InchiInput inchiInput) {
 		int[] stat = coordinateStatistics(inchiInput);
 		if (stat != null)
