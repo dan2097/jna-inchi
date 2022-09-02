@@ -409,6 +409,8 @@ public class FileTextUtils {
 			return 2;
 		case TRIPLE:
 			return 3;
+		case ALTERN:
+			return 4; //stored as MDL aromatic
 		};
 		return 1;
 	}
