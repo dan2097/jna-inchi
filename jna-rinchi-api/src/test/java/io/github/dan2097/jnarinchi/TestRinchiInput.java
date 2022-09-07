@@ -29,8 +29,8 @@ public class TestRinchiInput {
 
 	@Test 
 	public void testBezene01() {
+		//Testing benzene with kekule structure
 		RinchiInput rInp = new RinchiInput();
-
 		RinchiInputComponent ric1 = new RinchiInputComponent();
 		rInp.addComponent(ric1);
 		ric1.setRole(ReactionComponentRole.REAGENT);
@@ -52,6 +52,36 @@ public class TestRinchiInput {
 		ric1.addBond(new InchiBond(at4,at5, InchiBondType.DOUBLE));
 		ric1.addBond(new InchiBond(at5,at6, InchiBondType.SINGLE));
 		ric1.addBond(new InchiBond(at6,at1, InchiBondType.DOUBLE));
+
+		RinchiOutput rOutput = JnaRinchi.toRinchi(rInp);
+		assertEquals("RInChI=1.00.1S/<>C6H6/c1-2-4-6-5-3-1/h1-6H/d-", rOutput.getRinchi(), "RInChI for benzene");
+	}
+	
+	@Test 
+	public void testBezene02() {
+		//Testing benzene with 'aromatic' bonds
+		RinchiInput rInp = new RinchiInput();
+		RinchiInputComponent ric1 = new RinchiInputComponent();
+		rInp.addComponent(ric1);
+		ric1.setRole(ReactionComponentRole.REAGENT);
+		InchiAtom at1 = new InchiAtom("C");
+		InchiAtom at2 = new InchiAtom("C");
+		InchiAtom at3 = new InchiAtom("C");
+		InchiAtom at4 = new InchiAtom("C");
+		InchiAtom at5 = new InchiAtom("C");
+		InchiAtom at6 = new InchiAtom("C");
+		ric1.addAtom(at1);
+		ric1.addAtom(at2);
+		ric1.addAtom(at3);
+		ric1.addAtom(at4);
+		ric1.addAtom(at5);
+		ric1.addAtom(at6);
+		ric1.addBond(new InchiBond(at1,at2, InchiBondType.ALTERN));
+		ric1.addBond(new InchiBond(at2,at3, InchiBondType.ALTERN));
+		ric1.addBond(new InchiBond(at3,at4, InchiBondType.ALTERN));
+		ric1.addBond(new InchiBond(at4,at5, InchiBondType.ALTERN));
+		ric1.addBond(new InchiBond(at5,at6, InchiBondType.ALTERN));
+		ric1.addBond(new InchiBond(at6,at1, InchiBondType.ALTERN));
 
 		RinchiOutput rOutput = JnaRinchi.toRinchi(rInp);
 		assertEquals("RInChI=1.00.1S/<>C6H6/c1-2-4-6-5-3-1/h1-6H/d-", rOutput.getRinchi(), "RInChI for benzene");
