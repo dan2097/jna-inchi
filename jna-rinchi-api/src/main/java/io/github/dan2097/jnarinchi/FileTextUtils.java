@@ -1052,7 +1052,7 @@ public class FileTextUtils {
 		
 		Integer n = readInteger(line, 6, 3); //atom count
 		if (n == null || n < 1 || n > 8) {
-			errors.add("M ISO molecule property Line (M ISOnn8 aaa vvv ...) " + curLineNum 
+			errors.add("M ISO molecule property Line (M  ISOnn8 aaa vvv ...) " + curLineNum 
 					+ " : incorrect number of atoms (nn8 part): " + line);
 			return -1;
 		}
@@ -1062,16 +1062,16 @@ public class FileTextUtils {
 			// aaa
 			Integer atomIndex = readInteger(line, pos, 4);			
 			if (atomIndex == null || atomIndex < 1 || atomIndex > ric.getAtoms().size()) {
-				errors.add("M ISO molecule property Line (M ISOnn8 aaa vvv ...) " + curLineNum 
-						+ " : incorrect atom index for (aaa vvv) pair #" + (i+1) + " :" + line);
+				errors.add("M ISO molecule property Line (M  ISOnn8 aaa vvv ...) " + curLineNum 
+						+ " : incorrect atom index for (aaa vvv) pair #" + (i+1) + " in line: " + line);
 				return -2;
 			}
 			pos += 4;
 			// vvv
 			Integer mass = readInteger(line, pos, 4);
 			if (mass == null || mass < 1 ) {
-				errors.add("M ISO molecule property Line (M ISOnn8 aaa vvv ...) " + curLineNum 
-						+ " : incorrect mass for (aaa vvv) pair #" + (i+1) + " :" + line);
+				errors.add("M ISO molecule property Line (M  ISOnn8 aaa vvv ...) " + curLineNum 
+						+ " : incorrect mass for (aaa vvv) pair #" + (i+1) + " in line: " + line);
 				return -3;
 			}
 			pos += 4;
@@ -1086,7 +1086,7 @@ public class FileTextUtils {
 		
 		Integer n = readInteger(line, 6, 3); //atom count
 		if (n == null || n < 1 || n > 8) {
-			errors.add("M CHG molecule property Line (M CHGnn8 aaa vvv ...) " + curLineNum 
+			errors.add("M CHG molecule property Line (M  CHGnn8 aaa vvv ...) " + curLineNum 
 					+ " : incorrect number of atoms (nn8 part): " + line);
 			return -1;
 		}
@@ -1096,16 +1096,16 @@ public class FileTextUtils {
 			// aaa
 			Integer atomIndex = readInteger(line, pos, 4);			
 			if (atomIndex == null || atomIndex < 1 || atomIndex > ric.getAtoms().size()) {
-				errors.add("M CHG molecule property Line (M CHGnn8 aaa vvv ...) " + curLineNum 
-						+ " : incorrect atom index for (aaa vvv) pair #" + (i+1) + " :" + line);
+				errors.add("M CHG molecule property Line (M  CHGnn8 aaa vvv ...) " + curLineNum 
+						+ " : incorrect atom index for (aaa vvv) pair #" + (i+1) + " in line: " + line);
 				return -2;
 			}
 			pos += 4;
 			// vvv
 			Integer charge = readInteger(line, pos, 4);
 			if (charge == null || charge < -15 || charge > 15) {
-				errors.add("M CHG molecule property Line (M ISOnn8 aaa vvv ...) " + curLineNum 
-						+ " : incorrect charge for (aaa vvv) pair #" + (i+1) + " :" + line);
+				errors.add("M CHG molecule property Line (M  ISOnn8 aaa vvv ...) " + curLineNum 
+						+ " : incorrect charge for (aaa vvv) pair #" + (i+1) + " in line: " + line);
 				return -3;
 			}
 			pos += 4;
@@ -1130,16 +1130,16 @@ public class FileTextUtils {
 			// aaa
 			Integer atomIndex = readInteger(line, pos, 4);			
 			if (atomIndex == null || atomIndex < 1 || atomIndex > ric.getAtoms().size()) {
-				errors.add("M RAD molecule property Line (M CHGnn8 aaa vvv ...) " + curLineNum 
-						+ " : incorrect atom index for (aaa vvv) pair #" + (i+1) + " :" + line);
+				errors.add("M RAD molecule property Line (M  RADnn8 aaa vvv ...) " + curLineNum 
+						+ " : incorrect atom index for (aaa vvv) pair #" + (i+1) + " in line: " + line);
 				return -2;
 			}
 			pos += 4;
 			// vvv
 			Integer radCode = readInteger(line, pos, 4);
 			if (radCode == null || radCode < 0 || radCode > 3) {
-				errors.add("M RAD molecule property Line (M RADnn8 aaa vvv ...) " + curLineNum 
-						+ " : incorrect radical value for (aaa vvv) pair #" + (i+1) + " :" + line);
+				errors.add("M RAD molecule property Line (M  RADnn8 aaa vvv ...) " + curLineNum 
+						+ " : incorrect radical value for (aaa vvv) pair #" + (i+1) + " in line: " + line);
 				return -3;
 			}
 			pos += 4;
