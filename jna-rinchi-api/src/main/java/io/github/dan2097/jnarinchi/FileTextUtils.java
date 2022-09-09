@@ -30,6 +30,7 @@ import io.github.dan2097.jnainchi.InchiAtom;
 import io.github.dan2097.jnainchi.InchiBond;
 import io.github.dan2097.jnainchi.InchiBondStereo;
 import io.github.dan2097.jnainchi.InchiBondType;
+import io.github.dan2097.jnainchi.InchiRadical;
 import io.github.dan2097.jnainchi.InchiStereo;
 import io.github.dan2097.jnainchi.InchiStereoParity;
 import io.github.dan2097.jnarinchi.cheminfo.MoleculeUtils;
@@ -265,7 +266,10 @@ public class FileTextUtils {
 		//dd not specified yet
 		strBuilder.append(" 0"); 
 		//ccc
-		addInteger(getOldCTABChargeCoding(atom.getCharge()),3);
+		if (atom.getRadical() == InchiRadical.DOUBLET)
+			strBuilder.append("  4"); //MDL code for doublet radical
+		else
+			addInteger(getOldCTABChargeCoding(atom.getCharge()),3);
 		//sss stereo parity
 		if (parity != null) {
 			switch (parity) {
@@ -383,6 +387,34 @@ public class FileTextUtils {
 			}
 			strBuilder.append(endLine);
 		}
+		
+		//Add radicals
+		atomList = getAtomsWithRadical(ric);
+		if (!atomList.isEmpty()) {
+			//Atom radicals are added in sets of 8 atoms (M  RADnn8 aaa vvv ...)
+			int numSets = atomList.size() / 8;
+			for (int curSet = 0; curSet < numSets; curSet++) {
+				strBuilder.append("M  RAD  8");
+				for (int i = 0; i < 8; i++) {
+					int atIndex = atomList.get(curSet * 8 + i);
+					addInteger(atIndex+1, 4);
+					int radCode = getRadicalMDLCode(ric.getAtom(atIndex).getRadical());
+					addInteger(radCode, 4);
+				}
+				strBuilder.append(endLine);
+			}			
+			//One additional set of k charged atoms (atomList.size() = 8 * numSets + k)
+			int k = atomList.size() % 8;
+			strBuilder.append("M  RAD");
+			addInteger(k,3);
+			for (int i = 0; i < k; i++) {
+				int atIndex = atomList.get(numSets * 8 + i);
+				addInteger(atIndex+1, 4);
+				int radCode = getRadicalMDLCode(ric.getAtom(atIndex).getRadical());
+				addInteger(radCode, 4);
+			}
+			strBuilder.append(endLine);
+		}
 	}
 	
 	private List<Integer> getAtomsWithCharge(RinchiInputComponent ric){
@@ -401,7 +433,27 @@ public class FileTextUtils {
 		return atomList;
 	}
 	
-	int getBondMDLBondCode(InchiBond bond) {
+	private List<Integer> getAtomsWithRadical(RinchiInputComponent ric){
+		List<Integer> atomList = new ArrayList<>();
+		for (int i = 0; i < ric.getAtoms().size(); i++)
+			if (ric.getAtom(i).getRadical() != InchiRadical.NONE)
+				atomList.add(i);
+		return atomList;
+	}
+	
+	private int getRadicalMDLCode(InchiRadical inchiRadical) {
+		switch (inchiRadical) {
+		case SINGLET:
+			return 1;
+		case DOUBLET:
+			return 2;
+		case TRIPLET:
+			return 3;
+		}
+		return 0;
+	}
+	
+	private int getBondMDLBondCode(InchiBond bond) {
 		switch (bond.getType()) {
 		case SINGLE:
 			return 1;
