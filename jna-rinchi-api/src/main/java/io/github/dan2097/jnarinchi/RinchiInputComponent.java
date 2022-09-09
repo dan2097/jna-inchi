@@ -24,6 +24,7 @@ import io.github.dan2097.jnainchi.InchiAtom;
 import io.github.dan2097.jnainchi.InchiBond;
 import io.github.dan2097.jnainchi.InchiBondStereo;
 import io.github.dan2097.jnainchi.InchiInput;
+import io.github.dan2097.jnainchi.InchiRadical;
 import io.github.dan2097.jnainchi.InchiStereo;
 
 public class RinchiInputComponent extends InchiInput {
@@ -89,13 +90,17 @@ public class RinchiInputComponent extends InchiInput {
 		if (at.getImplicitHydrogen() != 0)
 			s+= " H" + at.getImplicitHydrogen();
 		else
-			s+= "  ";
+			s+= "   ";
+		
+		s+= "  " + at.getX() + "  " + at.getY() + "  " + at.getZ(); 
+		
 		if (at.getCharge() != 0)
 			s+= " " + at.getCharge();
 		if (at.getIsotopicMass() != 0)
 			s+= " iso " + at.getIsotopicMass();
-		s+= "  " + at.getX() + "  " + at.getY() + "  " + at.getZ(); 
-		
+		if (at.getRadical() != InchiRadical.NONE)
+			s+= "  radical " + at.getRadical();
+				
 		return s;
 	}
 	
