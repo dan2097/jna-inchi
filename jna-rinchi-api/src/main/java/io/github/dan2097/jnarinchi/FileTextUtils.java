@@ -453,6 +453,18 @@ public class FileTextUtils {
 		return 0;
 	}
 	
+	private InchiRadical getInchiRadical(int mdlRadicalCode) {
+		switch (mdlRadicalCode) {
+		case 1:
+			return InchiRadical.SINGLET;
+		case 2:
+			return InchiRadical.DOUBLET;
+		case 3:
+			return InchiRadical.TRIPLET;	
+		}
+		return InchiRadical.NONE;
+	}
+	
 	private int getBondMDLBondCode(InchiBond bond) {
 		switch (bond.getType()) {
 		case SINGLE:
@@ -934,12 +946,15 @@ public class FileTextUtils {
 		}
 		int charge = getChargeFromOldCTABCoding(chCode);
 		
-		
 		InchiAtom atom = new InchiAtom(atSymbol, coordX, coordY, coordZ);
 		ric.addAtom(atom);
 		
 		if (charge != 0)
 			atom.setCharge(charge); //M  CHG molecule property takes precedence if present
+		
+		//Handle special case for doublet radical
+		if (chCode == 4)
+			atom.setRadical(InchiRadical.DOUBLET);
 		
 		//sss stereo parity
 		Integer parityCode = readInteger(line, 39, 3);
@@ -1020,12 +1035,13 @@ public class FileTextUtils {
 			return -1;
 		
 		if (line.startsWith("M  ISO"))
-			readIsotopePropertyLine (line, ric);
+			readIsotopePropertyLine(line, ric);
 		
 		if (line.startsWith("M  CHG"))
-			readChargePropertyLine (line, ric);
+			readChargePropertyLine(line, ric);
 		
-		//TODO handle radical
+		if (line.startsWith("M  RAD"))
+			readRadicalPropertyLine(line, ric);
 		
 		return 0;
 	}
@@ -1094,6 +1110,41 @@ public class FileTextUtils {
 			}
 			pos += 4;
 			ric.getAtom(atomIndex-1).setCharge(charge);
+		}		
+		return 0;
+	}
+	
+	private int readRadicalPropertyLine(String line, RinchiInputComponent ric) {
+		//MDL format for radical line: 
+		//M  RADnn8 aaa vvv ...
+		
+		Integer n = readInteger(line, 6, 3); //atom count
+		if (n == null || n < 1 || n > 8) {
+			errors.add("M RAD molecule property Line (M  RADnn8 aaa vvv ...) " + curLineNum 
+					+ " : incorrect number of atoms (nn8 part): " + line);
+			return -1;
+		}
+		
+		int pos = 9;
+		for (int i = 0; i < n; i++) {
+			// aaa
+			Integer atomIndex = readInteger(line, pos, 4);			
+			if (atomIndex == null || atomIndex < 1 || atomIndex > ric.getAtoms().size()) {
+				errors.add("M RAD molecule property Line (M CHGnn8 aaa vvv ...) " + curLineNum 
+						+ " : incorrect atom index for (aaa vvv) pair #" + (i+1) + " :" + line);
+				return -2;
+			}
+			pos += 4;
+			// vvv
+			Integer radCode = readInteger(line, pos, 4);
+			if (radCode == null || radCode < 0 || radCode > 3) {
+				errors.add("M RAD molecule property Line (M RADnn8 aaa vvv ...) " + curLineNum 
+						+ " : incorrect radical value for (aaa vvv) pair #" + (i+1) + " :" + line);
+				return -3;
+			}
+			pos += 4;
+			InchiRadical radical = getInchiRadical(radCode);
+			ric.getAtom(atomIndex-1).setRadical(radical);
 		}		
 		return 0;
 	}
