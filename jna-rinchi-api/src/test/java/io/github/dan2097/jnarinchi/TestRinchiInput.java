@@ -140,4 +140,26 @@ public class TestRinchiInput {
 		assertEquals(2, nDoublets, "Number of doublet radicals");
 	}
 	
+	@Test 
+	public void testRadical04() {
+		//Testing a compound with triplet radical
+		RinchiInput rInp = new RinchiInput();
+		RinchiInputComponent ric1 = new RinchiInputComponent();
+		rInp.addComponent(ric1);
+		ric1.setRole(ReactionComponentRole.REAGENT);
+		InchiAtom at1 = new InchiAtom("C");
+		//SINGKET and TRIPLET generate the same RInChI and RAuxInfo !!!
+		at1.setRadical(InchiRadical.TRIPLET);
+		InchiAtom at2 = new InchiAtom("C");
+		InchiAtom at3 = new InchiAtom("C");		
+		ric1.addAtom(at1);
+		ric1.addAtom(at2);
+		ric1.addAtom(at3);
+		ric1.addBond(new InchiBond(at1,at2, InchiBondType.SINGLE));
+		ric1.addBond(new InchiBond(at2,at3, InchiBondType.SINGLE));
+
+		RinchiOutput rOutput = JnaRinchi.toRinchi(rInp);
+		assertEquals("RInChI=1.00.1S/<>C3H6/c1-3-2/h1H,3H2,2H3/d-", rOutput.getRinchi(), "RInChI for propan radical");
+	}
+	
 }
