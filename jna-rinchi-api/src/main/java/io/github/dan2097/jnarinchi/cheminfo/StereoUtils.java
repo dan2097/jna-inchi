@@ -17,12 +17,16 @@
  */
 package io.github.dan2097.jnarinchi.cheminfo;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import io.github.dan2097.jnainchi.InchiAtom;
 import io.github.dan2097.jnainchi.InchiBond;
+import io.github.dan2097.jnainchi.InchiBondStereo;
+import io.github.dan2097.jnainchi.InchiBondType;
 import io.github.dan2097.jnainchi.InchiInput;
 import io.github.dan2097.jnainchi.InchiStereo;
 import io.github.dan2097.jnainchi.InchiStereoParity;
@@ -173,6 +177,44 @@ public class StereoUtils {
 		//Create new tetrahedral stereo element
 		return InchiStereo.createTetrahedralStereo(stereo.getCentralAtom(), 
 				ligands[0], ligands[1], ligands[2], ligands[3], newParity);
+	}
+	
+	/**
+	 * This function tries to guess existing Tetrahedral stereos 
+	 * using only the bond stereo information (e.g. UP/DOWN setting)
+	 * The created stereo objects are of type UNDEFINED
+	 * The correct recognition of the absolute stereo (if not given via atom attributes)
+	 * should be done by using the 2D or 3D coordinates
+	 * 
+	 * @param ric target RinchiInputComponent object
+	 */
+	public static  void guessUndefinedTetrahedralStereosBasedOnBondInfo(RinchiInputComponent ric, Set<InchiAtom> knownCenters) {
+		List<InchiAtom> newCenters = new ArrayList<>();  
+		for (int i = 0; i < ric.getBonds().size(); i++) {
+			InchiBond bo = ric.getBonds().get(i);
+			if (bo.getType() != InchiBondType.SINGLE)
+				continue;
+			InchiStereo stereo = null;
+			
+			//Create a Tetrahedral Stereo with a center first atom of the bond
+			if (bo.getStereo() == InchiBondStereo.SINGLE_1DOWN || 
+					bo.getStereo() == InchiBondStereo.SINGLE_1UP ||
+					bo.getStereo() == InchiBondStereo.SINGLE_1EITHER)				
+				stereo = createTetrahedralStereo(ric, bo.getStart(), InchiStereoParity.UNDEFINED);
+			
+			//Create a Tetrahedral Stereo with a center first atom of the bond
+			if (bo.getStereo() == InchiBondStereo.SINGLE_2DOWN || 
+					bo.getStereo() == InchiBondStereo.SINGLE_2UP ||
+					bo.getStereo() == InchiBondStereo.SINGLE_2EITHER)				
+				stereo = createTetrahedralStereo(ric, bo.getEnd(), InchiStereoParity.UNDEFINED);
+			
+			if (stereo != null && 
+					!newCenters.contains(stereo.getCentralAtom()) &&
+					!knownCenters.contains(stereo.getCentralAtom())) {
+				ric.addStereo(stereo);
+				newCenters.add(stereo.getCentralAtom());
+			}	
+		}
 	}
 	
 	public static void swap(int i, int j, Object[] objects) {

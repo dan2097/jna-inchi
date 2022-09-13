@@ -73,7 +73,8 @@ public class JnaRinchi
 			return new RinchiInputFromRinchiOutput(null, RinchiStatus.ERROR, -1, ftOut.getErrorMessage());
 		
 		//Converting RXN/RDFile to RinchiInput 
-		FileTextUtils ftUtils = new FileTextUtils(); 
+		FileTextUtils ftUtils = new FileTextUtils();
+		ftUtils.setGuessTetrahedralChiralityFromBondsInfo(true);
 		ftUtils.setFormat(ReactionFileFormat.RD);
 		RinchiInput rInp = ftUtils.fileTextToRinchiInput(ftOut.getReactionFileText());
 		if (rInp == null) 

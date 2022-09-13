@@ -59,6 +59,7 @@ public class FileTextUtils {
 	private List<String> errors = new ArrayList<String>();
 	private ReactionFileFormat format = ReactionFileFormat.RD;
 	private boolean checkParityAccordingAtomNumbering = true;
+	private boolean guessTetrahedralChiralityFromBondsInfo = false;
 	private ReactionFileFormat autoRecognizedformat = null;
 	private CTABVersion ctabVersion = CTABVersion.V2000; //Currently only V2000 is supported
 	private RinchiInput rInput = null;
@@ -893,6 +894,9 @@ public class FileTextUtils {
 				if (stereo != null)
 					ric.addStereo(stereo);
 			}
+		
+		if (guessTetrahedralChiralityFromBondsInfo) 
+			StereoUtils.guessUndefinedTetrahedralStereosBasedOnBondInfo(ric, parities.keySet());
 	}
 	
 	private void readMOLAtomLine(int atomIndex, RinchiInputComponent ric, Map<InchiAtom,InchiStereoParity> parities) {
@@ -1246,6 +1250,14 @@ public class FileTextUtils {
 
 	public void setCheckParityAccordingAtomNumbering(boolean checkParityAccordingAtomNumbering) {
 		this.checkParityAccordingAtomNumbering = checkParityAccordingAtomNumbering;
+	}
+
+	public boolean isGuessTetrahedralChiralityFromBondsInfo() {
+		return guessTetrahedralChiralityFromBondsInfo;
+	}
+
+	public void setGuessTetrahedralChiralityFromBondsInfo(boolean guessTetrahedralChiralityFromBondsInfo) {
+		this.guessTetrahedralChiralityFromBondsInfo = guessTetrahedralChiralityFromBondsInfo;
 	}
 		
 }
