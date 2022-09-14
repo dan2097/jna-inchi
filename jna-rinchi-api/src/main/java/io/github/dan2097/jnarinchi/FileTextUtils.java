@@ -229,8 +229,11 @@ public class FileTextUtils {
 		strBuilder.append("  0"); //fff
 		
 		Map<InchiAtom,InchiStereoParity> parities = StereoUtils.getAtomParities(ric, checkParityAccordingAtomNumbering);
-		int nTHChiralAtoms = parities.size();
-		addInteger(nTHChiralAtoms, 3); //ccc
+		//ccc
+		if (parities.isEmpty())
+			strBuilder.append("  0");
+		else
+			strBuilder.append("  1");
 		strBuilder.append("  0"); //sss
 		strBuilder.append("  0"); //xxx
 		strBuilder.append("  0"); //rrr
