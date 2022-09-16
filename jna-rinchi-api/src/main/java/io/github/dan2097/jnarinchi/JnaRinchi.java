@@ -27,6 +27,14 @@ import com.sun.jna.Pointer;
 import com.sun.jna.ptr.PointerByReference;
 
 
+/**
+ * Basic class for accessing RInChI library functionality via Java code.
+ * This class is kind of a wrapper of JNA native interface, 
+ * implemented via RinchiLibrary class 
+ * 
+ * @author Nikolay Kochev
+ *
+ */
 public class JnaRinchi 
 {
 	private static final String platform;
@@ -51,10 +59,29 @@ public class JnaRinchi
 	private static final int ERROR_CODE_DECOMPOSE_FROM_LINES = -1;
 
 	
+	/**
+	 * Converts a reaction represented as a RinchiInput object into RInChI and RAuxInfo. 
+	 * The output object of type RinchiOutput contains the generation status, error messages if any,
+	 * RInChI and RAuxInfo.
+	 * Default generation options are applied.
+	 * 
+	 * @param rInp input reaction as RinchiInput object
+	 * @return result RinchiOutput object
+	 */
 	public static RinchiOutput toRinchi(RinchiInput rInp) {
 		return toRinchi(rInp, RinchiOptions.DEFAULT_OPTIONS);
 	}
 	
+	/**
+	 * Converts a reaction represented as a RinchiInput object into RInChI and RAuxInfo. 
+	 * The output object of type RinchiOutput contains the generation status, error messages if any,
+	 * RInChI and RAuxInfo.
+	 * RInChI generation is customized via RinchiOptions. 
+	 * 
+	 * @param rInp input reaction as RinchiInput object
+	 * @param options RInChI generation options
+	 * @return result RinchiOutput object
+	 */
 	public static RinchiOutput toRinchi(RinchiInput rInp, RinchiOptions options) {
 		//Converting RinchiInput to RXN/RDFile
 		FileTextUtils ftUtils = new FileTextUtils(); 
@@ -67,10 +94,47 @@ public class JnaRinchi
 		return fileTextToRinchi(fileText, options);
 	}
 	
+	/**
+	 * Converts a reaction represented as via RInChI and RAuxInfo into a RinchiInput object. 
+	 * The output is an object of type RinchiInputFromRinchiOutput and 
+	 * contains the generation status, error messages if any and RinchiInput
+	 * RInChI and RAuxInfo must not be null. 
+	 * If RAuxInfo not present, empty string, "", should be given as an input
+	 * 
+	 * Native RInChI library stores chirality information only via 2D or 3D coordinates (if present in RAuxInfo). 
+	 * Stereo parity of the chiral atoms is not set within the output MDL RXN/RDFile text.  
+	 * That is way the resulting RinchiInput objects do not contain stereo elements for tetrahedral chirality.
+	 * This information needs to be extracted from the atom coordinates via a third party software.
+	 * 
+	 * @param rinchi input RInChi string
+	 * @param auxInfo input RAuxInfo string
+	 * @return result RinchiInputFromRinchiOutput object
+	 */
 	public static RinchiInputFromRinchiOutput getRinchiInputFromRinchi(String rinchi, String auxInfo) {
 		return getRinchiInputFromRinchi(rinchi, auxInfo, false);
 	}
 
+	/**
+	 * Converts a reaction represented via RInChI and RAuxInfo into a RinchiInput object. 
+	 * The output is an object of type RinchiInputFromRinchiOutput and 
+	 * contains the generation status, error messages if any and RinchiInput
+	 * RInChI and RAuxInfo must not be null. 
+	 * If RAuxInfo not present, empty string, "", should be given as an input.
+	 * 
+	 * Native RInChI library stores chirality information only via 2D or 3D coordinates (if present in RAuxInfo). 
+	 * Stereo parity of the chiral atoms is not set within the output MDL RXN/RDFile text.  
+	 * That is way the resulting RinchiInput objects do not contain stereo elements for tetrahedral chirality.
+	 * This information needs to be extracted from the atom coordinates via a third party software.
+	 * 
+	 * In this variation of the function: stereo elements with UNDEFINED parity could be guessed from the
+	 * MDL bond line attributes. This utility could be used only to indicate the presence of a chiral atoms but the 
+	 * parity (exact chirality) must be calculated from the coordinates additionally. 
+	 * 
+	 * @param rinchi input RInChi string
+	 * @param auxInfo input RAuxInfo string
+	 * @param guessTetrahedralChiralityFromBondsInfo flag for guessing chiral stereo elements from bond attributes
+	 * @return result RinchiInputFromRinchiOutput object
+	 */
 	public static RinchiInputFromRinchiOutput getRinchiInputFromRinchi(String rinchi, String auxInfo, 
 			boolean guessTetrahedralChiralityFromBondsInfo) {
 		FileTextOutput ftOut = rinchiToFileText(rinchi, auxInfo, ReactionFileFormat.RD);
@@ -88,14 +152,47 @@ public class JnaRinchi
 		return new RinchiInputFromRinchiOutput(rInp, RinchiStatus.SUCCESS, 0, "");
 	}
 	
+	/**
+	 * Converts a reaction represented in MDL RXN or RDFile format into RInChI and RAuxInfo. 
+	 * The output object of type RinchiOutput contains the generation status, error messages if any,
+	 * RInChI and RAuxInfo.
+	 * File format is automatically recognized.
+	 * Default generation options are applied.
+	 * 
+	 * @param reactFileText reaction represented in RXN or RDFile format
+	 * @return result RinchiOutput object
+	 */
 	public static RinchiOutput fileTextToRinchi(String reactFileText) {
 		return fileTextToRinchi(ReactionFileFormat.AUTO, reactFileText, RinchiOptions.DEFAULT_OPTIONS);
 	}
 
+	/**
+	 * Converts a reaction represented in MDL RXN or RDFile format into RInChI and RAuxInfo. 
+	 * The output object of type RinchiOutput contains the generation status, error messages if any,
+	 * RInChI and RAuxInfo
+	 * File format is automatically recognized.
+	 * RInChI generation is customized via RinchiOptions.
+	 * 
+	 * @param reactFileText reaction represented in RXN or RDFile format
+	 * @param options RInChI generation options
+	 * @return result RinchiOutput object
+	 */
 	public static RinchiOutput fileTextToRinchi(String reactFileText, RinchiOptions options) {
 		return fileTextToRinchi(ReactionFileFormat.AUTO, reactFileText, options);
 	}
 
+	/**
+	 * Converts a reaction represented in MDL RXN or RDFile format into RInChI and RAuxInfo. 
+	 * The output object of type RinchiOutput contains the generation status, error messages if any,
+	 * RInChI and RAuxInfo
+	 * File format is automatically recognized.
+	 * RInChI generation is customized via RinchiOptions.
+	 * 
+	 * @param fileFormat the MDL file format for reaction representation: RXN, RDFile or AUTO 
+	 * @param reactFileText reaction represented in RXN or RDFile format
+	 * @param options RInChI generation options
+	 * @return result RinchiOutput object
+	 */
 	public static RinchiOutput fileTextToRinchi(ReactionFileFormat fileFormat, String reactFileText, RinchiOptions options) {
 		checkLibrary();
 
@@ -119,14 +216,53 @@ public class JnaRinchi
 		return new RinchiOutput(rinchi, auxInfo, RinchiStatus.SUCCESS, 0, "");
 	}
 
+	/**
+	 * Converts a reaction represented in MDL RXN or RDFile format into RInChIKey. 
+	 * The output object of type RinchiKeyOutput contains the generation status, error messages if any,
+	 * and RInChIKey.
+	 * RInChIKey could be of type: LONG, SHORT or WEB.
+	 * File format is automatically recognized.
+	 * Default generation options are applied.
+	 * 
+	 * @param reactFileText reaction represented in RXN or RDFile format
+	 * @param keyType RInChI-Key type
+	 * @return result RinchiKeyOutput object
+	 */
 	public static RinchiKeyOutput fileTextToRinchiKey(String reactFileText, RinchiKeyType keyType) {
 		return fileTextToRinchiKey(ReactionFileFormat.AUTO, reactFileText, keyType, RinchiOptions.DEFAULT_OPTIONS);
 	}
 
+	/**
+	 * Converts a reaction represented in MDL RXN or RDFile format into RInChIKey. 
+	 * The output object of type RinchiKeyOutput contains the generation status, error messages if any,
+	 * and RInChIKey.
+	 * RInChIKey could be of type: LONG, SHORT or WEB.
+	 * File format is automatically recognized.
+	 * RInChIKey generation is customized via RinchiOptions.
+	 * 
+	 * @param reactFileText reaction represented in RXN or RDFile format
+	 * @param keyType RInChI-Key type
+	 * @param options RInChI/RInChIKey generation options
+	 * @return result RinchiKeyOutput object
+	 */
 	public static RinchiKeyOutput fileTextToRinchiKey(String reactFileText, RinchiKeyType keyType, RinchiOptions options) {
 		return fileTextToRinchiKey(ReactionFileFormat.AUTO, reactFileText, keyType, options);
 	}
 
+	/**
+	 * Converts a reaction represented in MDL RXN or RDFile format into RInChIKey. 
+	 * The output object of type RinchiKeyOutput contains the generation status, error messages if any,
+	 * and RInChIKey.
+	 * RInChIKey could be of type: LONG, SHORT or WEB.
+	 * File format is automatically recognized.
+	 * RInChIKey generation is customized via RinchiOptions.
+	 * 
+	 * @param fileFormat the MDL file format for reaction representation: RXN, RDFile or AUTO
+	 * @param reactFileText reaction represented in RXN or RDFile format
+	 * @param keyType RInChI-Key type
+	 * @param options RInChI/RInChIKey generation options
+	 * @return result RinchiKeyOutput object
+	 */
 	public static RinchiKeyOutput fileTextToRinchiKey(ReactionFileFormat fileFormat, String reactFileText, RinchiKeyType keyType, RinchiOptions options) {
 		checkLibrary();
 
@@ -145,7 +281,17 @@ public class JnaRinchi
 		return new RinchiKeyOutput(rinchi_key, keyType, RinchiKeyStatus.SUCCESS, 0, "");
 	}
 
-
+	/**
+	 * Converts RInChI and RAuxInfo into a reaction, represented in MDL RXN or RDFile format. 
+	 * The output object of type FileTextOutput contains the conversion status, error messages if any,
+	 * and file text.
+	 * File format is specified by the user.
+	 * 
+	 * @param rinchi input RInChi string
+	 * @param auxInfo input RAuxInfo string
+	 * @param fileFormat the MDL file format for reaction representation: RXN or RDFile (AUTO acts as RDFile) 
+	 * @return result FileTextOutput object
+	 */
 	public static FileTextOutput rinchiToFileText(String rinchi, String auxInfo, ReactionFileFormat fileFormat) {
 		checkLibrary();
 
@@ -162,7 +308,16 @@ public class JnaRinchi
 		return new FileTextOutput(reactFileText, fileFormat, FileTextStatus.SUCCESS, 0, "");
 	}
 
-
+	/**
+	 * Generates a RInChIKey from a RInChI string.
+	 * The output object of type RinchiKeyOutput contains the generation status, error messages if any,
+	 * and RInChIKey.
+	 * RInChIKey could be of type: LONG, SHORT or WEB. 
+	 *  
+	 * @param keyType RInChI-Key type
+	 * @param rinchi input RInChi string
+	 * @return result RinchiKeyOutput object
+	 */
 	public static RinchiKeyOutput rinchiToRinchiKey(RinchiKeyType keyType, String rinchi) {
 		checkLibrary();
 
@@ -179,11 +334,27 @@ public class JnaRinchi
 		return new RinchiKeyOutput(rinchi_key, keyType, RinchiKeyStatus.SUCCESS, 0, "");
 	}
 	
+	/**
+	 * Splits RInChI into individual components: list of InChIs.
+	 * The output object of type RinchiDecompositionOutput contains the decomposition status, error messages if any, 
+	 * an array of InChIs, the roles of the components (individual InChIs), RInChI reaction direction.
+	 *  
+	 * @param rinchi input RInChi string
+	 * @return result RinchiDecompositionOutput object
+	 */
 	public static RinchiDecompositionOutput decomposeRinchi(String rinchi) {
 		return decomposeRinchi(rinchi, "");
 	}
 
-
+	/**
+	 * Splits RInChI and RAuxInfo into individual components: list of pairs (InChI, AuxInfo).
+	 * The output object of type RinchiDecompositionOutput contains the decomposition status, error messages if any, 
+	 * an array of InChIs, an array of AuxInfos, the roles of the components (individual InChIs), RInChI reaction direction.
+	 *
+	 * @param rinchi input RInChi string
+	 * @param auxInfo input RAuxInfo string
+	 * @return result RinchiDecompositionOutput object
+	 */
 	public static RinchiDecompositionOutput decomposeRinchi(String rinchi, String auxInfo) {
 		PointerByReference out_inchis_text_p = new PointerByReference();
 		int errCode = RinchiLibrary.rinchilib_inchis_from_rinchi(rinchi, auxInfo, out_inchis_text_p);
