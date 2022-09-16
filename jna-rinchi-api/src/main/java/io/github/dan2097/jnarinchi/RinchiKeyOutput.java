@@ -18,7 +18,13 @@
 package io.github.dan2097.jnarinchi;
 
 
-
+/**
+ * This class is a placeholder for the output/result from 
+ * RInChIKey generation
+ * 
+ * @author Nikolay Kochev
+ *
+ */
 public class RinchiKeyOutput 
 {
 	private final String rinchiKey;

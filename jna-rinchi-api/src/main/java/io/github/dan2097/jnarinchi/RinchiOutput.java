@@ -18,7 +18,13 @@
 package io.github.dan2097.jnarinchi;
 
 
-
+/**
+ * This class is a placeholder for the output/result from 
+ * RInChI and RAuxInfo generation.
+ * 
+ * @author Nikolay Kochev
+ *
+ */
 public class RinchiOutput {
 
 	private final String rinchi;

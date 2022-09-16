@@ -23,6 +23,13 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.Locale;
 
+
+/**
+ * Utility class for RInChI options setting.
+ * 
+ * @author Nikolay Kochev
+ *
+ */
 public class RinchiOptions 
 {		
 	public static final RinchiOptions DEFAULT_OPTIONS = new RinchiOptionsBuilder().build();
