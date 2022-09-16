@@ -37,6 +37,13 @@ import io.github.dan2097.jnarinchi.cheminfo.MoleculeUtils;
 import io.github.dan2097.jnarinchi.cheminfo.PerTable;
 import io.github.dan2097.jnarinchi.cheminfo.StereoUtils;
 
+
+/**
+ * This class provides utilities for converting RinchiInput data 
+ * to file texts in RXN or RDFile format
+ * @author Nikolay Kochev
+ *
+ */
 public class FileTextUtils {
 	
 	public static enum CTABVersion {
@@ -78,12 +85,25 @@ public class FileTextUtils {
 	private String errorComponentContext = "";
 	
 		
+	/**
+	 * Converts a reaction represented as MDL RXN/RDFile format text to RinchiInput object.
+	 * 
+	 * @param inputString reaction represented as a string (RXN/RDFile format)
+	 * @return RinchiInput object
+	 */
 	public RinchiInput fileTextToRinchiInput(String inputString) {
 		this.inputString = inputString;
 		BufferedReader reader = new BufferedReader(new StringReader(inputString));
 		return fileTextToRinchiInput(reader);
 	}
 	
+	/**
+	 * Converts a reaction represented as MDL RXN/RDFile format text to RinchiInput object
+	 * Input reaction information is taken from a buffered reader.
+	 * 
+	 * @param inputReader buffered input reader
+	 * @return RinchiInput object
+	 */
 	public RinchiInput fileTextToRinchiInput(BufferedReader inputReader) {
 		this.inputReader = inputReader;
 		resetForFileTextReading();
@@ -103,6 +123,13 @@ public class FileTextUtils {
 			return null;
 	}
 	
+	/**
+	 * Converts a reaction represented as RinchiInput object into a MDL RXN/RDFile format text.
+	 * Default format is RDFile. File format is set via setFormat() function.  
+	 * 
+	 * @param rInp input RinchiInput object
+	 * @return reaction file text
+	 */
 	public String rinchiInputToFileText(RinchiInput rInp) {
 		this.rInput = rInp;
 		if (rInput == null) {
@@ -799,7 +826,7 @@ public class FileTextUtils {
 		}
 	}
 	
-	public void readRXNCountLine() {
+	private void readRXNCountLine() {
 		//Read RXN count line: rrrppp
 		String line = readLine();		
 		if (line == null) {
@@ -1176,8 +1203,7 @@ public class FileTextUtils {
 		
 		return ric;
 	}
-	
-	
+		
 	private String readString(String line, int startPos, int lenght) {
 		int endPos = startPos + lenght;
 		if (startPos > line.length() || endPos > line.length())
@@ -1226,11 +1252,16 @@ public class FileTextUtils {
 		return "Line " + curLineNum + ": "; 
 	}
 	
-	
+	/**
+	 * Gets a list of generated errors.
+	 */
 	public List<String> getErrors() {
 		return errors;
 	}
 	
+	/**
+	 * Gets a single string with all errors.
+	 */
 	public String getAllErrors() {
 		StringBuilder sb = new StringBuilder();
 		for (String err: errors)
@@ -1238,27 +1269,52 @@ public class FileTextUtils {
 		return sb.toString();
 	}
 	
+	/**
+	 * Gets the reaction file format: RXN or RDFile (also AUTO can be used).
+	 */
 	public ReactionFileFormat getFormat() {
 		return format;
 	}
-
+	
+	/**
+	 * Sets the reaction file format: RXN, RDFile or AUTO
+	 * 
+	 * @param format reaction file format
+	 */
 	public void setFormat(ReactionFileFormat format) {
 		if (format != null)
 			this.format = format;
 	}
-
+	
+	/**
+	 * Gets the value of flag checkParityAccordingAtomNumbering.
+	 */
 	public boolean isCheckParityAccordingAtomNumbering() {
 		return checkParityAccordingAtomNumbering;
-	}
-
+	}	
+	
+	/**
+	 * Sets the value of flag: checkParityAccordingAtomNumbering.
+	 * 
+	 * @param checkParityAccordingAtomNumbering flag value to be set.
+	 */
 	public void setCheckParityAccordingAtomNumbering(boolean checkParityAccordingAtomNumbering) {
 		this.checkParityAccordingAtomNumbering = checkParityAccordingAtomNumbering;
 	}
 
+	/**
+	 * Gets the value of flag guessTetrahedralChiralityFromBondsInfo.
+	 */
 	public boolean isGuessTetrahedralChiralityFromBondsInfo() {
 		return guessTetrahedralChiralityFromBondsInfo;
 	}
-
+	
+	
+	/**
+	 * Gets the value of flag guessTetrahedralChiralityFromBondsInfo.
+	 * 
+	 * @param guessTetrahedralChiralityFromBondsInfo flag value to be set.
+	 */
 	public void setGuessTetrahedralChiralityFromBondsInfo(boolean guessTetrahedralChiralityFromBondsInfo) {
 		this.guessTetrahedralChiralityFromBondsInfo = guessTetrahedralChiralityFromBondsInfo;
 	}

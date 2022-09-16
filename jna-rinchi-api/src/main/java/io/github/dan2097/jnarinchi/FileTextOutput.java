@@ -18,6 +18,12 @@
 package io.github.dan2097.jnarinchi;
 
 
+/**
+ * This class is a placeholder for the output/result from 
+ * RInChI conversion to a reaction represented as file text (RXN or RDFile formats 
+ * @author Nikolay Kochev
+ *
+ */
 public class FileTextOutput 
 {
 	private final String reactionFileText; 
@@ -53,6 +59,5 @@ public class FileTextOutput
 
 	public String getErrorMessage() {
 		return errorMessage;
-	}	
-	
+	}
 }
