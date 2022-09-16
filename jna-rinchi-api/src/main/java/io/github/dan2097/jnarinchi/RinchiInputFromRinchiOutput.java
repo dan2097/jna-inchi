@@ -17,6 +17,12 @@
  */
 package io.github.dan2097.jnarinchi;
 
+/**
+ * This class is a placeholder for the output/result from 
+ * RInChI (and RAuxInfo) conversion to a RinchiInput object.
+ * @author Nikolay Kochev
+ *
+ */
 public class RinchiInputFromRinchiOutput {
 	private final RinchiInput rinchInput;
 	private final RinchiStatus status;

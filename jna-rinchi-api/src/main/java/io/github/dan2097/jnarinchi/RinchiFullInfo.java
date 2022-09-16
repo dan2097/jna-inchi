@@ -17,6 +17,10 @@
  */
 package io.github.dan2097.jnarinchi;
 
+/**
+ * Utility class, a placeholder for all information related to RInChI
+ * @author nick
+ */
 public class RinchiFullInfo 
 {
 	private String rinchi = null;

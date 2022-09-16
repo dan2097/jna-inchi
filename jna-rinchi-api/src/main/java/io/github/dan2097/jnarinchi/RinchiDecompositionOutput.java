@@ -17,7 +17,12 @@
  */
 package io.github.dan2097.jnarinchi;
 
-
+/**
+ * This class is a placeholder for the output/result from 
+ * RInChI/RAuxInfo decomposition into separate InChIs
+ * 
+ * @author Nikolay Kochev
+ */
 public class RinchiDecompositionOutput 
 {			
 	private final ReactionDirection direction;		

@@ -27,6 +27,16 @@ import io.github.dan2097.jnainchi.InchiInput;
 import io.github.dan2097.jnainchi.InchiRadical;
 import io.github.dan2097.jnainchi.InchiStereo;
 
+/**
+ * This class contains the data for particular component of a reaction.
+ * The class inherits InchiInput class, developed for storing the input for InChI generation 
+ * in a connection table fashion (see module jna-inchi-api).
+ * In class RinchiInputComponent, component roles are added and some utilities for converting
+ * RinchiInputComponent to a String. 
+ * 
+ * @author Nikolay Kochev
+ *
+ */
 public class RinchiInputComponent extends InchiInput {
 	
 	private ReactionComponentRole role = ReactionComponentRole.REAGENT;

@@ -20,7 +20,7 @@ package io.github.dan2097.jnarinchi;
 
 /**
  * This class is a placeholder for the output/result from 
- * RInChI conversion to a reaction represented as file text (RXN or RDFile formats 
+ * RInChI (and RAuxInfo) conversion to a reaction represented as file text (RXN or RDFile formats)
  * @author Nikolay Kochev
  *
  */

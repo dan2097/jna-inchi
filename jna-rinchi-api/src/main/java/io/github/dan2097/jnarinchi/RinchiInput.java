@@ -21,7 +21,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-
+/**
+ * This class is a placeholder for the basic data used for an input to RInChI native library 
+ * The class contains a list of components and reaction direction.
+ * 
+ * @author Nikolay Kochev
+ *
+ */
 public class RinchiInput {
 
 	private List<RinchiInputComponent> components = new ArrayList<>();
