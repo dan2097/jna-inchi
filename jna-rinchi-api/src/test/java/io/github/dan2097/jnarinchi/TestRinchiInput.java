@@ -26,11 +26,17 @@ import io.github.dan2097.jnainchi.InchiBond;
 import io.github.dan2097.jnainchi.InchiBondType;
 import io.github.dan2097.jnainchi.InchiRadical;
 
+/**
+ * Testing the functionality/utilities concerning RinchiInput
+ *
+ */
 public class TestRinchiInput {
 
+	/**
+	 * Testing benzene represented as a kekule structure
+	 */
 	@Test 
-	public void testBezene01() {
-		//Testing benzene with kekule structure
+	public void testBezene01() {		
 		RinchiInput rInp = new RinchiInput();
 		RinchiInputComponent ric1 = new RinchiInputComponent();
 		rInp.addComponent(ric1);
@@ -58,9 +64,11 @@ public class TestRinchiInput {
 		assertEquals("RInChI=1.00.1S/<>C6H6/c1-2-4-6-5-3-1/h1-6H/d-", rOutput.getRinchi(), "RInChI for benzene");
 	}
 	
+	/**
+	 * Testing benzene represented 'aromatic' bonds
+	 */
 	@Test 
 	public void testBezene02() {
-		//Testing benzene with 'aromatic' bonds
 		RinchiInput rInp = new RinchiInput();
 		RinchiInputComponent ric1 = new RinchiInputComponent();
 		rInp.addComponent(ric1);
@@ -89,9 +97,11 @@ public class TestRinchiInput {
 	}
 	
 	
+	/**
+	 * Testing a structure with radical (propane radical)
+	 */
 	@Test 
-	public void testRadical01() {
-		//Testing a propane radical 
+	public void testRadical01() { 
 		RinchiInput rInp = new RinchiInput();
 		RinchiInputComponent ric1 = new RinchiInputComponent();
 		rInp.addComponent(ric1);
@@ -110,9 +120,11 @@ public class TestRinchiInput {
 		assertEquals("RInChI=1.00.1S/<>C3H7/c1-3-2/h1,3H2,2H3/d-", rOutput.getRinchi(), "RInChI for propan radical");
 	}
 	
+	/**
+	 * Testing a structure with one radical
+	 */
 	@Test 
 	public void testRadical02() {
-		//Testing a compound with a radical
 		RinchiInputFromRinchiOutput rInpOut = JnaRinchi.getRinchiInputFromRinchi(
 				"RInChI=1.00.1S/<>C3H7/c1-3-2/h1,3H2,2H3/d-", 
 				"RAuxInfo=1.00.1/<>0/N:1,3,2/CRV:1d/rA:3nC.2CC/rB:s1;s2;/rC:;;;");
@@ -125,9 +137,11 @@ public class TestRinchiInput {
 		assertEquals(1, nDoublets, "Number of doublet radicals");
 	}
 	
+	/**
+	 * Testing a structure with two radicals
+	 */
 	@Test 
 	public void testRadical03() {
-		//Testing a compound with two radicals 
 		RinchiInputFromRinchiOutput rInpOut = JnaRinchi.getRinchiInputFromRinchi(
 				"RInChI=1.00.1S/<>C3H6/c1-3-2/h1-3H2/d-", 
 				"RAuxInfo=1.00.1/<>0/N:1,3,2/E:(1,2)/CRV:1d,2d/rA:3nC.2CC.2/rB:s1;s2;/rC:;;;");
@@ -140,9 +154,11 @@ public class TestRinchiInput {
 		assertEquals(2, nDoublets, "Number of doublet radicals");
 	}
 	
+	/**
+	 * Testing a compound with a triplet radical
+	 */
 	@Test 
 	public void testRadical04() {
-		//Testing a compound with triplet radical
 		RinchiInput rInp = new RinchiInput();
 		RinchiInputComponent ric1 = new RinchiInputComponent();
 		rInp.addComponent(ric1);

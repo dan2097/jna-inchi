@@ -28,9 +28,19 @@ import java.io.InputStreamReader;
 import java.util.Properties;
 
 
+/**
+ * Testing the main functionality of jna-rinchi-api module
+ *
+ */
 public class JnaRinchiTest 
 {
 		
+	/**
+	 * Reading a reaction from a resource text file into a text string
+	 * 
+	 * @param fileName reaction text file name
+	 * @return reaction as a string
+	 */
 	public static String readReactionFromResourceFile(String fileName) {
 		StringBuilder sb = new StringBuilder();
 		try (InputStream is = JnaRinchiTest.class.getResourceAsStream(fileName);
@@ -46,6 +56,12 @@ public class JnaRinchiTest
 		}
 	}
 	
+	/**
+	 * Reading the full RInChI information from a text file.
+	 * 
+	 * @param fileName text file name
+	 * @return RinchiFullInfo object with the full RInChI information
+	 */
 	public static RinchiFullInfo readRinchiFullInfoFromResourceFile(String fileName) {
 		try (InputStream is = JnaRinchiTest.class.getResourceAsStream(fileName)) {
 			Properties props = new Properties();
@@ -74,6 +90,14 @@ public class JnaRinchiTest
 		}
 	}
 	
+	/**
+	 * Generic test with example data provided by IUPAC RInChI developers.
+	 * The test compares the generated RInChI, RAuxInfo and RInChI-Keys with the
+	 * supplied ones.
+	 * 
+	 * @param reactionFile the reaction text file in  RXN or RDFile format
+	 * @param rinchiFile text file with all RInCHI information
+	 */
 	public static void genericExampleTest(String reactionFile, String rinchiFile) {
 		String reactText = readReactionFromResourceFile(reactionFile);
 		assertTrue(reactText != null, "Reading reaction from text file " + reactionFile);
@@ -118,6 +142,13 @@ public class JnaRinchiTest
 		
 	}
 	
+	/**
+	 * Performs testing of the conversion from RInChI to MDL RXN/RDFile and vice versa simultaneously.
+	 * 
+	 * @param reactionFile the reaction text file in  RXN or RDFile format
+	 * @param rinchiFile text file with all RInCHI information
+	 * @param format reaction file format
+	 */
 	public static void doubleConversionExampleTest(String reactionFile, String rinchiFile, ReactionFileFormat format) {
 		//Double conversion test RIChI --> file text --> RInChI
 		String reactText = readReactionFromResourceFile(reactionFile);
@@ -125,14 +156,18 @@ public class JnaRinchiTest
 		RinchiFullInfo rfi = readRinchiFullInfoFromResourceFile(rinchiFile);
 		assertTrue(rfi != null, "Reading Rinchi Full Infor from file " + rinchiFile);
 		
-		RinchiOutput rinchiOut;
-		RinchiKeyOutput rinchiKeyOut;
+		RinchiOutput rinchiOut0, rinchiOut;
 		
 		FileTextOutput fileTextOut = JnaRinchi.rinchiToFileText(rfi.getRinchi(), rfi.getAuxInfo(), format);
 		assertTrue(fileTextOut.getStatus() == FileTextStatus.SUCCESS, "RIChI to FileText conversion status for " + rinchiFile);
 		rinchiOut = JnaRinchi.fileTextToRinchi(fileTextOut.getReactionFileText());
 		assertEquals(rfi.getRinchi(), rinchiOut.getRinchi(), "Rinchi for " + reactionFile);
-		assertEquals(rfi.getAuxInfo(), rinchiOut.getAuxInfo(), "RAuxInfo for " + reactionFile);	
+		assertEquals(rfi.getAuxInfo(), rinchiOut.getAuxInfo(), "RAuxInfo for " + reactionFile);
+				
+		//Testing number of components and decomposed InChIs
+		rinchiOut0 = JnaRinchi.fileTextToRinchi(reactText);
+		assertEquals(rinchiOut0.getRinchi(), rinchiOut.getRinchi(), "Rinchi for " + reactionFile);
+		assertEquals(rinchiOut0.getAuxInfo(), rinchiOut.getAuxInfo(), "RAuxInfo for " + reactionFile);
 	}
 	
 	
