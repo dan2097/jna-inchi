@@ -23,13 +23,13 @@ public enum RinchiKeyType
 	SHORT ("S"), 
 	WEB ("W");
 	
-	private final String shortDeignation;
+	private final String shortDesignation;
 	
-	private RinchiKeyType (String shortDeignation) {
-		this.shortDeignation = shortDeignation; 
+	RinchiKeyType (String shortDesignation) {
+		this.shortDesignation = shortDesignation;
 	}
 	
-	public String getShortDeignation() {
-		return shortDeignation;
+	public String getShortDesignation() {
+		return shortDesignation;
 	}
 }

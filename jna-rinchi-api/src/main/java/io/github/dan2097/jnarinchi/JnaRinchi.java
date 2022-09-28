@@ -18,8 +18,6 @@
 package io.github.dan2097.jnarinchi;
 
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Properties;
 
 import com.sun.jna.Platform;
@@ -269,7 +267,7 @@ public class JnaRinchi
 		PointerByReference out_rinchi_key = new PointerByReference();
 		boolean forceEq = options.getFlags().contains(RinchiFlag.ForceEquilibrium);
 		int errCode = RinchiLibrary.rinchilib_rinchikey_from_file_text(fileFormat.toString(), reactFileText, 
-				keyType.getShortDeignation(), forceEq, out_rinchi_key);
+				keyType.getShortDesignation(), forceEq, out_rinchi_key);
 		if (errCode != 0)
 		{  
 			String err = RinchiLibrary.rinchilib_latest_err_msg();
@@ -322,7 +320,7 @@ public class JnaRinchi
 		checkLibrary();
 
 		PointerByReference out_rinchi_key = new PointerByReference();        
-		int errCode = RinchiLibrary.rinchilib_rinchikey_from_rinchi(rinchi, keyType.getShortDeignation(), out_rinchi_key);
+		int errCode = RinchiLibrary.rinchilib_rinchikey_from_rinchi(rinchi, keyType.getShortDesignation(), out_rinchi_key);
 		if (errCode != 0)
 		{  
 			String err = RinchiLibrary.rinchilib_latest_err_msg();
@@ -391,8 +389,8 @@ public class JnaRinchi
 		 * ...
 		 */
 
-		String lines[] = outText.split(RINCHI_DECOMPOSE_LINE_SEPARATOR);
-		StringBuffer errorBuffer = new StringBuffer();
+		String[] lines = outText.split(RINCHI_DECOMPOSE_LINE_SEPARATOR);
+		StringBuilder errorBuffer = new StringBuilder();
 		
 		//Check number of lines and determine the number of components
 		int nLines = lines.length;
