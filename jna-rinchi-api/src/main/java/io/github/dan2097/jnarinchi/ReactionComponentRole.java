@@ -17,25 +17,41 @@
  */
 package io.github.dan2097.jnarinchi;
 
-public enum ReactionComponentRole 
+/**
+ * Enum to indicate the role of the component of a reaction.
+ * <br>
+ * Each constant is associated with a short designation for this role as used by RInChI.
+ * For a given enum the short designation can be returned with {@link #getShortRinchiDesignation()}.
+ * For a given short designation, the enum can be returned with {@link #getRoleFromShortDesignation(String)}.
+ */
+public enum ReactionComponentRole
 {
 	REAGENT ("R"), 
 	PRODUCT ("P"), 
 	AGENT ("A");
 	
-	private final String shortRinchiDeignation;
+	private final String shortRinchiDesignation;
 	
-	private ReactionComponentRole(String shortRinchiDeignation) {
-		this.shortRinchiDeignation = shortRinchiDeignation; 
+	ReactionComponentRole(String shortRinchiDesignation) {
+		this.shortRinchiDesignation = shortRinchiDesignation;
 	}
-	
-	public String getShortRinchiDeignation() {
-		return shortRinchiDeignation;
+
+	/**
+	 * Returns the short designation of this component role as used by RInChI.
+	 * @return the short designation
+	 */
+	public String getShortRinchiDesignation() {
+		return shortRinchiDesignation;
 	}
-	
-	public static ReactionComponentRole getRoleFromShortDesignation(String designation) {
+
+	/**
+	 * Returns the enum associated with the provided short designation of this component role as used by RInChI.
+	 * @param shortDesignation short designation the enum is returned for
+	 * @return enum associated with <code>shortDesignation</code>
+	 */
+	public static ReactionComponentRole getRoleFromShortDesignation(String shortDesignation) {
 		for (ReactionComponentRole role : ReactionComponentRole.values())
-			if (role.getShortRinchiDeignation().equals(designation))
+			if (role.getShortRinchiDesignation().equals(shortDesignation))
 				return role;
 		return null;
 	}

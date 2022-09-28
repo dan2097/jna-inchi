@@ -17,25 +17,41 @@
  */
 package io.github.dan2097.jnarinchi;
 
-public enum ReactionDirection 
+/**
+ * Enum to indicate the direction of the reaction.
+ * <br>
+ * Each constant is associated with a short designation as used by RInChI.
+ * For a given enum the short designation can be returned with {@link #getShortRinchiDesignation()}.
+ * For a given short designation, the enum can be returned with {@link #getDirectionFromShortDesignation(String)}.
+ */
+public enum ReactionDirection
 {	
 	FORWARD ("+"), 
 	BACKWARD ("-"), 
 	EQUILIBRIUM ("=");
 	
-	private final String shortRinchiDeignation;
+	private final String shortRinchiDesignation;
 	
-	private ReactionDirection(String shortRinchiDeignation) {
-		this.shortRinchiDeignation = shortRinchiDeignation;
+	ReactionDirection(String shortRinchiDesignation) {
+		this.shortRinchiDesignation = shortRinchiDesignation;
 	}
 
-	public String getShortRinchiDeignation() {
-		return shortRinchiDeignation;
+	/**
+	 * Returns the short designation of this reaction direction as used by RInChI.
+	 * @return the short designation
+	 */
+	public String getShortRinchiDesignation() {
+		return shortRinchiDesignation;
 	}
-	
-	public static ReactionDirection getDirectionFromShortDesignation(String designation) {
+
+	/**
+	 * Returns the enum associated with the provided short designation as used by RInChI.
+	 * @param shortDesignation short designation the enum is returned for
+	 * @return enum associated with <code>shortDesignation</code>
+	 */
+	public static ReactionDirection getDirectionFromShortDesignation(String shortDesignation) {
 		for (ReactionDirection dir : ReactionDirection.values())
-			if (dir.getShortRinchiDeignation().equals(designation))
+			if (dir.getShortRinchiDesignation().equals(shortDesignation))
 				return dir;
 		return null;
 	}

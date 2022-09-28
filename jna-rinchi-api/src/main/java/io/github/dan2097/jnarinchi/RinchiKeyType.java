@@ -17,7 +17,12 @@
  */
 package io.github.dan2097.jnarinchi;
 
-public enum RinchiKeyType 
+/**
+ * Enum to indicate the type of RInChIKey.
+ * <br>
+ * Each key type is associated with a short designation as used by RInChI.
+ */
+public enum RinchiKeyType
 {
 	LONG ("L"), 
 	SHORT ("S"), 
@@ -28,7 +33,11 @@ public enum RinchiKeyType
 	RinchiKeyType (String shortDesignation) {
 		this.shortDesignation = shortDesignation;
 	}
-	
+
+	/**
+	 * Returns the short designation of this key type as used by RInChI.
+	 * @return short designation
+	 */
 	public String getShortDesignation() {
 		return shortDesignation;
 	}
