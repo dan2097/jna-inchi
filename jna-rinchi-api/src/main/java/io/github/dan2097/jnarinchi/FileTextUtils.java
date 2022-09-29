@@ -34,7 +34,7 @@ import io.github.dan2097.jnainchi.InchiRadical;
 import io.github.dan2097.jnainchi.InchiStereo;
 import io.github.dan2097.jnainchi.InchiStereoParity;
 import io.github.dan2097.jnarinchi.cheminfo.MoleculeUtils;
-import io.github.dan2097.jnarinchi.cheminfo.PerTable;
+import io.github.dan2097.jnarinchi.cheminfo.PeriodicTable;
 import io.github.dan2097.jnarinchi.cheminfo.StereoUtils;
 
 
@@ -962,7 +962,7 @@ public class FileTextUtils {
 		}
 		
 		//Check atom symbol
-		int atNum = PerTable.getAtomicNumberFromElSymbol(atSymbol);
+		int atNum = PeriodicTable.getAtomicNumberFromElementSymbol(atSymbol);
 		if (atNum == -1) {
 			errors.add(errorComponentContext + "MOL atom # " + (atomIndex + 1) 
 					+ " in Line " + curLineNum + " atom symbol error --> " + line);

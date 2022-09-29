@@ -17,8 +17,16 @@
  */
 package io.github.dan2097.jnarinchi.cheminfo;
 
-public class PerTable {
-	public static final String mElementSymbol[] =
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * Happily serves up atomic numbers for valid element symbols via {@link #getAtomicNumberFromElementSymbol(String)}.
+ * @author Nikolay Kochev
+ * @author Uli Fechner
+ */
+public class PeriodicTable {
+	private static final String[] mElementSymbol =
 		{
 			"*",                                                 //0 any atom, generally should not be used
 			"H","He","Li","Be","B","C","N","O","F","Ne",         //1-10
@@ -34,8 +42,17 @@ public class PerTable {
 			"Md","No","Lr","Rf","Db","Sg","Bh","Hs","Mt","Ds",   //101-110
 			"Rg","Cn","Nh","Fl" 		           			     //111-120    "Uuu","Uub","Uut","Uuq"
 		};
+
+	private static final Map<String,Integer> elementSymbolAtomicNumberMap = new HashMap<>();
+
+	// initialize the map with (element symbol, atomic symbol) pairs
+	static {
+		for (int i = 0; i < mElementSymbol.length; i++) {
+			elementSymbolAtomicNumberMap.put(mElementSymbol[i], i);
+		}
+	}
 	
-	public static final int majorIsotope[] =
+	public static final int[] majorIsotope =
 		{
 				0, //Any atom (should not be used)
 				1, //H 1
@@ -153,15 +170,19 @@ public class PerTable {
 				283, //Nh 113  using min value of: 283 284 285 286 287  (Uut)
 				285  //Fl 114  using min value of: 285 286 287 288 289  (Uuq)
 		};
-	
-	public static int getAtomicNumberFromElSymbol(String s)
+
+	/**
+	 * Returns the atomic number for a provided element symbol.
+	 *
+	 * @param elementSymbol the atomic number is returned for this symbol
+	 * @return the atomic number of the provided element symbol, -1 if <code>elementSymbol</code> equals <code>null</code> or the element symbol is not valid
+	 */
+	public static int getAtomicNumberFromElementSymbol(String elementSymbol)
 	{
-		for (int i=1; i < mElementSymbol.length; i++)
-		{
-			if (s.compareTo(mElementSymbol[i])==0)
-				return (i);
+		if (elementSymbol == null || !elementSymbolAtomicNumberMap.containsKey(elementSymbol)) {
+			return(-1);
 		}
 
-		return(-1);
-	};
+		return elementSymbolAtomicNumberMap.get(elementSymbol);
+	}
 }
