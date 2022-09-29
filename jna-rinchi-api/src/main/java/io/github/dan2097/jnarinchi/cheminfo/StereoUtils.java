@@ -34,8 +34,7 @@ import io.github.dan2097.jnainchi.InchiStereoType;
 import io.github.dan2097.jnarinchi.RinchiInputComponent;
 
 public class StereoUtils {
-
-	public static enum MolCoordinatesType {
+	public enum MolCoordinatesType {
 		_0D, _2D, _3D
 	}
 	
@@ -87,7 +86,7 @@ public class StereoUtils {
 	}
 	
 	public static InchiStereo createTetrahedralStereo(RinchiInputComponent ric, InchiAtom atom, InchiStereoParity parity) {
-		List<InchiAtom> neighbAtoms = ric.getConectedAtomList(atom);
+		List<InchiAtom> neighbAtoms = ric.getConnectedAtomList(atom);
 		if (neighbAtoms.size() < 3 || neighbAtoms.size() > 4)
 			return null; //Unable to create stereo element
 		
@@ -108,10 +107,8 @@ public class StereoUtils {
 		
 		InchiAtom[] sortedAtoms = sortAtomsToBeWithIncreasingIndices(ric, neighbAtoms);
 		
-		InchiStereo stereo = InchiStereo.createTetrahedralStereo(atom, 
+		return InchiStereo.createTetrahedralStereo(atom,
 				sortedAtoms[0], sortedAtoms[1], sortedAtoms[2], sortedAtoms[3], parity);
-		
-		return stereo;
 	}
 	
 	public static InchiAtom[] sortAtomsToBeWithIncreasingIndices(InchiInput inchiInput, List<InchiAtom> atoms) {
@@ -143,7 +140,7 @@ public class StereoUtils {
 	}
 	
 	public static InchiStereo sortTetrahedralLigandsToBeWithIncreasingIndices(InchiInput inchiInput, InchiStereo stereo) {
-		InchiAtom ligands[] = stereo.getAtoms();
+		InchiAtom[] ligands = stereo.getAtoms();
 		int numOfSwaps = 0;
 		int n = ligands.length;
 		
@@ -263,8 +260,10 @@ public class StereoUtils {
 	public static MolCoordinatesType getMolCoordinatesType(int nX, int nY, int nZ) {
 		if (nZ != 0)
 			return MolCoordinatesType._3D;
+
 		if (nY != 0)
 			return MolCoordinatesType._2D;
+
 		return MolCoordinatesType._0D;
 	}
 }

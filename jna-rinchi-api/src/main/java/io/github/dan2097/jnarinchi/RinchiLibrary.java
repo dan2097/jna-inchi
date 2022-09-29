@@ -23,7 +23,7 @@ import com.sun.jna.NativeLibrary;
 import com.sun.jna.ptr.PointerByReference;
 
 /**
- * NA Wrapper for library <b>rinchi</b><br>
+ * NA Wrapper for library <b>rinchi</b>.
  * 
  * @author nick
  *
@@ -33,24 +33,22 @@ public class RinchiLibrary implements Library
 	public static final String JNA_LIBRARY_NAME = "rinchi";
 	public static final NativeLibrary JNA_NATIVE_LIB = NativeLibrary.getInstance(RinchiLibrary.JNA_LIBRARY_NAME);
 
-	
 	static {
 		Native.register(RinchiLibrary.class, RinchiLibrary.JNA_NATIVE_LIB);
 	}
-	
-	
+
 	/**
-	 * Returns the native rinchi library latest error message.
+	 * Returns the latest error message of the native rinchi library.
 	 * 
 	 * @return the string of error message
 	 */
 	public static native String rinchilib_latest_err_msg();
-	
 
 	/**
 	 * Generates RInChI and RAuxInfo from a text file in MDL RXN/RDFile format.
-	 * Original signature : 
-	 * <code> int rinchilib_rinchi_from_file_text(
+	 * <br>
+	 * Original signature:
+	 * <code>int rinchilib_rinchi_from_file_text(
 	 * const char* input_format, const char* in_file_text, bool in_force_equilibrium, 
 	 * const char** out_rinchi_string, const char** out_rinchi_auxinfo)</code><br>
 	 * 
@@ -67,11 +65,11 @@ public class RinchiLibrary implements Library
 			boolean in_force_equilibrium,
 			PointerByReference out_rinchi_string_p,
 			PointerByReference out_rinchi_auxinfo_p);
-	
-	
+
 	/**
 	 * Generates RInChIKey from a text file in MDL RXN/RDFile format.
-	 * Original signature : 
+	 * <br>
+	 * Original signature:
 	 * <code> int rinchilib_rinchikey_from_file_text(const char* input_format, const char* in_file_text, 
 	 * const char* key_type, bool in_force_equilibrium, const char** out_rinchi_key) </code><br>
 	 * 
@@ -90,10 +88,10 @@ public class RinchiLibrary implements Library
 			PointerByReference out_rinchi_key_p
 			);
 
-	
 	/**
 	 * Converts RInChI and RAuxInfo into a reaction represented as text file in MDL RXN/RDFile format.
-	 * Original signature : 
+	 * <br>
+	 * Original signature:
 	 * <code> int rinchilib_file_text_from_rinchi(const char* rinchi_string, const char* rinchi_auxinfo, 
 	 * const char* output_format, const char** out_file_text) </code><br>
 	 * 
@@ -108,11 +106,11 @@ public class RinchiLibrary implements Library
 			String rinchi_auxinfo, 
 			String output_format, 
 			PointerByReference out_file_text_p);
-	
-	
+
 	/**
 	 * Extracts InChIs and AuxInfo for all reaction components from a RInChI and RAuxInfo strings.
-	 * Original signature : 
+	 * <br>
+	 * Original signature:
 	 * <code> int rinchilib_inchis_from_rinchi(const char* rinchi_string, const char* rinchi_auxinfo, 
 	 * const char** out_inchis_text) </code><br>
 	 * 
@@ -129,11 +127,11 @@ public class RinchiLibrary implements Library
 			String rinchi_auxinfo,
 			PointerByReference out_inchis_text_p
 			);
-	
-	
+
 	/**
 	 * Generates RInChIKey from a RInChI string.
-	 * Original signature : 
+	 * <br>
+	 * Original signature:
 	 * <code> int rinchilib_rinchikey_from_rinchi(const char* rinchi_string, const char* key_type, 
 	 * const char** out_rinchi_key) </code><br>
 	 * 
@@ -146,6 +144,4 @@ public class RinchiLibrary implements Library
 			String rinchi_string, 
 			String key_type, 
 			PointerByReference out_rinchi_key_p);
-
-	
 }
