@@ -491,7 +491,7 @@ public class JnaRinchi
 						.append(":").append("\n");
 		}
 		else
-			errorBuffer.append("No lines avalable!\n");
+			errorBuffer.append("No lines available!\n");
 		
 		//Iterate all reaction components
 		if (nComponents > 0)

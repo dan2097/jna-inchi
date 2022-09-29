@@ -43,37 +43,32 @@ import io.github.dan2097.jnarinchi.cheminfo.StereoUtils;
  * @author Nikolay Kochev
  */
 public class FileTextUtils {
-	
-	public static enum CTABVersion {
-		V2000, V3000
-	}
-	
-	private static NumberFormat mdlNumberFormat = NumberFormat.getNumberInstance(Locale.ENGLISH);
+	private static final String LINE_SEPARATOR = "\n";
+	private static final String CTAB_LINE_COUNT = "999";
+	private static final NumberFormat MDL_NUMBER_FORMAT = NumberFormat.getNumberInstance(Locale.ENGLISH);
 	private static final int MDL_FLOAT_SPACES = 10;
-	
+
 	static {
-		mdlNumberFormat.setMinimumIntegerDigits(1);
-		mdlNumberFormat.setMaximumIntegerDigits(4);
-		mdlNumberFormat.setMinimumFractionDigits(4);
-		mdlNumberFormat.setMaximumFractionDigits(4);
-		mdlNumberFormat.setGroupingUsed(false);
+		MDL_NUMBER_FORMAT.setMinimumIntegerDigits(1);
+		MDL_NUMBER_FORMAT.setMaximumIntegerDigits(4);
+		MDL_NUMBER_FORMAT.setMinimumFractionDigits(4);
+		MDL_NUMBER_FORMAT.setMaximumFractionDigits(4);
+		MDL_NUMBER_FORMAT.setGroupingUsed(false);
 	}
 	
-	private String endLine = "\n";	
-	private StringBuilder strBuilder;	
-	private List<String> errors = new ArrayList<String>();
+	private StringBuilder stringBuilder;
+	private final List<String> errors = new ArrayList<>();
 	private ReactionFileFormat format = ReactionFileFormat.RD;
 	private boolean checkParityAccordingAtomNumbering = true;
 	private boolean guessTetrahedralChiralityFromBondsInfo = false;
-	private ReactionFileFormat autoRecognizedformat = null;
-	private CTABVersion ctabVersion = CTABVersion.V2000; //Currently only V2000 is supported
+	private ReactionFileFormat autoRecognizedFormat = null;
+	private final CTabVersion ctabVersion = CTabVersion.V2000; //Currently only V2000 is supported
 	private RinchiInput rInput = null;
-	private List<RinchiInputComponent> reagents = new ArrayList<RinchiInputComponent>();
-	private List<RinchiInputComponent> products = new ArrayList<RinchiInputComponent>();
-	private List<RinchiInputComponent> agents = new ArrayList<RinchiInputComponent>();
+	private final List<RinchiInputComponent> reagents = new ArrayList<>();
+	private final List<RinchiInputComponent> products = new ArrayList<>();
+	private final List<RinchiInputComponent> agents = new ArrayList<>();
 	
 	//Reading work variables
-	private String inputString = null;
 	private BufferedReader inputReader = null;
 	private int curLineNum = 0;
 	private int numOfReagentsToRead = 0;
@@ -81,8 +76,7 @@ public class FileTextUtils {
 	private int numOfAtomsToRead = 0;
 	private int numOfBondsToRead = 0;
 	private String errorComponentContext = "";
-	
-		
+
 	/**
 	 * Converts a reaction represented as MDL RXN/RDFile format text to RinchiInput object.
 	 * 
@@ -90,7 +84,6 @@ public class FileTextUtils {
 	 * @return RinchiInput object
 	 */
 	public RinchiInput fileTextToRinchiInput(String inputString) {
-		this.inputString = inputString;
 		BufferedReader reader = new BufferedReader(new StringReader(inputString));
 		return fileTextToRinchiInput(reader);
 	}
@@ -146,7 +139,7 @@ public class FileTextUtils {
 		//Add RXN count line: rrrppp
 		addInteger(reagents.size(), 3); //rrr
 		addInteger(products.size(), 3); //ppp
-		strBuilder.append(endLine);
+		stringBuilder.append(LINE_SEPARATOR);
 		
 		//Add reagents
 		for (int i = 0; i < reagents.size(); i++) 
@@ -161,11 +154,11 @@ public class FileTextUtils {
 				addRrinchiInputComponentAsAgent(agents.get(i), i, "Agent " + (i+1), "  JNA-RIN", "");
 		}
 		
-		return strBuilder.toString();
+		return stringBuilder.toString();
 	}
 	
 	private void reset() {		
-		strBuilder = new StringBuilder();
+		stringBuilder = new StringBuilder();
 		errors.clear();
 		reagents.clear();
 		products.clear();
@@ -185,88 +178,88 @@ public class FileTextUtils {
 	private void addRrinchiInputComponent(RinchiInputComponent ric, String line1, String line2, String line3) 
 	{
 		addMolHeader(line1, line2, line3);
-		addCTABBlockV2000(ric);
+		addCTabBlockV2000(ric);
 		addPropertyBlock(ric);
-		strBuilder.append("M  END");
-		strBuilder.append(endLine);
+		stringBuilder.append("M  END");
+		stringBuilder.append(LINE_SEPARATOR);
 	}
 	
 	private void addRrinchiInputComponentAsAgent(RinchiInputComponent ric, int agentIndex, String line1, String line2, String line3) 
 	{
-		strBuilder.append("$DTYPE RXN:VARIATION(1):AGENT(" + (agentIndex + 1) + "):MOL(1):MOLSTRUCTURE");
-		strBuilder.append(endLine);
-		strBuilder.append("$DATUM $MFMT");
-		strBuilder.append(endLine);
+		stringBuilder.append("$DTYPE RXN:VARIATION(1):AGENT(").append(agentIndex + 1).append("):MOL(1):MOLSTRUCTURE");
+		stringBuilder.append(LINE_SEPARATOR);
+		stringBuilder.append("$DATUM $MFMT");
+		stringBuilder.append(LINE_SEPARATOR);
 		
 		//Molecule header
-		strBuilder.append(line1);
-		strBuilder.append(endLine);		
-		strBuilder.append(line2);
-		strBuilder.append(endLine);
-		strBuilder.append(line3);
-		strBuilder.append(endLine);
+		stringBuilder.append(line1);
+		stringBuilder.append(LINE_SEPARATOR);
+		stringBuilder.append(line2);
+		stringBuilder.append(LINE_SEPARATOR);
+		stringBuilder.append(line3);
+		stringBuilder.append(LINE_SEPARATOR);
 		
-		addCTABBlockV2000(ric);
+		addCTabBlockV2000(ric);
 		addPropertyBlock(ric);
-		strBuilder.append("M  END");
-		strBuilder.append(endLine);
+		stringBuilder.append("M  END");
+		stringBuilder.append(LINE_SEPARATOR);
 	}
 	
 	private void addMolHeader(String line1, String line2, String line3) {
-		strBuilder.append("$MOL");
-		strBuilder.append(endLine);
-		strBuilder.append(line1);
-		strBuilder.append(endLine);		
-		strBuilder.append(line2);
-		strBuilder.append(endLine);
-		strBuilder.append(line3);
-		strBuilder.append(endLine);
+		stringBuilder.append("$MOL");
+		stringBuilder.append(LINE_SEPARATOR);
+		stringBuilder.append(line1);
+		stringBuilder.append(LINE_SEPARATOR);
+		stringBuilder.append(line2);
+		stringBuilder.append(LINE_SEPARATOR);
+		stringBuilder.append(line3);
+		stringBuilder.append(LINE_SEPARATOR);
 	}
 	
 	private void addRDFileHeader(String info1, String info2, String info3) {
-		strBuilder.append("$RDFILE ");
-		strBuilder.append(info1);
-		strBuilder.append(endLine);
-		strBuilder.append("$DATM ");
-		strBuilder.append(info2);
-		strBuilder.append(endLine);
-		strBuilder.append("$RFMT ");		
-		strBuilder.append(info3);
-		strBuilder.append(endLine);
+		stringBuilder.append("$RDFILE ");
+		stringBuilder.append(info1);
+		stringBuilder.append(LINE_SEPARATOR);
+		stringBuilder.append("$DATM ");
+		stringBuilder.append(info2);
+		stringBuilder.append(LINE_SEPARATOR);
+		stringBuilder.append("$RFMT ");
+		stringBuilder.append(info3);
+		stringBuilder.append(LINE_SEPARATOR);
 	}
 	
 	private void addRXNHeader(String line2, String line3, String line4) {
-		strBuilder.append("$RXN");
-		strBuilder.append(endLine);
-		strBuilder.append(line2);
-		strBuilder.append(endLine);
-		strBuilder.append(line3);
-		strBuilder.append(endLine);		
-		strBuilder.append(line4);
-		strBuilder.append(endLine);
+		stringBuilder.append("$RXN");
+		stringBuilder.append(LINE_SEPARATOR);
+		stringBuilder.append(line2);
+		stringBuilder.append(LINE_SEPARATOR);
+		stringBuilder.append(line3);
+		stringBuilder.append(LINE_SEPARATOR);
+		stringBuilder.append(line4);
+		stringBuilder.append(LINE_SEPARATOR);
 	}
 	
-	private void addCTABBlockV2000(RinchiInputComponent ric) {
+	private void addCTabBlockV2000(RinchiInputComponent ric) {
 		//Counts line: aaabbblllfffcccsssxxxrrrpppiiimmmvvvvvv
 		addInteger(ric.getAtoms().size(), 3); //aaa
 		addInteger(ric.getBonds().size(), 3); //bbb
-		strBuilder.append("  0"); //lll
-		strBuilder.append("  0"); //fff
+		stringBuilder.append("  0"); //lll
+		stringBuilder.append("  0"); //fff
 		
 		Map<InchiAtom,InchiStereoParity> parities = StereoUtils.getAtomParities(ric, checkParityAccordingAtomNumbering);
 		//ccc
 		if (parities.isEmpty())
-			strBuilder.append("  0");
+			stringBuilder.append("  0");
 		else
-			strBuilder.append("  1");
-		strBuilder.append("  0"); //sss
-		strBuilder.append("  0"); //xxx
-		strBuilder.append("  0"); //rrr
-		strBuilder.append("  0"); //ppp
-		strBuilder.append("  0"); //iii
-		strBuilder.append("999"); //mmm
-		strBuilder.append(" V2000"); //vvvvvv
-		strBuilder.append(endLine);
+			stringBuilder.append("  1");
+		stringBuilder.append("  0"); //sss
+		stringBuilder.append("  0"); //xxx
+		stringBuilder.append("  0"); //rrr
+		stringBuilder.append("  0"); //ppp
+		stringBuilder.append("  0"); //iii
+		stringBuilder.append(CTAB_LINE_COUNT); //mmm
+		stringBuilder.append(" ").append(CTabVersion.V2000); //vvvvvv
+		stringBuilder.append(LINE_SEPARATOR);
 		
 		//Add Atom block
 		for (int i = 0; i < ric.getAtoms().size(); i++) {
@@ -289,44 +282,44 @@ public class FileTextUtils {
 		addDouble(atom.getX());
 		addDouble(atom.getY());
 		addDouble(atom.getZ());
-		strBuilder.append(" ");
+		stringBuilder.append(" ");
 		//aaa
 		addString(atom.getElName(),3); 
 		//dd not specified yet
-		strBuilder.append(" 0"); 
+		stringBuilder.append(" 0");
 		//ccc
 		if (atom.getRadical() == InchiRadical.DOUBLET)
-			strBuilder.append("  4"); //MDL code for doublet radical
+			stringBuilder.append("  4"); //MDL code for doublet radical
 		else
 			addInteger(getOldCTABChargeCoding(atom.getCharge()),3);
 		//sss stereo parity
 		if (parity != null) {
 			switch (parity) {
 			case ODD:
-				strBuilder.append("  1");
+				stringBuilder.append("  1");
 				break;
 			case EVEN:
-				strBuilder.append("  2");
+				stringBuilder.append("  2");
 				break;
 			case UNKNOWN:
-				strBuilder.append("  3");
+				stringBuilder.append("  3");
 				break;		
 			default:
-				strBuilder.append("  0");
+				stringBuilder.append("  0");
 			}
 		}
 		//hhh: implicit H atoms: used for query 
 		//addInteger(getImplicitHAtomCoding(atom),3);
-		strBuilder.append("  0");
+		stringBuilder.append("  0");
 		//bbb stereo box care: used for queries
-		strBuilder.append("  0");
+		stringBuilder.append("  0");
 		//vvv valence
-		strBuilder.append("  0");
+		stringBuilder.append("  0");
 		//HHH not specified
-		strBuilder.append("  0");
+		stringBuilder.append("  0");
 		
 		//rrriiimmmnnneee are not specified
-		strBuilder.append(endLine);
+		stringBuilder.append(LINE_SEPARATOR);
 	}
 	
 	private void addBondLine(InchiBond bond, RinchiInputComponent ric) {
@@ -354,12 +347,12 @@ public class FileTextUtils {
 		//sss bond stereo		
 		addInteger(getBondMDLStereoCode(bond), 3);
 		//xxx = not used
-		strBuilder.append("  0");
+		stringBuilder.append("  0");
 		//rrr (bond topology, used only for SSS)
-		strBuilder.append("  0");
+		stringBuilder.append("  0");
 		//ccc (reacting center status): 0 - unmarked 
-		strBuilder.append("  0");
-		strBuilder.append(endLine);
+		stringBuilder.append("  0");
+		stringBuilder.append(LINE_SEPARATOR);
 	}
 	
 	private void addPropertyBlock(RinchiInputComponent ric) {
@@ -371,24 +364,24 @@ public class FileTextUtils {
 			//Atom charges are added in sets of 8 atoms (M  CHGnn8 aaa vvv ...)
 			int numSets = atomList.size() / 8;
 			for (int curSet = 0; curSet < numSets; curSet++) {
-				strBuilder.append("M  CHG  8");
+				stringBuilder.append("M  CHG  8");
 				for (int i = 0; i < 8; i++) {
 					int atIndex = atomList.get(curSet * 8 + i);
 					addInteger(atIndex+1, 4);
 					addInteger(ric.getAtom(atIndex).getCharge(), 4);
 				}
-				strBuilder.append(endLine);
+				stringBuilder.append(LINE_SEPARATOR);
 			}			
 			//One additional set of k charged atoms (atomList.size() = 8 * numSets + k)
 			int k = atomList.size() % 8;
-			strBuilder.append("M  CHG");
+			stringBuilder.append("M  CHG");
 			addInteger(k,3);
 			for (int i = 0; i < k; i++) {
 				int atIndex = atomList.get(numSets * 8 + i);
 				addInteger(atIndex+1, 4);
 				addInteger(ric.getAtom(atIndex).getCharge(), 4);
 			}
-			strBuilder.append(endLine);
+			stringBuilder.append(LINE_SEPARATOR);
 		}
 		
 		//Add isotope masses
@@ -397,24 +390,24 @@ public class FileTextUtils {
 			//Atom isotope masses are added in sets of 8 atoms (M  ISOnn8 aaa vvv ...)
 			int numSets = atomList.size() / 8;
 			for (int curSet = 0; curSet < numSets; curSet++) {
-				strBuilder.append("M  ISO  8");
+				stringBuilder.append("M  ISO  8");
 				for (int i = 0; i < 8; i++) {
 					int atIndex = atomList.get(curSet * 8 + i);
 					addInteger(atIndex+1, 4);
 					addInteger(ric.getAtom(atIndex).getIsotopicMass(), 4);
 				}
-				strBuilder.append(endLine);
+				stringBuilder.append(LINE_SEPARATOR);
 			}			
 			//One additional set of k isotope masses (atomList.size() = 8 * numSets + k)
 			int k = atomList.size() % 8;
-			strBuilder.append("M  ISO");
+			stringBuilder.append("M  ISO");
 			addInteger(k,3);
 			for (int i = 0; i < k; i++) {
 				int atIndex = atomList.get(numSets * 8 + i);
 				addInteger(atIndex+1, 4);
 				addInteger(ric.getAtom(atIndex).getIsotopicMass(), 4);
 			}
-			strBuilder.append(endLine);
+			stringBuilder.append(LINE_SEPARATOR);
 		}
 		
 		//Add radicals
@@ -423,18 +416,18 @@ public class FileTextUtils {
 			//Atom radicals are added in sets of 8 atoms (M  RADnn8 aaa vvv ...)
 			int numSets = atomList.size() / 8;
 			for (int curSet = 0; curSet < numSets; curSet++) {
-				strBuilder.append("M  RAD  8");
+				stringBuilder.append("M  RAD  8");
 				for (int i = 0; i < 8; i++) {
 					int atIndex = atomList.get(curSet * 8 + i);
 					addInteger(atIndex+1, 4);
 					int radCode = getRadicalMDLCode(ric.getAtom(atIndex).getRadical());
 					addInteger(radCode, 4);
 				}
-				strBuilder.append(endLine);
+				stringBuilder.append(LINE_SEPARATOR);
 			}			
 			//One additional set of k charged atoms (atomList.size() = 8 * numSets + k)
 			int k = atomList.size() % 8;
-			strBuilder.append("M  RAD");
+			stringBuilder.append("M  RAD");
 			addInteger(k,3);
 			for (int i = 0; i < k; i++) {
 				int atIndex = atomList.get(numSets * 8 + i);
@@ -442,7 +435,7 @@ public class FileTextUtils {
 				int radCode = getRadicalMDLCode(ric.getAtom(atIndex).getRadical());
 				addInteger(radCode, 4);
 			}
-			strBuilder.append(endLine);
+			stringBuilder.append(LINE_SEPARATOR);
 		}
 	}
 	
@@ -504,7 +497,7 @@ public class FileTextUtils {
 			return 3;
 		case ALTERN:
 			return 4; //stored as MDL aromatic
-		};
+		}
 		return 1;
 	}
 	
@@ -579,51 +572,48 @@ public class FileTextUtils {
 		//Adding empty spaces and value
 		int nEmptySpaces = fixedSpace - vStr.length();
 		if (nEmptySpaces < 0) 
-			strBuilder.append(vStr.substring(fixedSpace));
+			stringBuilder.append(vStr.substring(fixedSpace));
 		else {
 			if (spacesAtTheEnd) {
-				strBuilder.append(vStr);
+				stringBuilder.append(vStr);
 				for (int i = 0; i < nEmptySpaces; i++)
-					strBuilder.append(" ");
+					stringBuilder.append(" ");
 			} else {
 				for (int i = 0; i < nEmptySpaces; i++)
-					strBuilder.append(" ");
-				strBuilder.append(vStr);
+					stringBuilder.append(" ");
+				stringBuilder.append(vStr);
 			}
 		}
 	}
 	
 	private void addInteger(int value, int fixedSpace) {
-		String vStr = Integer.toString(value);
-		if (vStr.length() > fixedSpace)
-			vStr = "0";
-		//Adding empty spaces and value
-		int nEmptySpaces = fixedSpace - vStr.length();
-		for (int i = 0; i < nEmptySpaces; i++)
-			strBuilder.append(" ");
-		strBuilder.append(vStr);
+		addNumber(Integer.toString(value), fixedSpace);
 	}
 	
 	private void addDouble(Double value) {
-		addDouble(value, mdlNumberFormat, MDL_FLOAT_SPACES);
+		addDouble(value, MDL_NUMBER_FORMAT, MDL_FLOAT_SPACES);
 	}
 	
 	private void addDouble(Double value, NumberFormat nf, int fixedSpace) {
-		String vStr;
-		if(Double.isNaN(value) || Double.isInfinite(value))
-			vStr = nf.format(0.0);
-		else
-			vStr = nf.format(value);
-		
-		if (vStr.length() > fixedSpace)
-			vStr = "0";
-		//Adding empty spaces and value
-		int nEmptySpaces = fixedSpace - vStr.length();
-		for (int i = 0; i < nEmptySpaces; i++)
-			strBuilder.append(" ");
-		strBuilder.append(vStr);
+		if(Double.isNaN(value) || Double.isInfinite(value)) {
+			addNumber(nf.format(0.0), fixedSpace);
+		} else {
+			addNumber(nf.format(value), fixedSpace);
+		}
 	}
-	
+
+	private void addNumber(String numberAsString, int fixedSpace) {
+		if (numberAsString.length() > fixedSpace) {
+			numberAsString = "0";
+		}
+
+		//Adding empty spaces and value
+		int nEmptySpaces = fixedSpace - numberAsString.length();
+		for (int i = 0; i < nEmptySpaces; i++) {
+			stringBuilder.append(" ");
+		}
+		stringBuilder.append(numberAsString);
+	}
 	
 	private int getOldCTABChargeCoding(int charge) {
 		//MDL Charge designation/coding
@@ -694,17 +684,17 @@ public class FileTextUtils {
 			readAutoFileHeader();
 			break;
 		case RXN:
-			readRXNFileHeader(true);
+			readRxnFileHeader(true);
 			break;
 		case RD:
-			readRDFileHeader(true);
-			readRXNFileHeader(true);
+			readRdFileHeader(true);
+			readRxnFileHeader(true);
 			break;	
 		}		
 		if (!errors.isEmpty())
 			return errors.size();
 		
-		readRXNCountLine();
+		readRxnCountLine();
 		if (!errors.isEmpty())
 			return errors.size();
 		
@@ -735,11 +725,11 @@ public class FileTextUtils {
 		}
 		
 		if ((format == ReactionFileFormat.RD) || 
-				(format == ReactionFileFormat.AUTO && autoRecognizedformat == ReactionFileFormat.RD)) 
+				(format == ReactionFileFormat.AUTO && autoRecognizedFormat == ReactionFileFormat.RD))
 			iterateAgentsDataLines();
 				
 		return 0;
-	};
+	}
 	
 	private void iterateAgentsDataLines() {		
 		String line;
@@ -747,7 +737,7 @@ public class FileTextUtils {
 		while ((line = readLine()) != null) {
 			if (line.startsWith("$DATUM ")) {
 				String line1 = line.substring(7).trim();
-				if (line1.startsWith("$MFMT"));{
+				if (line1.startsWith("$MFMT")) {
 					errorComponentContext = "Reading agent #" + (nAgents+1) + " ";
 					RinchiInputComponent ric = readMDLMolecule(false);
 					if (ric != null) {
@@ -769,16 +759,16 @@ public class FileTextUtils {
 		}
 		
 		if (line.startsWith("$RDFILE")) {
-			readRDFileHeader(false);
-			readRXNFileHeader(true);
+			readRdFileHeader(false);
+			readRxnFileHeader(true);
 		}	
 		else  //line starts With "$RXN"
-			readRXNFileHeader(false);
+			readRxnFileHeader(false);
 	}
 	
-	private void readRDFileHeader(boolean readRDFILELine) {
+	private void readRdFileHeader(boolean readRdFileLine) {
 		String line = readLine();
-		if (readRDFILELine) {
+		if (readRdFileLine) {
 			if (line == null || !line.startsWith("$RDFILE")) {
 				errors.add("RDFile Header: Line " + curLineNum + " is missing or does not start with $RDFILE");
 				return;
@@ -793,13 +783,12 @@ public class FileTextUtils {
 		line = readLine();
 		if (line == null || !line.startsWith("$RFMT")) {
 			errors.add("RDFile Header: Line " + curLineNum + " is missing or does not start with $RFMT");
-			return;
 		}
 	}
 	
-	private void readRXNFileHeader(boolean readRXNLine) {
+	private void readRxnFileHeader(boolean readRxnLine) {
 		String line = readLine();
-		if (readRXNLine) {
+		if (readRxnLine) {
 			if (line == null || !line.startsWith("$RXN")) {
 				errors.add("RXN Header: Line " + curLineNum + " is missing or does not start with $RXN");
 				return;
@@ -820,11 +809,10 @@ public class FileTextUtils {
 		line = readLine(); //Header Line 4 comment
 		if (line == null) {
 			errors.add("RXN Header (comment or blank): Line " + curLineNum + " is missing");
-			return;
 		}
 	}
 	
-	private void readRXNCountLine() {
+	private void readRxnCountLine() {
 		//Read RXN count line: rrrppp
 		String line = readLine();		
 		if (line == null) {
@@ -841,10 +829,9 @@ public class FileTextUtils {
 		Integer ppp = readInteger(line, 3, 3);
 		if (ppp == null || ppp < 0) {
 			errors.add("RXN counts (rrrppp) Line  " + curLineNum + " : incorrect number of reagents (ppp part): " + line);
-			return;
-		}
-		else
+		} else {
 			numOfProductsToRead = ppp;
+		}
 	}
 	
 	private void readMolHeader(boolean readMolLine) {
@@ -873,7 +860,6 @@ public class FileTextUtils {
 		if (line == null) {
 			errors.add(errorComponentContext + "MOL Header (line 3) in Line" 
 					+ curLineNum + " is missing");
-			return;
 		}
 	}
 	
@@ -896,10 +882,9 @@ public class FileTextUtils {
 		if (bbb == null || bbb < 0) {
 			errors.add("MOL counts (aaabbblll...) Line  " + curLineNum 
 					+ " : incorrect number of bonds (bbb part): " + line);
-			return;
-		}
-		else
+		} else {
 			numOfBondsToRead = bbb;
+		}
 	}
 	
 	private void readMOLCTABBlock(RinchiInputComponent ric) {
@@ -936,19 +921,19 @@ public class FileTextUtils {
 					+ " in Line " + curLineNum + " is missing !");
 			return;
 		}
-		Double coordX = readMDLCoordinate(line, 0);
+		Double coordX = readMdlCoordinate(line, 0);
 		if (coordX == null) {
 			errors.add(errorComponentContext + "MOL atom # " + (atomIndex + 1) 
 					+ " in Line " + curLineNum + " coordinate x error --> " + line);
 			return;
 		}
-		Double coordY = readMDLCoordinate(line, 10);
+		Double coordY = readMdlCoordinate(line, 10);
 		if (coordY == null) {
 			errors.add(errorComponentContext + "MOL atom # " + (atomIndex + 1) 
 					+ " in Line " + curLineNum + " coordinate y error --> " + line);
 			return;
 		}
-		Double coordZ = readMDLCoordinate(line, 20);
+		Double coordZ = readMdlCoordinate(line, 20);
 		if (coordZ == null) {
 			errors.add(errorComponentContext + "MOL atom # " + (atomIndex + 1) 
 					+ " in Line " + curLineNum + " coordinate z error --> " + line);
@@ -1202,22 +1187,21 @@ public class FileTextUtils {
 		return ric;
 	}
 		
-	private String readString(String line, int startPos, int lenght) {
-		int endPos = startPos + lenght;
+	private String readString(String line, int startPos, int length) {
+		int endPos = startPos + length;
 		if (startPos > line.length() || endPos > line.length())
 			return null;
-		String s = line.substring(startPos, endPos).trim();
-		return s;
+
+		return line.substring(startPos, endPos).trim();
 	}
 	
-	private Integer readInteger(String line, int startPos, int lenght) {
-		int endPos = startPos + lenght;
+	private Integer readInteger(String line, int startPos, int length) {
+		int endPos = startPos + length;
 		if (startPos > line.length() || endPos > line.length())
 			return null;
 		String s = line.substring(startPos, endPos).trim();
 		try {
-			int i = Integer.parseInt(s);
-			return i;
+			return Integer.parseInt(s);
 		}
 		catch(Exception x) {
 			errors.add(errorPrefix() + "Error on parsing integer: " + s);
@@ -1225,7 +1209,7 @@ public class FileTextUtils {
 		}
 	}
 	
-	private Double readMDLCoordinate(String line, int startPos) {
+	private Double readMdlCoordinate(String line, int startPos) {
 		int endPos = startPos + MDL_FLOAT_SPACES;
 		if (startPos > line.length() || endPos > line.length())
 			return null;
@@ -1237,8 +1221,7 @@ public class FileTextUtils {
 		}	
 		
 		try {
-			double d = Double.parseDouble(s);
-			return d;
+			return Double.parseDouble(s);
 		}
 		catch(Exception x) {
 			errors.add(errorPrefix() + "Error on parsing float: " + s);
