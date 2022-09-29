@@ -128,7 +128,7 @@ public class TestRinchiInput {
 		RinchiInputFromRinchiOutput rInpOut = JnaRinchi.getRinchiInputFromRinchi(
 				"RInChI=1.00.1S/<>C3H7/c1-3-2/h1,3H2,2H3/d-", 
 				"RAuxInfo=1.00.1/<>0/N:1,3,2/CRV:1d/rA:3nC.2CC/rB:s1;s2;/rC:;;;");
-		RinchiInput rInp = rInpOut.getRinchInput();
+		RinchiInput rInp = rInpOut.getRinchiInput();
 		int nDoublets = 0;
 		for (int i = 0; i < rInp.getComponents().get(0).getAtoms().size(); i++)
 			if (rInp.getComponents().get(0).getAtom(i).getRadical() == InchiRadical.DOUBLET)
@@ -145,7 +145,7 @@ public class TestRinchiInput {
 		RinchiInputFromRinchiOutput rInpOut = JnaRinchi.getRinchiInputFromRinchi(
 				"RInChI=1.00.1S/<>C3H6/c1-3-2/h1-3H2/d-", 
 				"RAuxInfo=1.00.1/<>0/N:1,3,2/E:(1,2)/CRV:1d,2d/rA:3nC.2CC.2/rB:s1;s2;/rC:;;;");
-		RinchiInput rInp = rInpOut.getRinchInput();
+		RinchiInput rInp = rInpOut.getRinchiInput();
 		int nDoublets = 0;
 		for (int i = 0; i < rInp.getComponents().get(0).getAtoms().size(); i++)
 			if (rInp.getComponents().get(0).getAtom(i).getRadical() == InchiRadical.DOUBLET)

@@ -39,10 +39,8 @@ import io.github.dan2097.jnarinchi.cheminfo.StereoUtils;
 
 
 /**
- * This class provides utilities for converting RinchiInput data 
- * to file texts in RXN or RDFile format
+ * This class provides utilities for converting RinchiInput data to file texts in RXN or RDFile format.
  * @author Nikolay Kochev
- *
  */
 public class FileTextUtils {
 	
@@ -849,9 +847,9 @@ public class FileTextUtils {
 			numOfProductsToRead = ppp;
 	}
 	
-	private void readMOLHeader(boolean readMOLline) {
+	private void readMolHeader(boolean readMolLine) {
 		String line;		
-		if (readMOLline) {
+		if (readMolLine) {
 			line = readLine();
 			if (line == null || !line.startsWith("$MOL")) {
 				errors.add(errorComponentContext + "MOL Start section in Line " 
@@ -1185,7 +1183,7 @@ public class FileTextUtils {
 	
 	private RinchiInputComponent readMDLMolecule(boolean readMOLline) {
 		RinchiInputComponent ric = new RinchiInputComponent();
-		readMOLHeader(readMOLline);
+		readMolHeader(readMOLline);
 		if (!errors.isEmpty())
 			return null;
 		

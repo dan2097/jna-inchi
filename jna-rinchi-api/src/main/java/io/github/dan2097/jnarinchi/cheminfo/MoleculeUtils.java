@@ -17,69 +17,61 @@
  */
 package io.github.dan2097.jnarinchi.cheminfo;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import io.github.dan2097.jnainchi.InchiAtom;
 import io.github.dan2097.jnainchi.InchiBond;
 import io.github.dan2097.jnainchi.InchiBondType;
 import io.github.dan2097.jnainchi.InchiInput;
-import io.github.dan2097.jnainchi.InchiStereo;
-import io.github.dan2097.jnainchi.InchiStereoParity;
-import io.github.dan2097.jnainchi.InchiStereoType;
-import io.github.dan2097.jnarinchi.RinchiInputComponent;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class MoleculeUtils {
-	
-	
-	
-	
+
 	public static boolean containsHydrogen(List<InchiAtom> atoms) {
 		for (InchiAtom a: atoms)
 			if (a.getElName().equals("H"))
 				return true;
 		return false;
 	}
-	
-	
+
 	public static void setImplicitHydrogenAtoms(InchiInput inchiInput) {
 		Map<InchiAtom,Integer> atomExplVal =  getExplicitAtomValencies(inchiInput);
 		for (InchiAtom at : inchiInput.getAtoms()) {
 			Integer explVal = atomExplVal.get(at);
 			if (explVal == null)
 				explVal = 0;
-			int maxImplHydrogen = getImlicitHAtomsCount(at.getElName(), at.getCharge(), explVal) ;
-			
+			int maxImplHydrogen = getImplicitHAtomsCount(at.getElName(), at.getCharge(), explVal) ;
+
 			if (maxImplHydrogen >= explVal)
 				at.setImplicitHydrogen(maxImplHydrogen - explVal);
 		}
 	}
-	
+
 	public static Map<InchiAtom,Integer> getExplicitAtomValencies(InchiInput inchiInput) {
-		Map<InchiAtom,Integer> atomVal = new HashMap<>();		
+		Map<InchiAtom,Integer> atomVal = new HashMap<>();
 		for (InchiBond bo : inchiInput.getBonds()) {
 			//start atom
 			Integer val = atomVal.get(bo.getStart());
 			if (val == null)
-				val = new Integer(getOrder(bo.getType()));
+				val = getOrder(bo.getType());
 			else
 				val = val + getOrder(bo.getType());
 			atomVal.put(bo.getStart(), val);
 			// end atom
 			val = atomVal.get(bo.getEnd());
 			if (val == null)
-				val = new Integer(getOrder(bo.getType()));
+				val = getOrder(bo.getType());
 			else
 				val = val + getOrder(bo.getType());
 			atomVal.put(bo.getEnd(), val);
 		}
 		return atomVal;
 	}
-			
+
 	public static int getOrder(InchiBondType ibt) {
 		switch (ibt) {
-		case NONE: 
+		case NONE:
 			return 0;
 		case SINGLE:
 			return 1;
@@ -90,37 +82,35 @@ public class MoleculeUtils {
 		}
 		return 0;
 	}
-	
-	
-	
+
 	/**
 	 * Function returns the implicit valence (h atom count) for a given atom,
 	 * taking into account atom element, charge and
-	 * explicit valence (sum of all bond orders). 
+	 * explicit valence (sum of all bond orders).
 	 * Code of the function implements the MDL valence model.
 	 * See CDK org.openscience.cdk.io.MDLValence.java
-	 *  
+	 *
 	 *  <blockquote> $Id: MDLValence.h 2288 2012-11-26 03:39:27Z glandrum $
-	 *  	 
+	 *
 	 * Copyright (C) 2012 NextMove Software
 	 *
-	 * @@ All Rights Reserved @@ This file is part of the RDKit. The contents
+	 * All Rights Reserved This file is part of the RDKit. The contents
 	 * are covered by the terms of the BSD license which is included in the file
 	 * license.txt, found at the root of the RDKit source tree. </blockquote>
-	 *   
+	 *
 	 */
-	public static int getImlicitHAtomsCount(String elName, int charge, int val) {
+	public static int getImplicitHAtomsCount(String elName, int charge, int val) {
 		switch (elName) {
 		case "H":  //1
 		case "Li": //3
 		case "Na": //11
-		case "K":  //19 
+		case "K":  //19
 		case "Rb": //37
 		case "Cs": //55
 		case "Fr": //87
 			if (charge == 0 && val <= 1) return 1;
 			break;
-		
+
 		case "Be": //4
 		case "Mg": //12
 		case "Ca": //20
@@ -136,7 +126,7 @@ public class MoleculeUtils {
 				break;
 			}
 			break;
-             
+
 		case "B": //5
 			switch (charge) {
 			case -4:
@@ -162,9 +152,9 @@ public class MoleculeUtils {
 				if (val <= 1) return 1;
 				break;
 			}
-			break;    
+			break;
 
-		case "C" : //6	
+		case "C" : //6
 			switch (charge) {
 			case -3:
 				if (val <= 1) return 1;
@@ -190,7 +180,7 @@ public class MoleculeUtils {
 				break;
 			}
 			break;
-			
+
 		case "N": //7
 			switch (charge) {
 			case -2:
@@ -217,7 +207,7 @@ public class MoleculeUtils {
 				break;
 			}
 			break;
-			
+
 		case "O": //8
 			switch (charge) {
 			case -1:
@@ -244,7 +234,7 @@ public class MoleculeUtils {
 				break;
 			}
 			break;
-			
+
 		case "F": //9
 			switch (charge) {
 			case 0:
@@ -271,7 +261,7 @@ public class MoleculeUtils {
 				break;
 			}
 			break;
-		
+
 		case "Al": //13
 			switch (charge) {
 			case -4:
@@ -303,7 +293,7 @@ public class MoleculeUtils {
 				break;
 			}
 			break;
-		
+
 		case "Si": //41
 			switch (charge) {
 			case -3:
@@ -335,7 +325,7 @@ public class MoleculeUtils {
 				break;
 			}
 			break;
-		
+
 		case "P": //15
 			switch (charge) {
 			case -2:
@@ -367,7 +357,7 @@ public class MoleculeUtils {
 				break;
 			}
 			break;
-		
+
 		case "S": //16
 			switch (charge) {
 			case -1:
@@ -398,8 +388,8 @@ public class MoleculeUtils {
 				if (val <= 1) return 1;
 				break;
 			}
-			break;	
-		
+			break;
+
 		case "Cl": //17
 			switch (charge) {
 			case 0:
@@ -459,8 +449,8 @@ public class MoleculeUtils {
 				if (val <= 1) return 1;
 				break;
 			}
-			break;    
-         
+			break;
+
 		case "Ge": //32
 			switch (charge) {
 			case -3:
@@ -489,7 +479,7 @@ public class MoleculeUtils {
 				break;
 			}
 			break;
-			
+
 		case "As": //33
 			switch (charge) {
 			case -2:
@@ -517,8 +507,8 @@ public class MoleculeUtils {
 				if (val <= 1) return 1;
 				break;
 			}
-			break;	
-		
+			break;
+
 		case "Se": //34
 			switch (charge) {
 			case -1:
@@ -547,7 +537,7 @@ public class MoleculeUtils {
 				break;
 			}
 			break;
-		
+
 		case "Br": //35
 			switch (charge) {
 			case 0:
@@ -576,7 +566,7 @@ public class MoleculeUtils {
 				break;
 			}
 			break;
-		
+
 		case "In": //49
 			switch (charge) {
 			case -4:
@@ -605,8 +595,8 @@ public class MoleculeUtils {
 				if (val <= 1) return 1;
 				break;
 			}
-			break;	
-		
+			break;
+
 		case "Sn": //50
 		case "Pb": //82
 			switch (charge) {
@@ -637,7 +627,7 @@ public class MoleculeUtils {
 				break;
 			}
 			break;
-			
+
 		case "Sb": //51
 		case "Bi": //83
 			switch (charge) {
@@ -668,7 +658,7 @@ public class MoleculeUtils {
 				break;
 			}
 			break;
-		
+
 		case "Te": //52
 		case "Po": //84
 			switch (charge) {
@@ -699,7 +689,7 @@ public class MoleculeUtils {
 				break;
 			}
 			break;
-		
+
 		case "I": //53
 		case "At": //85
 			switch (charge) {
@@ -730,7 +720,7 @@ public class MoleculeUtils {
 				break;
 			}
 			break;
-			
+
 		case "Tl": //81
 			switch (charge) {
 			case -4:
@@ -757,13 +747,10 @@ public class MoleculeUtils {
 				if (val <= 3) return 3;
 				break;
 			}
-			break;	
-			
+			break;
+
 		}
-		
+
 		return val;
 	}
-	
-	
-	
 }

@@ -366,8 +366,8 @@ public class JnaRinchi
 
 		Pointer p = out_inchis_text_p.getValue();
 		String s = p.getString(0);
-		RinchiDecompositionOutput rdo = parseNativeOutInchisText(s);
-		return rdo;
+
+		return parseNativeOutInchisText(s);
 	}
 
 		
@@ -412,11 +412,11 @@ public class JnaRinchi
 				String dirStr = lines[0].substring(2);
 				direction = ReactionDirection.getDirectionFromShortDesignation(dirStr);
 				if (direction == null)
-					errorBuffer.append("Incorrect deirection definition in the first line: " + lines[0] + "\n");
+					errorBuffer.append("Incorrect direction definition in the first line: ").append(lines[0]).append("\n");
 			}
 			else
-				errorBuffer.append("Incorrect first line: has to start with " 
-						+ RINCHI_DECOMPOSE_DIRECTION_SHORT_DESIGNATION + ":" + "\n");
+				errorBuffer.append("Incorrect first line: has to start with ").append(RINCHI_DECOMPOSE_DIRECTION_SHORT_DESIGNATION)
+						.append(":").append("\n");
 		}
 		else
 			errorBuffer.append("No lines avalable!\n");
@@ -427,27 +427,27 @@ public class JnaRinchi
 				String rinchiLine = lines[2+2*i];
 				String auxInfoLine = lines[2+2*i+1];
 				
-				boolean flagRinciLineOK = false;
+				boolean flagRinchiLineOK = false;
 				ReactionComponentRole role = null;
 				if (rinchiLine.length() < 2)
-					errorBuffer.append("Incorrect RInChI component line: " + rinchiLine + "\n");
+					errorBuffer.append("Incorrect RInChI component line: ").append(rinchiLine).append("\n");
 				else {
 					role = ReactionComponentRole.getRoleFromShortDesignation(rinchiLine.substring(0,1));
 					if (role == null) 
-						errorBuffer.append("Incorrect RInChI component line: incorrect role: " + rinchiLine + "\n");
+						errorBuffer.append("Incorrect RInChI component line: incorrect role: ").append(rinchiLine).append("\n");
 					else {
 						inchis[i] = rinchiLine.substring(2);
-						flagRinciLineOK = true;
+						flagRinchiLineOK = true;
 					}	
 				}
 				
-				if (flagRinciLineOK) {
+				if (flagRinchiLineOK) {
 					if (auxInfoLine.length() < 2)
-						errorBuffer.append("Incorrect AuxInfo component line: " + auxInfoLine + "\n");
+						errorBuffer.append("Incorrect AuxInfo component line: ").append(auxInfoLine).append("\n");
 					else {
 						ReactionComponentRole role2 = ReactionComponentRole.getRoleFromShortDesignation(auxInfoLine.substring(0,1));
 						if (role2 == null || (role != role2) )
-							errorBuffer.append("Incorrect AuxInfo component line: incorrect role: " + auxInfoLine + "\n");
+							errorBuffer.append("Incorrect AuxInfo component line: incorrect role: ").append(auxInfoLine).append("\n");
 						else {
 							auxInfos[i] = auxInfoLine.substring(2);
 							roles[i] = role;
