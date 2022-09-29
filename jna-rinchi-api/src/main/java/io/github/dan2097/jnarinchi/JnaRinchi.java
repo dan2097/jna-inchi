@@ -59,7 +59,6 @@ public class JnaRinchi
 	private static final String RINCHI_DECOMPOSE_DIRECTION_SHORT_DESIGNATION = "D";
 	private static final int ERROR_CODE_DECOMPOSE_FROM_LINES = -1;
 
-	
 	/**
 	 * Converts a reaction represented as a RinchiInput object into RInChI and RAuxInfo. 
 	 * The output object of type RinchiOutput contains the generation status, error messages if any,

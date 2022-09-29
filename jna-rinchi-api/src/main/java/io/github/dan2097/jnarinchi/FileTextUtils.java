@@ -151,7 +151,7 @@ public class FileTextUtils {
 		//Add agents for RDFile
 		if (format == ReactionFileFormat.RD || format == ReactionFileFormat.AUTO ) {
 			for (int i = 0; i < agents.size(); i++) 
-				addRrinchiInputComponentAsAgent(agents.get(i), i, "Agent " + (i+1), "  JNA-RIN", "");
+				addRinchiInputComponentAsAgent(agents.get(i), i, "Agent " + (i+1), "  JNA-RIN", "");
 		}
 		
 		return stringBuilder.toString();
@@ -184,7 +184,7 @@ public class FileTextUtils {
 		stringBuilder.append(LINE_SEPARATOR);
 	}
 	
-	private void addRrinchiInputComponentAsAgent(RinchiInputComponent ric, int agentIndex, String line1, String line2, String line3) 
+	private void addRinchiInputComponentAsAgent(RinchiInputComponent ric, int agentIndex, String line1, String line2, String line3)
 	{
 		stringBuilder.append("$DTYPE RXN:VARIATION(1):AGENT(").append(agentIndex + 1).append("):MOL(1):MOLSTRUCTURE");
 		stringBuilder.append(LINE_SEPARATOR);

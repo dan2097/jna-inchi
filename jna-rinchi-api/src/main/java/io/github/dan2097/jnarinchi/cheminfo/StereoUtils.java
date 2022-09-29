@@ -17,21 +17,10 @@
  */
 package io.github.dan2097.jnarinchi.cheminfo;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import io.github.dan2097.jnainchi.InchiAtom;
-import io.github.dan2097.jnainchi.InchiBond;
-import io.github.dan2097.jnainchi.InchiBondStereo;
-import io.github.dan2097.jnainchi.InchiBondType;
-import io.github.dan2097.jnainchi.InchiInput;
-import io.github.dan2097.jnainchi.InchiStereo;
-import io.github.dan2097.jnainchi.InchiStereoParity;
-import io.github.dan2097.jnainchi.InchiStereoType;
+import io.github.dan2097.jnainchi.*;
 import io.github.dan2097.jnarinchi.RinchiInputComponent;
+
+import java.util.*;
 
 public class StereoUtils {
 	public enum MolCoordinatesType {
@@ -104,7 +93,6 @@ public class StereoUtils {
 		//Check for lone pair is not needed
 		//since InchiStereo encode lone pair by adding central atom within
 		//the list of ligands (i.e. in this case 4 ligands are present)
-		
 		InchiAtom[] sortedAtoms = sortAtomsToBeWithIncreasingIndices(ric, neighbAtoms);
 		
 		return InchiStereo.createTetrahedralStereo(atom,
@@ -114,29 +102,11 @@ public class StereoUtils {
 	public static InchiAtom[] sortAtomsToBeWithIncreasingIndices(InchiInput inchiInput, List<InchiAtom> atoms) {
 		if (atoms == null)
 			return null;
-		InchiAtom[] sorted = atoms.toArray(new InchiAtom[] {});
-		int n = atoms.size();
-		
-		if (n <= 1)
-			return sorted;
-		
-		if (n == 2) {
-			if (inchiInput.getAtoms().indexOf(sorted[0]) > inchiInput.getAtoms().indexOf(sorted[1]))
-				swap(0, 1, sorted);
-			return sorted;
-		}
-		
-		//get atom indices
-		Map<InchiAtom, Integer> atomIndices = new HashMap<>();
-		for (int i = 0; i < n; i++)
-			atomIndices.put(sorted[i], inchiInput.getAtoms().indexOf(sorted[i]));
-		//bubble sorting
-		for (int i = n-1; i >= 0; i--) 
-			for (int j = 0; j < i; j++) {
-				if (atomIndices.get(sorted[i]) > atomIndices.get(sorted[j])) 
-					swap (i,j, sorted);
-			}
-		return sorted;
+
+		List<InchiAtom> sortedList = new ArrayList<>(atoms);
+		sortedList.sort(Comparator.comparingInt(atom -> inchiInput.getAtoms().indexOf(atom)));
+
+		return sortedList.toArray(new InchiAtom[sortedList.size()]);
 	}
 	
 	public static InchiStereo sortTetrahedralLigandsToBeWithIncreasingIndices(InchiInput inchiInput, InchiStereo stereo) {

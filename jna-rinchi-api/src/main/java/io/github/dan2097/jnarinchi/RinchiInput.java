@@ -29,8 +29,7 @@ import java.util.List;
  *
  */
 public class RinchiInput {
-
-	private List<RinchiInputComponent> components = new ArrayList<>();
+	private final List<RinchiInputComponent> components = new ArrayList<>();
 	private ReactionDirection direction = ReactionDirection.FORWARD;
 
 	public void addComponent(RinchiInputComponent component) {

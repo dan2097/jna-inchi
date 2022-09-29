@@ -47,12 +47,13 @@ public enum ReactionDirection
 	/**
 	 * Returns the enum associated with the provided short designation as used by RInChI.
 	 * @param shortDesignation short designation the enum is returned for
-	 * @return enum associated with <code>shortDesignation</code>
+	 * @return enum associated with <code>shortDesignation</code> or <code>null</code> if there is no enum whose short RInChI designation matches <code>shortResignation</code>
 	 */
 	public static ReactionDirection getDirectionFromShortDesignation(String shortDesignation) {
 		for (ReactionDirection dir : ReactionDirection.values())
 			if (dir.getShortRinchiDesignation().equals(shortDesignation))
 				return dir;
+
 		return null;
 	}
 	

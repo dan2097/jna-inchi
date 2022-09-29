@@ -47,12 +47,13 @@ public enum ReactionComponentRole
 	/**
 	 * Returns the enum associated with the provided short designation of this component role as used by RInChI.
 	 * @param shortDesignation short designation the enum is returned for
-	 * @return enum associated with <code>shortDesignation</code>
+	 * @return enum associated with <code>shortDesignation</code> or <code>null</code> if there is no enum whose short RInChI designation matches <code>shortResignation</code>
 	 */
 	public static ReactionComponentRole getRoleFromShortDesignation(String shortDesignation) {
 		for (ReactionComponentRole role : ReactionComponentRole.values())
 			if (role.getShortRinchiDesignation().equals(shortDesignation))
 				return role;
+
 		return null;
 	}
 }

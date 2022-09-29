@@ -32,11 +32,13 @@ public class MoleculeUtils {
 		for (InchiAtom a: atoms)
 			if (a.getElName().equals("H"))
 				return true;
+
 		return false;
 	}
 
 	public static void setImplicitHydrogenAtoms(InchiInput inchiInput) {
 		Map<InchiAtom,Integer> atomExplVal =  getExplicitAtomValencies(inchiInput);
+
 		for (InchiAtom at : inchiInput.getAtoms()) {
 			Integer explVal = atomExplVal.get(at);
 			if (explVal == null)
@@ -51,6 +53,7 @@ public class MoleculeUtils {
 	public static Map<InchiAtom,Integer> getExplicitAtomValencies(InchiInput inchiInput) {
 		Map<InchiAtom,Integer> atomVal = new HashMap<>();
 		for (InchiBond bo : inchiInput.getBonds()) {
+
 			//start atom
 			Integer val = atomVal.get(bo.getStart());
 			if (val == null)
@@ -58,6 +61,7 @@ public class MoleculeUtils {
 			else
 				val = val + getOrder(bo.getType());
 			atomVal.put(bo.getStart(), val);
+
 			// end atom
 			val = atomVal.get(bo.getEnd());
 			if (val == null)

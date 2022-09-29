@@ -23,8 +23,7 @@ package io.github.dan2097.jnarinchi;
  * 
  * @author Nikolay Kochev
  */
-public class RinchiDecompositionOutput 
-{			
+public class RinchiDecompositionOutput {
 	private final ReactionDirection direction;		
 	private final String[] inchis;
 	private final String[] auxInfos;
