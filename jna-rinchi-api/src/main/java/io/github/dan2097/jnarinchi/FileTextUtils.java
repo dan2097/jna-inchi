@@ -81,7 +81,8 @@ public class FileTextUtils {
 	 * Converts a reaction represented as MDL RXN/RDFile format text to RinchiInput object.
 	 * 
 	 * @param inputString reaction represented as a string (RXN/RDFile format)
-	 * @return RinchiInput object
+	 * @return RinchiInput object or <code>null</code> if an error occurs
+	 * @see #fileTextToRinchiInput(BufferedReader) 
 	 */
 	public RinchiInput fileTextToRinchiInput(String inputString) {
 		BufferedReader reader = new BufferedReader(new StringReader(inputString));
@@ -89,11 +90,12 @@ public class FileTextUtils {
 	}
 	
 	/**
-	 * Converts a reaction represented as MDL RXN/RDFile format text to RinchiInput object
+	 * Converts a reaction represented as MDL RXN/RDFile format text to RinchiInput object.
 	 * Input reaction information is taken from a buffered reader.
 	 * 
 	 * @param inputReader buffered input reader
-	 * @return RinchiInput object
+	 * @return RinchiInput object or <code>null</code> if an error occurs
+	 * @see #fileTextToRinchiInput(String)
 	 */
 	public RinchiInput fileTextToRinchiInput(BufferedReader inputReader) {
 		this.inputReader = inputReader;
@@ -115,7 +117,7 @@ public class FileTextUtils {
 	}
 	
 	/**
-	 * Converts a reaction represented as RinchiInput object into a MDL RXN/RDFile format text.
+	 * Converts a reaction represented as RinchiInput object into an MDL RXN/RDFile format text.
 	 * Default format is RDFile. File format is set via setFormat() function.  
 	 * 
 	 * @param rInp input RinchiInput object
@@ -143,10 +145,10 @@ public class FileTextUtils {
 		
 		//Add reagents
 		for (int i = 0; i < reagents.size(); i++) 
-			addRrinchiInputComponent(reagents.get(i), "Reagent " + (i+1), "  JNA-RIN", "");
+			addRinchiInputComponent(reagents.get(i), "Reagent " + (i+1), "  JNA-RIN", "");
 		//Add products
 		for (int i = 0; i < products.size(); i++) 
-			addRrinchiInputComponent(products.get(i), "Product " + (i+1), "  JNA-RIN", "");
+			addRinchiInputComponent(products.get(i), "Product " + (i+1), "  JNA-RIN", "");
 		
 		//Add agents for RDFile
 		if (format == ReactionFileFormat.RD || format == ReactionFileFormat.AUTO ) {
@@ -175,7 +177,7 @@ public class FileTextUtils {
 		numOfProductsToRead = 0;
 	}
 	
-	private void addRrinchiInputComponent(RinchiInputComponent ric, String line1, String line2, String line3) 
+	private void addRinchiInputComponent(RinchiInputComponent ric, String line1, String line2, String line3)
 	{
 		addMolHeader(line1, line2, line3);
 		addCTabBlockV2000(ric);

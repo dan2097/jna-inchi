@@ -26,7 +26,6 @@ import com.sun.jna.ptr.PointerByReference;
  * NA Wrapper for library <b>rinchi</b>.
  * 
  * @author nick
- *
  */
 public class RinchiLibrary implements Library 	
 {
