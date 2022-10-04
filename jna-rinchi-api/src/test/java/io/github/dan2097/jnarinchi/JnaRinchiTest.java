@@ -430,7 +430,7 @@ class JnaRinchiTest {
         assertEquals(1, rinchiOutput.getErrorCode());
         assertEquals(RinchiStatus.ERROR, rinchiOutput.getStatus());
         assertTrue(rinchiOutput.getErrorMessage().endsWith("rinchi::MdlRxnfileReaderError: Reading from 'std::istream', line 5: Invalid component count line - must be 6 characters long."));
-        assertEquals("class rinchi::MdlRxnfileReaderError: Reading from 'std::istream', line 5: Invalid component count line - must be 6 characters long.", rinchiOutput.getErrorMessage());
+        assertEquals("", rinchiOutput.getRinchi(), "Rinchi for " + reactionFilename);
 
         // a new version of the rinchi software might include the ability to read/write agents from MDL files
         // if so, include the following lines to subject the reaction with agents to a round-trip test
@@ -904,7 +904,13 @@ class JnaRinchiTest {
         // assert
         assertEquals(1, rinchiOutput.getErrorCode());
         assertEquals(RinchiStatus.ERROR, rinchiOutput.getStatus());
-        assertTrue(rinchiOutput.getErrorMessage().endsWith("rinchi::MdlRDfileReaderError: Reading from 'std::istream', line 87, class rinchi::InChIGeneratorError: Error: no InChI has been created."));
+        // error messages from rinchi lib differ slightly depending on the platform win/linux
+        // win: contains 'class' before any classes; linux: does not contain 'class' before any classes
+        // complete message reads:
+        // [class] rinchi::MdlRDfileReaderError: Reading from 'std::istream', line 87, [class] rinchi::InChIGeneratorError: Error: no InChI has been created.
+        // we assert the parts of the error message string before and after 'class'
+        assertTrue(rinchiOutput.getErrorMessage().contains("rinchi::MdlRDfileReaderError: Reading from 'std::istream', line 87,"));
+        assertTrue(rinchiOutput.getErrorMessage().endsWith("rinchi::InChIGeneratorError: Error: no InChI has been created."));
         assertEquals("", rinchiOutput.getRinchi(), "Rinchi for " + reactionFilename);
     }
 }
