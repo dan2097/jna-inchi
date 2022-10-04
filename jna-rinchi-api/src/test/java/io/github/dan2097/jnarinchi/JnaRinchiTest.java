@@ -429,8 +429,8 @@ class JnaRinchiTest {
         // assert
         assertEquals(1, rinchiOutput.getErrorCode());
         assertEquals(RinchiStatus.ERROR, rinchiOutput.getStatus());
+        assertTrue(rinchiOutput.getErrorMessage().endsWith("rinchi::MdlRxnfileReaderError: Reading from 'std::istream', line 5: Invalid component count line - must be 6 characters long."));
         assertEquals("class rinchi::MdlRxnfileReaderError: Reading from 'std::istream', line 5: Invalid component count line - must be 6 characters long.", rinchiOutput.getErrorMessage());
-        assertEquals("", rinchiOutput.getRinchi(), "Rinchi for " + reactionFilename);
 
         // a new version of the rinchi software might include the ability to read/write agents from MDL files
         // if so, include the following lines to subject the reaction with agents to a round-trip test
@@ -886,7 +886,7 @@ class JnaRinchiTest {
         // assert
         assertEquals(1, rinchiOutput.getErrorCode());
         assertEquals(RinchiStatus.ERROR, rinchiOutput.getStatus());
-        assertEquals("class rinchi::InChIGeneratorError: Error: no InChI has been created.", rinchiOutput.getErrorMessage());
+        assertTrue(rinchiOutput.getErrorMessage().endsWith("rinchi::InChIGeneratorError: Error: no InChI has been created."));
         assertEquals("", rinchiOutput.getRinchi(), "Rinchi for " + reactionFilename);
     }
 
@@ -904,7 +904,7 @@ class JnaRinchiTest {
         // assert
         assertEquals(1, rinchiOutput.getErrorCode());
         assertEquals(RinchiStatus.ERROR, rinchiOutput.getStatus());
-        assertEquals("class rinchi::MdlRDfileReaderError: Reading from 'std::istream', line 87, class rinchi::InChIGeneratorError: Error: no InChI has been created.", rinchiOutput.getErrorMessage());
+        assertTrue(rinchiOutput.getErrorMessage().endsWith("rinchi::MdlRDfileReaderError: Reading from 'std::istream', line 87, class rinchi::InChIGeneratorError: Error: no InChI has been created."));
         assertEquals("", rinchiOutput.getRinchi(), "Rinchi for " + reactionFilename);
     }
 }
