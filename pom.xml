@@ -93,6 +93,9 @@
           <includes>
             <include>**/*.java</include>
           </includes>
+          <excludes>
+            <exclude>**/jnarinchi/**/*.java</exclude>
+          </excludes>
         </configuration>
         <executions>
           <execution>
