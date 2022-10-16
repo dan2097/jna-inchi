@@ -60,7 +60,7 @@ public class RinchiOptions
 		return new RinchiOptionsBuilder();
 	}
 
-	private static class RinchiOptionsBuilder {
+	public static class RinchiOptionsBuilder {
 		private final EnumSet<RinchiFlag> flags = EnumSet.noneOf(RinchiFlag.class);
 		private long timeoutMilliSecs = 0;
 
