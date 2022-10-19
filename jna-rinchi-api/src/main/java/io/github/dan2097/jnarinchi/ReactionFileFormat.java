@@ -17,6 +17,14 @@
  */
 package io.github.dan2097.jnarinchi;
 
+/**
+ * Enum to indicate the format used for reaction text file storage.
+ * <br>
+ * Enum values are defined as used by RInChI.
+ * RXN stands for MDL RXN file format. 
+ * RD stands for MDL RDFile file format.
+ * AUTO is used by native RInChI library for automatic recognition of the input file format (RXN or RDFile)
+ */
 public enum ReactionFileFormat {	
 	RXN, 
 	RD, 
