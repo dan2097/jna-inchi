@@ -27,7 +27,12 @@ import java.util.List;
 import java.util.Map;
 
 public class MoleculeUtils {
-
+	/**
+	 * Determines whether at least one hydrogen is present within the atom list. 
+	 * 
+	 * @param atoms the list of atoms.
+	 * @return true if at least one hydrogen is present
+	 */
 	public static boolean containsHydrogen(List<InchiAtom> atoms) {
 		for (InchiAtom a: atoms)
 			if (a.getElName().equals("H"))
@@ -35,7 +40,14 @@ public class MoleculeUtils {
 
 		return false;
 	}
-
+	
+	/**
+	 * Function sets the implicit hydrogens for all atoms of a structure represented as {@link InchiInput}.
+	 * The function uses {@link #getImplicitHAtomsCount(String, int, int)} to define the maximal possible number of 
+	 * valences to be filled with H atoms. The maximal possible number is diminished by {@link #getExplicitAtomValencies(InchiInput)}.
+	 * 
+	 * @param inchiInput molecule structure represented as {@link InchiInput}
+	 */
 	public static void setImplicitHydrogenAtoms(InchiInput inchiInput) {
 		Map<InchiAtom,Integer> atomExplVal =  getExplicitAtomValencies(inchiInput);
 
@@ -49,7 +61,14 @@ public class MoleculeUtils {
 				at.setImplicitHydrogen(maxImplHydrogen - explVal);
 		}
 	}
-
+	
+	/**
+	 * Determines the explicit valency for each atom of a molecule.
+	 * Explicit atom valencies are inferred from the bonds and their orders connected to an atom.
+	 * 
+	 * @param inchiInput molecule structure represented as {@link InchiInput}
+	 * @return a map with inferred explicit atom valencies
+	 */
 	public static Map<InchiAtom,Integer> getExplicitAtomValencies(InchiInput inchiInput) {
 		Map<InchiAtom,Integer> atomVal = new HashMap<>();
 		for (InchiBond bo : inchiInput.getBonds()) {
@@ -72,7 +91,13 @@ public class MoleculeUtils {
 		}
 		return atomVal;
 	}
-
+	/**
+	 * Utility function to convert {@link InchiBondType} value 
+	 * to a bond order represented as a numeric value.
+	 * 
+	 * @param ibt {@link InchiBondType} value
+	 * @return bond order as a numeric value
+	 */
 	public static int getOrder(InchiBondType ibt) {
 		switch (ibt) {
 		case NONE:
