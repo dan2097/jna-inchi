@@ -42,8 +42,8 @@ import io.github.dan2097.jnarinchi.cheminfo.StereoUtils;
  * This class provides utilities for converting RinchiInput data to file texts in RXN or RDFile format.
  * <p>
  *     Please note that the RInChI library v1.00 <b>only support</b> reading and writing
- *     of <b>RXN and RDF V2000</b>. Consequently, this Java wrapper also only supports
- *     conversion from and to RXN and RDF V2000.
+ *     of <b>RXN and RDFile V2000</b>. Consequently, this Java wrapper also only supports
+ *     conversion from and to RXN and RDFile V2000.
  * </p>
  * @author Nikolay Kochev
  */
@@ -67,7 +67,7 @@ public class FileTextUtils {
 	private boolean checkParityAccordingAtomNumbering = true;
 	private boolean guessTetrahedralChiralityFromBondsInfo = false;
 	private ReactionFileFormat autoRecognizedFormat = null;
-	// currently, only RXN and RDF V2000 is supported
+	// currently, only RXN and RDFile V2000 is supported
 	private final CTabVersion ctabVersion = CTabVersion.V2000;
 	private RinchiInput rInput = null;
 	private final List<RinchiInputComponent> reagents = new ArrayList<>();
