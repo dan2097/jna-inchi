@@ -27,6 +27,12 @@ public class StereoUtils {
 		_0D, _2D, _3D
 	}
 	
+	/**
+	 * Determines the number of tetrahedral chirality atoms (within stereo elements list).
+	 * 
+	 * @param inchiInput molecule structure represented as an {@link InchiInput} object
+	 * @return number of tetrahedral chirality atoms
+	 */
 	public static int getNumberOfTetrahedralChiralityAtoms(InchiInput inchiInput) {
 		int nTH = 0;
 		for (int i = 0; i < inchiInput.getStereos().size(); i++) {
@@ -39,6 +45,15 @@ public class StereoUtils {
 		return nTH;
 	}
 	
+	/**
+	 * Determines the atom parities for all stereo elements of type {@InchiStereoType.Tetrahedral}.
+	 * Parity may be recalculated to match the tetrahedral stereo element with ligand atoms reordered with 
+	 * increasing atom indices.
+	 * 
+	 * @param inchiInput molecule structure represented as an {@link InchiInput} object
+	 * @param checkParityAccordingAtomNumbering determines whether to take into account atom indices
+	 * @return a hashed map with atom parities data
+	 */	
 	public static Map<InchiAtom,InchiStereoParity> getAtomParities(InchiInput inchiInput, 
 				boolean checkParityAccordingAtomNumbering) {
 		Map<InchiAtom,InchiStereoParity> parities = new HashMap<>();
@@ -58,6 +73,12 @@ public class StereoUtils {
 		return parities;
 	}
 	
+	/**
+	 * Determines the bond parities for all stereo elements of type {@InchiStereoType.DoubleBond}.
+	 * 
+	 * @param ric molecule structure represented as a {@link RinchiInputComponent} object
+	 * @return a hashed map with bond parities data
+	 */
 	public static Map<InchiBond,InchiStereoParity> getDoubleBondParities(RinchiInputComponent ric) {
 		Map<InchiBond,InchiStereoParity> boParities = new HashMap<>();
 		for (int i = 0; i < ric.getStereos().size(); i++) {
@@ -74,6 +95,15 @@ public class StereoUtils {
 		return boParities;
 	}
 	
+	/**
+	 * Utility function for creating a stereo element (object) of type {@InchiStereoType.Tetrahedral} 
+	 * for a particular atom and given parity. Implicit H atoms are taken into account.
+	 * 
+	 * @param ric molecule structure represented as a {@link RinchiInputComponent} object
+	 * @param atom the tetrahedral stereo center
+	 * @param parity the atom parity 
+	 * @return tetrahedral stereo element as an object of the type {@InchiStereo} 
+	 */
 	public static InchiStereo createTetrahedralStereo(RinchiInputComponent ric, InchiAtom atom, InchiStereoParity parity) {
 		List<InchiAtom> neighbAtoms = ric.getConnectedAtomList(atom);
 		if (neighbAtoms.size() < 3 || neighbAtoms.size() > 4)
@@ -99,6 +129,14 @@ public class StereoUtils {
 				sortedAtoms[0], sortedAtoms[1], sortedAtoms[2], sortedAtoms[3], parity);
 	}
 	
+	/**
+	 * Utility function for sorting atoms to be with an increasing indices 
+	 * within the context of a given chemical structure.
+	 * 
+	 * @param inchiInput molecule structure represented as an {@link InchiInput} object 
+	 * @param atoms atoms to be sorted
+	 * @return resulting array with sorted atoms
+	 */
 	public static InchiAtom[] sortAtomsToBeWithIncreasingIndices(InchiInput inchiInput, List<InchiAtom> atoms) {
 		if (atoms == null)
 			return null;
@@ -109,6 +147,14 @@ public class StereoUtils {
 		return sortedList.toArray(new InchiAtom[sortedList.size()]);
 	}
 	
+	/**
+	 * Creates a new new tetrahedral stereo element with ligants sorted according to atom indices.
+	 * Stereo element parity is updated/inverted to the new atom order
+	 * 
+	 * @param inchiInput molecule structure represented as an {@link InchiInput} object
+	 * @param stereo original stereo element, an object of type {@link InchiStereo}
+	 * @return resulting new tetrahedral stereo element
+	 */
 	public static InchiStereo sortTetrahedralLigandsToBeWithIncreasingIndices(InchiInput inchiInput, InchiStereo stereo) {
 		InchiAtom[] ligands = stereo.getAtoms();
 		int numOfSwaps = 0;
@@ -184,12 +230,25 @@ public class StereoUtils {
 		}
 	}
 	
+	/**
+	 * Utility function for swapping two array objects with given indices.
+	 * @param i the index of first object
+	 * @param j the index of second object
+	 * @param objects the array with objects
+	 */
 	public static void swap(int i, int j, Object[] objects) {
 		Object obj = objects[i];
 		objects[i] = objects[j];
 		objects[j] = obj;
 	}
 	
+	
+	/**
+	 * Returns the inverted parity
+	 * 
+	 * @param parity original parity
+	 * @return inverted parity
+	 */
 	public static InchiStereoParity invert(InchiStereoParity parity) {
 		switch (parity) {
 		case ODD:
@@ -198,7 +257,15 @@ public class StereoUtils {
 			return InchiStereoParity.ODD;	
 		}
 		return parity;
-	}	
+	}
+	
+	/**
+	 * Determines the coordinates type (OD, 2D or 3D) from available information within
+	 * {@link InchiInput} object
+	 * 
+	 * @param inchiInput molecule structure represented as an {@link InchiInput} object
+	 * @return molecule coordinates type, an enum value of the type {@link MolCoordinatesType}
+	 */
 	public static MolCoordinatesType getMolCoordinatesType(InchiInput inchiInput) {
 		int[] stat = coordinateStatistics(inchiInput);
 		if (stat != null)
@@ -207,6 +274,12 @@ public class StereoUtils {
 			return null;
 	}
 	
+	/**
+	 * Function performs a coordinates statistics. The numbers of non zero X, Y and Z coordinates are counted.
+	 * 
+	 * @param inchiInput molecule structure represented as an {@link InchiInput} object
+	 * @return an array with numbers of non zero X, Y and Z coordinates, accordingly
+	 */
 	public static int[] coordinateStatistics (InchiInput inchiInput) {
 		if (inchiInput == null)
 			return null;
@@ -227,6 +300,15 @@ public class StereoUtils {
 		return new int[] {nX, nY, nZ};
 	}
 	
+	/**
+	 * Determines the coordinates type (OD, 2D or 3D) from available coordinates statistics:
+	 * the numbers of non zero X, Y and Z coordinates.
+	 * 
+	 * @param nX the numbers of non zero X coordinates
+	 * @param nY the numbers of non zero Y coordinates
+	 * @param nZ the numbers of non zero Z coordinates
+	 * @return molecule coordinates type, an enum value of the type {@link MolCoordinatesType}
+	 */
 	public static MolCoordinatesType getMolCoordinatesType(int nX, int nY, int nZ) {
 		if (nZ != 0)
 			return MolCoordinatesType._3D;
