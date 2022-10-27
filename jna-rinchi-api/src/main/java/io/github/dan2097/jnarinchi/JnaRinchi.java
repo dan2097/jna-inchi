@@ -305,13 +305,13 @@ public class JnaRinchi
 		if (errCode != 0)
 		{  
 			String err = RinchiLibrary.rinchilib_latest_err_msg();
-			return new RinchiKeyOutput("", keyType, RinchiKeyStatus.ERROR, errCode, err);
+			return new RinchiKeyOutput("", keyType, Status.ERROR, errCode, err);
 		}  
 
 		Pointer p = out_rinchi_key.getValue();
 		String rinchi_key = p.getString(0);
 
-		return new RinchiKeyOutput(rinchi_key, keyType, RinchiKeyStatus.SUCCESS, 0, "");
+		return new RinchiKeyOutput(rinchi_key, keyType, Status.SUCCESS, 0, "");
 	}
 
 	/**
@@ -365,13 +365,13 @@ public class JnaRinchi
 		if (errCode != 0)
 		{  
 			String err = RinchiLibrary.rinchilib_latest_err_msg();
-			return new RinchiKeyOutput("", keyType, RinchiKeyStatus.ERROR, errCode, err);
+			return new RinchiKeyOutput("", keyType, Status.ERROR, errCode, err);
 		}      
 
 		Pointer p = out_rinchi_key.getValue();
 		String rinchi_key = p.getString(0);
 
-		return new RinchiKeyOutput(rinchi_key, keyType, RinchiKeyStatus.SUCCESS, 0, "");
+		return new RinchiKeyOutput(rinchi_key, keyType, Status.SUCCESS, 0, "");
 	}
 	
 	/**

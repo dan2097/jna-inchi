@@ -473,7 +473,7 @@ class JnaRinchiTest {
         RinchiKeyOutput longRinchiKeyOut = JnaRinchi.fileTextToRinchiKey(reactionText, RinchiKeyType.LONG);
         // assert
         assertEquals(0, longRinchiKeyOut.getErrorCode());
-        assertEquals(RinchiKeyStatus.SUCCESS, longRinchiKeyOut.getStatus());
+        assertEquals(Status.SUCCESS, longRinchiKeyOut.getStatus());
         assertEquals("", longRinchiKeyOut.getErrorMessage());
         assertEquals("Long-RInChIKey=SA-BUHFF-OCEYRUMTOAEWEA-UYRXBGFRSA-N--HRQNWWCYHJTAPI-UHFFFAOYSA-N--WEVYAHXRMPXWCK-UHFFFAOYSA-N-WGHUNMFFLAMBJD-UHFFFAOYSA-M",
                 longRinchiKeyOut.getRinchiKey(), "Long-RinchiKey for " + reactionFilename);
@@ -483,7 +483,7 @@ class JnaRinchiTest {
         RinchiKeyOutput shortRinchiKeyOut = JnaRinchi.fileTextToRinchiKey(reactionText, RinchiKeyType.SHORT);
         // assert
         assertEquals(0, shortRinchiKeyOut.getErrorCode());
-        assertEquals(RinchiKeyStatus.SUCCESS, shortRinchiKeyOut.getStatus());
+        assertEquals(Status.SUCCESS, shortRinchiKeyOut.getStatus());
         assertEquals("", shortRinchiKeyOut.getErrorMessage());
         assertEquals("Short-RInChIKey=SA-BUHFF-OCEYRUMTOA-HRQNWWCYHJ-ANFMRDWEKN-NDGAC-NUHFF-MUHFF-ZZZ",
                 shortRinchiKeyOut.getRinchiKey(), "Short-RinchiKey for " + reactionFilename);
@@ -493,7 +493,7 @@ class JnaRinchiTest {
         RinchiKeyOutput webRinchiKeyOut = JnaRinchi.fileTextToRinchiKey(reactionText, RinchiKeyType.WEB);
         // assert
         assertEquals(0, webRinchiKeyOut.getErrorCode());
-        assertEquals(RinchiKeyStatus.SUCCESS, webRinchiKeyOut.getStatus());
+        assertEquals(Status.SUCCESS, webRinchiKeyOut.getStatus());
         assertEquals("", webRinchiKeyOut.getErrorMessage());
         assertEquals("Web-RInChIKey=YVHOQDQUXJQWHSZQW-MSWCGYDXJTZWXSA", webRinchiKeyOut.getRinchiKey(), "Web-RinchiKey for " + reactionFilename);
     }
