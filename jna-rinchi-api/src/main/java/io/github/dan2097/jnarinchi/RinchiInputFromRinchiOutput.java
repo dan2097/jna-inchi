@@ -24,11 +24,11 @@ package io.github.dan2097.jnarinchi;
  */
 public class RinchiInputFromRinchiOutput {
 	private final RinchiInput rinchiInput;
-	private final RinchiStatus status;
+	private final Status status;
 	private final int errorCode;
 	private final String errorMessage;
 	
-	public RinchiInputFromRinchiOutput(RinchiInput rinchiInput, RinchiStatus status,
+	public RinchiInputFromRinchiOutput(RinchiInput rinchiInput, Status status,
 									   int errorCode, String errorMessage) {
 		this.rinchiInput = rinchiInput;
 		this.status = status;
@@ -40,7 +40,7 @@ public class RinchiInputFromRinchiOutput {
 		return rinchiInput;
 	}
 
-	public RinchiStatus getStatus() {
+	public Status getStatus() {
 		return status;
 	}
 

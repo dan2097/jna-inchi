@@ -93,7 +93,7 @@ public class JnaRinchi
 		String fileText = ftUtils.rinchiInputToFileText(rinchiInput);
 
 		if (!ftUtils.getErrors().isEmpty()) {
-			return new RinchiOutput("", "", RinchiStatus.ERROR, -1, 
+			return new RinchiOutput("", "", Status.ERROR, -1, 
 					"Unable to convert RinchiInput to RDFile.\n" + ftUtils.getAllErrors());
 		}
 
@@ -150,7 +150,7 @@ public class JnaRinchi
 			boolean guessTetrahedralChiralityFromBondsInfo) {
 		FileTextOutput ftOut = rinchiToFileText(rinchi, auxInfo, ReactionFileFormat.RD);
 		if (ftOut.getStatus() != FileTextStatus.SUCCESS) 
-			return new RinchiInputFromRinchiOutput(null, RinchiStatus.ERROR, -1, ftOut.getErrorMessage());
+			return new RinchiInputFromRinchiOutput(null, Status.ERROR, -1, ftOut.getErrorMessage());
 		
 		//Converting RXN/RDFile to RinchiInput 
 		FileTextUtils ftUtils = new FileTextUtils();
@@ -159,9 +159,9 @@ public class JnaRinchi
 		RinchiInput rInp = ftUtils.fileTextToRinchiInput(ftOut.getReactionFileText());
 
 		if (rInp == null) 
-			return new RinchiInputFromRinchiOutput(null, RinchiStatus.ERROR, -1, ftUtils.getAllErrors());
+			return new RinchiInputFromRinchiOutput(null, Status.ERROR, -1, ftUtils.getAllErrors());
 		
-		return new RinchiInputFromRinchiOutput(rInp, RinchiStatus.SUCCESS, 0, "");
+		return new RinchiInputFromRinchiOutput(rInp, Status.SUCCESS, 0, "");
 	}
 	
 	/**
@@ -227,7 +227,7 @@ public class JnaRinchi
 		if (errCode != 0)
 		{
 			String errMsg = RinchiLibrary.rinchilib_latest_err_msg();
-			return new RinchiOutput("", "", RinchiStatus.ERROR, errCode, errMsg);
+			return new RinchiOutput("", "", Status.ERROR, errCode, errMsg);
 		}      
 
 		Pointer p = out_rinchi_string_p.getValue();
@@ -235,7 +235,7 @@ public class JnaRinchi
 		p = out_rinchi_auxinfo_p.getValue();
 		String auxInfo = p.getString(0);
 
-		return new RinchiOutput(rinchi, auxInfo, RinchiStatus.SUCCESS, 0, "");
+		return new RinchiOutput(rinchi, auxInfo, Status.SUCCESS, 0, "");
 	}
 
 	/**

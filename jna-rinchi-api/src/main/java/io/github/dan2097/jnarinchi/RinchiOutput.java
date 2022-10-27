@@ -29,11 +29,11 @@ public class RinchiOutput {
 
 	private final String rinchi;
 	private final String auxInfo;
-	private final RinchiStatus status;
+	private final Status status;
 	private final int errorCode;
 	private final String errorMessage;
 
-	public RinchiOutput(String rinchi, String auxInfo, RinchiStatus status, int errorCode, String errorMessage) {
+	public RinchiOutput(String rinchi, String auxInfo, Status status, int errorCode, String errorMessage) {
 		this.rinchi = rinchi;
 		this.auxInfo = auxInfo;
 		this.status = status;
@@ -49,7 +49,7 @@ public class RinchiOutput {
 		return auxInfo;
 	}
 	
-	public RinchiStatus getStatus() {
+	public Status getStatus() {
 		return status;
 	}
 	

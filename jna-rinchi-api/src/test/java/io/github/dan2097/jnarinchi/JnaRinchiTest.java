@@ -428,7 +428,7 @@ class JnaRinchiTest {
 
         // assert
         assertEquals(1, rinchiOutput.getErrorCode());
-        assertEquals(RinchiStatus.ERROR, rinchiOutput.getStatus());
+        assertEquals(Status.ERROR, rinchiOutput.getStatus());
         assertTrue(rinchiOutput.getErrorMessage().endsWith("rinchi::MdlRxnfileReaderError: Reading from 'std::istream', line 5: Invalid component count line - must be 6 characters long."));
         assertEquals("", rinchiOutput.getRinchi(), "Rinchi for " + reactionFilename);
 
@@ -452,7 +452,7 @@ class JnaRinchiTest {
 
         // assert
         assertEquals(0, rinchiOutput.getErrorCode());
-        assertEquals(RinchiStatus.SUCCESS, rinchiOutput.getStatus());
+        assertEquals(Status.SUCCESS, rinchiOutput.getStatus());
         assertEquals("", rinchiOutput.getErrorMessage());
         assertEquals("RInChI=1.00.1S/C18H13NO5S2/c1-12-2-4-14(5-3-12)26(21,22)19-13-6-9-18(10-7-13)23-15-8-11-25-16(15)" +
                 "17(20)24-18/h2-11H,1H3/b19-13-<>C18H15NO5S2/c1-12-2-8-15(9-3-12)26(22,23)19-13-4-6-14(7-5-13)24-16-10-11-25-17(16)" +
@@ -692,7 +692,7 @@ class JnaRinchiTest {
 
         // assert
         assertEquals(0, rinchiOutput.getErrorCode());
-        assertEquals(RinchiStatus.SUCCESS, rinchiOutput.getStatus());
+        assertEquals(Status.SUCCESS, rinchiOutput.getStatus());
         assertEquals("", rinchiOutput.getErrorMessage());
         assertEquals("RInChI=1.00.1S/C7H13BrN2O2/c1-3-7(8,4-2)5(11)10-6(9)12/h3-4H2,1-2H3,(H3,9,10,11,12)<>" +
                         "C7H14N2O2/c1-3-5(4-2)6(10)9-7(8)11/h5H,3-4H2,1-2H3,(H3,8,9,10,11)<>2H3O4P/c2*1-5(2,3)4/h2*(H3,1,2,3,4)" +
@@ -713,7 +713,7 @@ class JnaRinchiTest {
 
         // assert
         assertEquals(0, rinchiOutput.getErrorCode());
-        assertEquals(RinchiStatus.SUCCESS, rinchiOutput.getStatus());
+        assertEquals(Status.SUCCESS, rinchiOutput.getStatus());
         assertEquals("", rinchiOutput.getErrorMessage());
         assertEquals("RInChI=1.00.1S/C24H34O2Si/c1-6-21(18-25)17-20(2)19-26-27(24(3,4)5,22-13-9-7-10-14-22)23-15-11-8-12-16-23" +
                         "/h7-16,18,20-21H,6,17,19H2,1-5H3/t20-,21-/m1/s1<>C24H36O2Si/c1-6-21(18-25)17-20(2)19-26-27(24(3,4)5,22-13-9-7-10-14-22)" +
@@ -734,7 +734,7 @@ class JnaRinchiTest {
 
         // assert
         assertEquals(0, rinchiOutput.getErrorCode());
-        assertEquals(RinchiStatus.SUCCESS, rinchiOutput.getStatus());
+        assertEquals(Status.SUCCESS, rinchiOutput.getStatus());
         assertEquals("", rinchiOutput.getErrorMessage());
         assertEquals("RInChI=1.00.1S/C28H48O4Si/c1-19(2)33(20(3)4,21(5)6)32-28(24(9)27(30)25(10)29)23(8)16-22(7)17-31-18-26-14-12-11-13-15-26" +
                         "/h11-16,19-22,24-25,28-29H,17-18H2,1-10H3/b23-16+/t22-,24+,25+,28+/m1/s1<>C34H62O4Si2" +
@@ -757,7 +757,7 @@ class JnaRinchiTest {
 
         // assert
         assertEquals(0, rinchiOutput.getErrorCode());
-        assertEquals(RinchiStatus.SUCCESS, rinchiOutput.getStatus());
+        assertEquals(Status.SUCCESS, rinchiOutput.getStatus());
         assertEquals("", rinchiOutput.getErrorMessage());
         assertEquals("RInChI=1.00.1S/C6H10O/c7-6-4-2-1-3-5-6/h1-5H2<>C6H12O/c7-6-4-2-1-3-5-6/h6-7H,1-5H2<>3C18H15P.2ClH.Ru" +
                 "/c3*1-4-10-16(11-5-1)19(17-12-6-2-7-13-17)18-14-8-3-9-15-18;;;/h3*1-15H;2*1H;/q;;;;;+2/p-2!C3H8O" +
@@ -777,7 +777,7 @@ class JnaRinchiTest {
 
         // assert
         assertEquals(0, rinchiOutput.getErrorCode());
-        assertEquals(RinchiStatus.SUCCESS, rinchiOutput.getStatus());
+        assertEquals(Status.SUCCESS, rinchiOutput.getStatus());
         assertEquals("", rinchiOutput.getErrorMessage());
         assertEquals("RInChI=1.00.1S/C12H17NOS/c1-3-13(4-2)12(14)15-10-11-8-6-5-7-9-11/h5-9H,3-4,10H2,1-2H3<>C4H11N/c1-3-5-4-2" +
                         "/h5H,3-4H2,1-2H3!C7H7Br/c8-6-7-4-2-1-3-5-7/h1-5H,6H2!CO/c1-2!S8/c1-2-4-6-8-7-5-3-1<>2ClH.2H2N.Pt/h2*1H;2*1H2;/q;;2*-1;+4" +
@@ -799,7 +799,7 @@ class JnaRinchiTest {
 
         // assert
         assertEquals(0, rinchiOutput.getErrorCode());
-        assertEquals(RinchiStatus.SUCCESS, rinchiOutput.getStatus());
+        assertEquals(Status.SUCCESS, rinchiOutput.getStatus());
         assertEquals("", rinchiOutput.getErrorMessage());
         assertEquals("RInChI=1.00.1S//d+/u1-1-0", rinchiOutput.getRinchi(), "Rinchi for " + reactionFilename);
     }
@@ -816,7 +816,7 @@ class JnaRinchiTest {
 
         // assert
         assertEquals(0, rinchiOutput.getErrorCode());
-        assertEquals(RinchiStatus.SUCCESS, rinchiOutput.getStatus());
+        assertEquals(Status.SUCCESS, rinchiOutput.getStatus());
         assertEquals("", rinchiOutput.getErrorMessage());
         assertEquals("RInChI=1.00.1S/<><>C4H8O/c1-2-4-5-3-1/h1-4H2!Mn.2O/d+/u1-1-0", rinchiOutput.getRinchi(), "Rinchi for " + reactionFilename);
     }
@@ -833,7 +833,7 @@ class JnaRinchiTest {
 
         // assert
         assertEquals(0, rinchiOutput.getErrorCode());
-        assertEquals(RinchiStatus.SUCCESS, rinchiOutput.getStatus());
+        assertEquals(Status.SUCCESS, rinchiOutput.getStatus());
         assertEquals("", rinchiOutput.getErrorMessage());
         assertEquals("RInChI=1.00.1S//d+/u1-1-0", rinchiOutput.getRinchi(), "Rinchi for " + reactionFilename);
     }
@@ -850,7 +850,7 @@ class JnaRinchiTest {
 
         // assert
         assertEquals(0, rinchiOutput.getErrorCode());
-        assertEquals(RinchiStatus.SUCCESS, rinchiOutput.getStatus());
+        assertEquals(Status.SUCCESS, rinchiOutput.getStatus());
         assertEquals("", rinchiOutput.getErrorMessage());
         assertEquals("RInChI=1.00.1S/<><>C2H6O/c1-2-3/h3H,2H2,1H3!Cu/d+/u1-1-0", rinchiOutput.getRinchi(), "Rinchi for " + reactionFilename);
     }
@@ -867,7 +867,7 @@ class JnaRinchiTest {
 
         // assert
         assertEquals(0, rinchiOutput.getErrorCode());
-        assertEquals(RinchiStatus.SUCCESS, rinchiOutput.getStatus());
+        assertEquals(Status.SUCCESS, rinchiOutput.getStatus());
         assertEquals("", rinchiOutput.getErrorMessage());
         assertEquals("RInChI=1.00.1S/<><>Cu.O/d+/u2-1-0", rinchiOutput.getRinchi(), "Rinchi for " + reactionFilename);
     }
@@ -885,7 +885,7 @@ class JnaRinchiTest {
 
         // assert
         assertEquals(1, rinchiOutput.getErrorCode());
-        assertEquals(RinchiStatus.ERROR, rinchiOutput.getStatus());
+        assertEquals(Status.ERROR, rinchiOutput.getStatus());
         assertTrue(rinchiOutput.getErrorMessage().endsWith("rinchi::InChIGeneratorError: Error: no InChI has been created."));
         assertEquals("", rinchiOutput.getRinchi(), "Rinchi for " + reactionFilename);
     }
@@ -903,7 +903,7 @@ class JnaRinchiTest {
 
         // assert
         assertEquals(1, rinchiOutput.getErrorCode());
-        assertEquals(RinchiStatus.ERROR, rinchiOutput.getStatus());
+        assertEquals(Status.ERROR, rinchiOutput.getStatus());
         // error messages from rinchi lib differ slightly depending on the platform win/linux
         // win: contains 'class' before any classes; linux: does not contain 'class' before any classes
         // complete message reads:
