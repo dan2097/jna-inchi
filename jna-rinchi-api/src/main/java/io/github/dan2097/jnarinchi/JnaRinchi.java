@@ -406,7 +406,7 @@ public class JnaRinchi
 		{	
 			String err = RinchiLibrary.rinchilib_latest_err_msg();
 			return new RinchiDecompositionOutput(ReactionDirection.FORWARD, null, null, null, 
-					RinchiDecompositionStatus.ERROR, errCode, err);
+					Status.ERROR, errCode, err);
 		}
 
 		Pointer p = out_inchis_text_p.getValue();
@@ -530,11 +530,11 @@ public class JnaRinchi
 		String err = errorBuffer.toString();
 		if (err.isEmpty())
 			return new RinchiDecompositionOutput(direction, inchis, auxInfos, roles, 
-					RinchiDecompositionStatus.SUCCESS, 0, "");
+					Status.SUCCESS, 0, "");
 		else {
 			//Generally this should never happen. Otherwise, it is a bug in RInChI native C++ code
 			return new RinchiDecompositionOutput(direction, null, null, null, 
-					RinchiDecompositionStatus.ERROR, ERROR_CODE_DECOMPOSE_FROM_LINES, err);
+					Status.ERROR, ERROR_CODE_DECOMPOSE_FROM_LINES, err);
 		}	
 	}
 

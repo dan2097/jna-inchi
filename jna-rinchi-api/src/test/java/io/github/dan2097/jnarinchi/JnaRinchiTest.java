@@ -560,7 +560,7 @@ class JnaRinchiTest {
 
         // assert
         assertEquals(0, rinchiDecompositionOutput.getErrorCode());
-        assertEquals(RinchiDecompositionStatus.SUCCESS, rinchiDecompositionOutput.getStatus());
+        assertEquals(Status.SUCCESS, rinchiDecompositionOutput.getStatus());
         assertEquals("", rinchiDecompositionOutput.getErrorMessage());
         assertEquals("-", rinchiDecompositionOutput.getDirection().getShortRinchiDesignation(), "Direction for RInChI decomposition");
         assertEquals(inchis.size(), rinchiDecompositionOutput.getNumberOfComponents(), "number of components from RInChI decomposition");
@@ -608,7 +608,7 @@ class JnaRinchiTest {
 
         // assert
         assertEquals(0, rinchiDecompositionOutput.getErrorCode());
-        assertEquals(RinchiDecompositionStatus.SUCCESS, rinchiDecompositionOutput.getStatus());
+        assertEquals(Status.SUCCESS, rinchiDecompositionOutput.getStatus());
         assertEquals("", rinchiDecompositionOutput.getErrorMessage());
         assertEquals("-", rinchiDecompositionOutput.getDirection().getShortRinchiDesignation(), "Direction for RInChI decomposition");
         assertEquals(inchis.size(), rinchiDecompositionOutput.getNumberOfComponents(), "number of components from RInChI decomposition");
@@ -666,7 +666,7 @@ class JnaRinchiTest {
 
         // assert
         assertEquals(0, rinchiDecompositionOutput.getErrorCode());
-        assertEquals(RinchiDecompositionStatus.SUCCESS, rinchiDecompositionOutput.getStatus());
+        assertEquals(Status.SUCCESS, rinchiDecompositionOutput.getStatus());
         assertEquals("", rinchiDecompositionOutput.getErrorMessage());
         assertEquals("+", rinchiDecompositionOutput.getDirection().getShortRinchiDesignation(), "Direction for RInChI decomposition");
         assertEquals(inchis.size(), rinchiDecompositionOutput.getNumberOfComponents(), "number of components from RInChI decomposition");

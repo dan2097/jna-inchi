@@ -28,13 +28,13 @@ public class RinchiDecompositionOutput {
 	private final String[] inchis;
 	private final String[] auxInfos;
 	private final ReactionComponentRole[] roles;
-	private final RinchiDecompositionStatus status;
+	private final Status status;
 	private final int errorCode;
 	private final String errorMessage;
 	
 	
 	public RinchiDecompositionOutput (ReactionDirection direction, String[] inchis, String[] auxInfos, ReactionComponentRole[] roles,
-			RinchiDecompositionStatus status, int errorCode, String errorMessage) 
+			Status status, int errorCode, String errorMessage) 
 	{
 		this.direction = direction;
 		this.inchis = inchis;
@@ -61,7 +61,7 @@ public class RinchiDecompositionOutput {
 		return roles;
 	}
 
-	public RinchiDecompositionStatus getStatus() {
+	public Status getStatus() {
 		return status;
 	}
 
