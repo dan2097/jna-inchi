@@ -181,7 +181,7 @@ class JnaRinchiTest {
         RinchiOutput rinchiOut0, rinchiOut;
 
         FileTextOutput fileTextOut = JnaRinchi.rinchiToFileText(rfi.getRinchi(), rfi.getAuxInfo(), format);
-        assertSame(fileTextOut.getStatus(), FileTextStatus.SUCCESS, "RIChI to FileText conversion status for " + rinchiFile);
+        assertSame(fileTextOut.getStatus(), Status.SUCCESS, "RIChI to FileText conversion status for " + rinchiFile);
         rinchiOut = JnaRinchi.fileTextToRinchi(fileTextOut.getReactionFileText());
         assertEquals(rfi.getRinchi(), rinchiOut.getRinchi(), "Rinchi for " + reactionFile);
         assertEquals(rfi.getAuxInfo(), rinchiOut.getAuxInfo(), "RAuxInfo for " + reactionFile);

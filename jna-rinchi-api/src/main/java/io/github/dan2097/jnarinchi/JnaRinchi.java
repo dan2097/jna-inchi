@@ -149,7 +149,7 @@ public class JnaRinchi
 	public static RinchiInputFromRinchiOutput getRinchiInputFromRinchi(String rinchi, String auxInfo, 
 			boolean guessTetrahedralChiralityFromBondsInfo) {
 		FileTextOutput ftOut = rinchiToFileText(rinchi, auxInfo, ReactionFileFormat.RD);
-		if (ftOut.getStatus() != FileTextStatus.SUCCESS) 
+		if (ftOut.getStatus() != Status.SUCCESS) 
 			return new RinchiInputFromRinchiOutput(null, Status.ERROR, -1, ftOut.getErrorMessage());
 		
 		//Converting RXN/RDFile to RinchiInput 
@@ -336,13 +336,13 @@ public class JnaRinchi
 		if (errCode != 0)
 		{  
 			String err = RinchiLibrary.rinchilib_latest_err_msg();
-			return new FileTextOutput("", fileFormat, FileTextStatus.ERROR, errCode, err);
+			return new FileTextOutput("", fileFormat, Status.ERROR, errCode, err);
 		}  
 
 		Pointer p = out_file_text_p.getValue();
 		String reactFileText = p.getString(0);
 
-		return new FileTextOutput(reactFileText, fileFormat, FileTextStatus.SUCCESS, 0, "");
+		return new FileTextOutput(reactFileText, fileFormat, Status.SUCCESS, 0, "");
 	}
 
 	/**
