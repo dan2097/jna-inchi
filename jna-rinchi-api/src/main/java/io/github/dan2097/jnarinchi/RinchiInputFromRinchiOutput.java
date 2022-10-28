@@ -22,33 +22,16 @@ package io.github.dan2097.jnarinchi;
  * RInChI (and RAuxInfo) conversion to a RinchiInput object.
  * @author Nikolay Kochev
  */
-public class RinchiInputFromRinchiOutput {
+public class RinchiInputFromRinchiOutput extends Output {
 	private final RinchiInput rinchiInput;
-	private final Status status;
-	private final int errorCode;
-	private final String errorMessage;
 	
 	public RinchiInputFromRinchiOutput(RinchiInput rinchiInput, Status status,
 									   int errorCode, String errorMessage) {
+		super(status, errorCode, errorMessage);
 		this.rinchiInput = rinchiInput;
-		this.status = status;
-		this.errorCode = errorCode;
-		this.errorMessage = errorMessage;
 	}
 
 	public RinchiInput getRinchiInput() {
 		return rinchiInput;
-	}
-
-	public Status getStatus() {
-		return status;
-	}
-
-	public int getErrorCode() {
-		return errorCode;
-	}
-
-	public String getErrorMessage() {
-		return errorMessage;
-	}
+	}	
 }
