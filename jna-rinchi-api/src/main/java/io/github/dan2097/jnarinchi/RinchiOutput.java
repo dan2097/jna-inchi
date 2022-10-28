@@ -23,22 +23,16 @@ package io.github.dan2097.jnarinchi;
  * RInChI and RAuxInfo generation.
  * 
  * @author Nikolay Kochev
- *
  */
-public class RinchiOutput {
-
+public class RinchiOutput extends Output {
+	
 	private final String rinchi;
 	private final String auxInfo;
-	private final Status status;
-	private final int errorCode;
-	private final String errorMessage;
-
+	
 	public RinchiOutput(String rinchi, String auxInfo, Status status, int errorCode, String errorMessage) {
+		super(status, errorCode, errorMessage);
 		this.rinchi = rinchi;
 		this.auxInfo = auxInfo;
-		this.status = status;
-		this.errorCode = errorCode;
-		this.errorMessage = errorMessage;
 	}
 
 	public String getRinchi() {
@@ -47,18 +41,6 @@ public class RinchiOutput {
 
 	public String getAuxInfo() {
 		return auxInfo;
-	}
-	
-	public Status getStatus() {
-		return status;
-	}
-	
-	public int getErrorCode() {
-		return errorCode;
-	}
-
-	public String getErrorMessage() {
-		return errorMessage;
 	}
 
 	@Override
