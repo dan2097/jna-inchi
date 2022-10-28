@@ -26,9 +26,15 @@ package io.github.dan2097.jnarinchi;
  */
 public class Output {
 	
-	protected final Status status = Status.SUCCESS;
-	protected final int errorCode = 0;
-	protected final String errorMessage = "";
+	private final Status status;
+	private final int errorCode;
+	private final String errorMessage;
+	
+	public Output (Status status, int errorCode, String errorMessage) {
+		this.status = status;
+		this.errorCode = errorCode;
+		this.errorMessage = errorMessage;
+	}
 		
 	public Status getStatus() {
 		return status;
