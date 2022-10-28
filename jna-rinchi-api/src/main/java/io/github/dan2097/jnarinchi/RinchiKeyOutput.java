@@ -23,23 +23,16 @@ package io.github.dan2097.jnarinchi;
  * RInChIKey generation
  * 
  * @author Nikolay Kochev
- *
  */
-public class RinchiKeyOutput 
-{
+public class RinchiKeyOutput extends Output {
 	private final String rinchiKey;
 	private final RinchiKeyType rinchiKeyType;
-	private final Status status;
-	private final int errorCode;
-	private final String errorMessage;
 	
 	public RinchiKeyOutput (String rinchiKey, RinchiKeyType rinchiKeyType,
 				Status status, int errorCode, String errorMessage) {
+		super(status, errorCode, errorMessage);
 		this.rinchiKey = rinchiKey;
 		this.rinchiKeyType = rinchiKeyType;
-		this.status = status;
-		this.errorCode = errorCode;
-		this.errorMessage = errorMessage;
 	}
 
 	public String getRinchiKey() {
@@ -48,17 +41,5 @@ public class RinchiKeyOutput
 
 	public RinchiKeyType getRinchiKeyType() {
 		return rinchiKeyType;
-	}
-
-	public Status getStatus() {
-		return status;
-	}
-
-	public int getErrorCode() {
-		return errorCode;
-	}
-
-	public String getErrorMessage() {
-		return errorMessage;
-	}
+	}	
 }
