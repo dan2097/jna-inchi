@@ -24,21 +24,16 @@ package io.github.dan2097.jnarinchi;
  * @author Nikolay Kochev
  *
  */
-public class FileTextOutput 
-{
+public class FileTextOutput extends Output {
+
 	private final String reactionFileText; 
 	private final ReactionFileFormat fileFormat;
-	private final Status status;
-	private final int errorCode;
-	private final String errorMessage;
-	
+		
 	public FileTextOutput (String reactionFileText, ReactionFileFormat fileFormat,
 			Status status, int errorCode, String errorMessage) {
+		super(status, errorCode, errorMessage);
 		this.reactionFileText = reactionFileText;
 		this.fileFormat = fileFormat;
-		this.status = status;
-		this.errorCode = errorCode;
-		this.errorMessage = errorMessage;
 	}
 
 	public String getReactionFileText() {
@@ -47,17 +42,5 @@ public class FileTextOutput
 
 	public ReactionFileFormat getFileFormat() {
 		return fileFormat;
-	}
-	
-	public Status getStatus() {
-		return status;
-	}
-
-	public int getErrorCode() {
-		return errorCode;
-	}
-
-	public String getErrorMessage() {
-		return errorMessage;
 	}
 }
