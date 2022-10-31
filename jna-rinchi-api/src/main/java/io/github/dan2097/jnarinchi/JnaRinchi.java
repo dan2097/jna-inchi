@@ -24,6 +24,9 @@ import com.sun.jna.Platform;
 import com.sun.jna.Pointer;
 import com.sun.jna.ptr.PointerByReference;
 
+import io.github.dan2097.jnarinchi.cheminfo.MDLReactionReader;
+import io.github.dan2097.jnarinchi.cheminfo.MDLReactionWriter;
+
 /**
  * Basic class for accessing RInChI library functionality via Java code.
  * This class wraps around the native RInChI library using the JNA native interface
@@ -88,13 +91,13 @@ public class JnaRinchi
 	 */
 	public static RinchiOutput toRinchi(RinchiInput rinchiInput, RinchiOptions options) {
 		//Converting RinchiInput to RXN/RDFile
-		FileTextUtils ftUtils = new FileTextUtils(); 
-		ftUtils.setFormat(ReactionFileFormat.RD);
-		String fileText = ftUtils.rinchiInputToFileText(rinchiInput);
-
-		if (!ftUtils.getErrors().isEmpty()) {
+		MDLReactionWriter mdlWriter = new MDLReactionWriter(); 
+		mdlWriter.setFormat(ReactionFileFormat.RD);
+		String fileText = mdlWriter.rinchiInputToFileText(rinchiInput);
+		
+		if (!mdlWriter.getErrors().isEmpty()) {
 			return new RinchiOutput("", "", Status.ERROR, -1, 
-					"Unable to convert RinchiInput to RDFile.\n" + ftUtils.getAllErrors());
+					"Unable to convert RinchiInput to RDFile.\n" + mdlWriter.getAllErrors());
 		}
 
 		return fileTextToRinchi(fileText, options);
@@ -152,14 +155,14 @@ public class JnaRinchi
 		if (ftOut.getStatus() != Status.SUCCESS) 
 			return new RinchiInputFromRinchiOutput(null, Status.ERROR, -1, ftOut.getErrorMessage());
 		
-		//Converting RXN/RDFile to RinchiInput 
-		FileTextUtils ftUtils = new FileTextUtils();
-		ftUtils.setGuessTetrahedralChiralityFromBondsInfo(guessTetrahedralChiralityFromBondsInfo);
-		ftUtils.setFormat(ReactionFileFormat.RD);
-		RinchiInput rInp = ftUtils.fileTextToRinchiInput(ftOut.getReactionFileText());
+		//Converting RXN/RDFile to RinchiInput
+		MDLReactionReader mdlReader = new MDLReactionReader();
+		mdlReader.setGuessTetrahedralChiralityFromBondsInfo(guessTetrahedralChiralityFromBondsInfo);
+		mdlReader.setFormat(ReactionFileFormat.RD);
+		RinchiInput rInp = mdlReader.fileTextToRinchiInput(ftOut.getReactionFileText());
 
 		if (rInp == null) 
-			return new RinchiInputFromRinchiOutput(null, Status.ERROR, -1, ftUtils.getAllErrors());
+			return new RinchiInputFromRinchiOutput(null, Status.ERROR, -1, mdlReader.getAllErrors());
 		
 		return new RinchiInputFromRinchiOutput(rInp, Status.SUCCESS, 0, "");
 	}
