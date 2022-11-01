@@ -31,7 +31,24 @@ import io.github.dan2097.jnarinchi.CTabVersion;
 import io.github.dan2097.jnarinchi.ReactionFileFormat;
 import io.github.dan2097.jnarinchi.RinchiInput;
 import io.github.dan2097.jnarinchi.RinchiInputComponent;
-
+/**
+ * Writes a reaction ({@link RinchiInput} object) into a MDL RXN or RDFile file format string.
+ * Null pointer is returned when writing is unsuccessful. All errors could be
+ * taken as a list with function {@link #getErrors()} or 
+ * as a single string by means of function {@link #getAllErrors()}.
+ * 
+ * File format is set by function {@link #setFormat(ReactionFileFormat)}.
+ * By default the file format is set to {@link ReactionFileFormat#RD}.
+ * Format {@link ReactionFileFormat#AUTO} is treated as equivalent to {@link ReactionFileFormat#RD}.  
+ * 
+ * Atom parities for all stereo elements of type {@InchiStereoType.Tetrahedral}
+ * are recalculated to match the tetrahedral stereo element with ligand atoms reordered with 
+ * increasing atom indices (as it is the good practice for MDL format storage). 
+ * The latter is performed since the input {@link RinchiInput} object may have 
+ * stereo elements with an arbitrary order of the ligand atoms. 
+ * 
+ * @author nick
+ */
 public class MDLReactionWriter {
 	
 	private static final String LINE_SEPARATOR = "\n";
@@ -39,6 +56,8 @@ public class MDLReactionWriter {
 	private StringBuilder stringBuilder;
 	private final List<String> errors = new ArrayList<>();
 	private ReactionFileFormat format = ReactionFileFormat.RD;
+	//This flag is not made visible as it is preferred always true 
+	//in order to follow the correct atom ordering for MDL format 
 	private boolean checkParityAccordingAtomNumbering = true;
 	// currently, only RXN and RDFile V2000 is supported
 	private final CTabVersion ctabVersion = CTabVersion.V2000;
