@@ -35,9 +35,27 @@ import io.github.dan2097.jnarinchi.ReactionComponentRole;
 import io.github.dan2097.jnarinchi.ReactionFileFormat;
 import io.github.dan2097.jnarinchi.RinchiInput;
 import io.github.dan2097.jnarinchi.RinchiInputComponent;
-
+/**
+ * Reads a molecule from a MDL RXN or RDFile file format.
+ * Null pointer is returned when reading is unsuccessful. All errors could be
+ * taken as a list with function {@link #getErrors()} or 
+ * as a single string by means of function {@link #getAllErrors()}
+ * By default the expected format is set to {@link ReactionFileFormat#AUTO} i.e.
+ * RXN or RDFile is automatically recognized from the MDL file text header.
+ * If one of the RXN or RDFile formats is to be specifically expected, format could be enforced
+ * by function {{@link #setFormat(ReactionFileFormat)}}.  
+ * 
+ * Option/flag {@link #guessTetrahedralChiralityFromBondsInfo} allows 
+ * to guess the presence of Tetrahedral stereos, using only the bond stereo information (e.g. UP/DOWN setting),
+ * but the created stereo objects are of type UNDEFINED. 
+ * The correct recognition of the absolute stereo (if not given via atom attributes)
+ * should be done by using the 2D or 3D coordinates.
+ * By default flag {@link #guessTetrahedralChiralityFromBondsInfo} is set to FALSE.
+ * 
+ * @author nick
+ */
 public class MDLReactionReader {
-	private ReactionFileFormat format = ReactionFileFormat.RD;
+	private ReactionFileFormat format = ReactionFileFormat.AUTO;
 	private ReactionFileFormat autoRecognizedFormat = null;
 	private boolean guessTetrahedralChiralityFromBondsInfo = false;
 	
