@@ -24,6 +24,7 @@ package io.github.dan2097.jnarinchi;
  * @author Nikolay Kochev
  */
 public class RinchiDecompositionOutput extends Output {
+	private final static int ARRAY_IS_NULL = -1;
 	private final ReactionDirection direction;		
 	private final String[] inchis;
 	private final String[] auxInfos;
@@ -34,6 +35,17 @@ public class RinchiDecompositionOutput extends Output {
 	{
 		super(status, errorCode, errorMessage);
 		this.direction = direction;
+
+		// make sure that the number of elements in the arrays storing the individual InChIs, auxiliary information
+		// and reaction component roles is equal; otherwise, we throw an exception
+		final int noElementsInchis = inchis == null ? ARRAY_IS_NULL : inchis.length;
+		final int noElementsAuxInfo = auxInfos == null ? ARRAY_IS_NULL : auxInfos.length;
+		final int noElementsRoles = roles == null ? ARRAY_IS_NULL : roles.length;
+		if (noElementsInchis != noElementsAuxInfo || noElementsAuxInfo != noElementsRoles) {
+			throw new IllegalArgumentException("The number of InChIs (" + noElementsInchis + "), auxiliary information (" +
+					noElementsAuxInfo + ") and reaction component roles (" + noElementsRoles + ") must be equal.");
+		}
+
 		this.inchis = inchis;
 		this.auxInfos = auxInfos;
 		this.roles = roles;

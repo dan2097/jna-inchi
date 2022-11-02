@@ -532,8 +532,14 @@ public class JnaRinchi
 				
 		String err = errorBuffer.toString();
 		if (err.isEmpty())
-			return new RinchiDecompositionOutput(direction, inchis, auxInfos, roles, 
-					Status.SUCCESS, 0, "");
+			try {
+				return new RinchiDecompositionOutput(direction, inchis, auxInfos, roles,
+						Status.SUCCESS, 0, "");
+			} catch (IllegalArgumentException exception) {
+				// we end up here if the number of InChIs, auxiliary information and reaction component role is not equal
+				return new RinchiDecompositionOutput(direction, null, null, null,
+						Status.ERROR, ERROR_CODE_DECOMPOSE_FROM_LINES, exception.getMessage());
+			}
 		else {
 			//Generally this should never happen. Otherwise, it is a bug in RInChI native C++ code
 			return new RinchiDecompositionOutput(direction, null, null, null, 
