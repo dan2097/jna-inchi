@@ -73,4 +73,39 @@ public class RinchiDecompositionOutput extends Output {
 		else
 			return inchis.length;
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append(this.getClass().getSimpleName());
+		stringBuilder.append("={reactionDirection=");
+		stringBuilder.append(direction);
+		stringBuilder.append(", inchis=");
+		stringBuilder.append(arrayElementsToString(inchis));
+		stringBuilder.append(", auxInfo=");
+		stringBuilder.append(arrayElementsToString(auxInfos));
+		stringBuilder.append(", reactionComponentRole=");
+		stringBuilder.append(arrayElementsToString(roles));
+		stringBuilder.append("}");
+
+		return stringBuilder.toString();
+	}
+
+	private String arrayElementsToString(Object[] array) {
+		StringBuilder stringBuilder = new StringBuilder();
+
+		if (array == null) {
+			stringBuilder.append("null");
+		} else {
+			stringBuilder.append("[");
+			for (Object object: array) {
+				stringBuilder.append(object.toString());
+				stringBuilder.append(", ");
+			}
+			stringBuilder.delete(stringBuilder.length() - 2, stringBuilder.length());
+			stringBuilder.append("]");
+		}
+
+		return stringBuilder.toString();
+	}
 }
