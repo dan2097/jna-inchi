@@ -46,7 +46,7 @@ public class StereoUtils {
 	}
 	
 	/**
-	 * Determines the atom parities for all stereo elements of type {@InchiStereoType.Tetrahedral}.
+	 * Determines the atom parities for all stereo elements of type {@link InchiStereoType#Tetrahedral}.
 	 * Parity may be recalculated to match the tetrahedral stereo element with ligand atoms reordered with 
 	 * increasing atom indices.
 	 * 
@@ -74,7 +74,7 @@ public class StereoUtils {
 	}
 	
 	/**
-	 * Determines the bond parities for all stereo elements of type {@InchiStereoType.DoubleBond}.
+	 * Determines the bond parities for all stereo elements of type {@link InchiStereoType#DoubleBond}.
 	 * 
 	 * @param ric molecule structure represented as a {@link RinchiInputComponent} object
 	 * @return a hashed map with bond parities data
@@ -96,13 +96,13 @@ public class StereoUtils {
 	}
 	
 	/**
-	 * Utility function for creating a stereo element (object) of type {@InchiStereoType.Tetrahedral} 
+	 * Utility function for creating a stereo element (object) of type {@link InchiStereoType#Tetrahedral}
 	 * for a particular atom and given parity. Implicit H atoms are taken into account.
 	 * 
 	 * @param ric molecule structure represented as a {@link RinchiInputComponent} object
 	 * @param atom the tetrahedral stereo center
 	 * @param parity the atom parity 
-	 * @return tetrahedral stereo element as an object of the type {@InchiStereo} 
+	 * @return tetrahedral stereo element as an object of the type {@link InchiStereo}
 	 */
 	public static InchiStereo createTetrahedralStereo(RinchiInputComponent ric, InchiAtom atom, InchiStereoParity parity) {
 		List<InchiAtom> neighbAtoms = ric.getConnectedAtomList(atom);

@@ -41,7 +41,8 @@ import io.github.dan2097.jnarinchi.RinchiInputComponent;
  * By default the file format is set to {@link ReactionFileFormat#RD}.
  * Format {@link ReactionFileFormat#AUTO} is treated as equivalent to {@link ReactionFileFormat#RD}.  
  * 
- * Atom parities for all stereo elements of type {@InchiStereoType.Tetrahedral}
+ * Atom parities for all stereo elements of type
+ * {@link io.github.dan2097.jnainchi.InchiStereoType#Tetrahedral}
  * are recalculated to match the tetrahedral stereo element with ligand atoms reordered with 
  * increasing atom indices (as it is the good practice for MDL format storage). 
  * The latter is performed since the input {@link RinchiInput} object may have 
