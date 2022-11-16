@@ -64,6 +64,10 @@ public class RinchiOptions
 		private final EnumSet<RinchiFlag> flags = EnumSet.noneOf(RinchiFlag.class);
 		private long timeoutMilliSecs = 0;
 
+		private RinchiOptionsBuilder() {
+
+		}
+
 		/**
 		 * Customize the configuration by adding one or more flags.
 		 * @param flags flags to be added to the configuration
