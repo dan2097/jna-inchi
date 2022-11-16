@@ -219,6 +219,9 @@ public class JnaRinchi
 	 */
 	public static RinchiOutput fileTextToRinchi(String reactionFileText, RinchiOptions options, ReactionFileFormat fileFormat) {
 		checkLibrary();
+		requireNonNull(reactionFileText, "reactionFileText");
+		requireNonNull(options, "options");
+		requireNonNull(fileFormat, "fileFormat");
 
 		PointerByReference out_rinchi_string_p = new PointerByReference();
 		PointerByReference out_rinchi_auxinfo_p = new PointerByReference();
@@ -299,6 +302,10 @@ public class JnaRinchi
 	 */
 	public static RinchiKeyOutput fileTextToRinchiKey(String reactionFileText, RinchiKeyType keyType, RinchiOptions options, ReactionFileFormat fileFormat) {
 		checkLibrary();
+		requireNonNull(reactionFileText, "reactionFileText");
+		requireNonNull(keyType, "keyType");
+		requireNonNull(options, "options");
+		requireNonNull(fileFormat, "fileFormat");
 
 		PointerByReference out_rinchi_key = new PointerByReference();
 		boolean forceEq = options.getFlags().contains(RinchiFlag.ForceEquilibrium);
@@ -332,6 +339,9 @@ public class JnaRinchi
 	 */
 	public static FileTextOutput rinchiToFileText(String rinchi, String auxInfo, ReactionFileFormat fileFormat) {
 		checkLibrary();
+		requireNonNull(rinchi, "rinchi");
+		requireNonNull(auxInfo, "auxInfo");
+		requireNonNull(fileFormat, "fileFormat");
 
 		PointerByReference out_file_text_p = new PointerByReference();
 		int errCode = RinchiLibrary.rinchilib_file_text_from_rinchi(rinchi, auxInfo, fileFormat.toString(), out_file_text_p);
@@ -361,6 +371,8 @@ public class JnaRinchi
 	 */
 	public static RinchiKeyOutput rinchiToRinchiKey(RinchiKeyType keyType, String rinchi) {
 		checkLibrary();
+		requireNonNull(keyType, "keyType");
+		requireNonNull(rinchi, "rinchi");
 
 		PointerByReference out_rinchi_key = new PointerByReference();        
 		int errCode = RinchiLibrary.rinchilib_rinchikey_from_rinchi(rinchi, keyType.getShortDesignation(), out_rinchi_key);
@@ -402,6 +414,10 @@ public class JnaRinchi
 	 * @see #decomposeRinchi(String)
 	 */
 	public static RinchiDecompositionOutput decomposeRinchi(String rinchi, String auxInfo) {
+		checkLibrary();
+		requireNonNull(rinchi, "rinchi");
+		requireNonNull(auxInfo, "auxInfo");
+
 		PointerByReference out_inchis_text_p = new PointerByReference();
 		int errCode = RinchiLibrary.rinchilib_inchis_from_rinchi(rinchi, auxInfo, out_inchis_text_p);
 
@@ -545,6 +561,12 @@ public class JnaRinchi
 			return new RinchiDecompositionOutput(direction, null, null, null, 
 					Status.ERROR, ERROR_CODE_DECOMPOSE_FROM_LINES, err);
 		}	
+	}
+
+	private static void requireNonNull(Object object, String argumentName) {
+		if (object == null) {
+			throw new IllegalArgumentException("The argument '" + argumentName + "' must not be null.");
+		}
 	}
 
 	private static void checkLibrary() {

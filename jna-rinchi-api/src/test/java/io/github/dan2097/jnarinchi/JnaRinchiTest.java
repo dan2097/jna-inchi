@@ -17,6 +17,7 @@
  */
 package io.github.dan2097.jnarinchi;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -912,5 +913,103 @@ class JnaRinchiTest {
         assertTrue(rinchiOutput.getErrorMessage().contains("rinchi::MdlRDfileReaderError: Reading from 'std::istream', line 87,"));
         assertTrue(rinchiOutput.getErrorMessage().endsWith("rinchi::InChIGeneratorError: Error: no InChI has been created."));
         assertEquals("", rinchiOutput.getRinchi(), "Rinchi for " + reactionFilename);
+    }
+
+    @Test
+    public void testDecomposeRinchi_rinchiIsNull() {
+        // act & assert
+        Exception exception = Assertions.assertThrows(IllegalArgumentException.class, () -> JnaRinchi.decomposeRinchi(null, ""));
+        Assertions.assertEquals("The argument 'rinchi' must not be null.", exception.getMessage());
+    }
+
+    @Test
+    public void testDecomposeRinchi_auxInfoIsNull() {
+        // act & assert
+        Exception exception = Assertions.assertThrows(IllegalArgumentException.class, () -> JnaRinchi.decomposeRinchi("", null));
+        Assertions.assertEquals("The argument 'auxInfo' must not be null.", exception.getMessage());
+    }
+
+    @Test
+    public void testRinchiToRinchiKey_keyTypeIsNull() {
+        // act & assert
+        Exception exception = Assertions.assertThrows(IllegalArgumentException.class, () -> JnaRinchi.rinchiToRinchiKey(null, ""));
+        Assertions.assertEquals("The argument 'keyType' must not be null.", exception.getMessage());
+    }
+
+    @Test
+    public void testRinchiToRinchiKey_rinchiIsNull() {
+        // act & assert
+        Exception exception = Assertions.assertThrows(IllegalArgumentException.class, () -> JnaRinchi.rinchiToRinchiKey(RinchiKeyType.LONG, null));
+        Assertions.assertEquals("The argument 'rinchi' must not be null.", exception.getMessage());
+    }
+
+    @Test
+    public void testRinchiToFileText_rinchiIsNull() {
+        // act & assert
+        Exception exception = Assertions.assertThrows(IllegalArgumentException.class, () -> JnaRinchi.rinchiToFileText(null, "", ReactionFileFormat.AUTO));
+        Assertions.assertEquals("The argument 'rinchi' must not be null.", exception.getMessage());
+    }
+
+    @Test
+    public void testRinchiToFileText_auxInfoIsNull() {
+        // act & assert
+        Exception exception = Assertions.assertThrows(IllegalArgumentException.class, () -> JnaRinchi.rinchiToFileText("", null, ReactionFileFormat.AUTO));
+        Assertions.assertEquals("The argument 'auxInfo' must not be null.", exception.getMessage());
+    }
+
+    @Test
+    public void testRinchiToFileText_reactionFileFormatIsNull() {
+        // act & assert
+        Exception exception = Assertions.assertThrows(IllegalArgumentException.class, () -> JnaRinchi.rinchiToFileText("", "", null));
+        Assertions.assertEquals("The argument 'fileFormat' must not be null.", exception.getMessage());
+    }
+
+    @Test
+    public void testFileTextToRinchiKey_reactionFileTextIsNull() {
+        // act & assert
+        Exception exception = Assertions.assertThrows(IllegalArgumentException.class, () -> JnaRinchi.fileTextToRinchiKey(null, RinchiKeyType.LONG, RinchiOptions.DEFAULT_OPTIONS, ReactionFileFormat.AUTO));
+        Assertions.assertEquals("The argument 'reactionFileText' must not be null.", exception.getMessage());
+    }
+
+    @Test
+    public void testFileTextToRinchiKey_rinchiKeyTypeIsNull() {
+        // act & assert
+        Exception exception = Assertions.assertThrows(IllegalArgumentException.class, () -> JnaRinchi.fileTextToRinchiKey("", null, RinchiOptions.DEFAULT_OPTIONS, ReactionFileFormat.AUTO));
+        Assertions.assertEquals("The argument 'keyType' must not be null.", exception.getMessage());
+    }
+
+    @Test
+    public void testFileTextToRinchiKey_optionsIsNull() {
+        // act & assert
+        Exception exception = Assertions.assertThrows(IllegalArgumentException.class, () -> JnaRinchi.fileTextToRinchiKey("", RinchiKeyType.LONG, null, ReactionFileFormat.AUTO));
+        Assertions.assertEquals("The argument 'options' must not be null.", exception.getMessage());
+    }
+
+    @Test
+    public void testFileTextToRinchiKey_reactionFileFormatIsNull() {
+        // act & assert
+        Exception exception = Assertions.assertThrows(IllegalArgumentException.class, () -> JnaRinchi.fileTextToRinchiKey("", RinchiKeyType.LONG, RinchiOptions.DEFAULT_OPTIONS, null));
+        Assertions.assertEquals("The argument 'fileFormat' must not be null.", exception.getMessage());
+    }
+
+    @Test
+    public void testFileTextToRinchi_reactionFileTextIsNull() {
+        // act & assert
+        Exception exception = Assertions.assertThrows(IllegalArgumentException.class, () -> JnaRinchi.fileTextToRinchi(null, RinchiOptions.DEFAULT_OPTIONS, ReactionFileFormat.AUTO));
+        Assertions.assertEquals("The argument 'reactionFileText' must not be null.", exception.getMessage());
+    }
+
+    @Test
+    public void testFileTextToRinchi_optionsIsNull() {
+        // act & assert
+        Exception exception = Assertions.assertThrows(IllegalArgumentException.class, () -> JnaRinchi.fileTextToRinchi("", null, ReactionFileFormat.AUTO));
+        Assertions.assertEquals("The argument 'options' must not be null.", exception.getMessage());
+    }
+
+    @Test
+    public void testFileTextToRinchi_reactionFileFormatIsNull() {
+        // act & assert
+        Exception exception = Assertions.assertThrows(IllegalArgumentException.class, () -> JnaRinchi.fileTextToRinchi("", RinchiOptions.DEFAULT_OPTIONS, null));
+        Assertions.assertEquals("The argument 'fileFormat' must not be null.", exception.getMessage());
     }
 }
