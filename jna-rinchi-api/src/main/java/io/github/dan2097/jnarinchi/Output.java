@@ -24,7 +24,7 @@ package io.github.dan2097.jnarinchi;
  * @author Nikolay Kochev
  *
  */
-public class Output {
+public abstract class Output {
 	
 	private final Status status;
 	private final int errorCode;
