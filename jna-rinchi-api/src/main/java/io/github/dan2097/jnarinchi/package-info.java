@@ -75,6 +75,10 @@
  * RDfile is the preferred (and default, see {@link io.github.dan2097.jnarinchi.ReactionFileFormat#AUTO}) input format
  * to feed into the native RInChI library when consuming a reaction to producing a RInChI.
  * <br>
+ * The agent types information (e.g. catalyst, solvent) generally could be present in the RDFile content, 
+ * but such information is not processed by the native RInChI code (also there is no uniform or widely accepted way 
+ * to store/formalize the agent types within MDL syntax).  
+ * <br>
  * Please note that agents cannot be processed by the native RInChI library if the unofficial agent-extension of the
  * RXN V2000 format is used.
  * </p>
