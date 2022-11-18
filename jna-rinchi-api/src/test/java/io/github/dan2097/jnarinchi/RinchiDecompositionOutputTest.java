@@ -39,13 +39,13 @@ class RinchiDecompositionOutputTest {
     @Test
     void testRinchiDecompositionOutput_constructor_TwoArraysThreeElements_OneArrayNull() {
         Assertions.assertThrowsExactly(IllegalArgumentException.class, () -> new RinchiDecompositionOutput(
-                ReactionDirection.FORWARD,
-                new String[]{"inchi1", "inchi2", "inchi3"},
-                new String[]{"auxInfo1", "auxInfo2", "auxInfo3"},
-                null,
-                Status.SUCCESS,
-                0,
-                ""),
+                        ReactionDirection.FORWARD,
+                        new String[]{"inchi1", "inchi2", "inchi3"},
+                        new String[]{"auxInfo1", "auxInfo2", "auxInfo3"},
+                        null,
+                        Status.SUCCESS,
+                        0,
+                        ""),
                 "Testing constructor, the arrays inchis, auxInfo have three elements each, roles is null; expected to raise an exception.");
     }
 

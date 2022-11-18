@@ -23,11 +23,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This class contains the data for particular component of a reaction.
- * The class inherits {@link InchiInput} class, developed for storing the input for InChI generation
- * in a connection table fashion (see module jna-inchi-api).
- * RinchiInputComponent adds component roles and some utilities for converting
- * RinchiInputComponent to a String.
+ * This class models a particular component of a reaction.
+ * <p>
+ * It inherits from {@link InchiInput} which stores the input for InChI generation
+ * and uses {@link InchiAtom atom}, @link InchiBond bond} and {@link InchiStereo}
+ * objects to represent molecular structures.
+ * <br>
+ * RinchiInputComponent adds a {@link ReactionComponentRole component role} and the
+ * ability to convert an instance to a String representation.
+ * </p>
  *
  * @author Nikolay Kochev
  */
@@ -44,6 +48,7 @@ public class RinchiInputComponent extends InchiInput {
 
     /**
      * Returns a list of atoms that are connected to <code>atom</code>.
+     *
      * @param atom adjacent atoms to this atom are returned in a list
      * @return list of atoms connected to <code>atom</code> or null if <code>atom</code> equals <code>null</code>
      */
@@ -66,6 +71,7 @@ public class RinchiInputComponent extends InchiInput {
 
     /**
      * Returns the bond that connects <code>atom1</code> and <code>atom2</code>.
+     *
      * @param atom1 the first atom participating in the bond to be returned
      * @param atom2 the second atom participating in the bond to be returned
      * @return the bond that connects <code>atom1</code> and <code>atom2</code> or <code>null</code> if no such bond exists
@@ -81,6 +87,7 @@ public class RinchiInputComponent extends InchiInput {
         return null;
     }
 
+    @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("  Atoms:").append("\n");
