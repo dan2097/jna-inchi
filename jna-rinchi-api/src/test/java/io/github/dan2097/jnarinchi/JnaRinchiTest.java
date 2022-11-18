@@ -1012,4 +1012,74 @@ class JnaRinchiTest {
         Exception exception = Assertions.assertThrows(IllegalArgumentException.class, () -> JnaRinchi.fileTextToRinchi("", RinchiOptions.DEFAULT_OPTIONS, null));
         Assertions.assertEquals("The argument 'fileFormat' must not be null.", exception.getMessage());
     }
+
+    /**
+     * Mutable data class for results that are generated when calculating a RInChI (rinchi, auxinfo, rinchiKeyLong, rinchiKeyShort, rinchiKeyWeb).
+     */
+    private static class RinchiFullInfo {
+        private String rinchi = null;
+        private String auxInfo = null;
+        private String rinchiKeyLong = null;
+        private String rinchiKeyShort = null;
+        private String rinchiKeyWeb = null;
+
+        public RinchiFullInfo() {
+        }
+
+        public String getRinchi() {
+            return rinchi;
+        }
+
+        public void setRinchi(String rinchi) {
+            this.rinchi = rinchi;
+        }
+
+        public String getAuxInfo() {
+            return auxInfo;
+        }
+
+        public void setAuxInfo(String auxInfo) {
+            this.auxInfo = auxInfo;
+        }
+
+        public String getRinchiKeyLong() {
+            return rinchiKeyLong;
+        }
+
+        public void setRinchiKeyLong(String rinchiKeyLong) {
+            this.rinchiKeyLong = rinchiKeyLong;
+        }
+
+        public String getRinchiKeyShort() {
+            return rinchiKeyShort;
+        }
+
+        public void setRinchiKeyShort(String rinchiKeyShort) {
+            this.rinchiKeyShort = rinchiKeyShort;
+        }
+
+        public String getRinchiKeyWeb() {
+            return rinchiKeyWeb;
+        }
+
+        public void setRinchiKeyWeb(String rinchiKeyWeb) {
+            this.rinchiKeyWeb = rinchiKeyWeb;
+        }
+
+        @Override
+        public String toString() {
+            StringBuilder sb = new StringBuilder();
+            if (rinchi != null)
+                sb.append("RInChI=").append(rinchi).append("\n");
+            if (auxInfo != null)
+                sb.append("RAuxInfo=").append(auxInfo).append("\n");
+            if (rinchiKeyLong != null)
+                sb.append("Long-RInChIKey=").append(rinchiKeyLong).append("\n");
+            if (rinchiKeyShort != null)
+                sb.append("Short-RInChIKey=").append(rinchiKeyShort).append("\n");
+            if (rinchiKeyWeb != null)
+                sb.append("Web-RInChIKey=").append(rinchiKeyWeb).append("\n");
+            return sb.toString();
+        }
+    }
 }
