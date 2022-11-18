@@ -1,5 +1,8 @@
 # JNA-InChI Release Notes
 
+## 1.2 (TBD)
+* Added support for RInChI by wrapping the native RInChI library
+
 ## v1.1 (2022-01-23)
 * Methods on JnaInchi will now throw a RuntimeException rather than an Error if loading the InChI library fails e.g. unsupported platform
 * Added methods to retrieve the version number of this library and the bundled InChI library
