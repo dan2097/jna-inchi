@@ -6,7 +6,6 @@ import io.github.dan2097.jnainchi.InchiBondType;
 import io.github.dan2097.jnarinchi.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -298,7 +297,6 @@ class MDLReactionWriterTest {
         }
     }
 
-    @Disabled
     @Test
     void test_ReactionTwo_auto() throws IOException {
         // arrange
@@ -307,7 +305,7 @@ class MDLReactionWriterTest {
 
         // act
         MDLReactionWriter writer = new MDLReactionWriter();
-        writer.setFormat(ReactionFileFormat.RD);
+        writer.setFormat(ReactionFileFormat.AUTO);
         String reactionText = writer.rinchiInputToFileText(rinchiInputReactionTwoWithAgents);
 
         // assert
