@@ -64,16 +64,13 @@ public class MDLReactionReader {
 
     //Reading work variables
     private final List<String> errors = new ArrayList<>();
-    private RinchiInput rInput = null;
-    private final List<RinchiInputComponent> reagents = new ArrayList<>();
-    private final List<RinchiInputComponent> products = new ArrayList<>();
-    private final List<RinchiInputComponent> agents = new ArrayList<>();
-    private BufferedReader inputReader = null;
-    private int curLineNum = 0;
-    private int numOfReagentsToRead = 0;
-    private int numOfProductsToRead = 0;
-    private int numOfAtomsToRead = 0;
-    private int numOfBondsToRead = 0;
+    private RinchiInput rInput;
+    private BufferedReader inputReader;
+    private int curLineNum;
+    private int numOfReagentsToRead;
+    private int numOfProductsToRead;
+    private int numOfAtomsToRead;
+    private int numOfBondsToRead;
     private String errorComponentContext = "";
 
     /**
@@ -116,9 +113,6 @@ public class MDLReactionReader {
 
     private void resetForFileTextReading() {
         errors.clear();
-        reagents.clear();
-        products.clear();
-        agents.clear();
         curLineNum = 0;
         numOfReagentsToRead = 0;
         numOfProductsToRead = 0;
@@ -392,7 +386,7 @@ public class MDLReactionReader {
                     + " in Line " + curLineNum + " coordinate z error --> " + line);
             return;
         }
-        String atSymbol = readString(line, 30, 4); //length 4 for: ' ' + aaa
+        String atSymbol = 34 > line.length() ? null : line.substring(30, 34).trim();
         if (atSymbol == null) {
             errors.add(errorComponentContext + "MOL atom # " + (atomIndex + 1)
                     + " in Line " + curLineNum + " atom symbol error --> " + line);
@@ -638,14 +632,6 @@ public class MDLReactionReader {
             return null;
 
         return ric;
-    }
-
-    private String readString(String line, int startPos, int length) {
-        int endPos = startPos + length;
-        if (startPos > line.length() || endPos > line.length())
-            return null;
-
-        return line.substring(startPos, endPos).trim();
     }
 
     private Integer readInteger(String line, int startPos, int length) {
