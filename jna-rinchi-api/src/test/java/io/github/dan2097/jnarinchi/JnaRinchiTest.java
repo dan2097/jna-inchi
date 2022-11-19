@@ -194,16 +194,8 @@ class JnaRinchiTest {
     }
 
     @Test
-    void testCheckLibrary() {
-        boolean checkLib = true;
-        String errMsg = "";
-        try {
-            JnaRinchi.getJnaRinchiVersion();
-        } catch (Exception x) {
-            checkLib = false;
-            errMsg = x.getMessage();
-        }
-        assertTrue(checkLib, errMsg);
+    void test_getRinchiLibraryVersion() {
+        assertEquals("1.00", JnaRinchi.getRinchiLibraryVersion());
     }
 
     @Test
