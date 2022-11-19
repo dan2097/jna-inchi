@@ -21,11 +21,11 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Properties;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -36,28 +36,6 @@ import static org.junit.jupiter.api.Assertions.*;
  * at the <a href="https://github.com/IUPAC-InChI/RInChI">RInChI repository</a>.
  */
 class JnaRinchiTest {
-
-    /**
-     * Reading a reaction from a resource text file into a text string.
-     *
-     * @param fileName name of the text file that contains a reaction in RD or RXN format
-     * @return file content as a string
-     */
-    static String readReactionFromResourceFile(String fileName) throws IOException {
-        StringBuilder sb = new StringBuilder();
-        InputStream is = JnaRinchiTest.class.getResourceAsStream(fileName);
-        BufferedReader br = new BufferedReader(new InputStreamReader(is));
-
-        String line;
-        while ((line = br.readLine()) != null) {
-            sb.append(line).append("\n");
-        }
-
-        // clean up
-        br.close();
-
-        return sb.toString();
-    }
 
     /**
      * Reading the full RInChI information from a text file.
@@ -108,7 +86,7 @@ class JnaRinchiTest {
      * @param rinchiFile   text file with all RInCHI information
      */
     static void genericExampleTest(String reactionFile, String rinchiFile) throws IOException {
-        String reactText = readReactionFromResourceFile(reactionFile);
+        String reactText = TestUtils.readTextFromResourceAsString(reactionFile);
         assertNotNull(reactText, "Reading reaction from text file " + reactionFile);
         RinchiFullInfo rfi = readRinchiFullInfoFromResourceFile(rinchiFile);
         assertNotNull(rfi, "Reading Rinchi Full Information from file " + rinchiFile);
@@ -174,7 +152,7 @@ class JnaRinchiTest {
      */
     static void doubleConversionExampleTest(String reactionFile, String rinchiFile, ReactionFileFormat format) throws IOException {
         //Double conversion test RIChI --> file text --> RInChI
-        String reactText = readReactionFromResourceFile(reactionFile);
+        String reactText = TestUtils.readTextFromResourceAsString(reactionFile);
         assertNotNull(reactText, "Reading reaction from text file " + reactionFile);
         RinchiFullInfo rfi = readRinchiFullInfoFromResourceFile(rinchiFile);
         assertNotNull(rfi, "Reading Rinchi Full Infor from file " + rinchiFile);
@@ -423,7 +401,7 @@ class JnaRinchiTest {
     public void testFileTextToRinchi_R005a_with_agents() throws IOException {
         // arrange
         final String reactionFilename = "examples/R005a_with_agents.rxn";
-        String reactionText = readReactionFromResourceFile(reactionFilename);
+        String reactionText = TestUtils.readTextFromResourceAsString(reactionFilename);
         assertNotNull(reactionText, "Reading reaction from text file " + reactionFilename);
 
         // act
@@ -447,7 +425,7 @@ class JnaRinchiTest {
     public void testFileTextToRinchi_example_01_CCR() throws IOException {
         // arrange
         final String reactionFilename = "examples/Example_01_CCR.rdf";
-        String reactionText = readReactionFromResourceFile(reactionFilename);
+        String reactionText = TestUtils.readTextFromResourceAsString(reactionFilename);
         assertNotNull(reactionText, "Reading reaction from text file " + reactionFilename);
 
         // act
@@ -468,7 +446,7 @@ class JnaRinchiTest {
     public void testFileTextToRinchiKey_example_01_CCR() throws IOException {
         // arrange
         final String reactionFilename = "examples/Example_01_CCR.rdf";
-        String reactionText = readReactionFromResourceFile(reactionFilename);
+        String reactionText = TestUtils.readTextFromResourceAsString(reactionFilename);
         assertNotNull(reactionText, "Reading reaction from text file " + reactionFilename);
 
         // Long-RInChIKey
@@ -687,7 +665,7 @@ class JnaRinchiTest {
     public void testFileTextToRinchi_example_03_metab_UDM() throws IOException {
         // arrange
         final String reactionFilename = "examples/Example_03_metab_UDM.rdf";
-        String reactionText = readReactionFromResourceFile(reactionFilename);
+        String reactionText = TestUtils.readTextFromResourceAsString(reactionFilename);
         assertNotNull(reactionText, "Reading reaction from text file " + reactionFilename);
 
         // act
@@ -708,7 +686,7 @@ class JnaRinchiTest {
     public void testFileTextToRinchi_example_04_simple() throws IOException {
         // arrange
         final String reactionFilename = "examples/Example_04_simple.rdf";
-        String reactionText = readReactionFromResourceFile(reactionFilename);
+        String reactionText = TestUtils.readTextFromResourceAsString(reactionFilename);
         assertNotNull(reactionText, "Reading reaction from text file " + reactionFilename);
 
         // act
@@ -729,7 +707,7 @@ class JnaRinchiTest {
     public void testFileTextToRinchi_example_05_groups_UDM() throws IOException {
         // arrange
         final String reactionFilename = "examples/Example_05_groups_UDM.rdf";
-        String reactionText = readReactionFromResourceFile(reactionFilename);
+        String reactionText = TestUtils.readTextFromResourceAsString(reactionFilename);
         assertNotNull(reactionText, "Reading reaction from text file " + reactionFilename);
 
         // act
@@ -752,7 +730,7 @@ class JnaRinchiTest {
     public void testFileTextToRinchi_5_variations_1_step_each() throws IOException {
         // arrange
         final String reactionFilename = "examples/5_variations_1_step_each.rdf";
-        String reactionText = readReactionFromResourceFile(reactionFilename);
+        String reactionText = TestUtils.readTextFromResourceAsString(reactionFilename);
         assertNotNull(reactionText, "Reading reaction from text file " + reactionFilename);
 
         // act
@@ -772,7 +750,7 @@ class JnaRinchiTest {
     public void testFileTextToRinchi_1_variation_4_steps() throws IOException {
         // arrange
         final String reactionFilename = "examples/1_variation_4_steps.rdf";
-        String reactionText = readReactionFromResourceFile(reactionFilename);
+        String reactionText = TestUtils.readTextFromResourceAsString(reactionFilename);
         assertNotNull(reactionText, "Reading reaction from text file " + reactionFilename);
 
         // act
@@ -794,7 +772,7 @@ class JnaRinchiTest {
     public void testFileTextToRinchi_ok__nostruct_A() throws IOException {
         // arrange
         final String reactionFilename = "examples/ok__nostruct-A.rxn";
-        String reactionText = readReactionFromResourceFile(reactionFilename);
+        String reactionText = TestUtils.readTextFromResourceAsString(reactionFilename);
         assertNotNull(reactionText, "Reading reaction from text file " + reactionFilename);
 
         // act
@@ -811,7 +789,7 @@ class JnaRinchiTest {
     public void testFileTextToRinchi_ok__nostruct_X() throws IOException {
         // arrange
         final String reactionFilename = "examples/ok__nostruct-X.rdf";
-        String reactionText = readReactionFromResourceFile(reactionFilename);
+        String reactionText = TestUtils.readTextFromResourceAsString(reactionFilename);
         assertNotNull(reactionText, "Reading reaction from text file " + reactionFilename);
 
         // act
@@ -828,7 +806,7 @@ class JnaRinchiTest {
     public void testFileTextToRinchi_ok__R_A() throws IOException {
         // arrange
         final String reactionFilename = "examples/ok__R-A.rxn";
-        String reactionText = readReactionFromResourceFile(reactionFilename);
+        String reactionText = TestUtils.readTextFromResourceAsString(reactionFilename);
         assertNotNull(reactionText, "Reading reaction from text file " + reactionFilename);
 
         // act
@@ -845,7 +823,7 @@ class JnaRinchiTest {
     public void testFileTextToRinchi_ok__R_X() throws IOException {
         // arrange
         final String reactionFilename = "examples/ok__R-X.rdf";
-        String reactionText = readReactionFromResourceFile(reactionFilename);
+        String reactionText = TestUtils.readTextFromResourceAsString(reactionFilename);
         assertNotNull(reactionText, "Reading reaction from text file " + reactionFilename);
 
         // act
@@ -862,7 +840,7 @@ class JnaRinchiTest {
     public void testFileTextToRinchi_ok__star_star_nostruct() throws IOException {
         // arrange
         final String reactionFilename = "examples/ok__star_star-nostruct.rdf";
-        String reactionText = readReactionFromResourceFile(reactionFilename);
+        String reactionText = TestUtils.readTextFromResourceAsString(reactionFilename);
         assertNotNull(reactionText, "Reading reaction from text file " + reactionFilename);
 
         // act
@@ -880,7 +858,7 @@ class JnaRinchiTest {
     public void testExample_err__R_reactant_A_product() throws IOException {
         // arrange
         final String reactionFilename = "examples/err__R_reactant-A_product.rxn";
-        String reactionText = readReactionFromResourceFile(reactionFilename);
+        String reactionText = TestUtils.readTextFromResourceAsString(reactionFilename);
         assertNotNull(reactionText, "Reading reaction from text file " + reactionFilename);
 
         // act
@@ -898,7 +876,7 @@ class JnaRinchiTest {
     public void testExample_err__star_reactant_product() throws IOException {
         // arrange
         final String reactionFilename = "examples/err__star_reactant-product.rdf";
-        String reactionText = readReactionFromResourceFile(reactionFilename);
+        String reactionText = TestUtils.readTextFromResourceAsString(reactionFilename);
         assertNotNull(reactionText, "Reading reaction from text file " + reactionFilename);
 
         // act

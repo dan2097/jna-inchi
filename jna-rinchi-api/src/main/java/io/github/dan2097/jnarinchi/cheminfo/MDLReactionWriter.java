@@ -17,7 +17,8 @@
  */
 package io.github.dan2097.jnarinchi.cheminfo;
 
-import java.text.NumberFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -55,15 +56,28 @@ import io.github.dan2097.jnarinchi.RinchiInputComponent;
  * @author nick
  */
 public class MDLReactionWriter {
-
     private static final String LINE_SEPARATOR = "\n";
+    private static final String RDFILE_LINE_1_RDFILE = "$RDFILE 1";
+    private static final String RDFILE_LINE_2_DATM = "$DATM";
+    private static final String RDFILE_LINE_3_RFMT = "$RFMT";
+    private static final String RXN_HEADER_LINE_1_RXN = "$RXN";
+    private static final String RXN_HEADER_LINE_2_REACTION_NAME = "";
+    private static final String RXN_HEADER_LINE_3_PROGRAM = "      JNA-RIN  ";
+    private static final String RXN_HEADER_LINE_4_COMMENT = "";
+    private static final String MOLFILE_MOL = "$MOL";
+    private static final String MOLFILE_HEADER_LINE_2_PROGRAM = "  JNA-RIN ";
+    private static final String MOLFILE_HEADER_LINE_3_COMMENT = "";
+    private static final String MOLFILE_M_END = "M  END";
+    private static final DateTimeFormatter DATE_TIME_FORMATTER_RDFILE = DateTimeFormatter.ofPattern("MM/dd/yy HH:mm");
+    private static final DateTimeFormatter DATE_TIME_FORMATTER_RXN = DateTimeFormatter.ofPattern("MMddyyyyHHmm");
+    private static final DateTimeFormatter DATE_TIME_FORMATTER_MOLFILE = DateTimeFormatter.ofPattern("MMddyyHHmm");
 
     private StringBuilder stringBuilder;
     private final List<String> errors = new ArrayList<>();
     private ReactionFileFormat format = ReactionFileFormat.RD;
     //This flag is not made visible as it is preferred always true
     //in order to follow the correct atom ordering for MDL format
-    private boolean checkParityAccordingAtomNumbering = true;
+    private final boolean checkParityAccordingAtomNumbering = true;
     // currently, only RXN and RDFile V2000 is supported
     private final CTabVersion ctabVersion = CTabVersion.V2000;
     private RinchiInput rInput = null;
@@ -89,9 +103,9 @@ public class MDLReactionWriter {
         analyzeComponents();
 
         if (format == ReactionFileFormat.RD || format == ReactionFileFormat.AUTO)
-            addRDFileHeader("1", "JNA-RIN", "");
+            addRDFileHeader();
 
-        addRXNHeader("Reaction 1", "      JNA-RIN", "");
+        addRXNHeader();
 
         //Add RXN count line: rrrppp
         addInteger(reagents.size(), 3); //rrr
@@ -100,15 +114,15 @@ public class MDLReactionWriter {
 
         //Add reagents
         for (int i = 0; i < reagents.size(); i++)
-            addRinchiInputComponent(reagents.get(i), "Reagent " + (i + 1), "  JNA-RIN", "");
+            addRinchiInputComponent(reagents.get(i), "Reagent " + (i + 1));
         //Add products
         for (int i = 0; i < products.size(); i++)
-            addRinchiInputComponent(products.get(i), "Product " + (i + 1), "  JNA-RIN", "");
+            addRinchiInputComponent(products.get(i), "Product " + (i + 1));
 
         //Add agents for RDFile
         if (format == ReactionFileFormat.RD || format == ReactionFileFormat.AUTO) {
             for (int i = 0; i < agents.size(); i++)
-                addRinchiInputComponentAsAgent(agents.get(i), i, "Agent " + (i + 1), "  JNA-RIN", "");
+                addRinchiInputComponentAsAgent(agents.get(i), i, "Agent " + (i + 1));
         }
 
         return stringBuilder.toString();
@@ -122,65 +136,67 @@ public class MDLReactionWriter {
         agents.clear();
     }
 
-    private void addRinchiInputComponent(RinchiInputComponent ric, String line1, String line2, String line3) {
-        addMolHeader(line1, line2, line3);
+    private void addRinchiInputComponent(RinchiInputComponent ric, String moleculeName) {
+        addMolHeader(moleculeName);
         addCTabBlockV2000(ric);
         addPropertyBlock(ric);
-        stringBuilder.append("M  END");
+        stringBuilder.append(MOLFILE_M_END);
         stringBuilder.append(LINE_SEPARATOR);
     }
 
-    private void addRinchiInputComponentAsAgent(RinchiInputComponent ric, int agentIndex, String line1, String line2, String line3) {
+    private void addRinchiInputComponentAsAgent(RinchiInputComponent ric, int agentIndex, String moleculeName) {
         stringBuilder.append("$DTYPE RXN:VARIATION(1):AGENT(").append(agentIndex + 1).append("):MOL(1):MOLSTRUCTURE");
         stringBuilder.append(LINE_SEPARATOR);
         stringBuilder.append("$DATUM $MFMT");
         stringBuilder.append(LINE_SEPARATOR);
 
         //Molecule header
-        stringBuilder.append(line1);
+        stringBuilder.append(moleculeName);
         stringBuilder.append(LINE_SEPARATOR);
-        stringBuilder.append(line2);
+        stringBuilder.append(MOLFILE_HEADER_LINE_2_PROGRAM);
+        stringBuilder.append(LocalDateTime.now().format(DATE_TIME_FORMATTER_MOLFILE));
         stringBuilder.append(LINE_SEPARATOR);
-        stringBuilder.append(line3);
+        stringBuilder.append(MOLFILE_HEADER_LINE_3_COMMENT);
         stringBuilder.append(LINE_SEPARATOR);
 
         addCTabBlockV2000(ric);
         addPropertyBlock(ric);
-        stringBuilder.append("M  END");
+        stringBuilder.append(MOLFILE_M_END);
         stringBuilder.append(LINE_SEPARATOR);
     }
 
-    private void addMolHeader(String line1, String line2, String line3) {
-        stringBuilder.append("$MOL");
+    private void addMolHeader(String moleculeName) {
+        stringBuilder.append(MOLFILE_MOL);
         stringBuilder.append(LINE_SEPARATOR);
-        stringBuilder.append(line1);
+        stringBuilder.append(moleculeName);
         stringBuilder.append(LINE_SEPARATOR);
-        stringBuilder.append(line2);
+        stringBuilder.append(MOLFILE_HEADER_LINE_2_PROGRAM);
+        stringBuilder.append(LocalDateTime.now().format(DATE_TIME_FORMATTER_MOLFILE));
         stringBuilder.append(LINE_SEPARATOR);
-        stringBuilder.append(line3);
-        stringBuilder.append(LINE_SEPARATOR);
-    }
-
-    private void addRDFileHeader(String info1, String info2, String info3) {
-        stringBuilder.append("$RDFILE ");
-        stringBuilder.append(info1);
-        stringBuilder.append(LINE_SEPARATOR);
-        stringBuilder.append("$DATM ");
-        stringBuilder.append(info2);
-        stringBuilder.append(LINE_SEPARATOR);
-        stringBuilder.append("$RFMT ");
-        stringBuilder.append(info3);
+        stringBuilder.append(MOLFILE_HEADER_LINE_3_COMMENT);
         stringBuilder.append(LINE_SEPARATOR);
     }
 
-    private void addRXNHeader(String line2, String line3, String line4) {
-        stringBuilder.append("$RXN");
+    private void addRDFileHeader() {
+        stringBuilder.append(RDFILE_LINE_1_RDFILE);
         stringBuilder.append(LINE_SEPARATOR);
-        stringBuilder.append(line2);
+        stringBuilder.append(RDFILE_LINE_2_DATM);
+        stringBuilder.append("    ");
+        stringBuilder.append(LocalDateTime.now().format(DATE_TIME_FORMATTER_RDFILE));
         stringBuilder.append(LINE_SEPARATOR);
-        stringBuilder.append(line3);
+        stringBuilder.append(RDFILE_LINE_3_RFMT);
         stringBuilder.append(LINE_SEPARATOR);
-        stringBuilder.append(line4);
+    }
+
+    private void addRXNHeader() {
+        stringBuilder.append(RXN_HEADER_LINE_1_RXN);
+        stringBuilder.append(LINE_SEPARATOR);
+        stringBuilder.append(RXN_HEADER_LINE_2_REACTION_NAME);
+        stringBuilder.append(LINE_SEPARATOR);
+        stringBuilder.append(RXN_HEADER_LINE_3_PROGRAM);
+        stringBuilder.append(LocalDateTime.now().format(DATE_TIME_FORMATTER_RXN));
+        stringBuilder.append(LINE_SEPARATOR);
+        stringBuilder.append(RXN_HEADER_LINE_4_COMMENT);
         stringBuilder.append(LINE_SEPARATOR);
     }
 
@@ -230,7 +246,7 @@ public class MDLReactionWriter {
         addDouble(atom.getZ());
         stringBuilder.append(" ");
         //aaa
-        addString(atom.getElName(), 3);
+        addString(atom.getElName());
         //dd not specified yet
         stringBuilder.append(" 0");
         //ccc
@@ -482,25 +498,16 @@ public class MDLReactionWriter {
         }
     }
 
-    private void addString(String vStr, int fixedSpace) {
-        addString(vStr, fixedSpace, true);
-    }
-
-    private void addString(String vStr, int fixedSpace, boolean spacesAtTheEnd) {
+    private void addString(String vStr) {
         //Adding empty spaces and value
+        final int fixedSpace = 3;
         int nEmptySpaces = fixedSpace - vStr.length();
         if (nEmptySpaces < 0)
             stringBuilder.append(vStr.substring(fixedSpace));
         else {
-            if (spacesAtTheEnd) {
-                stringBuilder.append(vStr);
-                for (int i = 0; i < nEmptySpaces; i++)
-                    stringBuilder.append(" ");
-            } else {
-                for (int i = 0; i < nEmptySpaces; i++)
-                    stringBuilder.append(" ");
-                stringBuilder.append(vStr);
-            }
+            stringBuilder.append(vStr);
+            for (int i = 0; i < nEmptySpaces; i++)
+                stringBuilder.append(" ");
         }
     }
 
@@ -509,14 +516,10 @@ public class MDLReactionWriter {
     }
 
     private void addDouble(Double value) {
-        addDouble(value, MDLReactionUtils.MDL_NUMBER_FORMAT, MDLReactionUtils.MDL_FLOAT_SPACES);
-    }
-
-    private void addDouble(Double value, NumberFormat nf, int fixedSpace) {
         if (Double.isNaN(value) || Double.isInfinite(value)) {
-            addNumber(nf.format(0.0), fixedSpace);
+            addNumber(MDLReactionUtils.MDL_NUMBER_FORMAT.format(0.0), MDLReactionUtils.MDL_FLOAT_SPACES);
         } else {
-            addNumber(nf.format(value), fixedSpace);
+            addNumber(MDLReactionUtils.MDL_NUMBER_FORMAT.format(value), MDLReactionUtils.MDL_FLOAT_SPACES);
         }
     }
 
@@ -602,5 +605,4 @@ public class MDLReactionWriter {
     public CTabVersion getCtabVersion() {
         return ctabVersion;
     }
-
 }
