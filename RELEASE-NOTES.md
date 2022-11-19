@@ -1,7 +1,7 @@
 # JNA-InChI Release Notes
 
 ## 1.2 (TBD)
-* Added support for RInChI by wrapping the native RInChI library
+* Added support for RInChI by wrapping the native RInChI library. The addition of RInChI capabilities was implemented by Ideaconsult Ltd and sponsored by Pending AI.
 
 ## v1.1 (2022-01-23)
 * Methods on JnaInchi will now throw a RuntimeException rather than an Error if loading the InChI library fails e.g. unsupported platform
