@@ -559,7 +559,7 @@ public class JnaRinchi {
         }
     }
 
-    private static void checkLibrary() {
+    static void checkLibrary() {
         if (libraryLoadingError != null) {
             throw new RuntimeException("Error loading RInChI native code. Please check that the binaries for your platform (" + platform + ") have been included on the classpath.", libraryLoadingError);
         }

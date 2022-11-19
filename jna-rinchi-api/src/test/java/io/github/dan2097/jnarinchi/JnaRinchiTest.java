@@ -199,6 +199,16 @@ class JnaRinchiTest {
     }
 
     @Test
+    void testCheckLibrary() {
+        // if the native library cannot be loaded a RuntimeException is thrown, and we fail this test
+        try {
+            JnaRinchi.checkLibrary();
+        } catch(Exception exception) {
+            Assertions.fail(exception);
+        }
+    }
+
+    @Test
     void testExample_1_reactant_A() throws IOException {
         genericExampleTest("examples/1_reactant_-_A.rxn", "examples/1_reactant_-_A.txt");
         doubleConversionExampleTest("examples/1_reactant_-_A.rxn", "examples/1_reactant_-_A.txt", ReactionFileFormat.RXN);
