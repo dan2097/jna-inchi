@@ -209,10 +209,14 @@ public class MDLReactionReader {
         }
 
         if (line.startsWith("$RDFILE")) {
+            autoRecognizedFormat = ReactionFileFormat.RD;
             readRdFileHeader(false);
             readRxnFileHeader(true);
-        } else  //line starts With "$RXN"
+        } else {
+            //line starts With "$RXN"
+            autoRecognizedFormat = ReactionFileFormat.RXN;
             readRxnFileHeader(false);
+        }
     }
 
     private void readRdFileHeader(boolean readRdFileLine) {
