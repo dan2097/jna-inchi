@@ -53,6 +53,10 @@ public class JnaInchi {
   
   private static final String platform;
   private static final Throwable libraryLoadingError;
+  private static final int ISOTOPIC_SHIFT_RANGE_MIN = InchiLibrary.ISOTOPIC_SHIFT_FLAG - InchiLibrary.ISOTOPIC_SHIFT_MAX;
+  private static final int ISOTOPIC_SHIFT_RANGE_MAX = InchiLibrary.ISOTOPIC_SHIFT_FLAG + InchiLibrary.ISOTOPIC_SHIFT_MAX;
+  private static final Map<String, Integer> inchiBaseAtomicMasses = new HashMap<>();
+  
   static {
     Throwable t = null;
     String p = null;
@@ -65,6 +69,128 @@ public class JnaInchi {
     }
     platform = p;
     libraryLoadingError = t;
+    
+    //avg mw from util.c
+    inchiBaseAtomicMasses.put("H", 1);
+    inchiBaseAtomicMasses.put("D", 2);
+    inchiBaseAtomicMasses.put("T", 3);
+    inchiBaseAtomicMasses.put("He", 4);
+    inchiBaseAtomicMasses.put("Li", 7);
+    inchiBaseAtomicMasses.put("Be", 9);
+    inchiBaseAtomicMasses.put("B", 11);
+    inchiBaseAtomicMasses.put("C", 12);
+    inchiBaseAtomicMasses.put("N", 14);
+    inchiBaseAtomicMasses.put("O", 16);
+    inchiBaseAtomicMasses.put("F", 19);
+    inchiBaseAtomicMasses.put("Ne", 20);
+    inchiBaseAtomicMasses.put("Na", 23);
+    inchiBaseAtomicMasses.put("Mg", 24);
+    inchiBaseAtomicMasses.put("Al", 27);
+    inchiBaseAtomicMasses.put("Si", 28);
+    inchiBaseAtomicMasses.put("P", 31);
+    inchiBaseAtomicMasses.put("S", 32);
+    inchiBaseAtomicMasses.put("Cl", 35);
+    inchiBaseAtomicMasses.put("Ar", 40);
+    inchiBaseAtomicMasses.put("K", 39);
+    inchiBaseAtomicMasses.put("Ca", 40);
+    inchiBaseAtomicMasses.put("Sc", 45);
+    inchiBaseAtomicMasses.put("Ti", 48);
+    inchiBaseAtomicMasses.put("V", 51);
+    inchiBaseAtomicMasses.put("Cr", 52);
+    inchiBaseAtomicMasses.put("Mn", 55);
+    inchiBaseAtomicMasses.put("Fe", 56);
+    inchiBaseAtomicMasses.put("Co", 59);
+    inchiBaseAtomicMasses.put("Ni", 59);
+    inchiBaseAtomicMasses.put("Cu", 64);
+    inchiBaseAtomicMasses.put("Zn", 65);
+    inchiBaseAtomicMasses.put("Ga", 70);
+    inchiBaseAtomicMasses.put("Ge", 73);
+    inchiBaseAtomicMasses.put("As", 75);
+    inchiBaseAtomicMasses.put("Se", 79);
+    inchiBaseAtomicMasses.put("Br", 80);
+    inchiBaseAtomicMasses.put("Kr", 84);
+    inchiBaseAtomicMasses.put("Rb", 85);
+    inchiBaseAtomicMasses.put("Sr", 88);
+    inchiBaseAtomicMasses.put("Y", 89);
+    inchiBaseAtomicMasses.put("Zr", 91);
+    inchiBaseAtomicMasses.put("Nb", 93);
+    inchiBaseAtomicMasses.put("Mo", 96);
+    inchiBaseAtomicMasses.put("Tc", 98);
+    inchiBaseAtomicMasses.put("Ru", 101);
+    inchiBaseAtomicMasses.put("Rh", 103);
+    inchiBaseAtomicMasses.put("Pd", 106);
+    inchiBaseAtomicMasses.put("Ag", 108);
+    inchiBaseAtomicMasses.put("Cd", 112);
+    inchiBaseAtomicMasses.put("In", 115);
+    inchiBaseAtomicMasses.put("Sn", 119);
+    inchiBaseAtomicMasses.put("Sb", 122);
+    inchiBaseAtomicMasses.put("Te", 128);
+    inchiBaseAtomicMasses.put("I", 127);
+    inchiBaseAtomicMasses.put("Xe", 131);
+    inchiBaseAtomicMasses.put("Cs", 133);
+    inchiBaseAtomicMasses.put("Ba", 137);
+    inchiBaseAtomicMasses.put("La", 139);
+    inchiBaseAtomicMasses.put("Ce", 140);
+    inchiBaseAtomicMasses.put("Pr", 141);
+    inchiBaseAtomicMasses.put("Nd", 144);
+    inchiBaseAtomicMasses.put("Pm", 145);
+    inchiBaseAtomicMasses.put("Sm", 150);
+    inchiBaseAtomicMasses.put("Eu", 152);
+    inchiBaseAtomicMasses.put("Gd", 157);
+    inchiBaseAtomicMasses.put("Tb", 159);
+    inchiBaseAtomicMasses.put("Dy", 163);
+    inchiBaseAtomicMasses.put("Ho", 165);
+    inchiBaseAtomicMasses.put("Er", 167);
+    inchiBaseAtomicMasses.put("Tm", 169);
+    inchiBaseAtomicMasses.put("Yb", 173);
+    inchiBaseAtomicMasses.put("Lu", 175);
+    inchiBaseAtomicMasses.put("Hf", 178);
+    inchiBaseAtomicMasses.put("Ta", 181);
+    inchiBaseAtomicMasses.put("W", 184);
+    inchiBaseAtomicMasses.put("Re", 186);
+    inchiBaseAtomicMasses.put("Os", 190);
+    inchiBaseAtomicMasses.put("Ir", 192);
+    inchiBaseAtomicMasses.put("Pt", 195);
+    inchiBaseAtomicMasses.put("Au", 197);
+    inchiBaseAtomicMasses.put("Hg", 201);
+    inchiBaseAtomicMasses.put("Tl", 204);
+    inchiBaseAtomicMasses.put("Pb", 207);
+    inchiBaseAtomicMasses.put("Bi", 209);
+    inchiBaseAtomicMasses.put("Po", 209);
+    inchiBaseAtomicMasses.put("At", 210);
+    inchiBaseAtomicMasses.put("Rn", 222);
+    inchiBaseAtomicMasses.put("Fr", 223);
+    inchiBaseAtomicMasses.put("Ra", 226);
+    inchiBaseAtomicMasses.put("Ac", 227);
+    inchiBaseAtomicMasses.put("Th", 232);
+    inchiBaseAtomicMasses.put("Pa", 231);
+    inchiBaseAtomicMasses.put("U", 238);
+    inchiBaseAtomicMasses.put("Np", 237);
+    inchiBaseAtomicMasses.put("Pu", 244);
+    inchiBaseAtomicMasses.put("Am", 243);
+    inchiBaseAtomicMasses.put("Cm", 247);
+    inchiBaseAtomicMasses.put("Bk", 247);
+    inchiBaseAtomicMasses.put("Cf", 251);
+    inchiBaseAtomicMasses.put("Es", 252);
+    inchiBaseAtomicMasses.put("Fm", 257);
+    inchiBaseAtomicMasses.put("Md", 258);
+    inchiBaseAtomicMasses.put("No", 259);
+    inchiBaseAtomicMasses.put("Lr", 260);
+    inchiBaseAtomicMasses.put("Rf", 261);
+    inchiBaseAtomicMasses.put("Db", 270);
+    inchiBaseAtomicMasses.put("Sg", 269);
+    inchiBaseAtomicMasses.put("Bh", 270);
+    inchiBaseAtomicMasses.put("Hs", 270);
+    inchiBaseAtomicMasses.put("Mt", 278);
+    inchiBaseAtomicMasses.put("Ds", 281);
+    inchiBaseAtomicMasses.put("Rg", 281);
+    inchiBaseAtomicMasses.put("Cn", 285);
+    inchiBaseAtomicMasses.put("Nh", 278);
+    inchiBaseAtomicMasses.put("Fl", 289);
+    inchiBaseAtomicMasses.put("Mc", 289);
+    inchiBaseAtomicMasses.put("Lv", 293);
+    inchiBaseAtomicMasses.put("Ts", 297);
+    inchiBaseAtomicMasses.put("Og", 294);
   }
     
   public static InchiOutput toInchi(InchiInput inchiInput) {
@@ -573,7 +699,8 @@ public class JnaInchi {
   private static void nativeToJavaAtoms(InchiInput inchiInput, tagInchiAtom[] nativeAtoms) {
     for (int i = 0, numAtoms = nativeAtoms.length; i < numAtoms; i++) {
       tagInchiAtom nativeAtom = nativeAtoms[i];
-      InchiAtom atom = new InchiAtom(toString(nativeAtom.elname));
+      String elSymbol = toString(nativeAtom.elname);
+      InchiAtom atom = new InchiAtom(elSymbol);
       atom.setX(nativeAtom.x);
       atom.setY(nativeAtom.y);
       atom.setZ(nativeAtom.z);
@@ -581,7 +708,14 @@ public class JnaInchi {
       atom.setImplicitProtium(nativeAtom.num_iso_H[1]);
       atom.setImplicitDeuterium(nativeAtom.num_iso_H[2]);
       atom.setImplicitTritium(nativeAtom.num_iso_H[3]);
-      atom.setIsotopicMass(nativeAtom.isotopic_mass);
+      int isotopicMass = nativeAtom.isotopic_mass;
+      if (isotopicMass >= ISOTOPIC_SHIFT_RANGE_MIN && isotopicMass <= ISOTOPIC_SHIFT_RANGE_MAX) {
+        //isotopic mass contains a delta from a hardcoded base mass
+        int baseMass = inchiBaseAtomicMasses.getOrDefault(elSymbol, 0);
+        int delta = isotopicMass - InchiLibrary.ISOTOPIC_SHIFT_FLAG;
+        isotopicMass = baseMass + delta;
+      }
+      atom.setIsotopicMass(isotopicMass);
       atom.setRadical(InchiRadical.of(nativeAtom.radical));
       atom.setCharge(nativeAtom.charge);
       inchiInput.addAtom(atom);

@@ -144,6 +144,31 @@ public class JnaInchiTest {
   }
   
   @Test
+  public void testInchiInputFromInchiWithIsotope() {
+    InchiInputFromInchiOutput output = JnaInchi.getInchiInputFromInchi("InChI=1S/CH4/h1H4/i1+2TD2");
+    assertEquals(InchiStatus.SUCCESS, output.getStatus());
+    InchiInput inchiInput = output.getInchiInput();
+    assertNotNull(inchiInput);
+    assertEquals(1, inchiInput.getAtoms().size());
+    assertEquals("C", inchiInput.getAtom(0).getElName());
+    assertEquals(14, inchiInput.getAtom(0).getIsotopicMass());
+    assertEquals(1, inchiInput.getAtom(0).getImplicitHydrogen());
+    assertEquals(2, inchiInput.getAtom(0).getImplicitDeuterium());
+    assertEquals(1, inchiInput.getAtom(0).getImplicitTritium());
+  }
+  
+  @Test
+  public void testInchiInputFromInchiWithIsotope2() {
+    InchiInputFromInchiOutput output = JnaInchi.getInchiInputFromInchi("InChI=1S/Tc/i1-2");
+    assertEquals(InchiStatus.SUCCESS, output.getStatus());
+    InchiInput inchiInput = output.getInchiInput();
+    assertNotNull(inchiInput);
+    assertEquals(1, inchiInput.getAtoms().size());
+    assertEquals("Tc", inchiInput.getAtom(0).getElName());
+    assertEquals(96, inchiInput.getAtom(0).getIsotopicMass());
+  }
+
+  @Test
   public void testInchiInputFromAuxInfo() {
     String auxInfo = "AuxInfo=1/0/N:3,2,5,1,4/it:im/rA:5ClC.oCIBr/rB:p1;s2;s2;N2;/rC:0,-1.54,0;;0,1.54,0;1.54,0,0;-1.54,0,0;";
     InchiInputFromAuxinfoOutput output = JnaInchi.getInchiInputFromAuxInfo(auxInfo, false, false);
