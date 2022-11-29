@@ -164,8 +164,7 @@ class MDLReactionWriterTest {
         final List<String> expectedLines = TestUtils.readTextFromResourceAsList(expectedFilename);
 
         // act
-        MDLReactionWriter writer = new MDLReactionWriter();
-        writer.setFormat(ReactionFileFormat.RXN);
+        MDLReactionWriter writer = new MDLReactionWriter(ReactionFileFormat.RXN);
         String reactionText = writer.rinchiInputToFileText(rinchiInputReactionOneWithoutAgents);
 
         // assert
@@ -192,8 +191,7 @@ class MDLReactionWriterTest {
         final List<String> expectedLines = TestUtils.readTextFromResourceAsList(expectedFilename);
 
         // act
-        MDLReactionWriter writer = new MDLReactionWriter();
-        writer.setFormat(ReactionFileFormat.RD);
+        MDLReactionWriter writer = new MDLReactionWriter(ReactionFileFormat.RD);
         String reactionText = writer.rinchiInputToFileText(rinchiInputReactionOneWithoutAgents);
 
         // assert
@@ -220,8 +218,7 @@ class MDLReactionWriterTest {
         final List<String> expectedLines = TestUtils.readTextFromResourceAsList(expectedFilename);
 
         // act
-        MDLReactionWriter writer = new MDLReactionWriter();
-        writer.setFormat(ReactionFileFormat.AUTO);
+        MDLReactionWriter writer = new MDLReactionWriter(ReactionFileFormat.AUTO);
         String reactionText = writer.rinchiInputToFileText(rinchiInputReactionOneWithoutAgents);
 
         // assert
@@ -248,8 +245,7 @@ class MDLReactionWriterTest {
         final List<String> expectedLines = TestUtils.readTextFromResourceAsList(expectedFilename);
 
         // act
-        MDLReactionWriter writer = new MDLReactionWriter();
-        writer.setFormat(ReactionFileFormat.RXN);
+        MDLReactionWriter writer = new MDLReactionWriter(ReactionFileFormat.RXN);
         String reactionText = writer.rinchiInputToFileText(rinchiInputReactionTwoWithAgents);
 
         // assert
@@ -276,8 +272,7 @@ class MDLReactionWriterTest {
         final List<String> expectedLines = TestUtils.readTextFromResourceAsList(expectedFilename);
 
         // act
-        MDLReactionWriter writer = new MDLReactionWriter();
-        writer.setFormat(ReactionFileFormat.RD);
+        MDLReactionWriter writer = new MDLReactionWriter(ReactionFileFormat.RD);
         String reactionText = writer.rinchiInputToFileText(rinchiInputReactionTwoWithAgents);
 
         // assert
@@ -304,8 +299,7 @@ class MDLReactionWriterTest {
         final List<String> expectedLines = TestUtils.readTextFromResourceAsList(expectedFilename);
 
         // act
-        MDLReactionWriter writer = new MDLReactionWriter();
-        writer.setFormat(ReactionFileFormat.AUTO);
+        MDLReactionWriter writer = new MDLReactionWriter(ReactionFileFormat.AUTO);
         String reactionText = writer.rinchiInputToFileText(rinchiInputReactionTwoWithAgents);
 
         // assert
