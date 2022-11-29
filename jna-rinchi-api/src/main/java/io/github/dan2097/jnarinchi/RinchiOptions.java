@@ -27,12 +27,12 @@ import java.util.Locale;
 /**
  * Holds available option settings to be used with RInChI operations.
  * <br>
- * The {@link #DEFAULT_OPTIONS} don't use a timeout value for RInChI generation.
+ * The {@link #DEFAULT_OPTIONS} don't use any customized options for RInChI generation.
  * <br>
  * This object comes with a builder for configuration:
  * <pre>
- * // configure a five second timeout for RInChI generation
- * RinchiOptions options = RinchiOptions.builder().withTimeout(5).build();
+ * RinchiFlag[] flags = new RinchiFlag[] {RinchiFlag.ForceEquilibrium};
+ * RinchiOptions options = RinchiOptions.builder().withFlags(flags).build();
  * </pre>
  *
  * @author Nikolay Kochev
@@ -45,11 +45,9 @@ public class RinchiOptions {
     private static final boolean IS_WINDOWS = System.getProperty("os.name", "").toLowerCase(Locale.ROOT).startsWith("windows");
 
     private final List<RinchiFlag> flags;
-    private final long timeoutMilliSecs;
 
     private RinchiOptions(RinchiOptionsBuilder builder) {
         this.flags = Collections.unmodifiableList(new ArrayList<>(builder.flags));
-        this.timeoutMilliSecs = builder.timeoutMilliSecs;
     }
 
     /**
@@ -64,14 +62,6 @@ public class RinchiOptions {
         return flags;
     }
 
-    public int getTimeout() {
-        return (int) (timeoutMilliSecs / 1000);
-    }
-
-    public long getTimeoutMilliSeconds() {
-        return timeoutMilliSecs;
-    }
-
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -84,15 +74,6 @@ public class RinchiOptions {
             sb.append(rinchiFlag.toString());
         }
 
-        if (timeoutMilliSecs != 0) {
-            if (sb.length() > 0) {
-                sb.append(' ');
-            }
-            sb.append(IS_WINDOWS ? "/" : "-");
-            sb.append("WM");
-            sb.append(timeoutMilliSecs);
-        }
-
         return sb.toString();
     }
 
@@ -101,7 +82,6 @@ public class RinchiOptions {
      */
     public static class RinchiOptionsBuilder {
         private final EnumSet<RinchiFlag> flags = EnumSet.noneOf(RinchiFlag.class);
-        private long timeoutMilliSecs = 0;
 
         private RinchiOptionsBuilder() {
 
@@ -114,32 +94,6 @@ public class RinchiOptions {
          */
         public RinchiOptionsBuilder withFlag(RinchiFlag... flags) {
             Collections.addAll(this.flags, flags);
-            return this;
-        }
-
-        /**
-         * Timeout in seconds (0 = infinite timeout).
-         * @param timeoutSecs timeout in seconds
-         * @return returns itself to allow for chaining method calls
-         */
-        public RinchiOptionsBuilder withTimeout(int timeoutSecs) {
-            if (timeoutSecs < 0) {
-                throw new IllegalArgumentException("Timeout should be a time in seconds or 0 for infinite: " + timeoutSecs);
-            }
-            this.timeoutMilliSecs = (long) timeoutSecs * 1000;
-            return this;
-        }
-
-        /**
-         * Timeout in milliseconds (0 = infinite timeout).
-         * @param timeoutMilliSecs timeout in milliseconds
-         * @return returns itself to allow for chaining method calls
-         */
-        public RinchiOptionsBuilder withTimeoutMilliSeconds(long timeoutMilliSecs) {
-            if (timeoutMilliSecs < 0) {
-                throw new IllegalArgumentException("Timeout should be a time in milliseconds or 0 for infinite: " + timeoutMilliSecs);
-            }
-            this.timeoutMilliSecs = timeoutMilliSecs;
             return this;
         }
 
