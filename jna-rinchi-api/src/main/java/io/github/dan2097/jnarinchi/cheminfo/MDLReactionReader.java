@@ -38,14 +38,18 @@ import io.github.dan2097.jnarinchi.RinchiInputComponent;
 
 /**
  * Reads a reaction from an MDL RXN or RDFile file format.
- * <code>Null</code> is returned if the reading is unsuccessful.
  * <p>
- * All errors can be retrieved as a list with {@link #getErrors()} or
- * as a single string with {@link #getAllErrors()}.
- * By default, the expected format is set to {@link ReactionFileFormat#AUTO}, i.e.,
- * the file format RXN or RDFile is automatically recognized from the MDL file text header.
+ * If an error occurs during reading a {@link MDLReactionReaderException} is thrown. This exception
+ * can then be queried for a list of all errors with {@link MDLReactionReaderException#getErrors()}
+ * or a single string where individual errors are separated by a newline character with
+ * {@link MDLReactionReaderException#getAllErrors()}.
+ * </p>
+ * <p>
+ * By default, i.e. if the constructor {@link #MDLReactionReader()} without any arguments is used,
+ * the expected format is set to {@link ReactionFileFormat#AUTO} so that the file format
+ * RXN or RDFile is automatically recognized from the MDL file text header.
  * If one of the RXN or RDFile formats is to be specifically expected, the format can be
- * enforced by {@link #setFormat(ReactionFileFormat)}.
+ * enforced by {@link #MDLReactionReader(ReactionFileFormat, boolean)}.
  * </p>
  * <p>
  * Option/flag <code>guessTetrahedralChiralityFromBondsInfo</code> allows

@@ -35,12 +35,10 @@ import io.github.dan2097.jnarinchi.RinchiInputComponent;
 
 /**
  * Writes a reaction ({@link RinchiInput} object) into an MDL RXN or RDFile file format string.
- * <code>Null</code> is returned if the writing is unsuccessful.
- * All errors can be retrieved as a list with {@link #getErrors()} or
- * as a single string with {@link #getAllErrors()}.
  * <p>
- * The file format is set with {@link #setFormat(ReactionFileFormat)}.
- * By default, the file format is set to {@link ReactionFileFormat#RD}.
+ * By default, i.e. if the constructor {@link #MDLReactionWriter()} without any arguments is used,
+ * the expected format is set to {@link ReactionFileFormat#RD}. If the RXN format is to be
+ * specified, the format can be set by {@link #MDLReactionWriter(ReactionFileFormat)}.
  * The file format {@link ReactionFileFormat#AUTO} is treated as equivalent to the default
  * setting of {@link ReactionFileFormat#RD}.
  * </p>
