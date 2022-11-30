@@ -32,11 +32,18 @@ import io.github.dan2097.jnarinchi.cheminfo.MDLReactionWriter;
  * Provides access to the native RInChI library functionality via Java code.
  * This class wraps around the native RInChI library using the JNA native interface
  * implemented in {@link RinchiLibrary}.
- *
+ * <p>
+ *     As the native RInChI library is not thread-safe this wrapper class
+ *     makes sure that there is only ever one call placed to the native
+ *     RInChI library at a time.
+ * </p>
  * @author Nikolay Kochev
+ * @author uli-f
  * @see RinchiLibrary
  */
 public class JnaRinchi {
+    // used as a lock object to synchronize on
+    private static final Object lock = new Object();
     private static final String PROPERTY_KEY_RINCHI_VERSION = "rinchi_version";
     private static final String PROPERTY_KEY_JNARINCHI_VERSION = "jnarinchi_version";
     private static final String PROPERTY_FILE_NAME = "jnarinchi_build.props";
@@ -210,29 +217,31 @@ public class JnaRinchi {
      * @see #fileTextToRinchi(String, RinchiOptions)
      */
     public static RinchiOutput fileTextToRinchi(String reactionFileText, RinchiOptions options, ReactionFileFormat fileFormat) {
-        checkLibrary();
-        requireNonNull(reactionFileText, "reactionFileText");
-        requireNonNull(options, "options");
-        requireNonNull(fileFormat, "fileFormat");
+        synchronized (lock) {
+            checkLibrary();
+            requireNonNull(reactionFileText, "reactionFileText");
+            requireNonNull(options, "options");
+            requireNonNull(fileFormat, "fileFormat");
 
-        PointerByReference out_rinchi_string_p = new PointerByReference();
-        PointerByReference out_rinchi_auxinfo_p = new PointerByReference();
+            PointerByReference out_rinchi_string_p = new PointerByReference();
+            PointerByReference out_rinchi_auxinfo_p = new PointerByReference();
 
-        boolean forceEq = options.getFlags().contains(RinchiFlag.ForceEquilibrium);
-        int errCode = RinchiLibrary.rinchilib_rinchi_from_file_text(fileFormat.toString(), reactionFileText,
-                forceEq, out_rinchi_string_p, out_rinchi_auxinfo_p);
+            boolean forceEq = options.getFlags().contains(RinchiFlag.ForceEquilibrium);
+            int errCode = RinchiLibrary.rinchilib_rinchi_from_file_text(fileFormat.toString(), reactionFileText,
+                    forceEq, out_rinchi_string_p, out_rinchi_auxinfo_p);
 
-        if (errCode != 0) {
-            String errMsg = RinchiLibrary.rinchilib_latest_err_msg();
-            return new RinchiOutput("", "", Status.ERROR, errCode, errMsg);
+            if (errCode != 0) {
+                String errMsg = RinchiLibrary.rinchilib_latest_err_msg();
+                return new RinchiOutput("", "", Status.ERROR, errCode, errMsg);
+            }
+
+            Pointer p = out_rinchi_string_p.getValue();
+            String rinchi = p.getString(0);
+            p = out_rinchi_auxinfo_p.getValue();
+            String auxInfo = p.getString(0);
+
+            return new RinchiOutput(rinchi, auxInfo, Status.SUCCESS, 0, "");
         }
-
-        Pointer p = out_rinchi_string_p.getValue();
-        String rinchi = p.getString(0);
-        p = out_rinchi_auxinfo_p.getValue();
-        String auxInfo = p.getString(0);
-
-        return new RinchiOutput(rinchi, auxInfo, Status.SUCCESS, 0, "");
     }
 
     /**
@@ -292,26 +301,28 @@ public class JnaRinchi {
      * @see #fileTextToRinchiKey(String, RinchiKeyType, RinchiOptions)
      */
     public static RinchiKeyOutput fileTextToRinchiKey(String reactionFileText, RinchiKeyType keyType, RinchiOptions options, ReactionFileFormat fileFormat) {
-        checkLibrary();
-        requireNonNull(reactionFileText, "reactionFileText");
-        requireNonNull(keyType, "keyType");
-        requireNonNull(options, "options");
-        requireNonNull(fileFormat, "fileFormat");
+        synchronized (lock) {
+            checkLibrary();
+            requireNonNull(reactionFileText, "reactionFileText");
+            requireNonNull(keyType, "keyType");
+            requireNonNull(options, "options");
+            requireNonNull(fileFormat, "fileFormat");
 
-        PointerByReference out_rinchi_key = new PointerByReference();
-        boolean forceEq = options.getFlags().contains(RinchiFlag.ForceEquilibrium);
-        int errCode = RinchiLibrary.rinchilib_rinchikey_from_file_text(fileFormat.toString(), reactionFileText,
-                keyType.getShortDesignation(), forceEq, out_rinchi_key);
+            PointerByReference out_rinchi_key = new PointerByReference();
+            boolean forceEq = options.getFlags().contains(RinchiFlag.ForceEquilibrium);
+            int errCode = RinchiLibrary.rinchilib_rinchikey_from_file_text(fileFormat.toString(), reactionFileText,
+                    keyType.getShortDesignation(), forceEq, out_rinchi_key);
 
-        if (errCode != 0) {
-            String err = RinchiLibrary.rinchilib_latest_err_msg();
-            return new RinchiKeyOutput("", keyType, Status.ERROR, errCode, err);
+            if (errCode != 0) {
+                String err = RinchiLibrary.rinchilib_latest_err_msg();
+                return new RinchiKeyOutput("", keyType, Status.ERROR, errCode, err);
+            }
+
+            Pointer p = out_rinchi_key.getValue();
+            String rinchi_key = p.getString(0);
+
+            return new RinchiKeyOutput(rinchi_key, keyType, Status.SUCCESS, 0, "");
         }
-
-        Pointer p = out_rinchi_key.getValue();
-        String rinchi_key = p.getString(0);
-
-        return new RinchiKeyOutput(rinchi_key, keyType, Status.SUCCESS, 0, "");
     }
 
     /**
@@ -328,23 +339,25 @@ public class JnaRinchi {
      * @return resultant FileTextOutput object
      */
     public static FileTextOutput rinchiToFileText(String rinchi, String auxInfo, ReactionFileFormat fileFormat) {
-        checkLibrary();
-        requireNonNull(rinchi, "rinchi");
-        requireNonNull(auxInfo, "auxInfo");
-        requireNonNull(fileFormat, "fileFormat");
+        synchronized (lock) {
+            checkLibrary();
+            requireNonNull(rinchi, "rinchi");
+            requireNonNull(auxInfo, "auxInfo");
+            requireNonNull(fileFormat, "fileFormat");
 
-        PointerByReference out_file_text_p = new PointerByReference();
-        int errCode = RinchiLibrary.rinchilib_file_text_from_rinchi(rinchi, auxInfo, fileFormat.toString(), out_file_text_p);
+            PointerByReference out_file_text_p = new PointerByReference();
+            int errCode = RinchiLibrary.rinchilib_file_text_from_rinchi(rinchi, auxInfo, fileFormat.toString(), out_file_text_p);
 
-        if (errCode != 0) {
-            String err = RinchiLibrary.rinchilib_latest_err_msg();
-            return new FileTextOutput("", fileFormat, Status.ERROR, errCode, err);
+            if (errCode != 0) {
+                String err = RinchiLibrary.rinchilib_latest_err_msg();
+                return new FileTextOutput("", fileFormat, Status.ERROR, errCode, err);
+            }
+
+            Pointer p = out_file_text_p.getValue();
+            String reactFileText = p.getString(0);
+
+            return new FileTextOutput(reactFileText, fileFormat, Status.SUCCESS, 0, "");
         }
-
-        Pointer p = out_file_text_p.getValue();
-        String reactFileText = p.getString(0);
-
-        return new FileTextOutput(reactFileText, fileFormat, Status.SUCCESS, 0, "");
     }
 
     /**
@@ -359,22 +372,24 @@ public class JnaRinchi {
      * @return result RinchiKeyOutput object
      */
     public static RinchiKeyOutput rinchiToRinchiKey(RinchiKeyType keyType, String rinchi) {
-        checkLibrary();
-        requireNonNull(keyType, "keyType");
-        requireNonNull(rinchi, "rinchi");
+        synchronized (lock) {
+            checkLibrary();
+            requireNonNull(keyType, "keyType");
+            requireNonNull(rinchi, "rinchi");
 
-        PointerByReference out_rinchi_key = new PointerByReference();
-        int errCode = RinchiLibrary.rinchilib_rinchikey_from_rinchi(rinchi, keyType.getShortDesignation(), out_rinchi_key);
+            PointerByReference out_rinchi_key = new PointerByReference();
+            int errCode = RinchiLibrary.rinchilib_rinchikey_from_rinchi(rinchi, keyType.getShortDesignation(), out_rinchi_key);
 
-        if (errCode != 0) {
-            String err = RinchiLibrary.rinchilib_latest_err_msg();
-            return new RinchiKeyOutput("", keyType, Status.ERROR, errCode, err);
+            if (errCode != 0) {
+                String err = RinchiLibrary.rinchilib_latest_err_msg();
+                return new RinchiKeyOutput("", keyType, Status.ERROR, errCode, err);
+            }
+
+            Pointer p = out_rinchi_key.getValue();
+            String rinchi_key = p.getString(0);
+
+            return new RinchiKeyOutput(rinchi_key, keyType, Status.SUCCESS, 0, "");
         }
-
-        Pointer p = out_rinchi_key.getValue();
-        String rinchi_key = p.getString(0);
-
-        return new RinchiKeyOutput(rinchi_key, keyType, Status.SUCCESS, 0, "");
     }
 
     /**
@@ -402,23 +417,25 @@ public class JnaRinchi {
      * @see #decomposeRinchi(String)
      */
     public static RinchiDecompositionOutput decomposeRinchi(String rinchi, String auxInfo) {
-        checkLibrary();
-        requireNonNull(rinchi, "rinchi");
-        requireNonNull(auxInfo, "auxInfo");
+        synchronized (lock) {
+            checkLibrary();
+            requireNonNull(rinchi, "rinchi");
+            requireNonNull(auxInfo, "auxInfo");
 
-        PointerByReference out_inchis_text_p = new PointerByReference();
-        int errCode = RinchiLibrary.rinchilib_inchis_from_rinchi(rinchi, auxInfo, out_inchis_text_p);
+            PointerByReference out_inchis_text_p = new PointerByReference();
+            int errCode = RinchiLibrary.rinchilib_inchis_from_rinchi(rinchi, auxInfo, out_inchis_text_p);
 
-        if (errCode != 0) {
-            String err = RinchiLibrary.rinchilib_latest_err_msg();
-            return new RinchiDecompositionOutput(ReactionDirection.FORWARD, null, null, null,
-                    Status.ERROR, errCode, err);
+            if (errCode != 0) {
+                String err = RinchiLibrary.rinchilib_latest_err_msg();
+                return new RinchiDecompositionOutput(ReactionDirection.FORWARD, null, null, null,
+                        Status.ERROR, errCode, err);
+            }
+
+            Pointer p = out_inchis_text_p.getValue();
+            String s = p.getString(0);
+
+            return parseNativeOutInchisText(s);
         }
-
-        Pointer p = out_inchis_text_p.getValue();
-        String s = p.getString(0);
-
-        return parseNativeOutInchisText(s);
     }
 
     /**
