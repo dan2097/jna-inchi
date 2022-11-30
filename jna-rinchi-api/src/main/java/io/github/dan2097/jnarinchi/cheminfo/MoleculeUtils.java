@@ -113,8 +113,9 @@ public class MoleculeUtils {
                 return 2;
             case TRIPLE:
                 return 3;
+            default:
+                return 0;
         }
-        return 0;
     }
 
     /**
@@ -781,7 +782,6 @@ public class MoleculeUtils {
                         break;
                 }
                 break;
-
         }
 
         return val;

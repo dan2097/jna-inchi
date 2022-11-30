@@ -265,8 +265,9 @@ public class StereoUtils {
                 return InchiStereoParity.EVEN;
             case EVEN:
                 return InchiStereoParity.ODD;
+            default:
+                return parity;
         }
-        return parity;
     }
 
     /**

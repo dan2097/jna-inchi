@@ -495,8 +495,9 @@ public class MDLReactionReader {
                     return InchiStereoParity.EVEN;
                 case 3:
                     return InchiStereoParity.UNKNOWN;
+                default:
+                    return null;
             }
-            return null;
         }
     
         private void readMOLBondLine(int bondIndex, RinchiInputComponent ric) {
@@ -738,8 +739,9 @@ public class MDLReactionReader {
                     return -2;
                 case 7:
                     return -3;
+                default:
+                    return 0;
             }
-            return 0;
         }
     
         private InchiBondStereo getBondStereoFromMDLCode(int code) {
@@ -754,8 +756,9 @@ public class MDLReactionReader {
                     return InchiBondStereo.SINGLE_1DOWN;
                 case 3:
                     return InchiBondStereo.DOUBLE_EITHER;
+                default:
+                    return null;
             }
-            return null;
         }
     
         private InchiRadical getInchiRadical(int mdlRadicalCode) {
@@ -766,8 +769,9 @@ public class MDLReactionReader {
                     return InchiRadical.DOUBLET;
                 case 3:
                     return InchiRadical.TRIPLET;
+                default:
+                    return InchiRadical.NONE;
             }
-            return InchiRadical.NONE;
         }
     
         private String errorPrefix() {

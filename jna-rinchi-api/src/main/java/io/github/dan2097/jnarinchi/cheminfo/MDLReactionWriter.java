@@ -469,22 +469,23 @@ public class MDLReactionWriter {
                     return 2;
                 case TRIPLET:
                     return 3;
+                default:
+                    return 0;
             }
-            return 0;
         }
 
         private int getBondMDLBondCode(InchiBond bond) {
             switch (bond.getType()) {
-                case SINGLE:
-                    return 1;
                 case DOUBLE:
                     return 2;
                 case TRIPLE:
                     return 3;
                 case ALTERN:
                     return 4; //stored as MDL aromatic
+                case SINGLE:
+                default:
+                    return 1;
             }
-            return 1;
         }
 
         private int getBondMDLStereoCode(InchiBond bond) {
@@ -506,8 +507,9 @@ public class MDLReactionWriter {
                     return 6;
                 case DOUBLE_EITHER:
                     return 3;
+                default:
+                    return 0;
             }
-            return 0;
         }
 
         private boolean isWedgeEndAtSecondAtom(InchiBondStereo inchiBoStereo) {
@@ -589,8 +591,9 @@ public class MDLReactionWriter {
                     return 6;
                 case -3:
                     return 7;
+                default:
+                    return 0;
             }
-            return 0;
         }
 
     }
