@@ -5,8 +5,8 @@
     <artifactId>jna-inchi</artifactId>
     <version>1.2-SNAPSHOT</version>
   </parent>
-  <artifactId>jna-rinchi-api</artifactId>
-  <name>JNA RInChI API</name>
+  <artifactId>jna-rinchi-core</artifactId>
+  <name>JNA RInChI Core</name>
   <description>Functionality for calling the RInChI library from Java. Requires an appropriate RInChI binary on the classpath to use</description>
   <build>
     <resources>

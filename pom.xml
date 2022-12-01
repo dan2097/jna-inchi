@@ -19,7 +19,7 @@
     <module>jna-inchi-linux-x86-64</module>
     <module>jna-inchi-win32-x86</module>
     <module>jna-inchi-win32-x86-64</module>
-    <module>jna-rinchi-api</module>
+    <module>jna-rinchi-core</module>
 	<module>jna-rinchi-linux-arm</module>
     <module>jna-rinchi-linux-x86</module>
     <module>jna-rinchi-linux-x86-64</module>
