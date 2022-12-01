@@ -30,32 +30,26 @@
      <dependency>
         <groupId>io.github.dan2097</groupId>
         <artifactId>jna-inchi-api</artifactId>
-        <version>${project.version}</version>
       </dependency>
      <dependency>
         <groupId>io.github.dan2097</groupId>
         <artifactId>jna-rinchi-linux-arm</artifactId>
-        <version>${project.version}</version>
       </dependency>
       <dependency>
         <groupId>io.github.dan2097</groupId>
         <artifactId>jna-rinchi-linux-x86</artifactId>
-        <version>${project.version}</version>
       </dependency>
       <dependency>
         <groupId>io.github.dan2097</groupId>
         <artifactId>jna-rinchi-linux-x86-64</artifactId>
-        <version>${project.version}</version>
       </dependency>
     <dependency>
         <groupId>io.github.dan2097</groupId>
         <artifactId>jna-rinchi-win32-x86</artifactId>
-        <version>${project.version}</version>
       </dependency>
 	  <dependency>
         <groupId>io.github.dan2097</groupId>
         <artifactId>jna-rinchi-win32-x86-64</artifactId>
-        <version>${project.version}</version>
       </dependency>
     <dependency>
       <groupId>net.java.dev.jna</groupId>
