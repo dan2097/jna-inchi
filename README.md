@@ -110,11 +110,11 @@ If you don't need SMILES support or do not require support for all platforms, th
 | jna-inchi-win32-x86      | InChI 32-bit Windows support                      |
 | jna-inchi-win32-x86-64   | InChI 64-bit Windows support                      |
 | jna-rinchi-core          | JNA-RInChI API with binaries for Windows and Linux|
-| jna-inchi-linux-arm      | RInChI 64-bit ARM Linux support e.g. Raspberry Pi |
-| jna-inchi-linux-x86      | RInChI32-bit Linux support                        |
-| jna-inchi-linux-x86-64   | RInChI64-bit Linux support                        |
-| jna-inchi-win32-x86      | RInChI32-bit Windows support                      |
-| jna-inchi-win32-x86-64   | RInChI64-bit Windows support                      |
+| jna-rinchi-linux-arm     | RInChI 64-bit ARM Linux support e.g. Raspberry Pi |
+| jna-rinchi-linux-x86     | RInChI32-bit Linux support                        |
+| jna-rinchi-linux-x86-64  | RInChI64-bit Linux support                        |
+| jna-rinchi-win32-x86     | RInChI32-bit Windows support                      |
+| jna-rinchi-win32-x86-64  | RInChI64-bit Windows support                      |
 
 For example, `jna-inchi-core` omits SMILES support. If you only need 64-bit linux support, depending on if SMILES support was desired, you would choose `jna-inchi-smiles` + `jna-inchi-linux-x86-64`, or `jna-inchi-api` + `jna-inchi-linux-x86-64`
 
