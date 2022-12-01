@@ -24,9 +24,9 @@ import com.sun.jna.Platform;
 import com.sun.jna.Pointer;
 import com.sun.jna.ptr.PointerByReference;
 
-import io.github.dan2097.jnarinchi.cheminfo.MDLReactionReader;
-import io.github.dan2097.jnarinchi.cheminfo.MDLReactionReaderException;
-import io.github.dan2097.jnarinchi.cheminfo.MDLReactionWriter;
+import io.github.dan2097.jnarinchi.cheminfo.MdlReactionReader;
+import io.github.dan2097.jnarinchi.cheminfo.MdlReactionReaderException;
+import io.github.dan2097.jnarinchi.cheminfo.MdlReactionWriter;
 
 /**
  * Provides access to the native RInChI library functionality via Java code.
@@ -38,7 +38,7 @@ import io.github.dan2097.jnarinchi.cheminfo.MDLReactionWriter;
  *     RInChI library at a time.
  * </p>
  * @author Nikolay Kochev
- * @author uli-f
+ * @author Uli Fechner
  * @see RinchiLibrary
  */
 public class JnaRinchi {
@@ -98,7 +98,7 @@ public class JnaRinchi {
      */
     public static RinchiOutput toRinchi(RinchiInput rinchiInput, RinchiOptions options) {
         //Converting RinchiInput to RXN/RDFile
-        MDLReactionWriter mdlWriter = new MDLReactionWriter(ReactionFileFormat.RD);
+        MdlReactionWriter mdlWriter = new MdlReactionWriter(ReactionFileFormat.RD);
         String fileText = mdlWriter.rinchiInputToFileText(rinchiInput);
         return fileTextToRinchi(fileText, options);
     }
@@ -156,12 +156,12 @@ public class JnaRinchi {
             return new RinchiInputFromRinchiOutput(null, Status.ERROR, -1, ftOut.getErrorMessage());
 
         //Converting RXN/RDFile to RinchiInput
-        MDLReactionReader mdlReader = new MDLReactionReader(ReactionFileFormat.RD, guessTetrahedralChiralityFromBondsInfo);
+        MdlReactionReader mdlReader = new MdlReactionReader(ReactionFileFormat.RD, guessTetrahedralChiralityFromBondsInfo);
         
         try {
             RinchiInput rInp = mdlReader.fileTextToRinchiInput(ftOut.getReactionFileText());
             return new RinchiInputFromRinchiOutput(rInp, Status.SUCCESS, 0, "");
-        } catch (MDLReactionReaderException exception) {
+        } catch (MdlReactionReaderException exception) {
             return new RinchiInputFromRinchiOutput(null, Status.ERROR, -1, exception.getAllErrors());
         }
     }

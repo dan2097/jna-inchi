@@ -28,7 +28,7 @@ import io.github.dan2097.jnainchi.InchiBond;
 import io.github.dan2097.jnainchi.InchiBondStereo;
 import io.github.dan2097.jnainchi.InchiRadical;
 import io.github.dan2097.jnainchi.InchiStereoParity;
-import io.github.dan2097.jnarinchi.CTabVersion;
+import io.github.dan2097.jnarinchi.CtabVersion;
 import io.github.dan2097.jnarinchi.ReactionFileFormat;
 import io.github.dan2097.jnarinchi.RinchiInput;
 import io.github.dan2097.jnarinchi.RinchiInputComponent;
@@ -36,9 +36,9 @@ import io.github.dan2097.jnarinchi.RinchiInputComponent;
 /**
  * Writes a reaction ({@link RinchiInput} object) into an MDL RXN or RDFile file format string.
  * <p>
- * By default, i.e. if the constructor {@link #MDLReactionWriter()} without any arguments is used,
+ * By default, i.e. if the constructor {@link #MdlReactionWriter()} without any arguments is used,
  * the expected format is set to {@link ReactionFileFormat#RD}. If the RXN format is to be
- * specified, the format can be set by {@link #MDLReactionWriter(ReactionFileFormat)}.
+ * specified, the format can be set by {@link #MdlReactionWriter(ReactionFileFormat)}.
  * The file format {@link ReactionFileFormat#AUTO} is treated as equivalent to the default
  * setting of {@link ReactionFileFormat#RD}.
  * </p>
@@ -53,7 +53,7 @@ import io.github.dan2097.jnarinchi.RinchiInputComponent;
  *
  * @author nick
  */
-public class MDLReactionWriter {
+public class MdlReactionWriter {
     private static final String LINE_SEPARATOR = "\n";
     private static final String RDFILE_LINE_1_RDFILE = "$RDFILE 1";
     private static final String RDFILE_LINE_2_DATM = "$DATM";
@@ -72,7 +72,7 @@ public class MDLReactionWriter {
     
     private final ReactionFileFormat format;
     // currently, only RXN and RDFile V2000 is supported
-    private final CTabVersion ctabVersion = CTabVersion.V2000;
+    private final CtabVersion ctabVersion = CtabVersion.V2000;
     //This flag is not made visible as it is preferred always true
     //in order to follow the correct atom ordering for MDL format
     private final boolean checkParityAccordingAtomNumbering = true;
@@ -84,18 +84,18 @@ public class MDLReactionWriter {
      * <ul>
      *     <li>reaction file format {@link ReactionFileFormat#RD}</li>
      * </ul>
-     * @see #MDLReactionWriter(ReactionFileFormat)
+     * @see #MdlReactionWriter(ReactionFileFormat)
      */
-    public MDLReactionWriter() {
+    public MdlReactionWriter() {
         this(ReactionFileFormat.RD);
     }
 
     /**
      * Instantiates a new MDLReactionWriter with the specified {@link ReactionFileFormat reaction file format}.
      * @param format the reaction file format to write
-     * @see #MDLReactionWriter()
+     * @see #MdlReactionWriter()
      */
-    public MDLReactionWriter(ReactionFileFormat format) {
+    public MdlReactionWriter(ReactionFileFormat format) {
         this.format = format;
     }
     
@@ -107,7 +107,7 @@ public class MDLReactionWriter {
      * @return reaction file text
      */
     public String rinchiInputToFileText(RinchiInput rInp) {
-      return new MDLReactionWriterInstance(rInp).write();
+      return new MdlReactionWriterInstance(rInp).write();
     }
     
     /**
@@ -124,11 +124,11 @@ public class MDLReactionWriter {
      *
      * @return the CTAB version
      */
-    public CTabVersion getCtabVersion() {
+    public CtabVersion getCtabVersion() {
         return ctabVersion;
     }
     
-    private class MDLReactionWriterInstance {
+    private class MdlReactionWriterInstance {
 
         private final RinchiInput rInput;
         private final StringBuilder stringBuilder = new StringBuilder();
@@ -136,7 +136,7 @@ public class MDLReactionWriter {
         private final List<RinchiInputComponent> products = new ArrayList<>();
         private final List<RinchiInputComponent> agents = new ArrayList<>();
         
-        MDLReactionWriterInstance(RinchiInput rInput) {
+        MdlReactionWriterInstance(RinchiInput rInput) {
             if (rInput == null) {
                 throw new IllegalArgumentException("RinchiInput is null!");
             }
@@ -147,9 +147,9 @@ public class MDLReactionWriter {
             analyzeComponents();
 
             if (format == ReactionFileFormat.RD || format == ReactionFileFormat.AUTO)
-                addRDFileHeader();
+                addRdFileHeader();
 
-            addRXNHeader();
+            addRxnHeader();
 
             //Add RXN count line: rrrppp
             addInteger(reagents.size(), 3); //rrr
@@ -174,7 +174,7 @@ public class MDLReactionWriter {
 
         private void addRinchiInputComponent(RinchiInputComponent ric, String moleculeName) {
             addMolHeader(moleculeName);
-            addCTabBlockV2000(ric);
+            addCtabBlockV2000(ric);
             addPropertyBlock(ric);
             stringBuilder.append(MOLFILE_M_END);
             stringBuilder.append(LINE_SEPARATOR);
@@ -195,7 +195,7 @@ public class MDLReactionWriter {
             stringBuilder.append(MOLFILE_HEADER_LINE_3_COMMENT);
             stringBuilder.append(LINE_SEPARATOR);
 
-            addCTabBlockV2000(ric);
+            addCtabBlockV2000(ric);
             addPropertyBlock(ric);
             stringBuilder.append(MOLFILE_M_END);
             stringBuilder.append(LINE_SEPARATOR);
@@ -213,7 +213,7 @@ public class MDLReactionWriter {
             stringBuilder.append(LINE_SEPARATOR);
         }
 
-        private void addRDFileHeader() {
+        private void addRdFileHeader() {
             stringBuilder.append(RDFILE_LINE_1_RDFILE);
             stringBuilder.append(LINE_SEPARATOR);
             stringBuilder.append(RDFILE_LINE_2_DATM);
@@ -224,7 +224,7 @@ public class MDLReactionWriter {
             stringBuilder.append(LINE_SEPARATOR);
         }
 
-        private void addRXNHeader() {
+        private void addRxnHeader() {
             stringBuilder.append(RXN_HEADER_LINE_1_RXN);
             stringBuilder.append(LINE_SEPARATOR);
             stringBuilder.append(RXN_HEADER_LINE_2_REACTION_NAME);
@@ -236,7 +236,7 @@ public class MDLReactionWriter {
             stringBuilder.append(LINE_SEPARATOR);
         }
 
-        private void addCTabBlockV2000(RinchiInputComponent ric) {
+        private void addCtabBlockV2000(RinchiInputComponent ric) {
             //Counts line: aaabbblllfffcccsssxxxrrrpppiiimmmvvvvvv
             addInteger(ric.getAtoms().size(), 3); //aaa
             addInteger(ric.getBonds().size(), 3); //bbb
@@ -254,9 +254,9 @@ public class MDLReactionWriter {
             stringBuilder.append("  0"); //rrr
             stringBuilder.append("  0"); //ppp
             stringBuilder.append("  0"); //iii
-            stringBuilder.append(MDLReactionUtils.CTAB_LINE_COUNT); //mmm
+            stringBuilder.append(MdlReactionUtils.CTAB_LINE_COUNT); //mmm
             // at the moment, only RXN and RDF V2000 is supported
-            stringBuilder.append(" ").append(CTabVersion.V2000); //vvvvvv
+            stringBuilder.append(" ").append(CtabVersion.V2000); //vvvvvv
             stringBuilder.append(LINE_SEPARATOR);
 
             //Add Atom block
@@ -289,7 +289,7 @@ public class MDLReactionWriter {
             if (atom.getRadical() == InchiRadical.DOUBLET)
                 stringBuilder.append("  4"); //MDL code for doublet radical
             else
-                addInteger(getOldCTABChargeCoding(atom.getCharge()), 3);
+                addInteger(getOldCtabChargeCoding(atom.getCharge()), 3);
             //sss stereo parity
             if (parity != null) {
                 switch (parity) {
@@ -341,9 +341,9 @@ public class MDLReactionWriter {
                 addInteger(secondAt, 3);
             }
             //ttt bond type
-            addInteger(getBondMDLBondCode(bond), 3);
+            addInteger(getBondMdlBondCode(bond), 3);
             //sss bond stereo
-            addInteger(getBondMDLStereoCode(bond), 3);
+            addInteger(getBondMdlStereoCode(bond), 3);
             //xxx = not used
             stringBuilder.append("  0");
             //rrr (bond topology, used only for SSS)
@@ -418,7 +418,7 @@ public class MDLReactionWriter {
                     for (int i = 0; i < 8; i++) {
                         int atIndex = atomList.get(curSet * 8 + i);
                         addInteger(atIndex + 1, 4);
-                        int radCode = getRadicalMDLCode(ric.getAtom(atIndex).getRadical());
+                        int radCode = getRadicalMdlCode(ric.getAtom(atIndex).getRadical());
                         addInteger(radCode, 4);
                     }
                     stringBuilder.append(LINE_SEPARATOR);
@@ -430,7 +430,7 @@ public class MDLReactionWriter {
                 for (int i = 0; i < k; i++) {
                     int atIndex = atomList.get(numSets * 8 + i);
                     addInteger(atIndex + 1, 4);
-                    int radCode = getRadicalMDLCode(ric.getAtom(atIndex).getRadical());
+                    int radCode = getRadicalMdlCode(ric.getAtom(atIndex).getRadical());
                     addInteger(radCode, 4);
                 }
                 stringBuilder.append(LINE_SEPARATOR);
@@ -461,7 +461,7 @@ public class MDLReactionWriter {
             return atomList;
         }
 
-        private int getRadicalMDLCode(InchiRadical inchiRadical) {
+        private int getRadicalMdlCode(InchiRadical inchiRadical) {
             switch (inchiRadical) {
                 case SINGLET:
                     return 1;
@@ -474,7 +474,7 @@ public class MDLReactionWriter {
             }
         }
 
-        private int getBondMDLBondCode(InchiBond bond) {
+        private int getBondMdlBondCode(InchiBond bond) {
             switch (bond.getType()) {
                 case DOUBLE:
                     return 2;
@@ -488,7 +488,7 @@ public class MDLReactionWriter {
             }
         }
 
-        private int getBondMDLStereoCode(InchiBond bond) {
+        private int getBondMdlStereoCode(InchiBond bond) {
             if (bond.getStereo() != null)
                 return inchiBondStereoToMDLStereoCode(bond.getStereo());
             return 0;
@@ -555,9 +555,9 @@ public class MDLReactionWriter {
 
         private void addDouble(Double value) {
             if (Double.isNaN(value) || Double.isInfinite(value)) {
-                addNumber(MDLReactionUtils.MDL_NUMBER_FORMAT.format(0.0), MDLReactionUtils.MDL_FLOAT_SPACES);
+                addNumber(MdlReactionUtils.MDL_NUMBER_FORMAT.format(0.0), MdlReactionUtils.MDL_FLOAT_SPACES);
             } else {
-                addNumber(MDLReactionUtils.MDL_NUMBER_FORMAT.format(value), MDLReactionUtils.MDL_FLOAT_SPACES);
+                addNumber(MdlReactionUtils.MDL_NUMBER_FORMAT.format(value), MdlReactionUtils.MDL_FLOAT_SPACES);
             }
         }
 
@@ -574,7 +574,7 @@ public class MDLReactionWriter {
             stringBuilder.append(numberAsString);
         }
 
-        private int getOldCTABChargeCoding(int charge) {
+        private int getOldCtabChargeCoding(int charge) {
             //MDL Charge designation/coding
             //0 = uncharged or value other than these, 1 = +3, 2 = +2, 3 = +1,
             //4 = doublet radical, 5 = -1, 6 = -2, 7 = -3

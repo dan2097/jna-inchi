@@ -39,17 +39,17 @@ import io.github.dan2097.jnarinchi.RinchiInputComponent;
 /**
  * Reads a reaction from an MDL RXN or RDFile file format.
  * <p>
- * If an error occurs during reading a {@link MDLReactionReaderException} is thrown. This exception
- * can then be queried for a list of all errors with {@link MDLReactionReaderException#getErrors()}
+ * If an error occurs during reading a {@link MdlReactionReaderException} is thrown. This exception
+ * can then be queried for a list of all errors with {@link MdlReactionReaderException#getErrors()}
  * or a single string where individual errors are separated by a newline character with
- * {@link MDLReactionReaderException#getAllErrors()}.
+ * {@link MdlReactionReaderException#getAllErrors()}.
  * </p>
  * <p>
- * By default, i.e. if the constructor {@link #MDLReactionReader()} without any arguments is used,
+ * By default, i.e. if the constructor {@link #MdlReactionReader()} without any arguments is used,
  * the expected format is set to {@link ReactionFileFormat#AUTO} so that the file format
  * RXN or RDFile is automatically recognized from the MDL file text header.
  * If one of the RXN or RDFile formats is to be specifically expected, the format can be
- * enforced by {@link #MDLReactionReader(ReactionFileFormat, boolean)}.
+ * enforced by {@link #MdlReactionReader(ReactionFileFormat, boolean)}.
  * </p>
  * <p>
  * Option/flag <code>guessTetrahedralChiralityFromBondsInfo</code> allows
@@ -61,7 +61,7 @@ import io.github.dan2097.jnarinchi.RinchiInputComponent;
  * </p>
  * @author nick
  */
-public class MDLReactionReader {
+public class MdlReactionReader {
   
     private final boolean guessTetrahedralChiralityFromBondsInfo;
     private final ReactionFileFormat expectedFormat;
@@ -74,9 +74,9 @@ public class MDLReactionReader {
      *     <li>expected file format {@link ReactionFileFormat#AUTO}</li>
      *     <li>guess tetrahedral chirality from bonds information set to <code>true</code></li>
      * </ul>
-     * @see MDLReactionReader(ReactionFileFormat, boolean)
+     * @see MdlReactionReader (ReactionFileFormat, boolean)
      */
-    public MDLReactionReader() {
+    public MdlReactionReader() {
       this(ReactionFileFormat.AUTO, false);
     }
 
@@ -84,9 +84,9 @@ public class MDLReactionReader {
      * Instantiates a new MDLReactionReader with the specified settings.
      * @param expectedFormat the expected {@link ReactionFileFormat reaction file format}
      * @param guessTetrahedralChiralityFromBondsInfo indicates whether to guess tetrahedral chirality from bonds information
-     * @see MDLReactionReader()
+     * @see MdlReactionReader ()
      */
-    public MDLReactionReader(ReactionFileFormat expectedFormat, boolean guessTetrahedralChiralityFromBondsInfo) {
+    public MdlReactionReader(ReactionFileFormat expectedFormat, boolean guessTetrahedralChiralityFromBondsInfo) {
       this.expectedFormat = expectedFormat;
       this.guessTetrahedralChiralityFromBondsInfo = guessTetrahedralChiralityFromBondsInfo;
     }
@@ -110,10 +110,10 @@ public class MDLReactionReader {
      *
      * @param inputString reaction represented as a string (RXN/RDFile format)
      * @return RinchiInput object or <code>null</code> if an error occurs
-     * @throws MDLReactionReaderException raised if an error is encountered during reading and parsing of the reaction file
+     * @throws MdlReactionReaderException raised if an error is encountered during reading and parsing of the reaction file
      * @see #fileTextToRinchiInput(BufferedReader)
      */
-    public RinchiInput fileTextToRinchiInput(String inputString) throws MDLReactionReaderException {
+    public RinchiInput fileTextToRinchiInput(String inputString) throws MdlReactionReaderException {
         BufferedReader reader = new BufferedReader(new StringReader(inputString));
         return fileTextToRinchiInput(reader);
     }
@@ -124,14 +124,14 @@ public class MDLReactionReader {
      *
      * @param inputReader buffered input reader
      * @return RinchiInput object or <code>null</code> if an error occurs
-     * @throws MDLReactionReaderException raised if an error is encountered during reading and parsing of the reaction file
+     * @throws MdlReactionReaderException raised if an error is encountered during reading and parsing of the reaction file
      * @see #fileTextToRinchiInput(String)
      */
-    public RinchiInput fileTextToRinchiInput(BufferedReader inputReader) throws MDLReactionReaderException {
-        return new MDLReactionReaderInstance(inputReader).toRinchiInput();
+    public RinchiInput fileTextToRinchiInput(BufferedReader inputReader) throws MdlReactionReaderException {
+        return new MdlReactionReaderInstance(inputReader).toRinchiInput();
     }
     
-    private class MDLReactionReaderInstance {
+    private class MdlReactionReaderInstance {
     
         //Reading work variables
         private final List<String> errors = new ArrayList<>();
@@ -145,11 +145,11 @@ public class MDLReactionReader {
         private int numOfBondsToRead = 0;
         private String errorComponentContext = "";
     
-        MDLReactionReaderInstance(BufferedReader inputReader) {
+        MdlReactionReaderInstance(BufferedReader inputReader) {
             this.inputReader = inputReader;
         }
 
-        RinchiInput toRinchiInput() throws MDLReactionReaderException {
+        RinchiInput toRinchiInput() throws MdlReactionReaderException {
             try {
                 iterateInputLines();
                 inputReader.close();
@@ -158,7 +158,7 @@ public class MDLReactionReader {
             }
             
             if (!errors.isEmpty()) {
-                throw new MDLReactionReaderException(errors);
+                throw new MdlReactionReaderException(errors);
             }
             
             return rInput;
@@ -203,7 +203,7 @@ public class MDLReactionReader {
     
             //Reading reagents
             for (int i = 0; i < numOfReagentsToRead; i++) {
-                RinchiInputComponent ric = readMDLMolecule(true);
+                RinchiInputComponent ric = readMdlMolecule(true);
                 errorComponentContext = "Reading reagent #" + (i + 1) + " ";
                 if (ric != null) {
                     MoleculeUtils.setImplicitHydrogenAtoms(ric);
@@ -215,7 +215,7 @@ public class MDLReactionReader {
     
             //Reading products
             for (int i = 0; i < numOfProductsToRead; i++) {
-                RinchiInputComponent ric = readMDLMolecule(true);
+                RinchiInputComponent ric = readMdlMolecule(true);
                 errorComponentContext = "Reading product #" + (i + 1) + " ";
                 if (ric != null) {
                     MoleculeUtils.setImplicitHydrogenAtoms(ric);
@@ -240,7 +240,7 @@ public class MDLReactionReader {
                     String line1 = line.substring(7).trim();
                     if (line1.startsWith("$MFMT")) {
                         errorComponentContext = "Reading agent #" + (nAgents + 1) + " ";
-                        RinchiInputComponent ric = readMDLMolecule(false);
+                        RinchiInputComponent ric = readMdlMolecule(false);
                         if (ric != null) {
                             MoleculeUtils.setImplicitHydrogenAtoms(ric);
                             ric.setRole(ReactionComponentRole.AGENT);
@@ -366,7 +366,7 @@ public class MDLReactionReader {
             }
         }
     
-        private void readMOLCountsLine() {
+        private void readMolCountsLine() {
             //MOL Counts line: aaabbblllfffcccsssxxxrrrpppiiimmmvvvvvv
             String line = readLine();
             if (line == null) {
@@ -389,16 +389,16 @@ public class MDLReactionReader {
             }
         }
     
-        private void readMOLCTABBlock(RinchiInputComponent ric) {
+        private void readMolCtabBlock(RinchiInputComponent ric) {
             Map<InchiAtom, InchiStereoParity> parities = new HashMap<>();
     
             for (int i = 0; i < numOfAtomsToRead; i++) {
-                readMOLAtomLine(i, ric, parities);
+                readMolAtomLine(i, ric, parities);
                 if (!errors.isEmpty())
                     return;
             }
             for (int i = 0; i < numOfBondsToRead; i++) {
-                readMOLBondLine(i, ric);
+                readMolBondLine(i, ric);
                 if (!errors.isEmpty())
                     return;
             }
@@ -414,7 +414,7 @@ public class MDLReactionReader {
                 StereoUtils.guessUndefinedTetrahedralStereosBasedOnBondInfo(ric, parities.keySet());
         }
     
-        private void readMOLAtomLine(int atomIndex, RinchiInputComponent ric, Map<InchiAtom, InchiStereoParity> parities) {
+        private void readMolAtomLine(int atomIndex, RinchiInputComponent ric, Map<InchiAtom, InchiStereoParity> parities) {
             //Read MDL atom line
             //xxxxx.xxxxyyyyy.yyyyzzzzz.zzzz aaaddcccssshhhbbbvvvHHHrrriiimmmnnneee
             String line = readLine();
@@ -463,7 +463,7 @@ public class MDLReactionReader {
                         + " in Line " + curLineNum + " atom charge coding error --> " + line);
                 return;
             }
-            int charge = getChargeFromOldCTABCoding(chCode);
+            int charge = getChargeFromOldCtabCoding(chCode);
     
             InchiAtom atom = new InchiAtom(atSymbol, coordX, coordY, coordZ);
             ric.addAtom(atom);
@@ -500,7 +500,7 @@ public class MDLReactionReader {
             }
         }
     
-        private void readMOLBondLine(int bondIndex, RinchiInputComponent ric) {
+        private void readMolBondLine(int bondIndex, RinchiInputComponent ric) {
             //Read MDL bond line
             //111222tttsssxxxrrrccc
             String line = readLine();
@@ -533,7 +533,7 @@ public class MDLReactionReader {
                         + " : incorrect bond stereo (sss part): " + line);
                 return;
             }
-            InchiBondStereo ibs = getBondStereoFromMDLCode(sss);
+            InchiBondStereo ibs = getBondStereoFromMdlCode(sss);
             if (ibs == null) {
                 errors.add("MOL counts (111222ttt...) Line  " + curLineNum
                         + " : incorrect bond stereo (sss part): " + line);
@@ -544,7 +544,7 @@ public class MDLReactionReader {
             ric.addBond(bond);
         }
     
-        private void readMOLPropertiesBlock(RinchiInputComponent ric) {
+        private void readMolPropertiesBlock(RinchiInputComponent ric) {
             String line = readLine();
             while (processPropertyLine(line, ric) == 0)
                 line = readLine();
@@ -669,21 +669,21 @@ public class MDLReactionReader {
             return 0;
         }
     
-        private RinchiInputComponent readMDLMolecule(boolean readMOLline) {
+        private RinchiInputComponent readMdlMolecule(boolean readMolLine) {
             RinchiInputComponent ric = new RinchiInputComponent();
-            readMolHeader(readMOLline);
+            readMolHeader(readMolLine);
             if (!errors.isEmpty())
                 return null;
     
-            readMOLCountsLine();
+            readMolCountsLine();
             if (!errors.isEmpty())
                 return null;
     
-            readMOLCTABBlock(ric);
+            readMolCtabBlock(ric);
             if (!errors.isEmpty())
                 return null;
     
-            readMOLPropertiesBlock(ric);
+            readMolPropertiesBlock(ric);
             if (!errors.isEmpty())
                 return null;
     
@@ -704,7 +704,7 @@ public class MDLReactionReader {
         }
     
         private Double readMdlCoordinate(String line, int startPos) {
-            int endPos = startPos + MDLReactionUtils.MDL_FLOAT_SPACES;
+            int endPos = startPos + MdlReactionUtils.MDL_FLOAT_SPACES;
             if (startPos > line.length() || endPos > line.length())
                 return null;
     
@@ -722,7 +722,7 @@ public class MDLReactionReader {
             }
         }
     
-        private int getChargeFromOldCTABCoding(int code) {
+        private int getChargeFromOldCtabCoding(int code) {
             //MDL Charge designation/coding
             //0 = uncharged or value other than these, 1 = +3, 2 = +2, 3 = +1,
             //4 = doublet radical, 5 = -1, 6 = -2, 7 = -3
@@ -744,7 +744,7 @@ public class MDLReactionReader {
             }
         }
     
-        private InchiBondStereo getBondStereoFromMDLCode(int code) {
+        private InchiBondStereo getBondStereoFromMdlCode(int code) {
             switch (code) {
                 case 0:
                     return InchiBondStereo.NONE;

@@ -6,6 +6,10 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * @author Nikolay Kochev
+ * @author Uli Fechner
+ */
 public class TestUtils {
     public static final String LINE_SEPARATOR_NEWLINE = "\n";
 

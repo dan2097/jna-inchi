@@ -10,7 +10,7 @@ import io.github.dan2097.jnainchi.InchiAtom;
  *
  * @author nick
  */
-public class MDLReactionUtils {
+public class MdlReactionUtils {
     public static final int MDL_FLOAT_SPACES = 10;
     public static final String CTAB_LINE_COUNT = "999";
     public static final NumberFormat MDL_NUMBER_FORMAT = NumberFormat.getNumberInstance(Locale.ENGLISH);

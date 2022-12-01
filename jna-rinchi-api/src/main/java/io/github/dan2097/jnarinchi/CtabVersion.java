@@ -8,7 +8,7 @@ package io.github.dan2097.jnarinchi;
  * conversion from and to RXN and RDFile V2000.
  * </p>
  */
-public enum CTabVersion {
+public enum CtabVersion {
     /**
      * Constant representing the CTAB V2000 format and its version string.
      */
@@ -22,7 +22,7 @@ public enum CTabVersion {
 
     private final String versionString;
 
-    CTabVersion(String versionString) {
+    CtabVersion(String versionString) {
         this.versionString = versionString;
     }
 

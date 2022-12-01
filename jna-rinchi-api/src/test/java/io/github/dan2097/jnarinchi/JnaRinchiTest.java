@@ -34,6 +34,8 @@ import static org.junit.jupiter.api.Assertions.*;
  * <br>
  * The testing data is provided by the IUPAC RInChI developers and available
  * at the <a href="https://github.com/IUPAC-InChI/RInChI">RInChI repository</a>.
+ * @author Nikolay Kochev
+ * @author Uli Fechner
  */
 class JnaRinchiTest {
 

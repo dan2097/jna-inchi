@@ -12,8 +12,8 @@
  * </p>
  * <p>
  * The RInChI functionality is provided in Java by the class {@link io.github.dan2097.jnarinchi.JnaRinchi}.
- * The classes {@link io.github.dan2097.jnarinchi.cheminfo.MDLReactionReader} and
- * {@link io.github.dan2097.jnarinchi.cheminfo.MDLReactionWriter} provide utilities for converting RinchiInput data
+ * The classes {@link io.github.dan2097.jnarinchi.cheminfo.MdlReactionReader} and
+ * {@link io.github.dan2097.jnarinchi.cheminfo.MdlReactionWriter} provide utilities for converting RinchiInput data
  * to file texts in RXN and RDFile format and vice versa.
  * </p>
  * <h2>Getting Started</h2>

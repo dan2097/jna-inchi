@@ -4,19 +4,19 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * This exception is thrown by {@link MDLReactionReader} if an error is encountered during reading.
+ * This exception is thrown by {@link MdlReactionReader} if an error is encountered during reading.
  * <br>
  * All errors can be retrieved as a list of error strings with {@link #getErrors()} or
  * as a single string where individual errors are separated with a newline character
  * with {@link #getAllErrors()}.
  */
-public class MDLReactionReaderException extends Exception {
+public class MdlReactionReaderException extends Exception {
 
   private static final long serialVersionUID = 1L;
   private final List<String> errors;
   
   /** {@inheritDoc} */
-  public MDLReactionReaderException(List<String> errors) {
+  public MdlReactionReaderException(List<String> errors) {
     super(getAllErrors(errors));
     this.errors = errors;
   }
