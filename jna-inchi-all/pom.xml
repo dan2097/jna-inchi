@@ -39,6 +39,10 @@
       <artifactId>jna-inchi-smiles</artifactId>
     </dependency>
     <dependency>
+      <groupId>io.github.dan2097</groupId>
+      <artifactId>jna-rinchi-core</artifactId>
+    </dependency>
+    <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter</artifactId>
       <scope>test</scope>

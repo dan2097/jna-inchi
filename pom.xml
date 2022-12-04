@@ -20,11 +20,11 @@
     <module>jna-inchi-win32-x86</module>
     <module>jna-inchi-win32-x86-64</module>
     <module>jna-rinchi-core</module>
-	<module>jna-rinchi-linux-arm</module>
+    <module>jna-rinchi-linux-arm</module>
     <module>jna-rinchi-linux-x86</module>
     <module>jna-rinchi-linux-x86-64</module>
-	<module>jna-rinchi-win32-x86</module>
-	<module>jna-rinchi-win32-x86-64</module>
+    <module>jna-rinchi-win32-x86</module>
+    <module>jna-rinchi-win32-x86-64</module>
   </modules>
   <licenses>
     <license>
@@ -245,12 +245,17 @@
         <artifactId>jna-inchi-win32-x86-64</artifactId>
         <version>${project.version}</version>
       </dependency>
-       <dependency>
+      <dependency>
         <groupId>io.github.dan2097</groupId>
-        <artifactId>jna-rinchi-api</artifactId>
+        <artifactId>jna-inchi-core</artifactId>
         <version>${project.version}</version>
       </dependency>
-	  <dependency>
+      <dependency>
+        <groupId>io.github.dan2097</groupId>
+        <artifactId>jna-rinchi-core</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
         <groupId>io.github.dan2097</groupId>
         <artifactId>jna-rinchi-linux-arm</artifactId>
         <version>${project.version}</version>
@@ -265,12 +270,12 @@
         <artifactId>jna-rinchi-linux-x86-64</artifactId>
         <version>${project.version}</version>
       </dependency>
-	  <dependency>
+      <dependency>
         <groupId>io.github.dan2097</groupId>
         <artifactId>jna-rinchi-win32-x86</artifactId>
         <version>${project.version}</version>
       </dependency>
-	  <dependency>
+      <dependency>
         <groupId>io.github.dan2097</groupId>
         <artifactId>jna-rinchi-win32-x86-64</artifactId>
         <version>${project.version}</version>
