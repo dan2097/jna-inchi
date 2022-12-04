@@ -1,0 +1,86 @@
+$RDFILE 1
+$DATM 3/15/2016 18:12:20
+$RFMT $RIREG 181
+$RXN
+
+      ISIS     031520161812
+Next tag is gziped pref file
+  1  1
+$MOL
+
+  -ISIS-  03151618122D
+
+  4  3  0  0  0  0  0  0  0  0999 V2000
+    7.8373   -1.3750    0.0000 C   0  0  0  0  0  0  0  0  0  1  0  0
+    8.5518   -0.9625    0.0000 C   0  0  0  0  0  0  0  0  0  2  0  0
+    9.2663   -1.3750    0.0000 O   0  0  0  0  0  0  0  0  0  3  0  0
+    8.5518   -0.1375    0.0000 O   0  0  0  0  0  0  0  0  0  4  0  0
+  1  2  1  0  0  0  2
+  2  3  2  0  0  0  2
+  2  4  1  0  0  0  2
+M  END
+$MOL
+
+  -ISIS-  03151618122D
+
+  6  5  0  0  0  0  0  0  0  0999 V2000
+   12.4717   -1.7188    0.0000 C   0  0  0  0  0  0  0  0  0  1  0  0
+   13.1862   -1.3063    0.0000 C   0  0  0  0  0  0  0  0  0  2  0  0
+   13.9006   -1.7188    0.0000 O   0  0  0  0  0  0  0  0  0  3  0  0
+   13.1862   -0.4813    0.0000 O   0  0  0  0  0  0  0  0  0  4  0  0
+   13.9006   -0.0687    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+   14.6151   -0.4813    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  2
+  2  3  2  0  0  0  2
+  2  4  1  0  0  0  2
+  4  5  1  0  0  0  4
+  5  6  1  0  0  0  0
+M  END
+$DTYPE RXN:RXNREGNO
+$DATUM 181
+$DTYPE RXN:VARIATION(1):VARIATION_NO
+$DATUM 1
+$DTYPE RXN:VARIATION(1):STEPNO(1):STEP_NO
+$DATUM 1
+$DTYPE RXN:VARIATION(1):STEPNO(1):CATALYST(1):CATALYST_NO
+$DATUM 1
+$DTYPE RXN:VARIATION(1):STEPNO(1):CATALYST(1):MOL(1):MOLSTRUCTURE
+$DATUM $MFMT
+
+  -ISIS-  03151618122D
+Next tag is gziped pref file
+  5  4  0  0  0  0  0  0  0  0999 V2000
+    5.3750   -2.5917    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0
+    6.0895   -2.1833    0.0000 S   0  0  3  0  0  0  0  0  0  0  0  0
+    6.8123   -1.7667    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0
+    5.6728   -1.4625    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0
+    6.5072   -2.9011    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0
+  2  3  1  0  0  0  0
+  1  2  1  0  0  0  0
+  2  4  2  0  0  0  0
+  2  5  2  0  0  0  0
+M  END
+$DTYPE RXN:VARIATION(1):STEPNO(1):SOLVENT(1):SOLVENT_NO
+$DATUM 1
+$DTYPE RXN:VARIATION(1):STEPNO(1):SOLVENT(1):MOL(1):MOLSTRUCTURE
+$DATUM $MFMT
+
+  -ISIS-  03151618122D
+Next tag is gziped pref file
+  3  2  0  0  0  0  0  0  0  0999 V2000
+   -0.2167   -1.5917    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    0.4978   -1.1792    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    1.2123   -1.5917    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+M  END
+$DTYPE RXN:VARIATION(1):STEPNO(1):SOLVENT(2):SOLVENT_NO
+$DATUM 2
+$DTYPE RXN:VARIATION(1):STEPNO(1):SOLVENT(2):MOL(1):MOLSTRUCTURE
+$DATUM $MFMT
+
+  -ISIS-  03151618122D
+Next tag is gziped pref file
+  1  0  0  0  0  0  0  0  0  0999 V2000
+    2.7792   -1.9042    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0
+M  END

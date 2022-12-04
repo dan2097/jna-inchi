@@ -19,6 +19,12 @@
     <module>jna-inchi-linux-x86-64</module>
     <module>jna-inchi-win32-x86</module>
     <module>jna-inchi-win32-x86-64</module>
+    <module>jna-rinchi-core</module>
+	<module>jna-rinchi-linux-arm</module>
+    <module>jna-rinchi-linux-x86</module>
+    <module>jna-rinchi-linux-x86-64</module>
+	<module>jna-rinchi-win32-x86</module>
+	<module>jna-rinchi-win32-x86-64</module>
   </modules>
   <licenses>
     <license>
@@ -87,6 +93,9 @@
           <includes>
             <include>**/*.java</include>
           </includes>
+          <excludes>
+            <exclude>**/jnarinchi/**/*.java</exclude>
+          </excludes>
         </configuration>
         <executions>
           <execution>
@@ -161,6 +170,28 @@
         </plugins>
       </build>
     </profile>
+    <profile>
+      <!--Skip MacOS tests for RInChI as IUPAC does not provide a precompiled native library-->
+      <id>skip-rinchi-tests</id>
+      <activation>
+        <os>
+          <family>mac</family>
+        </os>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <configuration>
+              <excludes>
+                <exclude>jnarinchi*/**</exclude>
+              </excludes>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
   </profiles>
   <dependencyManagement>
     <dependencies>
@@ -212,6 +243,36 @@
       <dependency>
         <groupId>io.github.dan2097</groupId>
         <artifactId>jna-inchi-win32-x86-64</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+       <dependency>
+        <groupId>io.github.dan2097</groupId>
+        <artifactId>jna-rinchi-api</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+	  <dependency>
+        <groupId>io.github.dan2097</groupId>
+        <artifactId>jna-rinchi-linux-arm</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.github.dan2097</groupId>
+        <artifactId>jna-rinchi-linux-x86</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.github.dan2097</groupId>
+        <artifactId>jna-rinchi-linux-x86-64</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+	  <dependency>
+        <groupId>io.github.dan2097</groupId>
+        <artifactId>jna-rinchi-win32-x86</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+	  <dependency>
+        <groupId>io.github.dan2097</groupId>
+        <artifactId>jna-rinchi-win32-x86-64</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
