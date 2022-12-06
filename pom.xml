@@ -14,6 +14,7 @@
     <module>jna-inchi-all</module>
     <module>jna-inchi-darwin-aarch64</module>
     <module>jna-inchi-darwin-x86-64</module>
+    <module>jna-inchi-linux-aarch64</module>
     <module>jna-inchi-linux-arm</module>
     <module>jna-inchi-linux-x86</module>
     <module>jna-inchi-linux-x86-64</module>
@@ -218,6 +219,11 @@
       <dependency>
         <groupId>io.github.dan2097</groupId>
         <artifactId>jna-inchi-darwin-x86-64</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.github.dan2097</groupId>
+        <artifactId>jna-inchi-linux-aarch64</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>

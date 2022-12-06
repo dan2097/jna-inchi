@@ -104,6 +104,7 @@ If you don't need SMILES to InChI support, RInChI support, or do not require sup
 | jna-inchi-api            | JNA-InChI API                                     |
 | jna-inchi-darwin-aarch64 | InChI 64-bit ARM Mac support                      |
 | jna-inchi-darwin-x86-64  | InChI 64-bit Intel Mac support                    |
+| jna-inchi-linux-aarch64  | InChI 64-bit ARM Linux support e.g. Apple M1
 | jna-inchi-linux-arm      | InChI 32-bit ARM Linux support e.g. Raspberry Pi  |
 | jna-inchi-linux-x86      | InChI 32-bit Linux support                        |
 | jna-inchi-linux-x86-64   | InChI 64-bit Linux support                        |

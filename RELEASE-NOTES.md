@@ -2,6 +2,8 @@
 
 ## 1.2 (TBD)
 * Added support for RInChI by wrapping the native RInChI library. The addition of RInChI capabilities was implemented by Ideaconsult Ltd and sponsored by Pending AI.
+* Added ARM64 Linux binary (thanks to Igor Tetko)
+* getInchiInputFromInchi and getInchiInputFromAuxInfo now return correctly return isotopic masses, rather than InChI's internal representation of these
 
 ## v1.1 (2022-01-23)
 * Methods on JnaInchi will now throw a RuntimeException rather than an Error if loading the InChI library fails e.g. unsupported platform

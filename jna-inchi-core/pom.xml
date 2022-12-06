@@ -23,6 +23,10 @@
     </dependency>
     <dependency>
       <groupId>io.github.dan2097</groupId>
+      <artifactId>jna-inchi-linux-aarch64</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.github.dan2097</groupId>
       <artifactId>jna-inchi-linux-arm</artifactId>
     </dependency>
     <dependency>
