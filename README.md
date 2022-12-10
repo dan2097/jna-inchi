@@ -90,7 +90,7 @@ The simplest way to use the library is with:
 <dependency>
   <groupId>io.github.dan2097</groupId>
   <artifactId>jna-inchi-all</artifactId>
-  <version>1.1</version>
+  <version>1.2</version>
 </dependency>
 ```
 which includes binaries for most common platforms, support for converting SMILES to InChI/InChIKey and MDL RDfile and RXN to RInChI/RInChIKey.
