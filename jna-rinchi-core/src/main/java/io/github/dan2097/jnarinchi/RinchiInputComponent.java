@@ -169,6 +169,8 @@ public class RinchiInputComponent extends InchiInput {
                 stringBuilder.append(getAtoms().indexOf(stereo.getAtoms()[2]) + 1).append(" - ");
                 stringBuilder.append(getAtoms().indexOf(stereo.getAtoms()[3]) + 1);
                 break;
+            case None:
+                break;
         }
 
         stringBuilder.append("  ").append(stereo.getParity());

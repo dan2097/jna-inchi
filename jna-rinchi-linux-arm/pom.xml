@@ -7,5 +7,5 @@
   </parent>
   <artifactId>jna-rinchi-linux-arm</artifactId>
   <name>JNA RInChI Linux ARM</name>
-  <description>Binaries for 64-bit ARM Linux e.g. Raspberry Pi</description>
+  <description>Binaries for 32-bit ARM Linux e.g. Raspberry Pi</description>
 </project>
