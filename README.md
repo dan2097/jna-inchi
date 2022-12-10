@@ -78,10 +78,11 @@ Pull requests for other platforms are welcome.
 | Linux x86      | Yes   | Yes    |
 | Linux x86-64   | Yes   | Yes    |
 | Linux ARM      | Yes   | Yes    |
+| Linux ARM64    | Yes   | No     |
+| Mac x86-64     | Yes   | No     |
+| Mac ARM64      | Yes   | No     |
 | Windows x86    | Yes   | Yes    |
 | Windows x86-64 | Yes   | Yes    |
-| Mac ARM64      | Yes   | No     |
-| Mac x86-64     | Yes   | No     |
 
 ## Maven artifacts
 The simplest way to use the library is with:
@@ -104,7 +105,7 @@ If you don't need SMILES to InChI support, RInChI support, or do not require sup
 | jna-inchi-api            | JNA-InChI API                                     |
 | jna-inchi-darwin-aarch64 | InChI 64-bit ARM Mac support                      |
 | jna-inchi-darwin-x86-64  | InChI 64-bit Intel Mac support                    |
-| jna-inchi-linux-aarch64  | InChI 64-bit ARM Linux support e.g. Apple M1
+| jna-inchi-linux-aarch64  | InChI 64-bit ARM Linux support e.g. Apple M1      |
 | jna-inchi-linux-arm      | InChI 32-bit ARM Linux support e.g. Raspberry Pi  |
 | jna-inchi-linux-x86      | InChI 32-bit Linux support                        |
 | jna-inchi-linux-x86-64   | InChI 64-bit Linux support                        |
@@ -112,10 +113,10 @@ If you don't need SMILES to InChI support, RInChI support, or do not require sup
 | jna-inchi-win32-x86-64   | InChI 64-bit Windows support                      |
 | jna-rinchi-core          | JNA-RInChI API with binaries for Windows and Linux|
 | jna-rinchi-linux-arm     | RInChI 32-bit ARM Linux support e.g. Raspberry Pi |
-| jna-rinchi-linux-x86     | RInChI32-bit Linux support                        |
-| jna-rinchi-linux-x86-64  | RInChI64-bit Linux support                        |
-| jna-rinchi-win32-x86     | RInChI32-bit Windows support                      |
-| jna-rinchi-win32-x86-64  | RInChI64-bit Windows support                      |
+| jna-rinchi-linux-x86     | RInChI 32-bit Linux support                       |
+| jna-rinchi-linux-x86-64  | RInChI 64-bit Linux support                       |
+| jna-rinchi-win32-x86     | RInChI 32-bit Windows support                     |
+| jna-rinchi-win32-x86-64  | RInChI 64-bit Windows support                     |
 
 For example, `jna-inchi-core` omits SMILES support. If you only need 64-bit linux support, depending on if SMILES support was desired, you would choose `jna-inchi-smiles` + `jna-inchi-linux-x86-64`, or `jna-inchi-api` + `jna-inchi-linux-x86-64`
 
