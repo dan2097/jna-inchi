@@ -7,7 +7,7 @@
 Wrapper to access InChI and RInchI from Java. This wraps the latest version of [InChI](https://www.inchi-trust.org/) (1.06) and [RInChI](https://github.com/IUPAC-InChI/RInChI) (1.00) using [JNA](https://github.com/java-native-access/jna).
 A simple native Java interface can then be used to call InChI.
 Java 8 or higher is required.
-Detailed information about the capabilities and limitations when converting from and to RInChI can be found in the io.github.dan2097.jnarinchi [package documentation](https://github.com/dan2097/jna-inchi/blob/master/jna-rinchi-core/src/main/java/io/github/dan2097/jnarinchi/package-info.java).
+Detailed information about the capabilities and limitations when converting from and to RInChI can be found in the io.github.dan2097.jnarinchi [package documentation](https://javadoc.io/static/io.github.dan2097/jna-rinchi-core/1.2/io/github/dan2097/jnarinchi/package-summary.html#package.description).
 
 ## Examples
 Mol file to StdInChI
