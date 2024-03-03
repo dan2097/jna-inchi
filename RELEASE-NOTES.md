@@ -1,5 +1,8 @@
 # JNA-InChI Release Notes
 
+## 1.2.1 (2024-03-03)
+* Compatibility with JNA 5.13.0 and later ([#22](https://github.com/dan2097/jna-inchi/issues/22))
+
 ## 1.2 (2022-12-10)
 * Added support for RInChI by wrapping the native RInChI library. The addition of RInChI capabilities was implemented by Ideaconsult Ltd and sponsored by Pending AI.
 * Added ARM64 Linux binary (thanks to Igor Tetko)
