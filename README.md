@@ -1,4 +1,4 @@
-[![Maven Central](https://img.shields.io/maven-central/v/io.github.dan2097/jna-inchi-all.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.dan2097%22%20AND%20a:%22jna-inchi-all%22)
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.dan2097/jna-inchi-all.svg?label=Maven%20Central)](https://central.sonatype.com/search?smo=true&namespace=io.github.dan2097&name=jna-inchi-all)
 [![Javadoc](https://javadoc.io/badge/io.github.dan2097/jna-inchi-api.svg)](https://javadoc.io/doc/io.github.dan2097/jna-inchi-api)
 [![MIT license](https://img.shields.io/badge/License-LGPLv2.1-blue.svg)](https://opensource.org/licenses/LGPL-2.1)
 [![Build Status](https://github.com/dan2097/jna-inchi/workflows/ci_build/badge.svg)](https://github.com/dan2097/jna-inchi/actions)
