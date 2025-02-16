@@ -1,13 +1,13 @@
-[![Maven Central](https://img.shields.io/maven-central/v/io.github.dan2097/jna-inchi-all.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.dan2097%22%20AND%20a:%22jna-inchi-all%22)
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.dan2097/jna-inchi-all.svg?label=Maven%20Central)](https://central.sonatype.com/search?smo=true&namespace=io.github.dan2097&name=jna-inchi-all)
 [![Javadoc](https://javadoc.io/badge/io.github.dan2097/jna-inchi-api.svg)](https://javadoc.io/doc/io.github.dan2097/jna-inchi-api)
 [![MIT license](https://img.shields.io/badge/License-LGPLv2.1-blue.svg)](https://opensource.org/licenses/LGPL-2.1)
 [![Build Status](https://github.com/dan2097/jna-inchi/workflows/ci_build/badge.svg)](https://github.com/dan2097/jna-inchi/actions)
 
 # JNA-InChI
-Wrapper to access InChI and RInchI from Java. This wraps the latest version of [InChI](https://www.inchi-trust.org/) (1.06) and [RInChI](https://github.com/IUPAC-InChI/RInChI) (1.00) using [JNA](https://github.com/java-native-access/jna).
+Wrapper to access InChI and RInchI from Java. This wraps the latest version of [InChI](https://www.inchi-trust.org/) (1.07) and [RInChI](https://github.com/IUPAC-InChI/RInChI) (1.00) using [JNA](https://github.com/java-native-access/jna).
 A simple native Java interface can then be used to call InChI.
 Java 8 or higher is required.
-Detailed information about the capabilities and limitations when converting from and to RInChI can be found in the io.github.dan2097.jnarinchi [package documentation](https://javadoc.io/static/io.github.dan2097/jna-rinchi-core/1.2.1/io/github/dan2097/jnarinchi/package-summary.html#package.description).
+Detailed information about the capabilities and limitations when converting from and to RInChI can be found in the io.github.dan2097.jnarinchi [package documentation](https://javadoc.io/static/io.github.dan2097/jna-rinchi-core/1.3.1/io/github/dan2097/jnarinchi/package-summary.html#package.description).
 
 ## Examples
 Mol file to StdInChI
@@ -90,7 +90,7 @@ The simplest way to use the library is with:
 <dependency>
   <groupId>io.github.dan2097</groupId>
   <artifactId>jna-inchi-all</artifactId>
-  <version>1.2.1</version>
+  <version>1.3.1</version>
 </dependency>
 ```
 which includes binaries for most common platforms, support for converting SMILES to InChI/InChIKey and MDL RDfile and RXN to RInChI/RInChIKey.

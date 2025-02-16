@@ -1,5 +1,11 @@
 # JNA-InChI Release Notes
 
+## 1.3.1 (2025-02-16)
+* Updated to InChI 1.07.2
+
+## 1.3.0 (2025-02-09)
+* Updated to InChI 1.07
+
 ## 1.2.1 (2024-03-03)
 * Compatibility with JNA 5.13.0 and later ([#22](https://github.com/dan2097/jna-inchi/issues/22))
 
