@@ -1,5 +1,8 @@
 # JNA-InChI Release Notes
 
+## 1.3.1 (2025-02-16)
+* Updated to InChI 1.07.2
+
 ## 1.3.0 (2025-02-09)
 * Updated to InChI 1.07
 
