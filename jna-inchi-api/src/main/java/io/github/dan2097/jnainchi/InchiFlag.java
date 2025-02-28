@@ -113,8 +113,26 @@ public enum InchiFlag {
       //Java doesn't allow enums to start with digits
       return "15T";
     }
-    else {
-      return super.toString();
-    }
+    return super.toString();
   }
+  
+  private static HashMap<String, InChiFlag> map;
+
+  /**
+   * Get a flag from a string, case insensitive.
+   * Cache the names for better performance.
+   * 
+   * @param name
+   * @return the matching InchiFlag or null
+   * @author Bob Hanson
+   */
+  public static InchiFlag getFlagFromName(String name) {
+    if (map == null) {
+      map = new HashMap<>();
+      for (InchiFlag item : values())
+        map.put(item.toString().toLowerCase(), item);
+    }
+    return map.get(name.toLowerCase());
+  }
+
 }
