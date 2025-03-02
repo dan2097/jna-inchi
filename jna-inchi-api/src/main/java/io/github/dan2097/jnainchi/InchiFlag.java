@@ -18,6 +18,7 @@
 package io.github.dan2097.jnainchi;
 
 import java.util.HashMap;
+import java.util.Locale;
 
 public enum InchiFlag {
 
@@ -129,12 +130,16 @@ public enum InchiFlag {
    * @author Bob Hanson
    */
   public static InchiFlag getFlagFromName(String name) {
+    if (name == null) {
+      return null;
+    }
     if (map == null) {
       map = new HashMap<>();
-      for (InchiFlag item : values())
-        map.put(item.toString().toLowerCase(), item);
+      for (InchiFlag item : values()) {
+        map.put(item.toString().toLowerCase(Locale.ROOT), item);
+      }
     }
-    return map.get(name.toLowerCase());
+    return map.get(name.toLowerCase(Locale.ROOT));
   }
 
 }
