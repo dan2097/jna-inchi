@@ -18,6 +18,7 @@
 package io.github.dan2097.jnainchi;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import io.github.dan2097.jnainchi.inchi.InchiLibrary.tagINCHIStereoParity0D;
@@ -44,14 +45,25 @@ public enum InchiStereoParity {
     return code;
   }
   
-  private static final Map<Byte, InchiStereoParity> map = new HashMap<>();
+  private static final Map<Object, InchiStereoParity> map = new HashMap<>();
   
   static {
     for (InchiStereoParity val : InchiStereoParity.values()) {
-      map.put(val.code, val);
+      map.put(Byte.valueOf(val.code), val);
+      map.put(val.name().toLowerCase(Locale.ROOT), val);
     }
   }
   
+  public static int getCodeObj(Object val) {
+    if (val != null) {
+      InchiStereoParity e = (val instanceof InchiStereoParity ? (InchiStereoParity) val 
+          : map.get(val.toString().toLowerCase(Locale.ROOT)));
+      if (e != null)
+        return e.getCode();
+    }
+    return NONE.getCode();
+  }
+    
   static InchiStereoParity of(byte code) {
     return map.get(code);
   }
