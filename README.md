@@ -81,6 +81,7 @@ Pull requests for other platforms are welcome.
 | Linux ARM64    | Yes   | No     |
 | Mac x86-64     | Yes   | No     |
 | Mac ARM64      | Yes   | No     |
+| Windows ARM64  | Yes   | No     |
 | Windows x86    | Yes   | Yes    |
 | Windows x86-64 | Yes   | Yes    |
 
@@ -109,6 +110,7 @@ If you don't need SMILES to InChI support, RInChI support, or do not require sup
 | jna-inchi-linux-arm      | InChI 32-bit ARM Linux support e.g. Raspberry Pi  |
 | jna-inchi-linux-x86      | InChI 32-bit Linux support                        |
 | jna-inchi-linux-x86-64   | InChI 64-bit Linux support                        |
+| jna-inchi-win32-aarch64  | InChI 64-bit ARM Windows support                  |
 | jna-inchi-win32-x86      | InChI 32-bit Windows support                      |
 | jna-inchi-win32-x86-64   | InChI 64-bit Windows support                      |
 | jna-rinchi-core          | JNA-RInChI API with binaries for Windows and Linux|
