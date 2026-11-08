@@ -18,6 +18,7 @@
     <module>jna-inchi-linux-arm</module>
     <module>jna-inchi-linux-x86</module>
     <module>jna-inchi-linux-x86-64</module>
+    <module>jna-inchi-win32-aarch64</module>
     <module>jna-inchi-win32-x86</module>
     <module>jna-inchi-win32-x86-64</module>
     <module>jna-rinchi-core</module>
@@ -123,6 +124,29 @@
     </pluginManagement>
   </build>
   <profiles>
+    <profile>
+      <!-- RInChI has no Windows ARM64 binary; continue running InChI tests. -->
+      <id>skip-rinchi-tests-windows-aarch64</id>
+      <activation>
+        <os>
+          <family>windows</family>
+          <arch>aarch64</arch>
+        </os>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <configuration>
+              <excludes>
+                <exclude>**/jnarinchi/**</exclude>
+              </excludes>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
     <profile>
       <!--Additional plugins to run when performing a release for Maven Central-->
       <id>sonatype-oss-release</id>
@@ -239,6 +263,11 @@
       <dependency>
         <groupId>io.github.dan2097</groupId>
         <artifactId>jna-inchi-linux-x86-64</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.github.dan2097</groupId>
+        <artifactId>jna-inchi-win32-aarch64</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
