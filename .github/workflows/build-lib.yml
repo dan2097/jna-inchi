@@ -1,0 +1,44 @@
+name: InChI Native Libary Building
+
+on:
+  workflow_dispatch:
+    inputs:
+      release-tag:
+        description: 'git tag of the inchi release (e.g., v1.07.4, v1.07.5)'
+        required: true
+        type: string
+
+env:
+  RELEASE_TAG: ${{ inputs.release-tag }} 
+
+jobs:
+  macos:
+    name: macOS native library
+    runs-on: macos-15
+    steps:
+      - name: Clone Repository
+        uses: actions/checkout@v5
+        with:
+          repository: IUPAC-InChI/InChI    
+          path: inchi-main-repo
+          ref: ${{ inputs.release-tag }} 
+
+      - name: Build
+        run: |
+          cmake -S inchi-main-repo -B inchi-x86-64-build -DCMAKE_BUILD_TYPE=Release -DCMAKE_OSX_ARCHITECTURES=x86_64
+          cmake --build inchi-x86-64-build -j8
+          cmake -S inchi-main-repo -B inchi-aarch64-build -DCMAKE_BUILD_TYPE=Release -DCMAKE_OSX_ARCHITECTURES=arm64
+          cmake --build inchi-aarch64-build -j8
+      
+      - name: Upload x86-64 Artifacts
+        uses: actions/upload-artifact@v7
+        with:
+          name: libinchi-macos-x86-64
+          path: inchi-x86-64-build/INCHI-1-SRC/INCHI_API/libinchi/src/lib/libinchi.dylib
+      
+      - name: Upload aarch64 Artifacts
+        uses: actions/upload-artifact@v7
+        with:
+          name: libinchi-macos-aarch64
+          path: inchi-aarch64-build/INCHI-1-SRC/INCHI_API/libinchi/src/lib/libinchi.dylib
+
