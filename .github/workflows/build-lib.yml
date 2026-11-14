@@ -26,9 +26,9 @@ jobs:
       - name: Build
         run: |
           cmake -S inchi-main-repo -B inchi-x86-64-build -DCMAKE_BUILD_TYPE=Release -DCMAKE_OSX_ARCHITECTURES=x86_64
-          cmake --build inchi-x86-64-build -j8
+          cmake --build inchi-x86-64-build --parallel
           cmake -S inchi-main-repo -B inchi-aarch64-build -DCMAKE_BUILD_TYPE=Release -DCMAKE_OSX_ARCHITECTURES=arm64
-          cmake --build inchi-aarch64-build -j8
+          cmake --build inchi-aarch64-build --parallel
       
       - name: Upload x86-64 Artifacts
         uses: actions/upload-artifact@v7
